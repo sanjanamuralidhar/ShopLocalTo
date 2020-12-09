@@ -75,38 +75,11 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                               Icons.location_on,
                               color: Theme.of(context).primaryColor,
                             ),
+                             VerticalDivider(),
                             // added a dropdown for category selection @sanjana
+                            DropPage(),
                             SizedBox(width: 10),
-                            DropdownButton<String>(
-                              value: dropdownValue,
-                              icon: Icon(Icons.arrow_drop_down),
-                              iconSize: 24,
-                              elevation: 16,
-                              style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    .copyWith(fontWeight: FontWeight.w500),
-                              underline: Container(
-                                height: 2,
-                                // color: Colors.deepPurpleAccent,
-                              ),
-                              onChanged: (String newValue) {
-                                // setState(() {
-                                  dropdownValue = newValue;
-                                // });
-                              },
-                              items: <String>[
-                                'All categories',
-                                'Shops',
-                                'Hotels',
-                                'Restaurants'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                            ),
+                            
                           ],
                         ),
                       ),
@@ -130,3 +103,41 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }
+class DropPage extends StatefulWidget {
+  @override
+  _DropPageState createState() => _DropPageState();
+}
+// added a dropdown for category selection @sanjana
+class _DropPageState extends State<DropPage> {
+  String dropdownValue = "All category";
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: dropdownValue,
+      icon: Icon(Icons.arrow_drop_down),
+      iconSize: 24,
+      elevation: 16,
+      style: Theme.of(context)
+          .textTheme
+          .subtitle2
+          .copyWith(fontWeight: FontWeight.w500),
+      underline: Container(
+        height: 2,
+        // color: Colors.deepPurpleAccent,
+      ),
+      onChanged: (String newValue) {
+        setState(() {
+          dropdownValue = newValue;
+        });
+      },
+      items: <String>['All category', 'Shops', 'Restaurants', 'Hotels']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}
+
