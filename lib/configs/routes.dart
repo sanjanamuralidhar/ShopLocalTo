@@ -1,10 +1,15 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:listar_flutter/screens/IntroSlider/Introslider.dart';
 import 'package:listar_flutter/screens/screen.dart';
+import 'package:listar_flutter/screens/success/success.dart';
 
 class Routes {
   static const String signIn = "/signIn";
+  static const String introSlider = "/introSlider";
   static const String signUp = "/signUp";
+  static const String success = "/success";
+  static const String profile = "/profile";
   static const String forgotPassword = "/forgotPassword";
   static const String productDetail = "/productDetail";
   static const String productDetailTab = "ProductDetailTab";
@@ -37,12 +42,32 @@ class Routes {
           },
         );
 
+        case profile:
+        return MaterialPageRoute(
+          builder: (context) {
+            return Profile();
+          },
+        );
+
+      case introSlider:
+      return MaterialPageRoute(
+    builder: (context){
+      return IntroScreen();
+    });
+
       case signUp:
         return MaterialPageRoute(
           builder: (context) {
             return SignUp();
           },
         );
+
+      case success:
+      return MaterialPageRoute(
+        builder: (context) {
+          return Success();
+        }
+      );
 
       case forgotPassword:
         return MaterialPageRoute(

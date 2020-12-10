@@ -56,6 +56,7 @@ class _SignInState extends State<SignIn> {
         password: _textPassController.text,
       ));
     }
+    Navigator.pushNamed(context, Routes.introSlider);
   }
 
   ///On show message fail
@@ -92,16 +93,18 @@ class _SignInState extends State<SignIn> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          Translate.of(context).translate('sign_in'),
+          Translate.of(context).translate('Login'),
         ),
       ),
       body: SafeArea(
         child: Container(
-          padding: EdgeInsets.only(left: 20, right: 20),
+          padding: EdgeInsets.only(left: 30, right: 30),
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
+                Image.asset(Images.ShopLocalTOLogo,width: 300, height: 200),
+                SizedBox(height:30),
                 AppTextInput(
                   hintText: Translate.of(context).translate('account'),
                   errorText: _validID != null
@@ -172,33 +175,48 @@ class _SignInState extends State<SignIn> {
                         onPressed: () {
                           _login();
                         },
-                        text: Translate.of(context).translate('sign_in'),
+                        text: Translate.of(context).translate('Login'),
                         loading: login is LoginLoading,
                         disableTouchWhenLoading: true,
                       ),
                     );
                   },
                 ),
+                SizedBox(height:10),
                 Padding(
-                  padding: EdgeInsets.only(top: 5),
+                  padding: const EdgeInsets.only(left: 40,right:30),
+                  child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        Text('No Account?'),
+                        FlatButton(
+                          onPressed: _signUp,
+                          height: 10,
+                          child: Text(
+                            Translate.of(context).translate('Signup for free'),
+                          ),
+                        ),
+                      ]),
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: <Widget>[
-                    FlatButton(
-                      onPressed: _forgotPassword,
-                      child: Text(
-                        Translate.of(context).translate('forgot_password'),
+                Padding(
+                  padding: const EdgeInsets.only(left: 40,right:30),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        Translate.of(context).translate('forgot you password?'),
                       ),
-                    ),
-                    FlatButton(
-                      onPressed: _signUp,
-                      child: Text(
-                        Translate.of(context).translate('sign_up'),
-                      ),
-                    )
-                  ],
+                      FlatButton(
+                        height: 10,
+                        onPressed: _forgotPassword,
+                        child: Text(
+                          Translate.of(context).translate('Reset'),
+                        ),
+                      )
+                    ],
+                  ),
                 ),
+                Image.asset(Images.INDigitalLOGO_logo_large,width: 100, height: 100)
               ],
             ),
           ),

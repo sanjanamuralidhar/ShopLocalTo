@@ -61,6 +61,9 @@ class Images {
   static const String Service5 = "assets/images/service-housing.jpg";
   static const String Service6 = "assets/images/service-job.jpg";
   static const String Service7 = "assets/images/service-restaurant.jpg";
+  //@sanjana
+  static const String ShopLocalTOLogo = "assets/images/ShopLocalTOLogo.png";
+  static const String INDigitalLOGO_logo_large = "assets/images/INDigital-LOGO_logo_large.png";
 
   ///Singleton factory
   static final Images _instance = Images._internal();

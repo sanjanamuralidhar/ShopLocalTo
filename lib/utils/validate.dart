@@ -3,6 +3,7 @@ enum Type {
   email,
   password,
   phone,
+  location,
 }
 
 class UtilValidator {
@@ -12,6 +13,7 @@ class UtilValidator {
   static const String error_phone = "value_not_valid_phone";
   static const String error_password = "value_not_valid_password";
   static const String error_id = "value_not_valid_id";
+  static const String error_location = "value_not_valid_location";
 
   static validate({
     String data,

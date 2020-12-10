@@ -21,7 +21,8 @@ class AppTheme {
   ///Default Theme
   static ThemeModel currentTheme = ThemeModel.fromJson({
     "name": "default",
-    "color": Color(0xffe5634d),
+    // "color": Color(0xffe5634d),
+    "color": Color(0xff1565C0),
     "light": "primaryLight",
     "dark": "primaryDark",
   });
@@ -30,7 +31,8 @@ class AppTheme {
   static List themeSupport = [
     {
       "name": "default",
-      "color": Color(0xffe5634d),
+      // "color": Color(0xffe5634d),
+      "color": Color(0xff1565C0),
       "light": "primaryLight",
       "dark": "primaryDark",
     },

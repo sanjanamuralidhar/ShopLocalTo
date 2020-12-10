@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:listar_flutter/configs/image.dart';
+import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 
@@ -15,15 +17,21 @@ class _SignUpState extends State<SignUp> {
   final _textIDController = TextEditingController();
   final _textPassController = TextEditingController();
   final _textEmailController = TextEditingController();
+  final _textLocationController = TextEditingController();
+  final _textPhoneController = TextEditingController();
   final _focusID = FocusNode();
   final _focusPass = FocusNode();
   final _focusEmail = FocusNode();
+  final _focusPhone = FocusNode();
+  final _focusLocation = FocusNode();
 
   bool _loading = false;
   bool _showPassword = false;
   String _validID;
   String _validPass;
   String _validEmail;
+  String _validPhone;
+  String _validLocation;
 
   ///On sign up
   void _signUp() {
@@ -38,8 +46,15 @@ class _SignUpState extends State<SignUp> {
         data: _textEmailController.text,
         type: Type.email,
       );
-    });
-    if (_validID == null && _validPass == null && _validEmail == null) {}
+      _validPhone = UtilValidator.validate(
+          data: _textPhoneController.text, type: Type.phone);
+      _validLocation = UtilValidator.validate(
+          data: _textLocationController.text, type: Type.location);
+    },
+    );
+   
+    if (_validID == null && _validPass == null && _validEmail == null) {
+    }
   }
 
   @override
@@ -57,55 +72,43 @@ class _SignUpState extends State<SignUp> {
           alignment: Alignment.center,
           child: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    Translate.of(context).translate('account'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
+                Image.asset(Images.ShopLocalTOLogo, width: 300, height: 200),
+                SizedBox(
+                  height: 30,
                 ),
                 AppTextInput(
-                  hintText: Translate.of(context).translate('input_id'),
-                  errorText: _validID != null
-                      ? Translate.of(context).translate(_validID)
+                  hintText: Translate.of(context).translate('Your Email'),
+                  errorText: _validEmail != null
+                      ? Translate.of(context).translate(_validEmail)
                       : null,
-                  icon: Icon(Icons.clear),
-                  controller: _textIDController,
-                  focusNode: _focusID,
-                  textInputAction: TextInputAction.next,
+                  focusNode: _focusEmail,
+                  onTapIcon: () async {
+                    await Future.delayed(Duration(milliseconds: 100));
+                    _textEmailController.clear();
+                  },
+                  onSubmitted: (text) {
+                    _signUp();
+                  },
                   onChanged: (text) {
                     setState(() {
-                      _validID = UtilValidator.validate(
-                        data: _textIDController.text,
+                      _validEmail = UtilValidator.validate(
+                        data: _textEmailController.text,
+                        type: Type.email,
                       );
                     });
                   },
-                  onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(context, _focusID, _focusPass);
-                  },
-                  onTapIcon: () async {
-                    await Future.delayed(Duration(milliseconds: 100));
-                    _textIDController.clear();
-                  },
+                  icon: Icon(Icons.clear),
+                  controller: _textEmailController,
+                  keyboardType: TextInputType.emailAddress,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 10, top: 10),
-                  child: Text(
-                    Translate.of(context).translate('password'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
+                SizedBox(
+                  height: 10,
                 ),
                 AppTextInput(
                   hintText: Translate.of(context).translate(
-                    'input_your_password',
+                    'Password',
                   ),
                   errorText: _validPass != null
                       ? Translate.of(context).translate(_validPass)
@@ -134,40 +137,61 @@ class _SignUpState extends State<SignUp> {
                   controller: _textPassController,
                   focusNode: _focusPass,
                 ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 10, top: 10),
-                  child: Text(
-                    Translate.of(context).translate('email'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle2
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
+                SizedBox(
+                  height: 10,
                 ),
                 AppTextInput(
-                  hintText: Translate.of(context).translate('input_email'),
-                  errorText: _validEmail != null
-                      ? Translate.of(context).translate(_validEmail)
+                  hintText: Translate.of(context).translate('phone'),
+                  errorText: _validPhone != null
+                      ? Translate.of(context).translate(_validPhone)
                       : null,
-                  focusNode: _focusEmail,
-                  onTapIcon: () async {
-                    await Future.delayed(Duration(milliseconds: 100));
-                    _textEmailController.clear();
-                  },
-                  onSubmitted: (text) {
-                    _signUp();
-                  },
+                  icon: Icon(Icons.clear),
+                  controller: _textPhoneController,
+                  focusNode: _focusPhone,
+                  textInputAction: TextInputAction.next,
                   onChanged: (text) {
                     setState(() {
-                      _validEmail = UtilValidator.validate(
-                        data: _textEmailController.text,
-                        type: Type.email,
+                      _validPhone = UtilValidator.validate(
+                        data: _textPhoneController.text,
                       );
                     });
                   },
+                  onSubmitted: (text) {
+                    UtilOther.fieldFocusChange(
+                        context, _focusPhone, _focusPhone);
+                  },
+                  onTapIcon: () async {
+                    await Future.delayed(Duration(milliseconds: 100));
+                    _textPhoneController.clear();
+                  },
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                AppTextInput(
+                  hintText: Translate.of(context).translate('Select Location'),
+                  errorText: _validLocation != null
+                      ? Translate.of(context).translate(_validLocation)
+                      : null,
                   icon: Icon(Icons.clear),
-                  controller: _textEmailController,
-                  keyboardType: TextInputType.emailAddress,
+                  controller: _textLocationController,
+                  focusNode: _focusLocation,
+                  textInputAction: TextInputAction.next,
+                  onChanged: (text) {
+                    setState(() {
+                      _validLocation = UtilValidator.validate(
+                        data: _textLocationController.text,
+                      );
+                    });
+                  },
+                  onSubmitted: (text) {
+                    UtilOther.fieldFocusChange(
+                        context, _focusLocation, _focusLocation);
+                  },
+                  onTapIcon: () async {
+                    await Future.delayed(Duration(milliseconds: 100));
+                    _textLocationController.clear();
+                  },
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20),
@@ -175,11 +199,17 @@ class _SignUpState extends State<SignUp> {
                 AppButton(
                   onPressed: () {
                     _signUp();
+                     Navigator.pushNamed(context, Routes.success);
                   },
                   text: Translate.of(context).translate('sign_up'),
                   loading: _loading,
                   disableTouchWhenLoading: true,
                 ),
+                SizedBox(
+                  height: 30,
+                ),
+                Image.asset(Images.INDigitalLOGO_logo_large,
+                    width: 100, height: 100),
               ],
             ),
           ),
