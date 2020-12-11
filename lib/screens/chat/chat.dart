@@ -47,6 +47,7 @@ class _ChatState extends State<Chat> {
 
   ///On async get Image file
   Future _attachImage() async {
+    // ignore: deprecated_member_use
     final image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       final chat = MessageModel.fromJson({

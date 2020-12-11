@@ -19,6 +19,7 @@ class _SignUpState extends State<SignUp> {
   final _textEmailController = TextEditingController();
   final _textLocationController = TextEditingController();
   final _textPhoneController = TextEditingController();
+  // ignore: unused_field
   final _focusID = FocusNode();
   final _focusPass = FocusNode();
   final _focusEmail = FocusNode();

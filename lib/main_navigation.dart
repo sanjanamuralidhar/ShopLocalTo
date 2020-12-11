@@ -89,6 +89,7 @@ class _MainNavigationState extends State<MainNavigation> {
     return [
       BottomNavigationBarItem(
         icon: Icon(Icons.home),
+        // ignore: deprecated_member_use
         title: Padding(
           padding: EdgeInsets.only(top: 3),
           child: Text(Translate.of(context).translate('home')),
@@ -96,6 +97,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.bookmark),
+        // ignore: deprecated_member_use
         title: Padding(
           padding: EdgeInsets.only(top: 3),
           child: Text(Translate.of(context).translate('wish_list')),
@@ -103,6 +105,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.message),
+        // ignore: deprecated_member_use
         title: Padding(
           padding: EdgeInsets.only(top: 3),
           child: Text(Translate.of(context).translate('message')),
@@ -110,6 +113,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.notifications),
+        // ignore: deprecated_member_use
         title: Padding(
           padding: EdgeInsets.only(top: 3),
           child: Text(Translate.of(context).translate('notification')),
@@ -117,6 +121,7 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
       BottomNavigationBarItem(
         icon: Icon(Icons.account_circle),
+        // ignore: deprecated_member_use
         title: Padding(
           padding: EdgeInsets.only(top: 3),
           child: Text(Translate.of(context).translate('account')),

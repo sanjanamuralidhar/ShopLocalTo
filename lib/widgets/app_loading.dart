@@ -31,18 +31,18 @@ class _AppLoadingState extends State<AppLoading> with TickerProviderStateMixin {
 
     controller1 = AnimationController(
       duration: Duration(seconds: 2),
-      value:1
-      // vsync: this,
+      value:1,
+      vsync: this,
     );
 
     controller2 = AnimationController(
       duration: Duration(seconds: 2),
-      // vsync: this,
+      vsync: this,
     );
 
     controller3 = AnimationController(
       duration: Duration(seconds: 2),
-      // vsync: this,
+      vsync: this,
     );
 
     animation1 = Tween<double>(begin: 0.0, end: 1.0).animate(

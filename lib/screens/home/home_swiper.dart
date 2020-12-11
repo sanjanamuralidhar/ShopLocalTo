@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeSwipe extends StatefulWidget {
@@ -27,7 +28,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
         Container(child: _swipperBanner(context)),
         InkWell(
           onTap: (){
-            // Navigate to neibourhood information page
+            // Navigate to neighbourhood information page
           },
                   child: Padding(
             padding: const EdgeInsets.all(20.0),
@@ -50,7 +51,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
                 color: Colors.white,
                 textColor: Colors.black,
                 onPressed: () {
-                  /*.popup required..*/
+                  _openPopup(context);
                 },
                 child: Text(
                   "neighbourhood",
@@ -114,4 +115,29 @@ class _HomeSwipeState extends State<HomeSwipe> {
     );
   }
 }
+ _openPopup(context) {
+    Alert(
+        context: context,
+        title: "Neighbourhood",
+        content: Column(
+          children: <Widget>[
+            TextField(
+              decoration: InputDecoration(
+                icon: Icon(Icons.location_on),
+                labelText: 'Enter a Location',
+              ),
+            ),
+          ],
+        ),
+        buttons: [
+          DialogButton(
+color: Colors.blue[900],
+            onPressed: () => Navigator.pop(context),
+            child: Text(
+              "Select",
+              style: TextStyle(color: Colors.white, fontSize: 20),
+            ),
+          )
+        ]).show();
+  }
 // changed code _swipperbanner to widget

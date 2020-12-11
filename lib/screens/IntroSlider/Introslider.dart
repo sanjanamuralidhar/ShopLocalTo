@@ -1,11 +1,9 @@
 
 import 'package:flutter/material.dart';
-import 'package:intro_slider/dot_animation_enum.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
 import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/configs/routes.dart';
-import 'package:listar_flutter/screens/home/home.dart';
 
 import '../../main_navigation.dart';
 
@@ -46,6 +44,7 @@ class IntroScreenState extends State<IntroScreen> {
        description:
        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
        pathImage: Images.ShopLocalTOLogo,
+        
        backgroundImage: Images.Trip6,
      ),
    );

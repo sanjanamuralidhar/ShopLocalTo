@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/configs/image.dart';
-import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/translate.dart';
 import 'package:listar_flutter/widgets/app_button.dart';
@@ -28,36 +27,36 @@ class Success extends StatelessWidget {
                   height: 30,
                 ),
                 Container(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text("Thankyouforsignup"))),
-                  AppButton(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text("Thank You",style:TextStyle(color: Colors.blue[900],fontSize: 45)))),
+                        Container(
+                    child: Align(
+                        alignment: Alignment.center,
+                        child: Text("for SignUp!",style:TextStyle(color: Colors.blue[900],fontSize: 25)))),
+                SizedBox(height: 40,),
+                AppButton(
                   onPressed: () {
-                  Navigator.push(
-    context,
-    MaterialPageRoute(builder: (context) => SignIn()),
-  );
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignIn()),
+                    );
                   },
-                  text: Translate.of(context).translate('signin'),
+                  text: Translate.of(context).translate('SignIn'),
                   disableTouchWhenLoading: true,
-                )  ,
-               
+                ),
                 SizedBox(
                   height: 10,
                 ),
-               
                 SizedBox(
                   height: 10,
                 ),
-                
                 SizedBox(
                   height: 10,
                 ),
-                
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                
                 SizedBox(
                   height: 30,
                 ),
