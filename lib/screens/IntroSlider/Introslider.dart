@@ -26,27 +26,27 @@ class IntroScreenState extends State<IntroScreen> {
 
    slides.add(
      new Slide(
-       title: "ERASER",
+       title: "MOONLIGHT",
        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
-       pathImage: Images.Room4,
-       backgroundColor: Color(0xfff5a623),
+       pathImage: Images.ShopLocalTOLogo,
+       backgroundImage: Images.Room6,
      ),
    );
    slides.add(
      new Slide(
-       title: "PENCIL",
+       title: "GOOGI",
        description: "Ye indulgence unreserved connection alteration appearance",
-       pathImage: Images.Room5,
-       backgroundColor: Color(0xff203152),
+       pathImage: Images.ShopLocalTOLogo,
+       backgroundImage: Images.Room5,
      ),
    );
    slides.add(
      new Slide(
-       title: "RULER",
+       title: "fITNESS",
        description:
        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
-       pathImage: Images.Room6,
-       backgroundColor: Color(0xff9932CC),
+       pathImage: Images.ShopLocalTOLogo,
+       backgroundImage: Images.Trip6,
      ),
    );
  }
@@ -61,6 +61,7 @@ class IntroScreenState extends State<IntroScreen> {
  @override
  Widget build(BuildContext context) {
    return new IntroSlider(
+     onSkipPress: (){Navigator.pushNamed(context, Routes.signIn);},
      slides: this.slides,
      onDonePress: this.onDonePress,
    );

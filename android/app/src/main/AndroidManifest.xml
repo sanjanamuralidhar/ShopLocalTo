@@ -5,8 +5,8 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
         android:name="io.flutter.app.FlutterApplication"
-        android:label="Listar Flux"
-        android:icon="@mipmap/ic_launcher">
+        android:label="ShopLocaleTo"
+        android:icon="@mipmap/shop">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBRB5_8rkANX4dYFkqQ8hIDE60ELN4TCt8"/>
         <activity

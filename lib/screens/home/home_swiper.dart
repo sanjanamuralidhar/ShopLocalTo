@@ -25,14 +25,19 @@ class _HomeSwipeState extends State<HomeSwipe> {
     return Stack(
       children: <Widget>[
         Container(child: _swipperBanner(context)),
-        Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Align(
-            alignment: Alignment.topRight,
-            child: Icon(
-              Icons.info_outline,
-              color: Colors.white,
-              size: 30,
+        InkWell(
+          onTap: (){
+            // Navigate to neibourhood information page
+          },
+                  child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Align(
+              alignment: Alignment.topRight,
+              child: Icon(
+                Icons.info_outline,
+                color: Colors.white,
+                size: 30,
+              ),
             ),
           ),
         ),
