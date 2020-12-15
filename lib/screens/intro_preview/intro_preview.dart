@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intro_views_flutter/Models/page_view_model.dart';
-import 'package:intro_views_flutter/intro_views_flutter.dart';
 import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
-import 'package:listar_flutter/utils/utils.dart';
+import 'package:intro_slider/slide_object.dart';
+import 'package:intro_slider/intro_slider.dart';
 
 class IntroPreview extends StatefulWidget {
   IntroPreview({Key key}) : super(key: key);
@@ -32,98 +31,36 @@ class _IntroPreviewState extends State<IntroPreview> {
   @override
   Widget build(BuildContext context) {
     ///List Intro view page model
-    final List<PageViewModel> pages = [
-      PageViewModel(
-        pageColor: Color(0xff93b7b0),
-        bubble: Icon(
-          Icons.shop,
-          color: Colors.white,
-        ),
-        body: Text(
-          "Favorite brands and hottest trends.",
-          style: Theme.of(context).textTheme.headline6.copyWith(
-                color: Colors.white,
-              ),
-        ),
-        title: Text(
-          Translate.of(context).translate('shopping'),
-          style: Theme.of(context)
-              .textTheme
-              .headline4
-              .copyWith(color: Colors.white),
-        ),
-        titleTextStyle: Theme.of(context).textTheme.headline4,
-        bodyTextStyle: Theme.of(context).textTheme.headline6,
-        mainImage: Image.asset(
-          Images.Intro1,
-          fit: BoxFit.contain,
-        ),
-      ),
-      PageViewModel(
-        pageColor: Color(0xff93b7b0),
-        bubble: Icon(
-          Icons.phonelink,
-          color: Colors.white,
-        ),
-        body: Text(
-          Translate.of(context).translate('shopping_intro'),
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Colors.white),
-        ),
-        title: Text(
-          Translate.of(context).translate('payment'),
-          style: Theme.of(context)
-              .textTheme
-              .headline4
-              .copyWith(color: Colors.white),
-        ),
-        titleTextStyle: Theme.of(context).textTheme.headline4,
-        bodyTextStyle: Theme.of(context).textTheme.headline6,
-        mainImage: Image.asset(
-          Images.Intro2,
-          fit: BoxFit.contain,
-        ),
-      ),
-      PageViewModel(
-        pageColor: Color(0xff93b7b0),
-        bubble: Icon(
-          Icons.home,
-          color: Colors.white,
-        ),
-        body: Text(
-          Translate.of(context).translate('payment_intro'),
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              .copyWith(color: Colors.white),
-        ),
-        title: Text(
-          Translate.of(context).translate('location'),
-          style: Theme.of(context)
-              .textTheme
-              .headline4
-              .copyWith(color: Colors.white),
-        ),
-        titleTextStyle: Theme.of(context).textTheme.headline4,
-        bodyTextStyle: Theme.of(context).textTheme.headline6,
-        mainImage: Image.asset(
-          Images.Intro3,
-          fit: BoxFit.contain,
-        ),
-      ),
+    final List<Slide> pages = [
+      new Slide(
+       title: "MOONLIGHT",
+       description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
+       pathImage: Images.ShopLocalTOLogo,
+       backgroundImage: Images.Room6,
+     ),
+     new Slide(
+       title: "GOOGI",
+       description: "Ye indulgence unreserved connection alteration appearance",
+       pathImage: Images.ShopLocalTOLogo,
+       backgroundImage: Images.Room5,
+     ),
+    new Slide(
+       title: "fITNESS",
+       description:
+       "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
+       pathImage: Images.ShopLocalTOLogo, 
+       backgroundImage: Images.Trip6,
+     ),
     ];
 
     ///Build Page
     return Scaffold(
-      body: IntroViewsFlutter(
-        pages,
-        onTapSkipButton: _onCompleted,
-        onTapDoneButton: _onCompleted,
-        pageButtonTextStyles:
-            Theme.of(context).textTheme.button.copyWith(color: Colors.white),
-      ),
+      body: IntroSlider(
+     onSkipPress: ()=> _onCompleted(),
+     slides: pages,
+     onDonePress: ()=>_onCompleted(),
+   )
     );
   }
 }
+

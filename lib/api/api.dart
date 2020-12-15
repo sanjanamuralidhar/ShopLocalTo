@@ -17,6 +17,13 @@ class Api {
     return ResultApiModel.fromJson(result);
   }
 
+  //SignUp api
+  static Future<dynamic> signup({String email, String password, String phone, String location}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await UtilAsset.loadJson("assets/data/signup.json");
+    return ResultApiModel.fromJson(result);
+  }
+
   ///Validate token valid
   static Future<dynamic> validateToken() async {
     await Future.delayed(Duration(seconds: 1));

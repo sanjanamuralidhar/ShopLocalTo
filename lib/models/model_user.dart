@@ -9,6 +9,9 @@ class UserModel {
   final String tag;
   final double rate;
   final String token;
+  final String email;
+  final String phone;
+  final String location;
 
   UserModel(
     this.id,
@@ -21,6 +24,9 @@ class UserModel {
     this.tag,
     this.rate,
     this.token,
+    this.email,
+    this.location,
+    this.phone
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -35,6 +41,9 @@ class UserModel {
       json['tag'] as String ?? 'Unknown',
       json['rate'] as double ?? 0.0,
       json['token'] as String ?? 'Unknown',
+      json['email'] as String ?? 'Unknown',
+      json['phone'] as String ?? 'Unknown',
+      json['location'] as String ?? 'Unknown',
     );
   }
 
@@ -50,6 +59,9 @@ class UserModel {
       'tag': tag,
       'rate': rate,
       'token': token,
+      'email': email,
+      'phone':phone,
+      'location': location
     };
   }
 }

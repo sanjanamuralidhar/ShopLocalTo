@@ -24,6 +24,7 @@ class _SignInState extends State<SignIn> {
   bool _showPassword = false;
   String _validID;
   String _validPass;
+  bool setlogin=true;
 
   @override
   void initState() {
@@ -49,19 +50,16 @@ class _SignInState extends State<SignIn> {
     setState(() {
       _validID = UtilValidator.validate(data: _textIDController.text);
       _validPass = UtilValidator.validate(data: _textPassController.text);
+      print(_validPass);
     });
     if (_validID == null && _validPass == null) {
       _loginBloc.add(OnLogin(
         username: _textIDController.text,
         password: _textPassController.text,
-      ));
+      )
+      );
+      print(_validPass);
     }
-  //   Navigator.push(
-  //   context,
-  //   MaterialPageRoute(builder: (context) => IntroPreview()),
-  // );
-    Navigator.pushNamed(context, Routes.introSlider);
-
   }
 
   ///On show message fail
@@ -152,6 +150,7 @@ class _SignInState extends State<SignIn> {
                   },
                   onSubmitted: (text) {
                     _login();
+                    print(setlogin);
                   },
                   onTapIcon: () {
                     setState(() {
@@ -179,6 +178,7 @@ class _SignInState extends State<SignIn> {
                       child: AppButton(
                         onPressed: () {
                           _login();
+                           print(setlogin);
                         },
                         text: Translate.of(context).translate('Login'),
                         loading: login is LoginLoading,

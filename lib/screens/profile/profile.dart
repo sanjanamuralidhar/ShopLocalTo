@@ -20,6 +20,7 @@ class Profile extends StatefulWidget {
 class _ProfileState extends State<Profile> {
   LoginBloc _loginBloc;
   ProfilePageModel _profilePage;
+  bool setProfile = true;
 
   @override
   void initState() {
@@ -186,6 +187,7 @@ class _ProfileState extends State<Profile> {
                   return AppButton(
                     onPressed: () {
                       _logout();
+                      print(setProfile);
                     },
                     text: Translate.of(context).translate('sign_out'),
                     loading: login is LoginLoading,

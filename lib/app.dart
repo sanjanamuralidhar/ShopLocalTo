@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:listar_flutter/blocs/bloc.dart';
+import 'package:listar_flutter/blocs/signUp/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/main_navigation.dart';
+import 'package:listar_flutter/screens/IntroSlider/Introslider.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/utils.dart';
 
@@ -21,6 +23,7 @@ class _AppState extends State<App> {
   AuthBloc _authBloc;
   LoginBloc _loginBloc;
   SearchBloc _searchBloc;
+  SignUpBloc _signUpBloc;
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _AppState extends State<App> {
     _themeBloc = ThemeBloc();
     _authBloc = AuthBloc();
     _loginBloc = LoginBloc(authBloc: _authBloc);
+    _signUpBloc = SignUpBloc(authBloc: _authBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
       themeBloc: _themeBloc,
@@ -45,6 +49,7 @@ class _AppState extends State<App> {
     _themeBloc.close();
     _authBloc.close();
     _loginBloc.close();
+    _signUpBloc.close();
     _searchBloc.close();
     super.dispose();
   }
@@ -67,6 +72,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<LoginBloc>(
           create: (context) => _loginBloc,
+        ),
+        BlocProvider<SignUpBloc>(
+          create: (context) => _signUpBloc,
         ),
         BlocProvider<SearchBloc>(
           create: (context) => _searchBloc,

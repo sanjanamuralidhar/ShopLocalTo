@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:listar_flutter/blocs/signUp/bloc.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -26,7 +28,7 @@ class _SignUpState extends State<SignUp> {
   final _focusPhone = FocusNode();
   final _focusLocation = FocusNode();
 
-  bool _loading = false;
+
   bool _showPassword = false;
   String _validID;
   String _validPass;
@@ -34,6 +36,18 @@ class _SignUpState extends State<SignUp> {
   String _validPhone;
   String _validLocation;
 
+  SignUpBloc _signUpBloc;
+
+  void initState() {
+    _signUpBloc = BlocProvider.of<SignUpBloc>(context);
+    _textIDController.text = "test";
+    _textPassController.text = "123456";
+    _textEmailController.text = "test@gmail.com";
+    _textPhoneController.text = "56787689";
+     _textLocationController.text = "testlocation";
+
+    super.initState();
+  }
   ///On sign up
   void _signUp() {
     setState(() {
@@ -45,16 +59,31 @@ class _SignUpState extends State<SignUp> {
       );
       _validEmail = UtilValidator.validate(
         data: _textEmailController.text,
-        type: Type.email,
+        // type: Type.email,
       );
       _validPhone = UtilValidator.validate(
-          data: _textPhoneController.text, type: Type.phone);
+          data: _textPhoneController.text, 
+          // type: Type.phone
+          );
       _validLocation = UtilValidator.validate(
-          data: _textLocationController.text, type: Type.location);
+          data: _textLocationController.text, 
+          // type: Type.location
+          );
+          print(_validEmail);
+          // needed to navigate to signin page
     },
     );
    
-    if (_validID == null && _validPass == null && _validEmail == null) {
+    if (_validID == null && _validPass == null && _validEmail == null && _validPhone == null && 
+    _validLocation ==null ) {
+      _signUpBloc.add(OnSignUp(
+        email: _textIDController.text,
+        password: _textPassController.text,
+        phone: _textEmailController.text,
+        location: _textLocationController.text,
+      )
+      );
+      print(_validEmail);
     }
   }
 
@@ -123,8 +152,7 @@ class _SignUpState extends State<SignUp> {
                     });
                   },
                   onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(
-                        context, _focusPass, _focusEmail);
+                    _signUp();
                   },
                   onTapIcon: () {
                     setState(() {
@@ -197,15 +225,35 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                AppButton(
-                  onPressed: () {
-                    _signUp();
-                     Navigator.pushNamed(context, Routes.success);
+                BlocBuilder<SignUpBloc, SignUpState>(
+                  builder: (context, signup) {
+                    return BlocListener<SignUpBloc, SignUpState>(
+                      listener: (context, loginListener) {
+                        if (loginListener is SignUpFail) {
+                          print("signup failed");
+                           Navigator.of(context).pop();
+                        }
+                      },
+                      child: AppButton(
+                        onPressed: () {
+                          _signUp();
+                        },
+                        text: Translate.of(context).translate('sign_up'),
+                        loading: signup is SignUpLoading,
+                        disableTouchWhenLoading: true,
+                      ),
+                    );
                   },
-                  text: Translate.of(context).translate('sign_up'),
-                  loading: _loading,
-                  disableTouchWhenLoading: true,
                 ),
+                // AppButton(
+                //   onPressed: () {
+                //     _signUp();
+                //     //  Navigator.pushNamed(context, Routes.success);
+                //   },
+                //   text: Translate.of(context).translate('sign_up'),
+                //   loading: _loading,
+                //   disableTouchWhenLoading: true,
+                // ),
                 SizedBox(
                   height: 30,
                 ),

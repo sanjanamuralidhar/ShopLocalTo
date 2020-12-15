@@ -1,0 +1,28 @@
+1.A problem occurred evaluating project ':app'. > path may not be null or empty string. path='null'
+ans.flutter/android/app/build gradle
+signingConfigs {
+       release {
+           keyAlias keystoreProperties['keyAlias']
+           keyPassword keystoreProperties['keyPassword']
+           storeFile keystoreProperties['storeFile'] ? file(keystoreProperties['storeFile']) : null
+           storePassword keystoreProperties['storePassword']
+       }
+}
+2.apk build failure due to version miss match /(flutter app created using version older than 1.12)
+ans.https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects#add-to-app-migration
+follow this steps 3,4,5 https://github.com/flutter/flutter/wiki/Upgrading-pre-1.12-Android-projects#add-to-app-migration
+3.Execution failed for task ':app:validateSigningRelease'.
+> Keystore file 'E:\Flutter Workshop\ShopLocalTo\android\app\Users\hanbiro\Documents\HUYNH\PassionUI\flutter-listar\source\android\keystore.jks' 
+not found for signing config 'release'.
+ans.modified key.properties file with
+
+storePassword=123456
+keyPassword=123456
+keyAlias=key
+storeFile=/E:/Flutter Workshop/ShopLocalTo/android/keystore.jks
+instead of this
+
+storePassword=123456
+keyPassword=123456
+keyAlias=key
+storeFile=D:\flutterapps\testapp\key.jks
