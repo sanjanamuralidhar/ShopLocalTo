@@ -38,7 +38,7 @@ class _SplashScreenState extends State<SplashScreen> {
       DeviceOrientation.portraitUp,
     ]);
 
-    _controller = VideoPlayerController.asset(Videos.Background);
+    _controller = VideoPlayerController.asset(Videos.Background1);
     _controller.initialize().then((_) {
       _controller.setLooping(true);
       Timer(Duration(milliseconds: 100), () {

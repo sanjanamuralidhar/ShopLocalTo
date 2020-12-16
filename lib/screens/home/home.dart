@@ -326,23 +326,19 @@ _checkLocation();
         ),
         actions: <Widget>[
           TextButton(
-            child: Text('Continue'),
+            child: Text('Continue',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
           TextButton(
-            child: Text('Cancel'),
+            child: Text('Cancel',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
             onPressed: () {
               Navigator.of(context).pop();
             },
           ),
         ],
       )
-          // AlertDialog(
-          //   title: Text("Wifi"),
-          //   content: Text("Wifi not detected. Please activate it."),
-          // )
       );
   }
 }
