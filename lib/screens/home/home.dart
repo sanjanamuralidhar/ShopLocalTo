@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
@@ -20,13 +21,25 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   HomePageModel _homePage;
+   bool _tryAgain = false;
 
   @override
   void initState() {
     _loadData();
+_checkLocation();
     super.initState();
   }
-
+    _checkLocation() async {
+      // the method below returns a Future
+      var connectivityResult = await (new Connectivity().checkConnectivity());
+      bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
+      if (!connectedToWifi) {
+        _showAlert(context);
+      }
+      if (_tryAgain != !connectedToWifi) {
+        setState(() => _tryAgain = !connectedToWifi);
+      }
+    }
   ///On select category
   void _onTapService(CategoryModel item) {
     switch (item.type) {
@@ -297,5 +310,39 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+    void _showAlert(BuildContext context) {
+      showDialog(
+          context: context,
+          builder: (context) =>  AlertDialog(
+        title: Text('Confirmation'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Are you in "XYZ"? location'),
+              Text('Would you like to change the location to “XYZ” or continue with ABC'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Continue'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Cancel'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      )
+          // AlertDialog(
+          //   title: Text("Wifi"),
+          //   content: Text("Wifi not detected. Please activate it."),
+          // )
+      );
   }
 }

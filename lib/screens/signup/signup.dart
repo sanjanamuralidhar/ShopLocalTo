@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listar_flutter/configs/image.dart';
-import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';

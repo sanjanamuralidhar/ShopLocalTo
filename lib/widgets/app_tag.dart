@@ -159,7 +159,7 @@ class AppTag extends StatelessWidget {
               borderRadius: BorderRadius.all(
                 Radius.circular(10),
               ),
-              color: Theme.of(context).dividerColor,
+              color: Theme.of(context).primaryColor,
             ),
             child: Container(
               child: Row(
@@ -175,7 +175,7 @@ class AppTag extends StatelessWidget {
                     style: Theme.of(context)
                         .textTheme
                         .caption
-                        .copyWith(color: Theme.of(context).accentColor),
+                        .copyWith(color: Theme.of(context).canvasColor),
                   )
                 ],
               ),

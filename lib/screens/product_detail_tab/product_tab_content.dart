@@ -390,7 +390,7 @@ class TabContent extends StatelessWidget {
                           icon: Icon(
                             UtilIcon.getIconData(item.icon),
                             size: 12,
-                            color: Theme.of(context).accentColor,
+                            color: Theme.of(context).canvasColor,
                           ),
                         ),
                       );

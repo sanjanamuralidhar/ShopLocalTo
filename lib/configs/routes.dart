@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:listar_flutter/screens/IntroSlider/Introslider.dart';
+import 'package:listar_flutter/screens/neighbourinfo/neighbourinfo.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/screens/success/success.dart';
 
@@ -32,6 +32,7 @@ class Routes {
   static const String setting = "/setting";
   static const String fontSetting = "/fontSetting";
   static const String chooseLocation = "/chooseLocation";
+  static const String neighbourInfo = "/neighbourhoodInfo";
 
   Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -48,12 +49,6 @@ class Routes {
             return Profile();
           },
         );
-
-      case introSlider:
-      return MaterialPageRoute(
-    builder: (context){
-      return IntroScreen();
-    });
 
       case signUp:
         return MaterialPageRoute(
@@ -175,6 +170,13 @@ class Routes {
           },
         );
 
+      case neighbourInfo:
+        return MaterialPageRoute(
+          builder: (context) {
+            return NeighbourInfo();
+          },
+        );
+
       case fontSetting:
         return MaterialPageRoute(
           builder: (context) {
@@ -230,6 +232,7 @@ class Routes {
             return ChooseLocation(location: location);
           },
         );
+
 
       default:
         return MaterialPageRoute(

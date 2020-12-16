@@ -791,7 +791,7 @@ class _ProductDetailState extends State<ProductDetail> {
                         icon: Icon(
                           UtilIcon.getIconData(item.icon),
                           size: 12,
-                          color: Theme.of(context).accentColor,
+                          color: Theme.of(context).canvasColor,
                         ),
                       ),
                     );

@@ -35,6 +35,7 @@ class HomePageModel {
       return ProductModel.fromJson(item);
     }).toList();
 
+
     return HomePageModel(
       listBanner,
       listCategory,

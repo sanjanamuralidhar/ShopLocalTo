@@ -5,7 +5,6 @@ import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/main_navigation.dart';
-import 'package:listar_flutter/screens/IntroSlider/Introslider.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/utils.dart';
 

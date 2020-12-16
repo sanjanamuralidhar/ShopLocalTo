@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
@@ -34,10 +35,13 @@ class _HomeSwipeState extends State<HomeSwipe> {
             padding: const EdgeInsets.all(20.0),
             child: Align(
               alignment: Alignment.topRight,
-              child: Icon(
-                Icons.info_outline,
-                color: Colors.white,
-                size: 30,
+              child: InkWell(
+                onTap: () =>  Navigator.pushNamed(context, Routes.neighbourInfo),
+                              child: Icon(
+                  Icons.info_outline,
+                  color: Colors.white,
+                  size: 30,
+                ),
               ),
             ),
           ),
