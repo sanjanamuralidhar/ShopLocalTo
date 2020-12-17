@@ -319,8 +319,8 @@ _checkLocation();
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('Are you in "XYZ"? location'),
-              Text('Would you like to change the location to “XYZ” or continue with ABC'),
+              Text('Are you in "Brampton"?'),
+              Text('Would you like to change the location to "Brampton" or continue with colarado'),
             ],
           ),
         ),

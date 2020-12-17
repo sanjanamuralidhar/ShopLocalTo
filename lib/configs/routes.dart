@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:listar_flutter/screens/neighbourinfo/neighbourinfo.dart';
+import 'package:listar_flutter/screens/neighbourinfo/neighbourInfoPage.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/screens/success/success.dart';
 
@@ -76,6 +76,13 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             return ProductDetail(id: id);
+          },
+        );
+
+      case neighbourInfo:
+        return MaterialPageRoute(
+          builder: (context) {
+            return NeighbourhoodPage();
           },
         );
 
@@ -170,12 +177,7 @@ class Routes {
           },
         );
 
-      case neighbourInfo:
-        return MaterialPageRoute(
-          builder: (context) {
-            return NeighbourInfo();
-          },
-        );
+      
 
       case fontSetting:
         return MaterialPageRoute(
