@@ -32,11 +32,13 @@ class _HomeSwipeState extends State<HomeSwipe> {
             // Navigate to neighbourhood information page
           },
                   child: Padding(
-            padding: const EdgeInsets.all(20.0),
+            padding: const EdgeInsets.only(top: 25,right:20),
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                onTap: () =>  Navigator.pushNamed(context, Routes.neighbourInfo),
+                onTap: () => Navigator.pushNamed(context, Routes.productDetail,arguments: 11) ,
+                //itemid should be the argument we will get it during login(location id)
+                // Navigator.pushNamed(context, Routes.neighbourInfo,arguments: "Brampton"),
                               child: Icon(
                   Icons.info_outline,
                   color: Colors.white,
@@ -47,7 +49,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top:20,left:10),
           child: Align(
               alignment: Alignment.topLeft,
               child: FlatButton(
@@ -64,7 +66,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
               )),
         ),
         Padding(
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.only(top: 20),
           child: Align(
             alignment: Alignment.topCenter,
             child: Switch(
@@ -79,7 +81,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 24, left: 210),
+          padding: const EdgeInsets.only(top: 35, left: 210),
           child: Text("10 km",
               style: Theme.of(context)
                   .textTheme

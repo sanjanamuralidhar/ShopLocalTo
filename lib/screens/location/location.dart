@@ -36,7 +36,7 @@ class _LocationState extends State<Location> {
       infoWindow: InfoWindow(title: widget.location.name),
       onTap: () {},
     );
-
+print(widget.location.id.toString());
     setState(() {
       _initPosition = CameraPosition(
         target: LatLng(widget.location.lat, widget.location.long),

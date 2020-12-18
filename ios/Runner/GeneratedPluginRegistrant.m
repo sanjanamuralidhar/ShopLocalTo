@@ -28,6 +28,12 @@
 @import firebase_messaging;
 #endif
 
+#if __has_include(<flutter_keyboard_visibility/KeyboardVisibilityPlugin.h>)
+#import <flutter_keyboard_visibility/KeyboardVisibilityPlugin.h>
+#else
+@import flutter_keyboard_visibility;
+#endif
+
 #if __has_include(<google_maps_flutter/FLTGoogleMapsPlugin.h>)
 #import <google_maps_flutter/FLTGoogleMapsPlugin.h>
 #else
@@ -59,6 +65,7 @@
   [FLTFirebaseAnalyticsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseAnalyticsPlugin"]];
   [FLTFirebaseCorePlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseCorePlugin"]];
   [FLTFirebaseMessagingPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTFirebaseMessagingPlugin"]];
+  [FLTKeyboardVisibilityPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTKeyboardVisibilityPlugin"]];
   [FLTGoogleMapsPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTGoogleMapsPlugin"]];
   [FLTImagePickerPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTImagePickerPlugin"]];
   [FLTSharedPreferencesPlugin registerWithRegistrar:[registry registrarForPlugin:@"FLTSharedPreferencesPlugin"]];

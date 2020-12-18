@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/models/model_neighbour.dart';
 import 'package:listar_flutter/screens/home/home_swiper.dart';
 import 'package:listar_flutter/utils/utils.dart';
 
@@ -43,7 +44,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                     borderRadius: BorderRadius.circular(8),
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, Routes.searchHistory);
+                    // Navigator.pushNamed(context, Routes.searchHistory);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -58,28 +59,19 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: <Widget>[
-                            Expanded(
-                              child: Text(
-                                Translate.of(context).translate(
-                                  'search_location',
+
+                                                      Expanded(
+                                child: TextField(
+                              decoration: InputDecoration(
+                                  border: InputBorder.none,
+                                  hintText: 'Search Location'),
+                            )
                                 ),
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .subtitle2
-                                    .copyWith(fontWeight: FontWeight.w500),
-                              ),
-                            ),
 
                             VerticalDivider(),
-                            Icon(
-                              Icons.location_on,
-                              color: Theme.of(context).primaryColor,
-                            ),
-                             VerticalDivider(),
                             // added a dropdown for category selection @sanjana
                             DropPage(),
                             SizedBox(width: 10),
-                            
                           ],
                         ),
                       ),
@@ -103,10 +95,12 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }
+
 class DropPage extends StatefulWidget {
   @override
   _DropPageState createState() => _DropPageState();
 }
+
 // added a dropdown for category selection @sanjana
 class _DropPageState extends State<DropPage> {
   String dropdownValue = "All category";
@@ -140,4 +134,3 @@ class _DropPageState extends State<DropPage> {
     );
   }
 }
-

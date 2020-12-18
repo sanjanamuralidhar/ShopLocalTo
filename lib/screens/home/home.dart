@@ -280,7 +280,7 @@ _checkLocation();
                             children: <Widget>[
                               Text(
                                 Translate.of(context)
-                                    .translate('recent_location'),
+                                    .translate('Featured Shops'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6

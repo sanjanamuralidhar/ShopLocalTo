@@ -51,13 +51,14 @@
       { "id": 10, "image": "assets/images/location-5.jpg" }
     ],
     "service": [
-      { "icon": "wifi", "title": "Free Wifi" },
-      { "icon": "whatshot", "title": "Shower" },
-      { "icon": "pets", "title": "Pet Allowed" },
-      { "icon": "directions_bus", "title": "Shuttle Bus" },
-      { "icon": "shopping_cart", "title": "Supper Market" },
-      { "icon": "access_time", "title": "Open 24/7" }
+      { "icon": "wifi", "title": "Free Wifi","image": "assets/images/fb.png" },
+      { "icon": "whatshot", "title": "Shower","image": "assets/images/twit.png" },
+      { "icon": "pets", "title": "Pet Allowed", "image": "assets/images/insta.png" },
+      { "icon": "directions_bus", "title": "Shuttle Bus" ,"image": "assets/images/whats.png"},
+      { "icon": "shopping_cart", "title": "Supper Market" ,"image": "assets/images/link.png"},
+      { "icon": "access_time", "title": "Open 24/7" ,"image": "assets/images/vk.png"}
     ],
+   
     "feature": [
       {
         "id": 1,

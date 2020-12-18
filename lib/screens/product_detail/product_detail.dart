@@ -81,24 +81,60 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   ///Build banner UI
-  Widget _buildBanner() {
-    if (_detailPage?.product?.image == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Container(
-          color: Colors.white,
-        ),
-      );
-    }
+  // Widget _buildBanner() {
+  //   if (_detailPage?.product?.image == null) {
+  //     return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Container(
+  //         color: Colors.white,
+  //       ),
+  //     );
+  //   }
 
-    return Image.asset(
-      _detailPage?.product?.image,
+  //   return Image.asset(
+  //     _detailPage?.product?.image,
+  //     fit: BoxFit.cover,
+  //   );
+  // }
+Widget _buildBanner() {
+    return ListView(
+  scrollDirection: Axis.horizontal, // <-- Like so
+  children: <Widget>[
+    Container(
+      child: Image.asset(Images.Trip1,
+      // "assets/images/trip.png",
       fit: BoxFit.cover,
-    );
+    )),
+    Container(
+      child: Image.asset(Images.Trip2,
+      // "assets/images/trip1.png",
+      fit: BoxFit.cover,
+    )
+    ),
+    Container(
+      child: Image.asset(Images.Trip3,
+      // "assets/images/trip2.png",
+      fit: BoxFit.cover,
+    )
+    ),
+    Container(
+      child: Image.asset(Images.Trip4,
+      // "assets/images/trip3.png",
+      fit: BoxFit.cover,
+    )
+    ),
+    Container(
+      child: Image.asset(Images.Trip5,
+      // "assets/images/trip4.png",
+      fit: BoxFit.cover,
+    )
+    ),
+  ],
+);
+    
   }
-
   ///Build info
   Widget _buildInfo() {
     if (_detailPage == null) {
@@ -378,427 +414,19 @@ class _ProductDetailState extends State<ProductDetail> {
                     .copyWith(fontWeight: FontWeight.w600),
               ),
               IconButton(
-                icon: Icon(
-                  _like ? Icons.favorite : Icons.favorite_border,
-                  color: Theme.of(context).primaryColorLight,
-                ),
-                onPressed: _onLike,
-              )
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              InkWell(
-                onTap: _onReview,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      _detailPage?.product?.subtitle,
-                      style: Theme.of(context).textTheme.bodyText1,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 3),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AppTag(
-                          "${_detailPage?.product?.rate}",
-                          type: TagType.rateSmall,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        StarRating(
-                          rating: _detailPage?.product?.rate,
-                          size: 14,
-                          color: AppTheme.yellowColor,
-                          borderColor: AppTheme.yellowColor,
-                          onRatingChanged: (v) {
-                            _onReview();
-                          },
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          "(${_detailPage?.product?.numRate})",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ],
-                    )
-                  ],
-                ),
+                icon: Icon(Icons.location_on),
+                onPressed: _onLocation,
               ),
-              _detailPage?.product?.status != null
-                  ? AppTag(
-                      _detailPage?.product?.status,
-                      type: TagType.status,
-                    )
-                  : Container(),
+             
             ],
           ),
+         
           Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).dividerColor,
-                  ),
-                  child: Icon(
-                    Icons.location_on,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context).translate('address'),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(
-                        _detailPage?.product?.address,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Theme.of(context).dividerColor,
-                  ),
-                  child: Icon(
-                    Icons.phone,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context).translate('phone'),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(
-                        _detailPage?.product?.phone,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).dividerColor),
-                  child: Icon(
-                    Icons.email,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context).translate('email'),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(
-                        _detailPage?.product?.email,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Row(
-              children: <Widget>[
-                Container(
-                  width: 32,
-                  height: 32,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).dividerColor),
-                  child: Icon(
-                    Icons.language,
-                    color: Colors.white,
-                    size: 18,
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(left: 10, right: 10),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context).translate('website'),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(
-                        _detailPage?.product?.website,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
-          ),
-          InkWell(
-            onTap: () {
-              setState(() {
-                _showHour = !_showHour;
-              });
-            },
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Row(
-                    children: <Widget>[
-                      Container(
-                        width: 32,
-                        height: 32,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Theme.of(context).dividerColor,
-                        ),
-                        child: Icon(
-                          Icons.access_time,
-                          color: Colors.white,
-                          size: 18,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(left: 10, right: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: <Widget>[
-                            Text(
-                              Translate.of(context).translate('open_time'),
-                              style: Theme.of(context).textTheme.caption,
-                            ),
-                            Text(
-                              _detailPage?.product?.hour,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyText1
-                                  .copyWith(fontWeight: FontWeight.w600),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                Icon(
-                  _showHour
-                      ? Icons.keyboard_arrow_up
-                      : Icons.keyboard_arrow_down,
-                )
-              ],
-            ),
-          ),
-          Visibility(
-            visible: _showHour,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: _detailPage.product.hourDetail.map((item) {
-                return Container(
-                  decoration: BoxDecoration(
-                    border: Border(
-                      bottom: BorderSide(
-                        color: Theme.of(context).dividerColor,
-                        width: 1,
-                      ),
-                    ),
-                  ),
-                  margin: EdgeInsets.only(
-                    left: 42,
-                  ),
-                  padding: EdgeInsets.only(
-                    top: 10,
-                    bottom: 10,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context).translate(item.title),
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(
-                        item.title == 'day_off'
-                            ? Translate.of(context).translate('day_off')
-                            : item.title,
-                        style: Theme.of(context).textTheme.caption.copyWith(
-                            color: Theme.of(context).accentColor,
-                            fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                );
-              }).toList(),
-            ),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20),
+            padding: EdgeInsets.only(top: 10),
           ),
           Text(
             _detailPage?.product?.description,
             style: Theme.of(context).textTheme.bodyText1.copyWith(height: 1.3),
-          ),
-          Padding(
-            padding: EdgeInsets.only(top: 20, bottom: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Text(
-                      Translate.of(context).translate('date_established'),
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 3),
-                      child: Text(
-                        _detailPage?.product?.date,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    )
-                  ],
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: <Widget>[
-                    Text(
-                      Translate.of(context).translate('price_range'),
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 3),
-                      child: Text(
-                        _detailPage?.product?.priceRange,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    )
-                  ],
-                )
-              ],
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.only(top: 10, bottom: 20),
-            decoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                ),
-                bottom: BorderSide(
-                  color: Theme.of(context).dividerColor,
-                ),
-              ),
-            ),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(bottom: 10),
-                  child: Text(
-                    Translate.of(context).translate('facilities'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: _detailPage.product.service.map((item) {
-                    return IntrinsicWidth(
-                      child: AppTag(
-                        item.title,
-                        type: TagType.chip,
-                        icon: Icon(
-                          UtilIcon.getIconData(item.icon),
-                          size: 12,
-                          color: Theme.of(context).canvasColor,
-                        ),
-                      ),
-                    );
-                  }).toList(),
-                ),
-              ],
-            ),
           ),
         ],
       ),
@@ -869,7 +497,7 @@ class _ProductDetailState extends State<ProductDetail> {
           Padding(
             padding: EdgeInsets.only(bottom: 15),
             child: Text(
-              Translate.of(context).translate('related'),
+              Translate.of(context).translate('Ordinary Listings'),
               style: Theme.of(context)
                   .textTheme
                   .headline6
@@ -902,14 +530,11 @@ class _ProductDetailState extends State<ProductDetail> {
             expandedHeight: 200.0,
             pinned: true,
             actions: <Widget>[
-              IconButton(
-                icon: Icon(Icons.map),
-                onPressed: _onLocation,
-              ),
-              IconButton(
-                icon: Icon(Icons.photo_library),
-                onPressed: _onPhotoPreview,
-              )
+              
+              // IconButton(
+              //   icon: Icon(Icons.photo_library),
+              //   onPressed: _onPhotoPreview,
+              // )
             ],
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
@@ -923,14 +548,6 @@ class _ProductDetailState extends State<ProductDetail> {
                 padding: EdgeInsets.only(top: 15, bottom: 15),
                 child: Column(
                   children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.only(left: 20, right: 20),
-                      child: AppUserInfo(
-                        user: _detailPage?.product?.author,
-                        onPressed: () {},
-                        type: AppUserType.basic,
-                      ),
-                    ),
                     _buildInfo(),
                     _buildFeature(),
                     _buildRelated()

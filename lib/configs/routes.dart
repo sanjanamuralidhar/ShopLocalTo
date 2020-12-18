@@ -29,6 +29,7 @@ class Routes {
   static const String review = "/review";
   static const String writeReview = "/writeReview";
   static const String location = "/location";
+  static const String neighbourLocation = "/neighbourLocation";
   static const String setting = "/setting";
   static const String fontSetting = "/fontSetting";
   static const String chooseLocation = "/chooseLocation";
@@ -79,10 +80,18 @@ class Routes {
           },
         );
 
+      // case neighbourInfo:
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return NeighbourhoodPage();
+      //     },
+      //   );
+
       case neighbourInfo:
+        final category = settings.arguments;
         return MaterialPageRoute(
           builder: (context) {
-            return NeighbourhoodPage();
+            return NeighbourhoodPage(title: category);
           },
         );
 
@@ -199,6 +208,12 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) => Location(
             location: location,
+          ),
+        );
+
+      case neighbourLocation:
+        return MaterialPageRoute(
+          builder: (context) => Location(
           ),
         );
 

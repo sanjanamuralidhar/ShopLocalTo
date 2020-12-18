@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
@@ -351,6 +352,63 @@ class TabContent extends StatelessWidget {
             ),
           ),
         );
+      case 'socialmedia':
+        return Container(
+          key: item.keyContentItem,
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Container(
+            decoration: BoxDecoration(
+              border: Border(
+                bottom: BorderSide(
+                  color: Theme.of(context).dividerColor,
+                ),
+              ),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(bottom: 15, top: 15),
+                  child: Text(
+                    Translate.of(context).translate('Social Media'),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Wrap(spacing: 10, runSpacing: 10, 
+                  children: page.product.service.map((item) {
+                    return IntrinsicWidth(
+                        child: SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Material(
+                          type: MaterialType
+                              .transparency,
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.blue[800],
+                            ),
+                            child: InkWell(
+                                onTap: () {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Image.asset(item.image),
+                                )
+                                ),
+                          )),
+                    ));
+                     }).toList(),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
 
       case 'facilities':
         return Container(
@@ -525,7 +583,7 @@ class TabContent extends StatelessWidget {
                 Padding(
                   padding: EdgeInsets.only(top: 15, bottom: 15),
                   child: Text(
-                    Translate.of(context).translate('related'),
+                    Translate.of(context).translate('Ordinary Listing'),
                     style: Theme.of(context)
                         .textTheme
                         .headline6

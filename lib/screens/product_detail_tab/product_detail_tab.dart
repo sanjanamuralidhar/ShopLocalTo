@@ -220,7 +220,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
             pinned: true,
             actions: <Widget>[
               IconButton(
-                icon: Icon(Icons.map),
+                icon: Icon(Icons.location_on),
                 onPressed: _onLocation,
               ),
               IconButton(

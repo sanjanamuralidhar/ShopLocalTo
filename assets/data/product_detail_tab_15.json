@@ -19,10 +19,11 @@
     "price_range": "$46.00 to $93.00",
     "tab": [
       { "id": 1, "title": "information", "key": "information" },
-      { "id": 2, "title": "facilities", "key": "facilities" },
-      { "id": 3, "title": "featured", "key": "featured" },
-      { "id": 4, "title": "nearly", "key": "nearly" },
-      { "id": 5, "title": "related", "key": "related" }
+      { "id": 2, "title": "socialmedia", "key": "socialmedia"},
+      { "id": 3, "title": "facilities", "key": "facilities" },
+      { "id": 4, "title": "featured", "key": "featured" },
+      { "id": 5, "title": "nearly", "key": "nearly" },
+      { "id": 6, "title": "ordinary", "key": "related" }
     ],
     "author": {
       "id": 1,
@@ -57,12 +58,12 @@
       { "id": 10, "image": "assets/images/location-5.jpg" }
     ],
     "service": [
-      { "icon": "wifi", "title": "Free Wifi" },
-      { "icon": "whatshot", "title": "Shower" },
-      { "icon": "pets", "title": "Pet Allowed" },
-      { "icon": "directions_bus", "title": "Shuttle Bus" },
-      { "icon": "shopping_cart", "title": "Supper Market" },
-      { "icon": "access_time", "title": "Open 24/7" }
+      { "icon": "wifi", "title": "Free Wifi" , "image": "assets/images/fb.png"},
+      { "icon": "whatshot", "title": "Shower" ,"image": "assets/images/twit.png"},
+      { "icon": "pets", "title": "Pet Allowed" ,"image": "assets/images/insta.png"},
+      { "icon": "directions_bus", "title": "Shuttle Bus" ,"image": "assets/images/whats.png"},
+      { "icon": "shopping_cart", "title": "Supper Market" ,"image": "assets/images/link.png"},
+      { "icon": "access_time", "title": "Open 24/7" ,"image": "assets/images/vk.png"}
     ],
     "feature": [
       {
