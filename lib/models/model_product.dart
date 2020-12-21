@@ -41,6 +41,7 @@ class ProductModel {
   final LocationModel location;
   final UserModel author;
   final ProductType type;
+  final List<SocialIcon> socialicon; 
 
   ProductModel(
     this.id,
@@ -70,6 +71,7 @@ class ProductModel {
     this.location,
     this.author,
     this.type,
+    this.socialicon,
   );
 
   static List<HourModel> _setHourDetail(hour) {
@@ -136,6 +138,16 @@ class ProductModel {
     return null;
   }
 
+  static List<SocialIcon> _setSocial(socialicon) {
+    if (socialicon != null) {
+      final Iterable refactorSocial = socialicon;
+      return refactorSocial.map((item) {
+        return SocialIcon.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+
   static ProductType _setType(String type) {
     switch (type) {
       case 'hotel':
@@ -188,6 +200,8 @@ class ProductModel {
       _setLocation(json['location']),
       _setAuthor(json['author']),
       _setType(json['type']),
+      _setSocial(json['socialicon']),
+      
     );
   }
 }

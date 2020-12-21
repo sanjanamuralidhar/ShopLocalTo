@@ -1,0 +1,23 @@
+// Padding(
+                    //   padding: EdgeInsets.all(10),
+                    //   child: IntrinsicHeight(
+                    //     child: Row(
+                    //       crossAxisAlignment: CrossAxisAlignment.center,
+                    //       children: <Widget>[
+
+                    //                                   Expanded(
+                    //             child: TextField(
+                    //           decoration: InputDecoration(
+                    //               border: InputBorder.none,
+                    //               hintText: 'Search Location'),
+                    //         )
+                    //             ),
+
+                    //         VerticalDivider(),
+                    //         // added a dropdown for category selection @sanjana
+                    //         DropPage(),
+                    //         SizedBox(width: 10),
+                    //       ],
+                    //     ),
+                    //   ),
+                    // ),

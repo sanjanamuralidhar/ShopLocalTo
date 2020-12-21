@@ -103,7 +103,7 @@ class _SignUpState extends State<SignUp> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Image.asset(Images.ShopLocalTOLogo, width: 300, height: 200),
+                Image.asset(Images.ShopLocalTOLogo, width: 250, height: 150),
                 SizedBox(
                   height: 30,
                 ),
@@ -256,8 +256,8 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 30,
                 ),
-                Image.asset(Images.INDigitalLOGO_logo_large,
-                    width: 100, height: 100),
+                // Image.asset(Images.INDigitalLOGO_logo_large,
+                    // width: 100, height: 100),
               ],
             ),
           ),

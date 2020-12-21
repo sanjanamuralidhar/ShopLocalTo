@@ -2,11 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
+import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/models/model_logo.dart';
+import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 
 class SignIn extends StatefulWidget {
-  SignIn({Key key}) : super(key: key);
+  final IconModel item;
+  final ProductDetailTabPageModel page;
+  SignIn({Key key, this.item, this.page}) : super(key: key);
 
   @override
   _SignInState createState() {
@@ -24,7 +29,7 @@ class _SignInState extends State<SignIn> {
   bool _showPassword = false;
   String _validID;
   String _validPass;
-  bool setlogin=true;
+  bool setlogin = true;
 
   @override
   void initState() {
@@ -56,8 +61,7 @@ class _SignInState extends State<SignIn> {
       _loginBloc.add(OnLogin(
         username: _textIDController.text,
         password: _textPassController.text,
-      )
-      );
+      ));
       print(_validPass);
     }
   }
@@ -106,8 +110,8 @@ class _SignInState extends State<SignIn> {
           child: SingleChildScrollView(
             child: Column(
               children: <Widget>[
-                Image.asset(Images.ShopLocalTOLogo,width: 300, height: 200),
-                SizedBox(height:30),
+                Image.asset(Images.ShopLocalTOLogo, width: 250, height: 150),
+                SizedBox(height: 30),
                 AppTextInput(
                   hintText: Translate.of(context).translate('account'),
                   errorText: _validID != null
@@ -178,7 +182,7 @@ class _SignInState extends State<SignIn> {
                       child: AppButton(
                         onPressed: () {
                           _login();
-                           print(setlogin);
+                          print(setlogin);
                         },
                         text: Translate.of(context).translate('Login'),
                         loading: login is LoginLoading,
@@ -187,41 +191,108 @@ class _SignInState extends State<SignIn> {
                     );
                   },
                 ),
-                SizedBox(height:10),
+                SizedBox(height: 20),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40,right:30),
+                  padding: const EdgeInsets.only(left: 40, right: 30),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Text('No Account?'),
-                        FlatButton(
-                          onPressed: _signUp,
-                          height: 10,
-                          child: Text(
-                            Translate.of(context).translate('Signup for free'),
-                          ),
-                        ),
+                        Material(
+                            type: MaterialType.transparency,
+                            child: InkWell(
+                                onTap:_signUp,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                      Translate.of(context)
+                                          .translate('sign_up'),
+                                      style: TextStyle(
+                                          color: Colors.lightBlueAccent,
+                                          fontSize: 15)),
+                                ))),
                       ]),
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 40,right:30),
+                  padding: const EdgeInsets.only(left: 40, right: 30),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         Translate.of(context).translate('forgot you password?'),
                       ),
-                      FlatButton(
-                        height: 10,
-                        onPressed: _forgotPassword,
-                        child: Text(
-                          Translate.of(context).translate('Reset'),
-                        ),
-                      )
+                      Material(
+                          type: MaterialType.transparency,
+                          child: InkWell(
+                              onTap:_forgotPassword,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  Translate.of(context).translate('Reset'),
+                                  style: TextStyle(
+                                      color: Colors.lightBlueAccent,
+                                      fontSize: 15),
+                                ),
+                              ))),
                     ],
                   ),
                 ),
-                Image.asset(Images.INDigitalLOGO_logo_large,width: 100, height: 100)
+                Text(
+                                  Translate.of(context).translate('Or'),
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height:10),
+                                // Row(
+                                //   mainAxisAlignment: MainAxisAlignment.center,
+                                //   crossAxisAlignment: CrossAxisAlignment.center,
+                                //   children: [
+                                //  SizedBox(
+                                //    width:90,
+                                //    height:40,
+                                //    child: Material(
+                                //                   type: MaterialType.transparency,
+                                //                   child: Ink(
+                                //                     decoration: BoxDecoration(
+                                //                       borderRadius:
+                                //                           BorderRadius.circular(
+                                //                               10),
+                                //                       color: Theme.of(context).buttonColor,
+                                //                     ),
+                                //                     child: InkWell(
+                                //                         onTap: () {},
+                                //                         child: Padding(
+                                //                           padding:
+                                //                               const EdgeInsets
+                                //                                   .all(8.0),
+                                //                           child: Image.asset("assets/socialicons/facebook.png"),
+                                //                         )),
+                                //                   )),
+                                //  ),
+                                //  SizedBox(width:10),
+                                //                  SizedBox(
+                                //                    width:90,
+                                //                    height:40,
+                                //                    child: Material(
+                                //                 type: MaterialType.transparency,
+                                //                 child: Ink(
+                                //                     decoration: BoxDecoration(
+                                //                       borderRadius:
+                                //                           BorderRadius.circular(
+                                //                               10),
+                                //                       color: Theme.of(context).buttonColor,
+                                //                     ),
+                                //                     child: InkWell(
+                                //                         onTap: () {},
+                                //                         child: Padding(
+                                //                           padding:
+                                //                               const EdgeInsets
+                                //                                   .all(8.0),
+                                //                           child: Image.asset("assets/socialicons/instagram.png"),
+                                //                         )),
+                                //                 )),
+                                //                  ),
+                                // ],),
+                // Image.asset(Images.INDigitalLOGO_logo_large,width: 100, height: 100)
               ],
             ),
           ),

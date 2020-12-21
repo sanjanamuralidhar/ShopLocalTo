@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <application
-        android:label="ShopLocaleTo"
+        android:label="ShopLocalTo"
         android:icon="@mipmap/shop">
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="AIzaSyBRB5_8rkANX4dYFkqQ8hIDE60ELN4TCt8"/>

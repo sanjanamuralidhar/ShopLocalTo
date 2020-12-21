@@ -14,3 +14,4 @@ export 'model_tab.dart';
 export 'model_tag.dart';
 export 'model_theme.dart';
 export 'model_user.dart';
+export 'model_social.dart';

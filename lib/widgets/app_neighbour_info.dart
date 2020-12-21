@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
-import 'package:listar_flutter/models/model_neighbour.dart';
+import 'package:listar_flutter/models/model_shops.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -15,7 +15,7 @@ class AppNeighbourItem extends StatelessWidget {
     this.type,
   }) : super(key: key);
 
-  final NeighbourModel item;
+  final ShopModel item;
   final ProductViewType type;
   final Function(ProductModel) onPressed;
 

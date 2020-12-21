@@ -156,22 +156,59 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   }
 
   ///Build banner UI
-  Widget _buildBanner() {
-    if (_page?.product?.image == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Container(
-          color: Colors.white,
-        ),
-      );
-    }
+  // Widget _buildBanner() {
+  //   if (_page?.product?.image == null) {
+  //     return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Container(
+  //         color: Colors.white,
+  //       ),
+  //     );
+  //   }
 
-    return Image.asset(
-      _page?.product?.image,
+  //   return Image.asset(
+  //     _page?.product?.image,
+  //     fit: BoxFit.cover,
+  //   );
+  // }
+  Widget _buildBanner() {
+    return ListView(
+  scrollDirection: Axis.horizontal, // <-- Like so
+  children: <Widget>[
+    Container(
+      child: Image.asset(Images.Trip1,
+      // "assets/images/trip.png",
       fit: BoxFit.cover,
-    );
+    )),
+    Container(
+      child: Image.asset(Images.Trip2,
+      // "assets/images/trip1.png",
+      fit: BoxFit.cover,
+    )
+    ),
+    Container(
+      child: Image.asset(Images.Trip3,
+      // "assets/images/trip2.png",
+      fit: BoxFit.cover,
+    )
+    ),
+    Container(
+      child: Image.asset(Images.Trip4,
+      // "assets/images/trip3.png",
+      fit: BoxFit.cover,
+    )
+    ),
+    Container(
+      child: Image.asset(Images.Trip5,
+      // "assets/images/trip4.png",
+      fit: BoxFit.cover,
+    )
+    ),
+  ],
+);
+    
   }
 
   ///Build Tab Content UI
@@ -223,10 +260,10 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
                 icon: Icon(Icons.location_on),
                 onPressed: _onLocation,
               ),
-              IconButton(
-                icon: Icon(Icons.photo_library),
-                onPressed: _onPhotoPreview,
-              )
+              // IconButton(
+              //   icon: Icon(Icons.photo_library),
+              //   onPressed: _onPhotoPreview,
+              // )
             ],
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,

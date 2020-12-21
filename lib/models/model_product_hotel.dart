@@ -24,13 +24,14 @@ class HotelProductModel extends ProductModel {
       String date,
       String priceRange,
       List<HourModel> hourDetail,
-      List<IconModel> service,
+      List<SocialIcon> socialicon,
       List<ImageModel> photo,
       List<ProductModel> feature,
       List<ProductModel> related,
       LocationModel location,
       UserModel author,
       ProductType type,
+      List<IconModel> service,
       this.nearly)
       : super(
           id,
@@ -60,6 +61,7 @@ class HotelProductModel extends ProductModel {
           location,
           author,
           type,
+          socialicon,
         );
 
   static List<HourModel> _setHourDetail(hour) {
@@ -77,6 +79,16 @@ class HotelProductModel extends ProductModel {
       final Iterable refactorService = icon;
       return refactorService.map((item) {
         return IconModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+
+   static List<SocialIcon> _setSocial(socialicon) {
+    if (socialicon != null) {
+      final Iterable refactorSocial = socialicon;
+      return refactorSocial.map((item) {
+        return SocialIcon.fromJson(item);
       }).toList();
     }
     return null;
@@ -136,6 +148,8 @@ class HotelProductModel extends ProductModel {
     return null;
   }
 
+ 
+
   static ProductType _setType(String type) {
     switch (type) {
       case 'hotel':
@@ -181,14 +195,16 @@ class HotelProductModel extends ProductModel {
       json['date'] as String ?? 'Unknown',
       json['price_range'] as String ?? 'Unknown',
       _setHourDetail(json['hour_detail']),
-      _setService(json['service']),
+      _setSocial(json['socialicon']),
       _setPhoto(json['photo']),
       _setFeature(json['feature']),
       _setRelated(json['related']),
       _setLocation(json['location']),
       _setAuthor(json['author']),
       _setType(json['type']),
+      _setService(json['service']),
       _setNearly(json['nearly']),
+      
     );
   }
 }

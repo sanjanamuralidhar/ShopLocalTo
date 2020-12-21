@@ -1,13 +1,25 @@
+import 'package:listar_flutter/configs/image.dart';
+
 class LogoModel {
-  final String image;
+  // List<NeighbourImages> images; 
+  int id;
+  String imageUrl;
 
-  LogoModel(
-    this.image,
-  );
 
-  factory LogoModel.fromJson(Map<String, dynamic> json) {
-    return LogoModel(
-      json['logo'] as String ?? "Unknown",
-    );
-  }
+
+  LogoModel({
+    this.id,
+   this.imageUrl,
+  });
 }
+
+List<LogoModel> logos = [
+  LogoModel(
+    id:1,
+    imageUrl: "assets/socialicons/facebook.png",
+    ),
+  LogoModel(
+    id:2,
+    imageUrl: "assets/socialicons/instagram.png",
+  ),
+];

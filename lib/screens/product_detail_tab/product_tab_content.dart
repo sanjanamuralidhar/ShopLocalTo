@@ -4,6 +4,7 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class TabContent extends StatelessWidget {
   final TabModel item;
@@ -19,6 +20,7 @@ class TabContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(page?.product?.phone);
     switch (item.key) {
       case 'information':
         return Container(
@@ -54,7 +56,7 @@ class TabContent extends StatelessWidget {
                         height: 32,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Theme.of(context).dividerColor,
+                          color: Theme.of(context).buttonColor,
                         ),
                         child: Icon(
                           Icons.location_on,
@@ -88,7 +90,7 @@ class TabContent extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {launch("tel:903 98027892");},
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -96,7 +98,7 @@ class TabContent extends StatelessWidget {
                         height: 32,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: Theme.of(context).dividerColor,
+                          color: Theme.of(context).buttonColor,
                         ),
                         child: Icon(
                           Icons.phone,
@@ -105,8 +107,10 @@ class TabContent extends StatelessWidget {
                         ),
                       ),
                       Padding(
+                        
                         padding: EdgeInsets.only(left: 10, right: 10),
                         child: Column(
+                          
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
                             Text(
@@ -114,23 +118,26 @@ class TabContent extends StatelessWidget {
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
+                              
                               page?.product?.phone,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
                                   .copyWith(fontWeight: FontWeight.w600),
                             ),
+                            
                           ],
                         ),
                       )
                     ],
                   ),
                 ),
+                
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {launch("mailto:liststar@passionui.com");},
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -138,7 +145,7 @@ class TabContent extends StatelessWidget {
                         height: 32,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Theme.of(context).dividerColor),
+                            color: Theme.of(context).buttonColor),
                         child: Icon(
                           Icons.email,
                           color: Colors.white,
@@ -171,7 +178,7 @@ class TabContent extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {},
+                  onTap: () {launch("https://passionui.com/");},
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -179,7 +186,7 @@ class TabContent extends StatelessWidget {
                         height: 32,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Theme.of(context).dividerColor),
+                            color: Theme.of(context).buttonColor),
                         child: Icon(
                           Icons.language,
                           color: Colors.white,
@@ -221,7 +228,7 @@ class TabContent extends StatelessWidget {
                             height: 32,
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
-                              color: Theme.of(context).dividerColor,
+                              color: Theme.of(context).buttonColor,
                             ),
                             child: Icon(
                               Icons.access_time,
@@ -383,8 +390,8 @@ class TabContent extends StatelessWidget {
                   children: page.product.service.map((item) {
                     return IntrinsicWidth(
                         child: SizedBox(
-                      height: 40,
-                      width: 40,
+                      height: 35,
+                      width: 35,
                       child: Material(
                           type: MaterialType
                               .transparency,
@@ -396,7 +403,7 @@ class TabContent extends StatelessWidget {
                             child: InkWell(
                                 onTap: () {},
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(8),
                                   child: Image.asset(item.image),
                                 )
                                 ),

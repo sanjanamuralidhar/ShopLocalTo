@@ -32,7 +32,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
             // Navigate to neighbourhood information page
           },
                   child: Padding(
-            padding: const EdgeInsets.only(top: 25,right:20),
+            padding: const EdgeInsets.only(top: 35,right:20),
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(
@@ -49,7 +49,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top:20,left:10),
+          padding: const EdgeInsets.only(top:30,left:10),
           child: Align(
               alignment: Alignment.topLeft,
               child: FlatButton(
@@ -66,7 +66,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
               )),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 20),
+          padding: const EdgeInsets.only(top: 30),
           child: Align(
             alignment: Alignment.topCenter,
             child: Switch(
@@ -81,12 +81,9 @@ class _HomeSwipeState extends State<HomeSwipe> {
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 35, left: 210),
+          padding: const EdgeInsets.only(top: 42, left: 210),
           child: Text("10 km",
-              style: Theme.of(context)
-                  .textTheme
-                  .subtitle1
-                  .copyWith(fontWeight: FontWeight.w500)),
+              style: TextStyle(color:Colors.white,fontSize: 17)),
         ),
       ],
     );
@@ -131,6 +128,11 @@ class _HomeSwipeState extends State<HomeSwipe> {
               decoration: InputDecoration(
                 icon: Icon(Icons.location_on),
                 labelText: 'Enter a Location',
+                border: InputBorder.none,
+        focusedBorder: InputBorder.none,
+        enabledBorder: InputBorder.none,
+        errorBorder: InputBorder.none,
+        disabledBorder: InputBorder.none,
               ),
             ),
           ],

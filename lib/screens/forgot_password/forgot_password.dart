@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 
@@ -55,6 +56,7 @@ class _ForgotPasswordState extends State<ForgotPassword> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                Container(alignment:Alignment.center, child: Image.asset(Images.ShopLocalTOLogo, width: 250, height: 150)),
                 Padding(
                   padding: EdgeInsets.only(bottom: 10),
                   child: Text(

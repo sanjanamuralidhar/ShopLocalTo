@@ -60,12 +60,12 @@
       { "id": 10, "image": "assets/images/location-5.jpg" }
     ],
     "service": [
-      { "icon": "wifi", "title": "Free Wifi","image": "assets/images/fb.png" },
-      { "icon": "whatshot", "title": "Shower","image": "assets/images/twit.png" },
-      { "icon": "pets", "title": "Pet Allowed" ,"image": "assets/images/insta.png"},
-      { "icon": "directions_bus", "title": "Shuttle Bus" , "image": "assets/images/whats.png"},
-      { "icon": "shopping_cart", "title": "Supper Market" ,"image": "assets/images/link.png"},
-      { "icon": "access_time", "title": "Open 24/7" ,"image": "assets/images/vk.png"}
+      { "icon": "wifi", "title": "Free Wifi" ,"image":"assets/socialicons/facebook.png"},
+      { "icon": "whatshot", "title": "Shower" ,"image":"assets/socialicons/instagram.png"},
+      { "icon": "pets", "title": "Pet Allowed", "image":"assets/socialicons/linkedin.png"},
+      { "icon": "directions_bus", "title": "Shuttle Bus", "image":"assets/socialicons/twitter.png" },
+      { "icon": "shopping_cart", "title": "Supper Market", "image":"assets/socialicons/youtube.png" },
+      { "icon": "access_time", "title": "Open 24/7", "image": "assets/socialicons/whatsapp.png" }
     ],
     "feature": [
       {
@@ -687,6 +687,14 @@
           "long": -122.38696
         }
       }
+    ],
+    "socialicon": [
+      {"id":1,"image":"assets/socialicons/facebook.png"},
+      {"id":2,"image":"assets/socialicons/instagram.png"},
+      {"id":3,"image":"assets/socialicons/linkedin.png"},
+      {"id":4,"image":"assets/socialicons/twitter.png" },
+      {"id":5,"image":"assets/socialicons/youtube.png" },
+      {"id":6,"image": "assets/socialicons/whatsapp.png" }
     ],
     "location": {
       "id": 2,

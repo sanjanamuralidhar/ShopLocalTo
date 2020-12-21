@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/model_neighbour.dart';
+import 'package:listar_flutter/models/model_shops.dart';
+import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/home/home_swiper.dart';
+import 'package:listar_flutter/screens/product_detail/product_detail.dart';
+import 'package:listar_flutter/screens/product_detail_tab/product_detail_tab.dart';
 import 'package:listar_flutter/utils/utils.dart';
 
 class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
@@ -11,6 +16,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
 
   AppBarHomeSliver({this.expandedHeight, this.banners});
   String dropdownValue = 'One';
+  ProductModel _page;
   @override
   Widget build(context, shrinkOffset, overlapsContent) {
     return Stack(
@@ -23,8 +29,9 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
             height: expandedHeight,
           ),
         ),
+        
         Container(
-          height: 44,
+          height: 30,
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
         SafeArea(
@@ -47,36 +54,57 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                     // Navigator.pushNamed(context, Routes.searchHistory);
                   },
                   child: Container(
-                    decoration: BoxDecoration(
-                      color: Theme.of(context).hoverColor,
-                      borderRadius: BorderRadius.all(
-                        Radius.circular(8),
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(10),
-                      child: IntrinsicHeight(
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-
-                                                      Expanded(
-                                child: TextField(
-                              decoration: InputDecoration(
-                                  border: InputBorder.none,
-                                  hintText: 'Search Location'),
-                            )
-                                ),
-
-                            VerticalDivider(),
-                            // added a dropdown for category selection @sanjana
-                            DropPage(),
-                            SizedBox(width: 10),
-                          ],
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).hoverColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
                         ),
                       ),
-                    ),
-                  ),
+                      child: TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: false,
+                            // enabled: enable,
+                            onTap: () {},
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              border: InputBorder.none,
+                              hintText: "Search by",
+                              suffixIcon: Padding(
+                                padding: const EdgeInsets.only(
+                                    right: 10.0, left: 20.0),
+                                child: DropPage(),
+
+                                //removed dropdown
+                              ),
+                            ),
+                          ),
+                          suggestionsCallback: (Pattern) async {
+                            List<ShopModel> list = shopModels;
+                            var suggetionList = Pattern.isEmpty
+                                ? null
+                                : list
+                                    .where((e) => e.title
+                                        .toLowerCase()
+                                        .contains(Pattern.toLowerCase()))
+                                    .toList();
+
+                            return suggetionList;
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              leading: Icon(Icons.location_city),
+                              title: Text(suggestion.title),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ProductDetailTab(id:suggestion.id);
+                            }));
+                          })
+
+                      // previous search by sanjana search.txt
+                      ),
                 ),
               ),
             ),

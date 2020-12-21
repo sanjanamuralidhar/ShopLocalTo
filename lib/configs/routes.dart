@@ -87,13 +87,13 @@ class Routes {
       //     },
       //   );
 
-      case neighbourInfo:
-        final category = settings.arguments;
-        return MaterialPageRoute(
-          builder: (context) {
-            return NeighbourhoodPage(title: category);
-          },
-        );
+      // case neighbourInfo:
+      //   final category = settings.arguments;
+      //   return MaterialPageRoute(
+      //     builder: (context) {
+      //       return NeighbourhoodPage(title: category);
+      //     },
+      //   );
 
       case productDetailTab:
         final id = settings.arguments;
