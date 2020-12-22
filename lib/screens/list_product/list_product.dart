@@ -206,9 +206,9 @@ class _ListProductState extends State<ListProduct> {
   }
 
   ///On search
-  void _onSearch() {
-    Navigator.pushNamed(context, Routes.searchHistory);
-  }
+  // void _onSearch() {
+  //   Navigator.pushNamed(context, Routes.searchHistory);
+  // }
 
   ///Export Icon for Mode View
   IconData _exportIconView() {
@@ -495,7 +495,7 @@ class _ListProductState extends State<ListProduct> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: _onSearch,
+            // onPressed: _onSearch,
           ),
           Visibility(
             visible: _productList?.list != null,

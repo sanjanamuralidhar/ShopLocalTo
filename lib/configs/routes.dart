@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:listar_flutter/screens/neighbourinfo/neighbourInfoPage.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/screens/success/success.dart';
 
@@ -13,7 +12,6 @@ class Routes {
   static const String forgotPassword = "/forgotPassword";
   static const String productDetail = "/productDetail";
   static const String productDetailTab = "ProductDetailTab";
-  static const String searchHistory = "/searchHistory";
   static const String category = "/category";
   static const String editProfile = "/editProfile";
   static const String changePassword = "/changePassword";
@@ -80,33 +78,12 @@ class Routes {
           },
         );
 
-      // case neighbourInfo:
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       return NeighbourhoodPage();
-      //     },
-      //   );
-
-      // case neighbourInfo:
-      //   final category = settings.arguments;
-      //   return MaterialPageRoute(
-      //     builder: (context) {
-      //       return NeighbourhoodPage(title: category);
-      //     },
-      //   );
-
       case productDetailTab:
         final id = settings.arguments;
         return MaterialPageRoute(
           builder: (context) {
             return ProductDetailTab(id: id);
           },
-        );
-
-      case searchHistory:
-        return MaterialPageRoute(
-          builder: (context) => SearchHistory(),
-          fullscreenDialog: true,
         );
 
       case category:

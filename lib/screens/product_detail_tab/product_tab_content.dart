@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
@@ -467,7 +466,7 @@ class TabContent extends StatelessWidget {
           ),
         );
 
-      case 'featured':
+      case 'related':
         return Container(
           key: item.keyContentItem,
           child: Column(
@@ -481,7 +480,7 @@ class TabContent extends StatelessWidget {
                   top: 15,
                 ),
                 child: Text(
-                  Translate.of(context).translate('featured'),
+                  Translate.of(context).translate('Related'),
                   style: Theme.of(context)
                       .textTheme
                       .headline6
@@ -579,7 +578,7 @@ class TabContent extends StatelessWidget {
           ),
         );
 
-      case 'related':
+      case 'ordinary':
         return Container(
           key: item.keyContentItem,
           padding: EdgeInsets.only(left: 20, right: 20),

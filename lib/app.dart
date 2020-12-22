@@ -83,7 +83,9 @@ class _AppState extends State<App> {
         builder: (context, lang) {
           return BlocBuilder<ThemeBloc, ThemeState>(
             builder: (context, theme) {
-              return MaterialApp(
+              return BlocBuilder<AuthBloc, AuthenticationState>(
+                builder: (context,auth){
+                  return MaterialApp(
                 debugShowCheckedModeBanner: false,
                 theme: AppTheme.lightTheme,
                 darkTheme: AppTheme.darkTheme,
@@ -98,7 +100,7 @@ class _AppState extends State<App> {
                 home: BlocBuilder<ApplicationBloc, ApplicationState>(
                   builder: (context, app) {
                     if (app is ApplicationSetupCompleted) {
-                      return MainNavigation();
+                      return auth is AuthenticationSuccess ? MainNavigation() : SignIn();
                     }
                     if (app is ApplicationIntroView) {
                       return IntroPreview();
@@ -107,6 +109,9 @@ class _AppState extends State<App> {
                   },
                 ),
               );
+                }
+              );
+              
             },
           );
         },

@@ -6,6 +6,7 @@ import 'package:listar_flutter/configs/application.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/logger.dart';
 import 'package:listar_flutter/utils/utils.dart';
+import 'package:connectivity/connectivity.dart';
 
 class MainNavigation extends StatefulWidget {
   MainNavigation({Key key}) : super(key: key);
@@ -19,12 +20,26 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   final _fcm = FirebaseMessaging();
   int _selectedIndex = 0;
+  bool _tryAgain = false;
 
   @override
   void initState() {
+    _checkLocation();
     _fcmHandle();
     super.initState();
   }
+
+  _checkLocation() async {
+      // the method below returns a Future
+      var connectivityResult = await (new Connectivity().checkConnectivity());
+      bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
+      if (!connectedToWifi) {
+        _showAlert(context);
+      }
+      if (_tryAgain != !connectedToWifi) {
+        setState(() => _tryAgain = !connectedToWifi);
+      }
+    }
 
   ///Support Notification listen
   void _fcmHandle() async {
@@ -142,7 +157,7 @@ class _MainNavigationState extends State<MainNavigation> {
               WishList(),
               MessageList(),
               NotificationList(),
-              auth is AuthenticationSuccess ? Profile() : SignIn()
+              auth is AuthenticationSuccess ? Profile() : SignIn(),
             ],
           );
         },
@@ -157,5 +172,35 @@ class _MainNavigationState extends State<MainNavigation> {
         onTap: _onItemTapped,
       ),
     );
+  }
+  void _showAlert(BuildContext context) {
+      showDialog(
+          context: context,
+          builder: (context) =>  AlertDialog(
+        title: Text('Confirmation'),
+        content: SingleChildScrollView(
+          child: ListBody(
+            children: <Widget>[
+              Text('Are you in "Brampton"?'),
+              Text('Would you like to change the location to "Brampton" or continue with colarado'),
+            ],
+          ),
+        ),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Continue',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+          TextButton(
+            child: Text('Cancel',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
+        ],
+      )
+      );
   }
 }

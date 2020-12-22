@@ -23,7 +23,6 @@ export 'product_detail/product_detail.dart';
 export 'product_detail_tab/product_detail_tab.dart';
 export 'profile/profile.dart';
 export 'review/review.dart';
-export 'search_history/search_history.dart';
 export 'setting/setting.dart';
 export 'signin/signin.dart';
 export 'signup/signup.dart';

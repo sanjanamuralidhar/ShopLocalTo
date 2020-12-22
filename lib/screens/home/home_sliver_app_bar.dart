@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
-import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
-import 'package:listar_flutter/models/model_neighbour.dart';
 import 'package:listar_flutter/models/model_shops.dart';
-import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/home/home_swiper.dart';
-import 'package:listar_flutter/screens/product_detail/product_detail.dart';
 import 'package:listar_flutter/screens/product_detail_tab/product_detail_tab.dart';
-import 'package:listar_flutter/utils/utils.dart';
 
 class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
@@ -16,7 +11,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
 
   AppBarHomeSliver({this.expandedHeight, this.banners});
   String dropdownValue = 'One';
-  ProductModel _page;
+
   @override
   Widget build(context, shrinkOffset, overlapsContent) {
     return Stack(
@@ -78,6 +73,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                               ),
                             ),
                           ),
+                          // ignore: non_constant_identifier_names
                           suggestionsCallback: (Pattern) async {
                             List<ShopModel> list = shopModels;
                             var suggetionList = Pattern.isEmpty

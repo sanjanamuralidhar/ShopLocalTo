@@ -22,7 +22,7 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> {
   bool _like = false;
-  bool _showHour = false;
+  // bool _showHour = false;
   ProductDetailPageModel _detailPage;
 
   @override
@@ -43,13 +43,13 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   ///On navigate gallery
-  void _onPhotoPreview() {
-    Navigator.pushNamed(
-      context,
-      Routes.gallery,
-      arguments: _detailPage?.product?.photo,
-    );
-  }
+  // void _onPhotoPreview() {
+  //   Navigator.pushNamed(
+  //     context,
+  //     Routes.gallery,
+  //     arguments: _detailPage?.product?.photo,
+  //   );
+  // }
 
   ///On navigate map
   void _onLocation() {
@@ -73,7 +73,7 @@ class _ProductDetailState extends State<ProductDetail> {
     Navigator.pushNamed(context, Routes.review);
   }
 
-  ///On like product
+  // ///On like product
   void _onLike() {
     setState(() {
       _like = !_like;

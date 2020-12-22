@@ -1,4 +1,4 @@
-import 'package:listar_flutter/configs/image.dart';
+
 
 class LogoModel {
   // List<NeighbourImages> images; 

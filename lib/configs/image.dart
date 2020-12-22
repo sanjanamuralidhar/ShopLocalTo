@@ -64,6 +64,19 @@ class Images {
   //@sanjana
   static const String ShopLocalTOLogo = "assets/images/ShopLocalTOLogo.png";
   static const String INDigitalLOGO_logo_large = "assets/images/INDigital-LOGO_logo_large.png";
+  static const String Community1 = "assets/pictures/Bloor west.jpg";
+  static const String Community2 = "assets/pictures/chinatown-toronto.jpg";
+  static const String Community3 = "assets/pictures/Kensignton market.jpg";
+  static const String Community4 = "assets/pictures/Little-Italy-Toronto.jpg";
+  static const String Community5 = "assets/pictures/ShopLocalTO-Toronto-01.png";
+  static const String Community6 = "assets/pictures/ShopLocalTO-Toronto-02.webp";
+  static const String Community7 = "assets/pictures/ShopLocalTO-Toronto-03.jpg";
+  static const String Community8 = "assets/pictures/ShopLocalTO-Toronto-03.webp";
+  static const String Community9 = "assets/pictures/ShopLocalTO-Toronto-04.webp";
+  static const String Community10 = "assets/pictures/ShopLocalTO-Toronto-05.jpg";
+  static const String Community11 = "assets/pictures/shutterstock_418976134.jpg";
+
+
 
   ///Singleton factory
   static final Images _instance = Images._internal();

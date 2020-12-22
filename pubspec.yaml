@@ -30,9 +30,9 @@ dependencies:
   rflutter_alert: ^1.1.0
   connectivity: ^2.0.2
   carousel_slider: ^2.3.1
-  # search_widget: ^1.0.2
   flutter_typeahead: ^1.9.1
   url_launcher: ^5.7.10
+  flutter_signin_button: ^1.1.0
 
 dev_dependencies:
   flutter_test:
@@ -42,8 +42,8 @@ flutter:
     - assets/data/
     - assets/images/
     - assets/locale/
-    - assets/videos/
     - assets/socialicons/
+    - assets/pictures/
   fonts:
     - family: Raleway
       fonts:

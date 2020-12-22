@@ -67,33 +67,33 @@
     "popular": [
       {
         "id": 11,
-        "title": "Michigan",
+        "title": "Bloor West",
         "subtitle": "Arts & Humanities",
-        "image": "assets/images/trip-1.jpg"
+        "image": "assets/pictures/Bloor west.jpg"
       },
       {
         "id": 12,
-        "title": "Colorado",
+        "title": "ChinaTown Toranto",
         "subtitle": "Arts & Humanities",
-        "image": "assets/images/trip-4.jpg"
+        "image": "assets/pictures/chinatown-toronto.jpg"
       },
       {
         "id": 13,
-        "title": "Utah",
+        "title": "Kensignton Market",
         "subtitle": "Arts & Humanities",
-        "image": "assets/images/trip-5.jpg"
+        "image": "assets/pictures/Kensignton market.jpg"
       },
       {
         "id": 14,
-        "title": "King Utah",
+        "title": "Little Italy Toronto",
         "subtitle": "Arts & Humanities",
-        "image": "assets/images/trip-6.jpg"
+        "image": "assets/pictures/Little-Italy-Toronto.jpg"
       },
       {
         "id": 15,
-        "title": "Colorado King",
+        "title": "ShopLocalTO Toronto",
         "subtitle": "Arts & Humanities",
-        "image": "assets/images/trip-7.jpg"
+        "image": "assets/pictures/ShopLocalTO-Toronto-01.png"
       }
     ],
     "list": [

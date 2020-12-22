@@ -21,9 +21,9 @@
       { "id": 1, "title": "information", "key": "information" },
       { "id": 2, "title": "socialmedia", "key": "socialmedia"},
       { "id": 3, "title": "facilities", "key": "facilities" },
-      { "id": 4, "title": "featured", "key": "featured" },
+      { "id": 4, "title": "related", "key": "related" },
       { "id": 5, "title": "nearly", "key": "nearly" },
-      { "id": 6, "title": "ordinary", "key": "related" }
+      { "id": 6, "title": "ordinary", "key": "ordinary" }
     ],
     "author": {
       "id": 1,

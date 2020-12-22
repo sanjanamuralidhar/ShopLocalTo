@@ -25,8 +25,8 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
+    _checkLocation();
     _loadData();
-_checkLocation();
     super.initState();
   }
     _checkLocation() async {
