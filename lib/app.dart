@@ -100,7 +100,12 @@ class _AppState extends State<App> {
                 home: BlocBuilder<ApplicationBloc, ApplicationState>(
                   builder: (context, app) {
                     if (app is ApplicationSetupCompleted) {
-                      return auth is AuthenticationSuccess ? MainNavigation() : SignIn();
+                      return auth is AuthenticationSuccess 
+                      ? MainNavigation() 
+                      : auth is AuthenticationBeginCheck
+                      ? Center(
+                        child: CircularProgressIndicator(),
+                      ):SignIn();
                     }
                     if (app is ApplicationIntroView) {
                       return IntroPreview();

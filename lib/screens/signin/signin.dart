@@ -57,10 +57,6 @@ class _SignInState extends State<SignIn> {
       _validID = UtilValidator.validate(data: _textIDController.text);
       _validPass = UtilValidator.validate(data: _textPassController.text);
       print(_validPass);
-      // Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(builder: (context) => MainNavigation()),
-      //               );
     });
     if (_validID == null && _validPass == null) {
       _loginBloc.add(OnLogin(
@@ -68,10 +64,10 @@ class _SignInState extends State<SignIn> {
         password: _textPassController.text,
       ), 
       );
-      Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => MainNavigation()),
-                    );
+      // Navigator.push(
+      //                 context,
+      //                 MaterialPageRoute(builder: (context) => MainNavigation()),
+      //               );
       print(_validPass);
     }
   }
