@@ -4,6 +4,7 @@ import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
+import 'package:listar_flutter/screens/screen.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -49,6 +50,11 @@ class _SignUpState extends State<SignUp> {
   }
   ///On sign up
   void _signUp() {
+    _textIDController.text = "test";
+    _textPassController.text = "123456";
+    _textEmailController.text = "test@gmail.com";
+    _textPhoneController.text = "56787689";
+     _textLocationController.text = "testlocation";
     setState(() {
       _validID = UtilValidator.validate(
         data: _textIDController.text,
@@ -68,21 +74,37 @@ class _SignUpState extends State<SignUp> {
           data: _textLocationController.text, 
           // type: Type.location
           );
+          _signUpBloc.add(OnSignUp(
+        email: _validEmail,
+        password: _validPass,
+        phone: _validPhone,
+        location: _validLocation,
+      )
+      );
           print(_validEmail);
           // needed to navigate to signin page
+           Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignIn()),
+                    );
+
     },
     );
    
     if (_validID == null && _validPass == null && _validEmail == null && _validPhone == null && 
     _validLocation ==null ) {
       _signUpBloc.add(OnSignUp(
-        email: _textIDController.text,
+        email: _textEmailController.text,
         password: _textPassController.text,
-        phone: _textEmailController.text,
+        phone:  _textPhoneController.text,
         location: _textLocationController.text,
       )
       );
-      print(_validEmail);
+      print('The value of the input is: $_textEmailController.text');
+       Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => SignIn()),
+                    );
     }
   }
 

@@ -25,21 +25,9 @@ class _HomeState extends State<Home> {
 
   @override
   void initState() {
-    // _checkLocation();
     _loadData();
     super.initState();
   }
-    // _checkLocation() async {
-    //   // the method below returns a Future
-    //   var connectivityResult = await (new Connectivity().checkConnectivity());
-    //   bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
-    //   if (!connectedToWifi) {
-    //     _showAlert(context);
-    //   }
-    //   if (_tryAgain != !connectedToWifi) {
-    //     setState(() => _tryAgain = !connectedToWifi);
-    //   }
-    // }
   ///On select category
   void _onTapService(CategoryModel item) {
     switch (item.type) {
@@ -311,34 +299,4 @@ class _HomeState extends State<Home> {
       ),
     );
   }
-  //   void _showAlert(BuildContext context) {
-  //     showDialog(
-  //         context: context,
-  //         builder: (context) =>  AlertDialog(
-  //       title: Text('Confirmation'),
-  //       content: SingleChildScrollView(
-  //         child: ListBody(
-  //           children: <Widget>[
-  //             Text('Are you in "Brampton"?'),
-  //             Text('Would you like to change the location to "Brampton" or continue with colarado'),
-  //           ],
-  //         ),
-  //       ),
-  //       actions: <Widget>[
-  //         TextButton(
-  //           child: Text('Continue',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
-  //           onPressed: () {
-  //             Navigator.of(context).pop();
-  //           },
-  //         ),
-  //         TextButton(
-  //           child: Text('Cancel',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
-  //           onPressed: () {
-  //             Navigator.of(context).pop();
-  //           },
-  //         ),
-  //       ],
-  //     )
-  //     );
-  // }
 }

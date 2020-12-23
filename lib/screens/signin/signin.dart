@@ -35,7 +35,7 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
-    _textIDController.text = "test";
+    _textIDController.text = "test@gmail.com";
     _textPassController.text = "123456";
     super.initState();
   }
@@ -56,6 +56,12 @@ class _SignInState extends State<SignIn> {
     setState(() {
       _validID = UtilValidator.validate(data: _textIDController.text);
       _validPass = UtilValidator.validate(data: _textPassController.text);
+      _loginBloc.add(OnLogin(
+        username: _validID,
+      password: _validPass,
+      ), 
+      );
+      
       print(_validPass);
     });
     if (_validID == null && _validPass == null) {
@@ -64,10 +70,6 @@ class _SignInState extends State<SignIn> {
         password: _textPassController.text,
       ), 
       );
-      // Navigator.push(
-      //                 context,
-      //                 MaterialPageRoute(builder: (context) => MainNavigation()),
-      //               );
       print(_validPass);
     }
   }

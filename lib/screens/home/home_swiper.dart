@@ -60,7 +60,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
                   _openPopup(context);
                 },
                 child: Text(
-                  "neighbourhood",
+                  "Bloor West",
                   style: TextStyle(fontSize: 13.0),
                 ),
               )),

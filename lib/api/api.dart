@@ -9,20 +9,31 @@ class Api {
   static const String AUTH_LOGIN = "/jwt-auth/v1/token";
   static const String AUTH_VALIDATE = "/jwt-auth/v1/token/validate";
   static const String GET_SETTING = "/listar/v1/setting/init";
+  static const String Post_Login = "http://dev.shoplocalto.ca/api/login";
+  static const String Post_Signup = "http://dev.shoplocalto.ca/api/signup";
 
   ///Login api
   static Future<dynamic> login({String username, String password}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await UtilAsset.loadJson("assets/data/login.json");
-    return ResultApiModel.fromJson(result);
+    final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
+
+    // final result = await httpManager.post(url:Post_Login,data:{'email':username,'password':password});
+    // final value = await UtilAsset.loadJson("assets/data/login.json");
+    return ResultApiModel.fromJson(result[0]);
   }
 
   //SignUp api
   static Future<dynamic> signup({String email, String password, String phone, String location}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await UtilAsset.loadJson("assets/data/signup.json");
+    final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
+    // final result = await UtilAsset.loadJson("assets/data/signup.json");
     return ResultApiModel.fromJson(result);
   }
+  // static Future<dynamic> login() async {
+  //   await Future.delayed(Duration(seconds: 1));
+  //   final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
+  //   return ResultApiModel.fromJson(result);
+  // }
 
   ///Validate token valid
   static Future<dynamic> validateToken() async {
@@ -153,4 +164,5 @@ class Api {
   }
 
   Api._internal();
+
 }

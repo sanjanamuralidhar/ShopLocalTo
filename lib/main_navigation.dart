@@ -181,8 +181,8 @@ class _MainNavigationState extends State<MainNavigation> {
         content: SingleChildScrollView(
           child: ListBody(
             children: <Widget>[
-              Text('Are you in "Brampton"?'),
-              Text('Would you like to change the location to "Brampton" or continue with colarado'),
+              Text('Are you in "Bloor West"?'),
+              Text('Would you like to change the location to "ChinaTown Toronto" or continue with Bloor West'),
             ],
           ),
         ),

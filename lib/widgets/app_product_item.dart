@@ -146,7 +146,7 @@ class AppProductItem extends StatelessWidget {
             ],
           ),
         );
-
+    
       ///Mode View Gird
       case ProductViewType.gird:
         if (item == null) {
@@ -215,6 +215,7 @@ class AppProductItem extends StatelessWidget {
                       Radius.circular(8),
                     ),
                     image: DecorationImage(
+                      // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
                       image: AssetImage(item.image),
                       fit: BoxFit.cover,
                     ),
@@ -296,7 +297,7 @@ class AppProductItem extends StatelessWidget {
             ),
           ),
         );
-
+    
       ///Mode View List
       case ProductViewType.list:
         if (item == null) {
@@ -396,6 +397,7 @@ class AppProductItem extends StatelessWidget {
                 height: 140,
                 decoration: BoxDecoration(
                   image: DecorationImage(
+                    // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
                     image: AssetImage(item.image),
                     fit: BoxFit.cover,
                   ),
@@ -582,6 +584,7 @@ class AppProductItem extends StatelessWidget {
                 height: 200,
                 decoration: BoxDecoration(
                   image: DecorationImage(
+                    // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
                     image: AssetImage(item.image),
                     fit: BoxFit.cover,
                   ),
@@ -745,7 +748,7 @@ class AppProductItem extends StatelessWidget {
             ],
           ),
         );
-
+    
       ///Case View Card large
       case ProductViewType.cardLarge:
         if (item == null) {
@@ -783,6 +786,7 @@ class AppProductItem extends StatelessWidget {
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
+                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
                     image: AssetImage(item.image),
                     fit: BoxFit.cover,
                   ),
@@ -843,35 +847,37 @@ class AppProductItem extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
               child: Container(
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: AssetImage(item.image),
-                    fit: BoxFit.cover,
+                  decoration: BoxDecoration(
+                    image: DecorationImage(
+                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
+                      image: AssetImage(item.image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Padding(
+                        padding: EdgeInsets.all(10),
+                        child: Text(
+                          item.title,
+                          style: Theme.of(context).textTheme.subtitle2.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.w600,
+              ),
+                        ),
+                      )
+                    ],
                   ),
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: EdgeInsets.all(10),
-                      child: Text(
-                        item.title,
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      ),
-                    )
-                  ],
-                ),
-              ),
             ),
           ),
         );
 
       default:
         return Container(width: 160.0);
-    }
+    
   }
+}
 }
