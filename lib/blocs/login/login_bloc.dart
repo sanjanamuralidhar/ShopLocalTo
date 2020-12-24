@@ -30,13 +30,14 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final ResultApiModel result = await Api.login(
         username: event.username,
         password: event.password,
+        
       );
-
+      print('result: $result.data');
       ///Case API fail but not have token
       if (result.success) {
         ///Login API success
         final UserModel user = UserModel.fromJson(result.data);
-
+print('login attempt result success: $result.data');
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           authBloc.add(AuthenticationSave(user));
@@ -50,6 +51,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       } else {
         ///Notify loading to UI
         yield LoginFail(result.message);
+        
+        print('login attempt result failed: $result');
       }
     }
 

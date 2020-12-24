@@ -56,19 +56,21 @@ class _SignInState extends State<SignIn> {
     setState(() {
       _validID = UtilValidator.validate(data: _textIDController.text);
       _validPass = UtilValidator.validate(data: _textPassController.text);
-      _loginBloc.add(OnLogin(
-        username: _validID,
-      password: _validPass,
-      ), 
+      _loginBloc.add(
+        OnLogin(
+          username: _validID,
+          password: _validPass,
+        ),
       );
-      
+
       print(_validPass);
     });
     if (_validID == null && _validPass == null) {
-      _loginBloc.add(OnLogin(
-        username: _textIDController.text,
-        password: _textPassController.text,
-      ), 
+      _loginBloc.add(
+        OnLogin(
+          username: _textIDController.text,
+          password: _textPassController.text,
+        ),
       );
       print(_validPass);
     }
@@ -101,7 +103,14 @@ class _SignInState extends State<SignIn> {
       },
     );
   }
+   void _performLogin() {
+    String username = _usernameController.text;
+    String password = _passwordController.text;
 
+    print('login attempt: $username with $password');
+  }
+final _usernameController = TextEditingController();
+  final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -120,25 +129,31 @@ class _SignInState extends State<SignIn> {
               children: <Widget>[
                 Image.asset(Images.ShopLocalTOLogo, width: 250, height: 150),
                 SizedBox(height: 10),
+        //         TextFormField(controller: _usernameController,),
+        // TextFormField(controller: _passwordController, obscureText: true,),
+        // RaisedButton(
+        //   onPressed: _performLogin,
+        //   child: Text('Login'),
+        // ),
                 AppTextInput(
                   hintText: Translate.of(context).translate('account'),
-                  errorText: _validID != null
-                      ? Translate.of(context).translate(_validID)
-                      : null,
+                  // errorText: _validID != null
+                  //     ? Translate.of(context).translate(_validID)
+                  //     : null,
                   icon: Icon(Icons.clear),
                   controller: _textIDController,
                   focusNode: _focusID,
                   textInputAction: TextInputAction.next,
-                  onChanged: (text) {
-                    setState(() {
-                      _validID = UtilValidator.validate(
-                        data: _textIDController.text,
-                      );
-                    });
-                  },
-                  onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(context, _focusID, _focusPass);
-                  },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validID = UtilValidator.validate(
+                  //       data: _textIDController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(context, _focusID, _focusPass);
+                  // },
                   onTapIcon: () async {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textIDController.clear();
@@ -149,21 +164,22 @@ class _SignInState extends State<SignIn> {
                 ),
                 AppTextInput(
                   hintText: Translate.of(context).translate('password'),
-                  errorText: _validPass != null
-                      ? Translate.of(context).translate(_validPass)
-                      : null,
+                  // errorText: _validPass != null
+                  //     ? Translate.of(context).translate(_validPass)
+                  //     : null,
                   textInputAction: TextInputAction.done,
-                  onChanged: (text) {
-                    setState(() {
-                      _validPass = UtilValidator.validate(
-                        data: _textPassController.text,
-                      );
-                    });
-                  },
-                  onSubmitted: (text) {
-                    _login();
-                    print(setlogin);
-                  },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validPass = UtilValidator.validate(
+                  //       data: _textPassController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(context, _focusID, _focusPass);
+                  //   // _login();
+                  //   print(setlogin);
+                  // },
                   onTapIcon: () {
                     setState(() {
                       _showPassword = !_showPassword;
@@ -189,7 +205,19 @@ class _SignInState extends State<SignIn> {
                       },
                       child: AppButton(
                         onPressed: () {
-                          _login();
+                          setState(() {
+                            _validID = "test@gmail.com";
+                            _validPass = "123456";
+                            _loginBloc.add(
+                              OnLogin(
+                                username: _textIDController.text,
+                                password: _textPassController.text,
+                              ),
+                            );
+
+                            print(_validPass);
+                          });
+                          // _login();
                           print(setlogin);
                         },
                         text: Translate.of(context).translate('Login'),
@@ -251,8 +279,8 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 10),
                 SizedBox(
-                  width:MediaQuery.of(context).size.width*.7,
-                  height:45,
+                  width: MediaQuery.of(context).size.width * .7,
+                  height: 45,
                   child: SignInButtonBuilder(
                     text: 'Sign in with Facebook',
                     image: Padding(
@@ -265,8 +293,8 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 10),
                 SizedBox(
-                  width:MediaQuery.of(context).size.width*.7,
-                  height:45,
+                  width: MediaQuery.of(context).size.width * .7,
+                  height: 45,
                   child: SignInButtonBuilder(
                     text: 'Sign in with Google',
                     image: Padding(
@@ -278,7 +306,6 @@ class _SignInState extends State<SignIn> {
                   ),
                 )
 
-                
                 // Image.asset(Images.INDigitalLOGO_logo_large,width: 100, height: 100)
               ],
             ),
@@ -288,3 +315,27 @@ class _SignInState extends State<SignIn> {
     );
   }
 }
+// final _usernameController = TextEditingController();
+//   final _passwordController = TextEditingController();
+
+//   @override
+//   Widget build(BuildContext context) {
+//     return Column(
+//       children: <Widget>[
+//         TextFormField(controller: _usernameController,),
+//         TextFormField(controller: _passwordController, obscureText: true,),
+//         RaisedButton(
+//           onPressed: _performLogin,
+//           child: Text('Login'),
+//         )
+//       ],
+//     );
+//   }
+
+//   void _performLogin() {
+//     String username = _usernameController.text;
+//     String password = _passwordController.text;
+
+//     print('login attempt: $username with $password');
+//   }
+// }

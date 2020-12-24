@@ -14,26 +14,26 @@ class Api {
 
   ///Login api
   static Future<dynamic> login({String username, String password}) async {
+    print('this is username :$username');
+    print('this is password:$password');
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
-
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/login?email='+username+'&password='+password);
     // final result = await httpManager.post(url:Post_Login,data:{'email':username,'password':password});
-    // final value = await UtilAsset.loadJson("assets/data/login.json");
-    return ResultApiModel.fromJson(result[0]);
+    // final result = await UtilAsset.loadJson("assets/data/login.json");
+    // final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
+    print('this is the response:$result');
+    return ResultApiModel.fromJson(result);
+    
   }
 
   //SignUp api
   static Future<dynamic> signup({String email, String password, String phone, String location}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/signup?name='+location+'&password='+password+'&email='+email+'&phone='+phone);
+    // final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
     // final result = await UtilAsset.loadJson("assets/data/signup.json");
     return ResultApiModel.fromJson(result);
   }
-  // static Future<dynamic> login() async {
-  //   await Future.delayed(Duration(seconds: 1));
-  //   final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
-  //   return ResultApiModel.fromJson(result);
-  // }
 
   ///Validate token valid
   static Future<dynamic> validateToken() async {

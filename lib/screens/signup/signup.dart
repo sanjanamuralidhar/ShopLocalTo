@@ -28,7 +28,6 @@ class _SignUpState extends State<SignUp> {
   final _focusPhone = FocusNode();
   final _focusLocation = FocusNode();
 
-
   bool _showPassword = false;
   String _validID;
   String _validPass;
@@ -44,67 +43,64 @@ class _SignUpState extends State<SignUp> {
     _textPassController.text = "123456";
     _textEmailController.text = "test@gmail.com";
     _textPhoneController.text = "56787689";
-     _textLocationController.text = "testlocation";
+    _textLocationController.text = "testlocation";
 
     super.initState();
   }
+
   ///On sign up
   void _signUp() {
-    _textIDController.text = "test";
-    _textPassController.text = "123456";
-    _textEmailController.text = "test@gmail.com";
-    _textPhoneController.text = "56787689";
-     _textLocationController.text = "testlocation";
-    setState(() {
-      _validID = UtilValidator.validate(
-        data: _textIDController.text,
-      );
-      _validPass = UtilValidator.validate(
-        data: _textPassController.text,
-      );
-      _validEmail = UtilValidator.validate(
-        data: _textEmailController.text,
-        // type: Type.email,
-      );
-      _validPhone = UtilValidator.validate(
-          data: _textPhoneController.text, 
+    setState(
+      () {
+        _validID = UtilValidator.validate(
+          data: _textIDController.text,
+        );
+        _validPass = UtilValidator.validate(
+          data: _textPassController.text,
+        );
+        _validEmail = UtilValidator.validate(
+          data: _textEmailController.text,
+          // type: Type.email,
+        );
+        _validPhone = UtilValidator.validate(
+          data: _textPhoneController.text,
           // type: Type.phone
-          );
-      _validLocation = UtilValidator.validate(
-          data: _textLocationController.text, 
+        );
+        _validLocation = UtilValidator.validate(
+          data: _textLocationController.text,
           // type: Type.location
-          );
-          _signUpBloc.add(OnSignUp(
-        email: _validEmail,
-        password: _validPass,
-        phone: _validPhone,
-        location: _validLocation,
-      )
-      );
-          print(_validEmail);
-          // needed to navigate to signin page
-           Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignIn()),
-                    );
-
-    },
+        );
+        _signUpBloc.add(OnSignUp(
+          email: _validEmail,
+          password: _validPass,
+          phone: _validPhone,
+          location: _validLocation,
+        ));
+        print(_validEmail);
+        // needed to navigate to signin page
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SignIn()),
+        );
+      },
     );
-   
-    if (_validID == null && _validPass == null && _validEmail == null && _validPhone == null && 
-    _validLocation ==null ) {
+
+    if (_validID == null &&
+        _validPass == null &&
+        _validEmail == null &&
+        _validPhone == null &&
+        _validLocation == null) {
       _signUpBloc.add(OnSignUp(
         email: _textEmailController.text,
         password: _textPassController.text,
-        phone:  _textPhoneController.text,
+        phone: _textPhoneController.text,
         location: _textLocationController.text,
-      )
-      );
+      ));
       print('The value of the input is: $_textEmailController.text');
-       Navigator.push(
-                      context,
-                      MaterialPageRoute(builder: (context) => SignIn()),
-                    );
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => SignIn()),
+      );
     }
   }
 
@@ -139,17 +135,17 @@ class _SignUpState extends State<SignUp> {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textEmailController.clear();
                   },
-                  onSubmitted: (text) {
-                    _signUp();
-                  },
-                  onChanged: (text) {
-                    setState(() {
-                      _validEmail = UtilValidator.validate(
-                        data: _textEmailController.text,
-                        type: Type.email,
-                      );
-                    });
-                  },
+                  // onSubmitted: (text) {
+                  //   _signUp();
+                  // },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validEmail = UtilValidator.validate(
+                  //       data: _textEmailController.text,
+                  //       type: Type.email,
+                  //     );
+                  //   });
+                  // },
                   icon: Icon(Icons.clear),
                   controller: _textEmailController,
                   keyboardType: TextInputType.emailAddress,
@@ -165,16 +161,16 @@ class _SignUpState extends State<SignUp> {
                       ? Translate.of(context).translate(_validPass)
                       : null,
                   textInputAction: TextInputAction.next,
-                  onChanged: (text) {
-                    setState(() {
-                      _validPass = UtilValidator.validate(
-                        data: _textPassController.text,
-                      );
-                    });
-                  },
-                  onSubmitted: (text) {
-                    _signUp();
-                  },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validPass = UtilValidator.validate(
+                  //       data: _textPassController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   _signUp();
+                  // },
                   onTapIcon: () {
                     setState(() {
                       _showPassword = !_showPassword;
@@ -199,17 +195,17 @@ class _SignUpState extends State<SignUp> {
                   controller: _textPhoneController,
                   focusNode: _focusPhone,
                   textInputAction: TextInputAction.next,
-                  onChanged: (text) {
-                    setState(() {
-                      _validPhone = UtilValidator.validate(
-                        data: _textPhoneController.text,
-                      );
-                    });
-                  },
-                  onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(
-                        context, _focusPhone, _focusPhone);
-                  },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validPhone = UtilValidator.validate(
+                  //       data: _textPhoneController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(
+                  //       context, _focusPhone, _focusPhone);
+                  // },
                   onTapIcon: () async {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textPhoneController.clear();
@@ -227,17 +223,17 @@ class _SignUpState extends State<SignUp> {
                   controller: _textLocationController,
                   focusNode: _focusLocation,
                   textInputAction: TextInputAction.next,
-                  onChanged: (text) {
-                    setState(() {
-                      _validLocation = UtilValidator.validate(
-                        data: _textLocationController.text,
-                      );
-                    });
-                  },
-                  onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(
-                        context, _focusLocation, _focusLocation);
-                  },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validLocation = UtilValidator.validate(
+                  //       data: _textLocationController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(
+                  //       context, _focusLocation, _focusLocation);
+                  // },
                   onTapIcon: () async {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textLocationController.clear();
@@ -252,12 +248,18 @@ class _SignUpState extends State<SignUp> {
                       listener: (context, loginListener) {
                         if (loginListener is SignUpFail) {
                           print("signup failed");
-                           Navigator.of(context).pop();
+                          Navigator.of(context).pop();
                         }
                       },
                       child: AppButton(
                         onPressed: () {
-                          _signUp();
+                          _signUpBloc.add(OnSignUp(
+        email: _textEmailController.text,
+        password: _textPassController.text,
+        phone: _textPhoneController.text,
+        location: _textLocationController.text,
+      ));
+                          // _signUp();
                         },
                         text: Translate.of(context).translate('sign_up'),
                         loading: signup is SignUpLoading,
@@ -279,7 +281,7 @@ class _SignUpState extends State<SignUp> {
                   height: 30,
                 ),
                 // Image.asset(Images.INDigitalLOGO_logo_large,
-                    // width: 100, height: 100),
+                // width: 100, height: 100),
               ],
             ),
           ),
