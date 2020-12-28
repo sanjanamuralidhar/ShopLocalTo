@@ -27,7 +27,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       await Future.delayed(Duration(seconds: 1));
 
       ///Fetch API
-      final ResultApiModel result = await Api.signup(
+      final dynamic result = await Api.signup(
         email: event.email,
         password: event.password,
         phone: event.phone,
@@ -35,10 +35,10 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       );
 
       ///Case API fail but not have token
-      if (result.success) {
+      if (result['status']!=null) {
         ///Login API success
-        final UserModel user = UserModel.fromJson(result.data);
-
+        final UserModel user = UserModel.fromJson(result);
+print('signup success');
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           authBloc.add(AuthenticationSave(user));
@@ -51,7 +51,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
         }
       } else {
         ///Notify loading to UI
-        yield SignUpFail(result.message);
+        yield SignUpFail('signup failed');
       }
     }
 

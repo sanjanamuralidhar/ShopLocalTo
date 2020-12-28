@@ -78,10 +78,10 @@ class _SignUpState extends State<SignUp> {
         ));
         print(_validEmail);
         // needed to navigate to signin page
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SignIn()),
-        );
+        // Navigator.push(
+        //   context,
+        //   MaterialPageRoute(builder: (context) => SignIn()),
+        // );
       },
     );
 
@@ -249,6 +249,9 @@ class _SignUpState extends State<SignUp> {
                         if (loginListener is SignUpFail) {
                           print("signup failed");
                           Navigator.of(context).pop();
+                        }
+                        else{
+                          Navigator.pop(context);
                         }
                       },
                       child: AppButton(

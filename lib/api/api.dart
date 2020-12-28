@@ -22,7 +22,8 @@ class Api {
     // final result = await UtilAsset.loadJson("assets/data/login.json");
     // final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
     print('this is the response:$result');
-    return ResultApiModel.fromJson(result);
+    // return ResultApiModel.fromJson(result);
+    return result;
     
   }
 
@@ -32,7 +33,7 @@ class Api {
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/signup?name='+location+'&password='+password+'&email='+email+'&phone='+phone);
     // final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
     // final result = await UtilAsset.loadJson("assets/data/signup.json");
-    return ResultApiModel.fromJson(result);
+    return result;
   }
 
   ///Validate token valid

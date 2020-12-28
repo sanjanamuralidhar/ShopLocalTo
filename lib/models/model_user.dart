@@ -12,9 +12,9 @@ class UserModel {
   final String email;
   final String phone;
   final String location;
-  final String access_token;
-  final String token_type;
-  final String expires_in;
+  // final String access_token;
+  // final String token_type;
+  // final int expires_in;
 
   UserModel(
     this.id,
@@ -30,9 +30,9 @@ class UserModel {
     this.email,
     this.location,
     this.phone,
-    this.access_token,
-    this.token_type,
-    this.expires_in
+    // this.access_token,
+    // this.token_type,
+    // this.expires_in
   );
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
@@ -50,9 +50,9 @@ class UserModel {
       json['email'] as String ?? 'Unknown',
       json['phone'] as String ?? 'Unknown',
       json['location'] as String ?? 'Unknown',
-      json['access_token'] as String ?? 'Unknown',
-      json['token_type'] as String ?? 'Unknown',
-      json['expires_in'] as String ?? 'Unknown',
+      // json['access_token'] as String ?? 'Unknown',
+      // json['token_type'] as String ?? 'Unknown',
+      // json['expires_in'] as int ?? 'Unknown',
     );
   }
 
