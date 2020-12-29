@@ -7,7 +7,6 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
-import 'package:listar_flutter/main_navigation.dart';
 
 class SignIn extends StatefulWidget {
   final IconModel item;

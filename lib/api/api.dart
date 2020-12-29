@@ -11,6 +11,7 @@ class Api {
   static const String GET_SETTING = "/listar/v1/setting/init";
   static const String Post_Login = "http://dev.shoplocalto.ca/api/login";
   static const String Post_Signup = "http://dev.shoplocalto.ca/api/signup";
+  static const String Location = "http://dev.shoplocalto.ca/api/locations";
 
   ///Login api
   static Future<dynamic> login({String username, String password}) async {
@@ -155,6 +156,13 @@ class Api {
     await Future.delayed(Duration(seconds: 1));
     final result = await UtilAsset.loadJson("assets/data/review.json");
     return ResultApiModel.fromJson(result);
+  }
+  // @sanjana 
+
+  static Future<dynamic> getPopular() async {
+    await Future.delayed(Duration(seconds: 1));
+   final result = await httpManager.get(url:Location);
+   return result;
   }
 
   ///Singleton factory

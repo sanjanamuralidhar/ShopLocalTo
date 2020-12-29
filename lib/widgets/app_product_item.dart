@@ -7,16 +7,13 @@ import 'package:shimmer/shimmer.dart';
 enum ProductViewType { small, gird, list, block, cardLarge, cardSmall }
 
 class AppProductItem extends StatelessWidget {
-  AppProductItem({
-    Key key,
-    this.item,
-    this.onPressed,
-    this.type,
-  }) : super(key: key);
+
 
   final ProductModel item;
   final ProductViewType type;
   final Function(ProductModel) onPressed;
+
+  const AppProductItem({Key key, this.item, this.type, this.onPressed}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

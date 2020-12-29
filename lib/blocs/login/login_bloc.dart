@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/blocs/authentication/bloc.dart';
 import 'package:listar_flutter/blocs/login/bloc.dart';
@@ -32,7 +33,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         password: event.password,
         
       );
-      print('result: $result.data');
+      dynamic token = result['access_token'];
+      FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+      flutterSecureStorage.write(key: 'token', value: token);
+
+      print('result is result access_token:$token');
+
       ///Case API fail but not have token
       if (result['access_token']!=null) {
         ///Login API success

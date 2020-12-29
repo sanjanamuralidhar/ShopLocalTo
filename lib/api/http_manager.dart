@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:listar_flutter/utils/logger.dart';
 
+
 String dioErrorHandle(DioError error) {
   UtilLogger.log("ERROR", error);
   switch (error.type) {
@@ -18,10 +19,11 @@ String dioErrorHandle(DioError error) {
 
 class HTTPManager {
   BaseOptions baseOptions = BaseOptions(
+    method: await _flutterSecureStorage.containsKey(key:'token'),
     baseUrl: "http://www.listar.passionui.com/index.php/wp-json",
     connectTimeout: 30000,
     receiveTimeout: 30000,
-    headers: {},
+    headers: {'Authorization':'Bearer$token'},
     contentType: Headers.jsonContentType,
     responseType: ResponseType.json,
   );
@@ -31,6 +33,13 @@ class HTTPManager {
     String url,
     Map<String, dynamic> data,
     Options options,
+//     Map<String, dynamic> headerParams={};
+//     bool isLoggedIn = await _flutterSecureStorage.containsKey(key:'token');
+//     if(isLoggedIn){
+//       String token = await _flutterSecureStorage.read(key: 'token');
+//       headerParams = {'Authorization':'Bearer$token'};
+//     }
+// final nullableHeaderParams = {headerParams.isEmpty}?null:headerParams;
   }) async {
     UtilLogger.log("POST URL", url);
     UtilLogger.log("DATA", data);

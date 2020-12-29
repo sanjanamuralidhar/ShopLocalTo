@@ -495,7 +495,8 @@ class _ListProductState extends State<ListProduct> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.search),
-            // onPressed: _onSearch,
+            onPressed: (){}
+            // _onSearch,
           ),
           Visibility(
             visible: _productList?.list != null,

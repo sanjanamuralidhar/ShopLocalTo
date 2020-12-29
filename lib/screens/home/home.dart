@@ -1,4 +1,4 @@
-import 'package:connectivity/connectivity.dart';
+
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
@@ -21,11 +21,13 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   HomePageModel _homePage;
-   bool _tryAgain = false;
+  dynamic _popularlocation;
+  //  bool _tryAgain = false;
 
   @override
   void initState() {
     _loadData();
+    _loadPopular();
     super.initState();
   }
   ///On select category
@@ -68,6 +70,15 @@ class _HomeState extends State<Home> {
     if (result.success) {
       setState(() {
         _homePage = HomePageModel.fromJson(result.data);
+      });
+    }
+  }
+
+  Future<void> _loadPopular() async {
+    final dynamic result = await Api.getPopular();
+    if (result.success) {
+      setState(() {
+        _popularlocation = result;
       });
     }
   }

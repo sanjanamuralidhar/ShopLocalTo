@@ -43,13 +43,13 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   ///On navigate gallery
-  // void _onPhotoPreview() {
-  //   Navigator.pushNamed(
-  //     context,
-  //     Routes.gallery,
-  //     arguments: _detailPage?.product?.photo,
-  //   );
-  // }
+  void _onPhotoPreview() {
+    Navigator.pushNamed(
+      context,
+      Routes.gallery,
+      arguments: _detailPage?.product?.photo,
+    );
+  }
 
   ///On navigate map
   void _onLocation() {
@@ -69,9 +69,9 @@ class _ProductDetailState extends State<ProductDetail> {
   }
 
   ///On navigate review
-  void _onReview() {
-    Navigator.pushNamed(context, Routes.review);
-  }
+  // void _onReview() {
+  //   Navigator.pushNamed(context, Routes.review);
+  // }
 
   // ///On like product
   void _onLike() {

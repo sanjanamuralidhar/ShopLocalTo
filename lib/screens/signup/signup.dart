@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
@@ -249,19 +250,27 @@ class _SignUpState extends State<SignUp> {
                         if (loginListener is SignUpFail) {
                           print("signup failed");
                           Navigator.of(context).pop();
-                        }
-                        else{
-                          Navigator.pop(context);
+                        } else {
+                          Fluttertoast.showToast(
+                              msg: "Verified...!!",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.blue[800],
+                              textColor: Colors.white,
+                              fontSize: 16.0);
+                             Navigator.of(context).pop();
+                              // Navigator.pushNamed(context, "signin");
                         }
                       },
                       child: AppButton(
                         onPressed: () {
                           _signUpBloc.add(OnSignUp(
-        email: _textEmailController.text,
-        password: _textPassController.text,
-        phone: _textPhoneController.text,
-        location: _textLocationController.text,
-      ));
+                            email: _textEmailController.text,
+                            password: _textPassController.text,
+                            phone: _textPhoneController.text,
+                            location: _textLocationController.text,
+                          ));
                           // _signUp();
                         },
                         text: Translate.of(context).translate('sign_up'),
