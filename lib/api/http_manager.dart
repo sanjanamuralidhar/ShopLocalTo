@@ -19,11 +19,10 @@ String dioErrorHandle(DioError error) {
 
 class HTTPManager {
   BaseOptions baseOptions = BaseOptions(
-    method: await _flutterSecureStorage.containsKey(key:'token'),
     baseUrl: "http://www.listar.passionui.com/index.php/wp-json",
     connectTimeout: 30000,
     receiveTimeout: 30000,
-    headers: {'Authorization':'Bearer$token'},
+    headers: {},
     contentType: Headers.jsonContentType,
     responseType: ResponseType.json,
   );
