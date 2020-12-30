@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:listar_flutter/api/http_manager.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/utils/utils.dart';
+import 'package:listar_flutter/models/screen_models/screen_models.dart';
 
 class Api {
   ///URL API
@@ -11,7 +12,7 @@ class Api {
   static const String GET_SETTING = "/listar/v1/setting/init";
   static const String Post_Login = "http://dev.shoplocalto.ca/api/login";
   static const String Post_Signup = "http://dev.shoplocalto.ca/api/signup";
-  static const String Location = "http://dev.shoplocalto.ca/api/locations";
+  static const String Location = "http://dev.shoplocalto.ca/api/locations/featured";
 
   ///Login api
   static Future<dynamic> login({String username, String password}) async {
@@ -159,10 +160,12 @@ class Api {
   }
   // @sanjana 
 
-  static Future<dynamic> getPopular() async {
+  static Future<List<MyLocation>> getPopular() async {
     await Future.delayed(Duration(seconds: 1));
-   final result = await httpManager.get(url:Location);
-   return result;
+   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
+   print('getPopular():$result.runT');
+   return MyLocation.listFromJson(result['locations']);
+
   }
 
   ///Singleton factory

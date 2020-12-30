@@ -14,3 +14,4 @@ export 'profile_page_model.dart';
 export 'review_page_model.dart';
 export 'search_history_page_model.dart';
 export 'wish_list_page_model.dart';
+export 'popular_page_model.dart';

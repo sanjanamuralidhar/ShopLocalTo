@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
@@ -21,8 +20,9 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   HomePageModel _homePage;
-  dynamic _popularlocation;
+  PopularPageModel _popularPageModel;
   //  bool _tryAgain = false;
+  List<MyLocation> _locations = [];
 
   @override
   void initState() {
@@ -30,6 +30,7 @@ class _HomeState extends State<Home> {
     _loadPopular();
     super.initState();
   }
+
   ///On select category
   void _onTapService(CategoryModel item) {
     switch (item.type) {
@@ -75,12 +76,13 @@ class _HomeState extends State<Home> {
   }
 
   Future<void> _loadPopular() async {
-    final dynamic result = await Api.getPopular();
-    if (result.success) {
-      setState(() {
-        _popularlocation = result;
-      });
-    }
+    final List<MyLocation> result = await Api.getPopular();
+    _locations = result;
+    // if (result.status=="success") {
+    //   setState(() {
+    //     _popularPageModel = result;
+    //   });
+    // }
   }
 
   ///On navigate product detail
@@ -136,8 +138,51 @@ class _HomeState extends State<Home> {
     );
   }
 
+  //Build Popular @SANJANA
+  Widget _buildPopLocation() {
+
+    print(_locations.toString());
+    if (_locations == null) {
+      return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
+        itemBuilder: (context, index) {
+          return Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: AppLocation(
+              type: LocationViewType.cardSmall,
+            ),
+          );
+        },
+        itemCount: List.generate(8, (index) => index).length,
+      );
+    }
+
+    return ListView.builder(
+      scrollDirection: Axis.horizontal,
+      padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
+      itemBuilder: (context, index) {
+        final item = _locations[index];
+        return Padding(
+          padding: EdgeInsets.only(left: 15),
+          child: SizedBox(
+            width: 135,
+            height: 160,
+            child: AppLocation(
+              item: item,
+              type: LocationViewType.cardSmall,
+              onPressed: _onProductDetail,
+            ),
+          ),
+        );
+      },
+      itemCount: _locations.length,
+    );
+  }
+
   ///Build popular UI
-  Widget _buildPopular() {
+  Widget _buildPopular(_popularPageModel) {
+    print('popular location api call _popularPageModel2:$_popularPageModel');
     if (_homePage?.popular == null) {
       return ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -207,6 +252,7 @@ class _HomeState extends State<Home> {
 
   @override
   Widget build(BuildContext context) {
+    print('popular locatiugbuiiiiibj buiob:$_popularPageModel');
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -264,7 +310,8 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       height: 195,
-                      child: _buildPopular(),
+                      child: _buildPopLocation(),
+                      //  _buildPopular(_popularPageModel),
                     ),
                     Container(
                       padding: EdgeInsets.only(
