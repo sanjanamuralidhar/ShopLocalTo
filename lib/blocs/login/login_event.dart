@@ -1,10 +1,10 @@
 abstract class LoginEvent {}
 
 class OnLogin extends LoginEvent {
-  final String username;
+  final String email;
   final String password;
 
-  OnLogin({this.username, this.password});
+  OnLogin({this.email, this.password});
 }
 
 class OnLogout extends LoginEvent {

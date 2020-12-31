@@ -15,11 +15,11 @@ class Api {
   static const String Location = "http://dev.shoplocalto.ca/api/locations/featured";
 
   ///Login api
-  static Future<dynamic> login({String username, String password}) async {
-    print('this is username :$username');
+  static Future<dynamic> login({String email, String password}) async {
+    print('this is username :$email');
     print('this is password:$password');
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/login?email='+username+'&password='+password);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/login?email='+email+'&password='+password);
     // final result = await httpManager.post(url:Post_Login,data:{'email':username,'password':password});
     // final result = await UtilAsset.loadJson("assets/data/login.json");
     // final result = await httpManager.get(url:"http://dev.shoplocalto.ca/api/test");
@@ -30,7 +30,7 @@ class Api {
   }
 
   //SignUp api
-  static Future<dynamic> signup({String email, String password, String phone, String location}) async {
+  static Future<dynamic> signup({String username, String email, String password, String phone, String location}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/signup?name='+location+'&password='+password+'&email='+email+'&phone='+phone);
     // final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
@@ -166,6 +166,20 @@ class Api {
    print('getPopular():$result.runT');
    return MyLocation.listFromJson(result['locations']);
 
+  }
+
+  static Future<List<ShopModel>> getShops() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
+   print('getPopular():$result.runT');
+   return ShopModel.listFromJson(result['locations']);
+  }
+   
+   static Future<List<CategoryModel2>> getCategoryList() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
+   print('getPopular():$result.runT');
+   return CategoryModel2.listFromJson(result['locations']);
   }
 
   ///Singleton factory

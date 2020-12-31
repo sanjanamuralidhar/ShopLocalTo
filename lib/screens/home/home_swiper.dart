@@ -4,6 +4,7 @@ import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class HomeSwipe extends StatefulWidget {
   HomeSwipe({
@@ -19,10 +20,28 @@ class HomeSwipe extends StatefulWidget {
 }
 
 class _HomeSwipeState extends State<HomeSwipe> {
+
+  // String location;
+  String value;
   bool isSwitched = false;
+   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+Future<dynamic> getLocation() async{
+  String location1;
+    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'location');
+    print('isloggedin:$isLoggedIn');
+    if(isLoggedIn){
+      String location = await flutterSecureStorage.read(key:'location');
+      location1 = location;
+      print('location:$location');
+    }
+final nullable = location1.isEmpty?null:location1;
+value=nullable;
+print('location2:$location1');
+  }
 
   @override
   Widget build(BuildContext context) {
+    getLocation();
     //new code to add button,icon,toggle
     return Stack(
       children: <Widget>[
@@ -60,7 +79,8 @@ class _HomeSwipeState extends State<HomeSwipe> {
                   _openPopup(context);
                 },
                 child: Text(
-                  "Bloor West",
+                  value,
+                  //  "Bloor West",
                   style: TextStyle(fontSize: 13.0),
                 ),
               )),

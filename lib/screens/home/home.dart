@@ -23,11 +23,15 @@ class _HomeState extends State<Home> {
   PopularPageModel _popularPageModel;
   //  bool _tryAgain = false;
   List<MyLocation> _locations = [];
+  List<ShopModel> _shops = [];
+  List<CategoryModel2> _categoryList = [];
 
   @override
   void initState() {
     _loadData();
     _loadPopular();
+    _loadShops();
+    _loadCategoryList();
     super.initState();
   }
 
@@ -77,12 +81,23 @@ class _HomeState extends State<Home> {
 
   Future<void> _loadPopular() async {
     final List<MyLocation> result = await Api.getPopular();
-    _locations = result;
-    // if (result.status=="success") {
-    //   setState(() {
-    //     _popularPageModel = result;
-    //   });
-    // }
+    setState(() {
+      _locations = result;
+    });
+  }
+
+  Future<void> _loadShops() async {
+    final List<ShopModel> result = await Api.getShops();
+    setState(() {
+      _shops = result;
+    });
+  }
+
+   Future<void> _loadCategoryList() async {
+    final List<CategoryModel2> result = await Api.getCategoryList();
+    setState(() {
+      _categoryList = result;
+    });
   }
 
   ///On navigate product detail
@@ -93,7 +108,7 @@ class _HomeState extends State<Home> {
     Navigator.pushNamed(context, route, arguments: item.id);
   }
 
-  ///Build category UI
+  // /Build category UI
   Widget _buildCategory() {
     if (_homePage?.category == null) {
       return Wrap(
@@ -137,6 +152,49 @@ class _HomeState extends State<Home> {
       ).toList(),
     );
   }
+//Build category @SANJANA
+   Widget _buildCategoryItem() {
+    if (_categoryList == null) {
+      return Wrap(
+        runSpacing: 10,
+        alignment: WrapAlignment.center,
+        children: List.generate(8, (index) => index).map(
+          (item) {
+            return HomeCategoryItem();
+          },
+        ).toList(),
+      );
+    }
+
+    List<CategoryModel2> listBuild = _categoryList;
+    final more = CategoryModel2.fromJson({
+      "id": 9,
+      "title": Translate.of(context).translate("more"),
+      "icon": "more_horiz",
+      "color": "#ff8a65",
+      "type": "more"
+    });
+
+    if (_categoryList.length > 7) {
+      listBuild = _categoryList.take(7).toList();
+      listBuild.add(more);
+    }
+
+    return Wrap(
+      runSpacing: 10,
+      alignment: WrapAlignment.center,
+      children: listBuild.map(
+        (item) {
+          return HomeCategoryItem(
+            // item: item,
+            onPressed: (item) {
+              _onTapService(item);
+            },
+          );
+        },
+      ).toList(),
+    );
+  }
 
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
@@ -147,10 +205,12 @@ class _HomeState extends State<Home> {
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
         itemBuilder: (context, index) {
+          final item = _locations[index];
           return Padding(
             padding: EdgeInsets.only(left: 15),
             child: AppLocation(
-              type: LocationViewType.cardSmall,
+              item: item,
+              type: LocationViewType.cardLarge,
             ),
           );
         },
@@ -170,13 +230,42 @@ class _HomeState extends State<Home> {
             height: 160,
             child: AppLocation(
               item: item,
-              type: LocationViewType.cardSmall,
+              type: LocationViewType.cardLarge,
               onPressed: _onProductDetail,
             ),
           ),
         );
       },
       itemCount: _locations.length,
+    );
+  }
+
+  //Build shops @SANJANA
+   Widget _buildShopList() {
+    if (_shops == null) {
+      return Column(
+        children: List.generate(8, (index) => index).map(
+          (item) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: AppLocation(type: LocationViewType.small),
+            );
+          },
+        ).toList(),
+      );
+    }
+
+    return Column(
+      children: _locations.map((item) {
+        return Padding(
+          padding: EdgeInsets.only(bottom: 15),
+          child: AppLocation(
+            onPressed: _onProductDetail,
+            // item: item,
+            type: LocationViewType.small,
+          ),
+        );
+      }).toList(),
     );
   }
 
@@ -220,6 +309,7 @@ class _HomeState extends State<Home> {
       itemCount: _homePage.popular.length,
     );
   }
+
 
   ///Build list recent
   Widget _buildList() {
@@ -277,7 +367,7 @@ class _HomeState extends State<Home> {
                         left: 10,
                         right: 10,
                       ),
-                      child: _buildCategory(),
+                      child: _buildCategoryItem(),
                     ),
                     Container(
                       padding: EdgeInsets.only(
@@ -346,7 +436,8 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 20, right: 20),
-                      child: _buildList(),
+                      child: _buildShopList(),
+                      // _buildList()
                     ),
                   ],
                 ),

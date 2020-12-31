@@ -783,7 +783,7 @@ class AppLocation extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
-                    image: AssetImage(item.image),
+                    image: AssetImage('assets/pictures/Bloor west.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),

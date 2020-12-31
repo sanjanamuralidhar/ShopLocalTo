@@ -5,7 +5,6 @@ import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
-import 'package:listar_flutter/screens/screen.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -50,60 +49,60 @@ class _SignUpState extends State<SignUp> {
   }
 
   ///On sign up
-  void _signUp() {
-    setState(
-      () {
-        _validID = UtilValidator.validate(
-          data: _textIDController.text,
-        );
-        _validPass = UtilValidator.validate(
-          data: _textPassController.text,
-        );
-        _validEmail = UtilValidator.validate(
-          data: _textEmailController.text,
-          // type: Type.email,
-        );
-        _validPhone = UtilValidator.validate(
-          data: _textPhoneController.text,
-          // type: Type.phone
-        );
-        _validLocation = UtilValidator.validate(
-          data: _textLocationController.text,
-          // type: Type.location
-        );
-        _signUpBloc.add(OnSignUp(
-          email: _validEmail,
-          password: _validPass,
-          phone: _validPhone,
-          location: _validLocation,
-        ));
-        print(_validEmail);
-        // needed to navigate to signin page
-        // Navigator.push(
-        //   context,
-        //   MaterialPageRoute(builder: (context) => SignIn()),
-        // );
-      },
-    );
+  // void _signUp() {
+  //   setState(
+  //     () {
+  //       _validID = UtilValidator.validate(
+  //         data: _textIDController.text,
+  //       );
+  //       _validPass = UtilValidator.validate(
+  //         data: _textPassController.text,
+  //       );
+  //       _validEmail = UtilValidator.validate(
+  //         data: _textEmailController.text,
+  //         // type: Type.email,
+  //       );
+  //       _validPhone = UtilValidator.validate(
+  //         data: _textPhoneController.text,
+  //         // type: Type.phone
+  //       );
+  //       _validLocation = UtilValidator.validate(
+  //         data: _textLocationController.text,
+  //         // type: Type.location
+  //       );
+  //       _signUpBloc.add(OnSignUp(
+  //         email: _validEmail,
+  //         password: _validPass,
+  //         phone: _validPhone,
+  //         location: _validLocation,
+  //       ));
+  //       print(_validEmail);
+  //       // needed to navigate to signin page
+  //       // Navigator.push(
+  //       //   context,
+  //       //   MaterialPageRoute(builder: (context) => SignIn()),
+  //       // );
+  //     },
+  //   );
 
-    if (_validID == null &&
-        _validPass == null &&
-        _validEmail == null &&
-        _validPhone == null &&
-        _validLocation == null) {
-      _signUpBloc.add(OnSignUp(
-        email: _textEmailController.text,
-        password: _textPassController.text,
-        phone: _textPhoneController.text,
-        location: _textLocationController.text,
-      ));
-      print('The value of the input is: $_textEmailController.text');
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => SignIn()),
-      );
-    }
-  }
+  //   if (_validID == null &&
+  //       _validPass == null &&
+  //       _validEmail == null &&
+  //       _validPhone == null &&
+  //       _validLocation == null) {
+  //     _signUpBloc.add(OnSignUp(
+  //       email: _textEmailController.text,
+  //       password: _textPassController.text,
+  //       phone: _textPhoneController.text,
+  //       location: _textLocationController.text,
+  //     ));
+  //     print('The value of the input is: $_textEmailController.text');
+  //     Navigator.push(
+  //       context,
+  //       MaterialPageRoute(builder: (context) => SignIn()),
+  //     );
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +125,32 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 30,
                 ),
+                AppTextInput(
+                  hintText: Translate.of(context).translate('username'),
+                  errorText: _validID != null
+                      ? Translate.of(context).translate(_validID)
+                      : null,
+                  icon: Icon(Icons.clear),
+                  controller: _textIDController,
+                  focusNode: _focusLocation,
+                  textInputAction: TextInputAction.next,
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validLocation = UtilValidator.validate(
+                  //       data: _textLocationController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(
+                  //       context, _focusLocation, _focusLocation);
+                  // },
+                  onTapIcon: () async {
+                    await Future.delayed(Duration(milliseconds: 100));
+                    _textIDController.clear();
+                  },
+                ),
+                SizedBox(height:10),
                 AppTextInput(
                   hintText: Translate.of(context).translate('Your Email'),
                   errorText: _validEmail != null
@@ -252,7 +277,7 @@ class _SignUpState extends State<SignUp> {
                           Navigator.of(context).pop();
                         } else {
                           Fluttertoast.showToast(
-                              msg: "Verified...!!",
+                              msg: "Signup Successful...!!",
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
@@ -266,12 +291,18 @@ class _SignUpState extends State<SignUp> {
                       child: AppButton(
                         onPressed: () {
                           _signUpBloc.add(OnSignUp(
+                            username: _textIDController.text,
                             email: _textEmailController.text,
                             password: _textPassController.text,
                             phone: _textPhoneController.text,
                             location: _textLocationController.text,
                           ));
                           // _signUp();
+                            print('username:${_textIDController.text}');
+                            print('email:${_textEmailController.text}');
+                            print('password:${_textPassController.text}');
+                            print('phone:${_textPhoneController.text}');
+                            print('location:${_textLocationController.text}');
                         },
                         text: Translate.of(context).translate('sign_up'),
                         loading: signup is SignUpLoading,

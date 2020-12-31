@@ -104,7 +104,8 @@ class _AppState extends State<App> {
                       ? MainNavigation() 
                       : auth is AuthenticationBeginCheck
                       ? Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularProgressIndicator(backgroundColor: Colors.black,
+                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue[800])),
                       ):SignIn();
                     }
                     if (app is ApplicationIntroView) {

@@ -16,3 +16,5 @@ export 'model_theme.dart';
 export 'model_user.dart';
 export 'model_social.dart';
 export 'model_mylocation.dart';
+export 'model_shops.dart';
+export 'model_category2.dart';

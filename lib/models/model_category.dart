@@ -3,13 +3,13 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/utils/utils.dart';
 
 class CategoryModel {
-  final int id;
-  final String title;
-  final int count;
-  final String image;
-  final IconData icon;
-  final Color color;
-  final ProductType type;
+  int id;
+  String title;
+  int count;
+  String image;
+  IconData icon;
+  Color color;
+  ProductType type;
 
   CategoryModel({
     this.id,
@@ -20,6 +20,7 @@ class CategoryModel {
     this.color,
     this.type,
   });
+
 
   static ProductType _setType(String type) {
     switch (type) {
@@ -44,6 +45,8 @@ class CategoryModel {
     }
   }
 
+
+
   factory CategoryModel.fromJson(Map<String, dynamic> json) {
     final icon = UtilIcon.getIconData(json['icon'] ?? "Unknown");
     final color = UtilColor.getColorFromHex(json['color'] ?? "#ff8a65");
@@ -57,4 +60,6 @@ class CategoryModel {
       type: _setType(json['type'] as String ?? "Unknown"),
     );
   }
+
+  
 }

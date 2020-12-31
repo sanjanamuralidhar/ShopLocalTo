@@ -7,6 +7,7 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 class SignIn extends StatefulWidget {
   final IconModel item;
@@ -20,7 +21,7 @@ class SignIn extends StatefulWidget {
 }
 
 class _SignInState extends State<SignIn> {
-  final _textIDController = TextEditingController();
+  final _textEmailController = TextEditingController();
   final _textPassController = TextEditingController();
   final _focusID = FocusNode();
   final _focusPass = FocusNode();
@@ -29,12 +30,13 @@ class _SignInState extends State<SignIn> {
   bool _showPassword = false;
   String _validID;
   String _validPass;
+  String _validEmail;
   bool setlogin = true;
 
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
-    _textIDController.text = "test@gmail.com";
+    _textEmailController.text = "test@gmail.com";
     _textPassController.text = "123456";
     super.initState();
   }
@@ -50,30 +52,30 @@ class _SignInState extends State<SignIn> {
   }
 
   ///On login
-  void _login() {
-    UtilOther.hiddenKeyboard(context);
-    setState(() {
-      _validID = UtilValidator.validate(data: _textIDController.text);
-      _validPass = UtilValidator.validate(data: _textPassController.text);
-      _loginBloc.add(
-        OnLogin(
-          username: _validID,
-          password: _validPass,
-        ),
-      );
+  // void _login() {
+  //   UtilOther.hiddenKeyboard(context);
+  //   setState(() {
+  //     _validID = UtilValidator.validate(data: _textIDController.text);
+  //     _validPass = UtilValidator.validate(data: _textPassController.text);
+  //     _loginBloc.add(
+  //       OnLogin(
+  //         username: _validID,
+  //         password: _validPass,
+  //       ),
+  //     );
 
-      print(_validPass);
-    });
-    if (_validID == null && _validPass == null) {
-      _loginBloc.add(
-        OnLogin(
-          username: _textIDController.text,
-          password: _textPassController.text,
-        ),
-      );
-      print(_validPass);
-    }
-  }
+  //     print(_validPass);
+  //   });
+  //   if (_validID == null && _validPass == null) {
+  //     _loginBloc.add(
+  //       OnLogin(
+  //         username: _textIDController.text,
+  //         password: _textPassController.text,
+  //       ),
+  //     );
+  //     print(_validPass);
+  //   }
+  // }
 
   ///On show message fail
   Future<void> _showMessage(String message) async {
@@ -140,7 +142,7 @@ final _usernameController = TextEditingController();
                   //     ? Translate.of(context).translate(_validID)
                   //     : null,
                   icon: Icon(Icons.clear),
-                  controller: _textIDController,
+                  controller: _textEmailController,
                   focusNode: _focusID,
                   textInputAction: TextInputAction.next,
                   // onChanged: (text) {
@@ -155,8 +157,10 @@ final _usernameController = TextEditingController();
                   // },
                   onTapIcon: () async {
                     await Future.delayed(Duration(milliseconds: 100));
-                    _textIDController.clear();
+                    _textEmailController.clear();
                   },
+                  
+                  keyboardType: TextInputType.emailAddress,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 10),
@@ -200,23 +204,32 @@ final _usernameController = TextEditingController();
                       listener: (context, loginListener) {
                         if (loginListener is LoginFail) {
                           _showMessage(loginListener.message);
+                          Fluttertoast.showToast(
+                              msg: "Verified...!!",
+                              toastLength: Toast.LENGTH_SHORT,
+                              gravity: ToastGravity.CENTER,
+                              timeInSecForIosWeb: 1,
+                              backgroundColor: Colors.blue[800],
+                              textColor: Colors.white,
+                              fontSize: 16.0);
                         }
                       },
                       child: AppButton(
                         onPressed: () {
                           setState(() {
-                            _validID = "test@gmail.com";
-                            _validPass = "123456";
+                            // _validID = "test@gmail.com";
+                            // _validPass = "123456";
                             _loginBloc.add(
                               OnLogin(
-                                username: _textIDController.text,
+                                email: _textEmailController.text,
                                 password: _textPassController.text,
                               ),
                             );
-
-                            print(_validPass);
+                            print('email:${_textEmailController.text}');
+                             print('password:${_textPassController.text}');
                           });
                           // _login();
+                          
                           print(setlogin);
                         },
                         text: Translate.of(context).translate('Login'),

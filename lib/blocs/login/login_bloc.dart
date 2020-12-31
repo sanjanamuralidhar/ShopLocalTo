@@ -29,10 +29,12 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
 
       ///Fetch API
       final dynamic result = await Api.login(
-        username: event.username,
+        email: event.email,
         password: event.password,
         
       );
+      print('event.username at login bloc:${event.email}');
+      print('event.password at login bloc:${event.password}');
       dynamic token = result['access_token'];
       FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
       flutterSecureStorage.write(key: 'token', value: token);
@@ -55,7 +57,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         }
       } else {
         ///Notify loading to UI
-        yield LoginFail('login failed');
+        yield LoginFail(result['message']);
         
         print('login attempt result failed: $result');
       }

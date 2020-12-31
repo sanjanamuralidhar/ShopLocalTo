@@ -32,6 +32,45 @@ class ShopModel {
    this.locationDescription,
   //  this.images
   });
+
+ ShopModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    id = json['id'];
+    address = json['address'];
+    location = json['location'];
+    favorite = json['favorite'];
+    imageUrl = json['imageUrl'];
+    rating = json['rating'];
+    ratingCount = json['ratingCount'];
+    status = json['status'];
+    subtitle = json['subtitle'];
+    title = json['title'];
+    description = json['description'];
+    locationDescription = json['locationDescription'];
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (id != null) json['id'] = id;
+    if (address != null) json['created_at'] = address;
+    if (location != null) json['description'] = location;
+    if (favorite != null) json['display_home'] = favorite;
+    if (imageUrl != null) json['district_id'] = imageUrl;
+    if (rating != null) json['image'] = rating;
+    if (ratingCount != null) json['latitude'] = ratingCount;
+    if (status != null) json['longitude'] = status;
+    if (subtitle != null) json['name'] = subtitle;
+    if (title != null) json['slug'] = title;
+    if (description != null) json['updated_at'] = description;
+    if (locationDescription != null) json['updated_at'] = locationDescription;
+    return json;
+  }
+
+  static List<ShopModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? List<ShopModel>()
+        : json.map((value) => ShopModel.fromJson(value)).toList();
+  }
 }
 
 List<ShopModel> shopModels = [

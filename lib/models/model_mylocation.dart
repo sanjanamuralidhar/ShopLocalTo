@@ -32,23 +32,6 @@ class MyLocation {
     return toJson().toString();
   }
 
-
-  // factory MyLocation.fromJson(dynamic json) {
-  //   return MyLocation(
-  //     json['id'] as int ?? 0,
-  //     json['created_at'] as String ?? 'Unknown',
-  //     json['description'] as String ?? 'Unknown',
-  //     json['display_home'] as int ?? 'Unknown',
-  //     json['district_id'] as int ?? 'Unknown',
-  //     json['image'] as String ?? 'Unknown',
-  //     json['latitude'] as String ?? 'Unknown',
-  //     json['longitude'] as String ?? 'Unknown',
-  //     json['name'] as String ?? 'Unknown',
-  //     json['slug'] as String ?? 'Unknown',
-  //     json['updated_at'] as String ?? 'Unknown',
-
-  //   );
-  // }
   MyLocation.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['id'];

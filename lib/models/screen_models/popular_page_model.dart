@@ -11,22 +11,7 @@ class PopularPageModel {
     this.message,
     this.list,
   );
-
-
-  // factory PopularPageModel.fromJson(dynamic json) {
-  //   final Iterable refactorList = json['list'] ?? [];
-
-  //   final listProduct = refactorList.map((item) {
-  //     return MyLocation.fromJson(item);
-  //   }).toList();
-
-
-  //   return PopularPageModel(
-  //     json['status'] as String ?? 'Unknown',
-  //     json['message'] as String ?? 'Unknown',
-  //     listProduct,
-  //   );
-  // }
+  
   PopularPageModel.fromJson(Map<String, dynamic> json){
     if(json==null)return;
     status = json['status'];

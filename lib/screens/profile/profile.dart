@@ -7,6 +7,7 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class Profile extends StatefulWidget {
   Profile({Key key}) : super(key: key);
@@ -21,6 +22,8 @@ class _ProfileState extends State<Profile> {
   LoginBloc _loginBloc;
   ProfilePageModel _profilePage;
   bool setProfile = true;
+  String value;
+  FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
 
   @override
   void initState() {
@@ -28,7 +31,20 @@ class _ProfileState extends State<Profile> {
     _loadData();
     super.initState();
   }
-
+  // Fetch flutterSecureStoragedata
+  Future<dynamic> getLocation() async{
+  String name;
+    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'username');
+    print('isloggedin:$isLoggedIn');
+    if(isLoggedIn){
+      String username = await flutterSecureStorage.read(key:'location');
+      name = username;
+      print('location:$username');
+    }
+final nullable = name.isEmpty?null:name;
+value=nullable;
+print('location2:$name');
+  }
   ///Fetch API
   Future<void> _loadData() async {
     final ResultApiModel result = await Api.getProfile();
