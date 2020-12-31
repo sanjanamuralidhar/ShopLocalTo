@@ -1,4 +1,4 @@
-import 'package:listar_flutter/models/model.dart';
+
 
 class MyLocation {
   int id;
@@ -8,9 +8,13 @@ class MyLocation {
   String latitude;
   String longitude;
   String image;
+  // ignore: non_constant_identifier_names
   String created_at;
+  // ignore: non_constant_identifier_names
   String updated_at;
+  // ignore: non_constant_identifier_names
   int district_id;
+  // ignore: non_constant_identifier_names
   int display_home;
 
   MyLocation(

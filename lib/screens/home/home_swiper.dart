@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/screens/screen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
+import 'home_sliver_app_bar.dart';
 
 class HomeSwipe extends StatefulWidget {
   HomeSwipe({
@@ -138,34 +142,100 @@ print('location2:$location1');
     );
   }
 }
- _openPopup(context) {
+// openpopup sanjana old
+//  _openPopup(context) {
+//     Alert(
+//         context: context,
+//         title: "Neighbourhood",
+//         content: Column(
+//           children: <Widget>[
+//             TextField(
+//               decoration: InputDecoration(
+//                 icon: Icon(Icons.location_on),
+//                 labelText: 'Enter a Location',
+//                 border: InputBorder.none,
+//         focusedBorder: InputBorder.none,
+//         enabledBorder: InputBorder.none,
+//         errorBorder: InputBorder.none,
+//         disabledBorder: InputBorder.none,
+//               ),
+//             ),
+//           ],
+//         ),
+//         buttons: [
+//           DialogButton(
+// color: Colors.blue[900],
+//             onPressed: () => Navigator.pop(context),
+//             child: Text(
+//               "Select",
+//               style: TextStyle(color: Colors.white, fontSize: 20),
+//             ),
+//           )
+//         ]).show();
+//   }
+// changed code _swipperbanner to widget
+// openpopup sanjana
+_openPopup(context){
     Alert(
         context: context,
         title: "Neighbourhood",
         content: Column(
           children: <Widget>[
-            TextField(
-              decoration: InputDecoration(
-                icon: Icon(Icons.location_on),
-                labelText: 'Enter a Location',
-                border: InputBorder.none,
-        focusedBorder: InputBorder.none,
-        enabledBorder: InputBorder.none,
-        errorBorder: InputBorder.none,
-        disabledBorder: InputBorder.none,
-              ),
-            ),
-          ],
-        ),
-        buttons: [
+Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).hoverColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      child: TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: false,
+                            // enabled: enable,
+                            onTap: () {},
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              border: InputBorder.none,
+                              hintText: "Search by",
+                            ),
+                          ),
+                          // ignore: non_constant_identifier_names
+                          suggestionsCallback: (Pattern) async {
+                            List<ShopModel> list = shopModels;
+                            var suggetionList = Pattern.isEmpty
+                                ? null
+                                : list
+                                    .where((e) => e.title
+                                        .toLowerCase()
+                                        .contains(Pattern.toLowerCase()))
+                                    .toList();
+
+                            return suggetionList;
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              leading: Icon(Icons.location_city),
+                              title: Text(suggestion.title),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ProductDetailTab(id:suggestion.id);
+                            }));
+                          })
+
+                      // previous search by sanjana search.txt
+                      ),
+          ]),
+          buttons: [
           DialogButton(
-color: Colors.blue[900],
+color: Theme.of(context).buttonColor,
             onPressed: () => Navigator.pop(context),
             child: Text(
-              "Select",
+              "Cancel",
               style: TextStyle(color: Colors.white, fontSize: 20),
             ),
           )
-        ]).show();
-  }
-// changed code _swipperbanner to widget
+        ]
+          ).show();}

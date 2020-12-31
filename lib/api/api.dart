@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:listar_flutter/api/http_manager.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/utils/utils.dart';
-import 'package:listar_flutter/models/screen_models/screen_models.dart';
 
 class Api {
   ///URL API

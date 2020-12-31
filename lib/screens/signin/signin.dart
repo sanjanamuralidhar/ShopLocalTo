@@ -28,9 +28,9 @@ class _SignInState extends State<SignIn> {
 
   LoginBloc _loginBloc;
   bool _showPassword = false;
-  String _validID;
-  String _validPass;
-  String _validEmail;
+  // String _validID;
+  // String _validPass;
+  // String _validEmail;
   bool setlogin = true;
 
   @override

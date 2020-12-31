@@ -27,7 +27,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       ///Notify loading to UI
       yield SignUpLoading();
 
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 5));
 
       ///Fetch API
       final dynamic result = await Api.signup(
@@ -52,6 +52,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       print(value.toString());
 
        @override
+  // ignore: unused_element
   String toString() {
     return value.toString();
   }

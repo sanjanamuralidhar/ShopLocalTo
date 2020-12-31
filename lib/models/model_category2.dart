@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:listar_flutter/models/model.dart';
-import 'package:listar_flutter/utils/utils.dart';
 
 class CategoryModel2 {
   int id;
