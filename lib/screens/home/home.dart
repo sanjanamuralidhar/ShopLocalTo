@@ -34,6 +34,7 @@ class _HomeState extends State<Home> {
     _loadCategoryList();
     super.initState();
   }
+// try dark and white theme
 
   ///On select category
   void _onTapService(CategoryModel item) {
@@ -256,7 +257,7 @@ class _HomeState extends State<Home> {
     }
 
     return Column(
-      children: _locations.map((item) {
+      children: _shops.map((item) {
         return Padding(
           padding: EdgeInsets.only(bottom: 15),
           child: AppLocation(

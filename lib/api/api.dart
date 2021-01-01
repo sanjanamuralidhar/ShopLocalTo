@@ -123,11 +123,14 @@ class Api {
     return ResultApiModel.fromJson(result);
   }
 
-  ///Get Wish List
-  static Future<dynamic> getWishList() async {
+  ///Get Wish List edited sanjana
+  static Future<List<ShopModel>> getWishList() async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await UtilAsset.loadJson("assets/data/wishlist.json");
-    return ResultApiModel.fromJson(result);
+ final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
+   print('getPopular():$result.runT');
+   return ShopModel.listFromJson(result['locations']);
+    // final result = await UtilAsset.loadJson("assets/data/wishlist.json");
+    // return ResultApiModel.fromJson(result);
   }
 
   ///On Search

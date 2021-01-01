@@ -7,12 +7,12 @@ import 'package:listar_flutter/widgets/widget.dart';
 enum LocationViewType { small, gird, list, block, cardLarge, cardSmall }
 class AppLocation extends StatelessWidget {
 
-
+  final ShopModel shopModel;
   final MyLocation item;
   final LocationViewType type;
   final Function(ProductModel) onPressed;
 
-  const AppLocation({Key key, this.item, this.type, this.onPressed}) : super(key: key);
+  const AppLocation({Key key, this.item, this.type, this.onPressed, this.shopModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class AppLocation extends StatelessWidget {
 
       ///Mode View Small
       case LocationViewType.small:
-        if (item == null) {
+        if (shopModel == null) {
           return Shimmer.fromColors(
             child: Row(
               children: <Widget>[
@@ -86,7 +86,7 @@ class AppLocation extends StatelessWidget {
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
                 child: Image.asset(
-                  item.image,
+                  shopModel.imageUrl,
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
@@ -97,14 +97,14 @@ class AppLocation extends StatelessWidget {
                   left: 10,
                   right: 10,
                   top: 5,
-                  bottom: 5,
+                  bottom: 5, 
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.created_at,
+                      shopModel.title,
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
@@ -113,7 +113,7 @@ class AppLocation extends StatelessWidget {
                     ),
                     Padding(padding: EdgeInsets.only(top: 5)),
                     Text(
-                      item.description,
+                      shopModel.description,
                       style: Theme.of(context)
                           .textTheme
                           .caption

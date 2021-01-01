@@ -8,8 +8,6 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-import 'home_sliver_app_bar.dart';
-
 class HomeSwipe extends StatefulWidget {
   HomeSwipe({
     Key key,
@@ -18,6 +16,9 @@ class HomeSwipe extends StatefulWidget {
   }) : super(key: key);
   final double height;
   final List<ImageModel> images;
+  List<ShopModel> shops;
+  
+
 
   @override
   _HomeSwipeState createState() => _HomeSwipeState();
@@ -26,6 +27,7 @@ class HomeSwipe extends StatefulWidget {
 class _HomeSwipeState extends State<HomeSwipe> {
 
   // String location;
+  List<ShopModel> shops;
   String value;
   bool isSwitched = false;
    FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
@@ -45,7 +47,11 @@ print('location2:$location1');
 
   @override
   Widget build(BuildContext context) {
+  
     getLocation();
+    if(value==null){
+      Text('novalue');
+    }
     //new code to add button,icon,toggle
     return Stack(
       children: <Widget>[
@@ -71,24 +77,7 @@ print('location2:$location1');
             ),
           ),
         ),
-        Padding(
-          padding: const EdgeInsets.only(top:30,left:10),
-          child: Align(
-              alignment: Alignment.topLeft,
-              child: FlatButton(
-                height: 30,
-                color: Colors.white,
-                textColor: Colors.black,
-                onPressed: () {
-                  _openPopup(context);
-                },
-                child: Text(
-                  value,
-                  //  "Bloor West",
-                  style: TextStyle(fontSize: 13.0),
-                ),
-              )),
-        ),
+        _buildValue(),
         Padding(
           padding: const EdgeInsets.only(top: 30),
           child: Align(
@@ -107,7 +96,7 @@ print('location2:$location1');
         Padding(
           padding: const EdgeInsets.only(top: 42, left: 210),
           child: Text("10 km",
-              style: TextStyle(color:Colors.white,fontSize: 17)),
+              style: TextStyle(color:Colors.white,fontSize: 17,fontWeight: FontWeight.bold)),
         ),
       ],
     );
@@ -141,7 +130,46 @@ print('location2:$location1');
       ),
     );
   }
+
+Widget _buildValue(){
+BuildContext context;
+if(value==null){
+  return Shimmer.fromColors(
+            child: Row(
+              children: <Widget>[
+              Container(
+                        height: 10,
+                        width: 100,
+                        color: Colors.white,
+                      ),
+              ],
+            ),
+            baseColor: Colors.white,
+            highlightColor: Colors.white,
+          );
 }
+return Padding(
+          padding: const EdgeInsets.only(top:30,left:10),
+          child: Align(
+              alignment: Alignment.topLeft,
+              child: FlatButton(
+                height: 30,
+                color: Colors.white,
+                textColor: Colors.black,
+                onPressed: () {
+                  _openPopup(context);
+                },
+                child: Text(
+                  // value from flutter secure storage
+                  value,
+                  //  "Bloor West",
+                  style: TextStyle(fontSize: 13.0),
+                ),
+              )),
+        );
+}
+}
+
 // openpopup sanjana old
 //  _openPopup(context) {
 //     Alert(

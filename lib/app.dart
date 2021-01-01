@@ -84,40 +84,42 @@ class _AppState extends State<App> {
           return BlocBuilder<ThemeBloc, ThemeState>(
             builder: (context, theme) {
               return BlocBuilder<AuthBloc, AuthenticationState>(
-                builder: (context,auth){
-                  return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                theme: AppTheme.lightTheme,
-                darkTheme: AppTheme.darkTheme,
-                onGenerateRoute: route.generateRoute,
-                locale: AppLanguage.defaultLanguage,
-                localizationsDelegates: [
-                  Translate.delegate,
-                  GlobalMaterialLocalizations.delegate,
-                  GlobalWidgetsLocalizations.delegate,
-                ],
-                supportedLocales: AppLanguage.supportLanguage,
-                home: BlocBuilder<ApplicationBloc, ApplicationState>(
-                  builder: (context, app) {
-                    if (app is ApplicationSetupCompleted) {
-                      return auth is AuthenticationSuccess 
-                      ? MainNavigation() 
-                      : auth is AuthenticationBeginCheck
-                      ? Center(
-                        child: CircularProgressIndicator(backgroundColor: Colors.black,
-                valueColor: new AlwaysStoppedAnimation<Color>(Colors.blue[800])),
-                      ):SignIn();
-                    }
-                    if (app is ApplicationIntroView) {
-                      return IntroPreview();
-                    }
-                    return SplashScreen();
-                  },
-                ),
-              );
-                }
-              );
-              
+                  builder: (context, auth) {
+                return MaterialApp(
+                  debugShowCheckedModeBanner: false,
+                  theme: AppTheme.lightTheme,
+                  darkTheme: AppTheme.darkTheme,
+                  onGenerateRoute: route.generateRoute,
+                  locale: AppLanguage.defaultLanguage,
+                  localizationsDelegates: [
+                    Translate.delegate,
+                    GlobalMaterialLocalizations.delegate,
+                    GlobalWidgetsLocalizations.delegate,
+                  ],
+                  supportedLocales: AppLanguage.supportLanguage,
+                  home: BlocBuilder<ApplicationBloc, ApplicationState>(
+                    builder: (context, app) {
+                      if (app is ApplicationSetupCompleted) {
+                        return auth is AuthenticationSuccess
+                            ? MainNavigation()
+                            : auth is AuthenticationBeginCheck
+                                ? Center(
+                                    child: CircularProgressIndicator(
+                                        backgroundColor: Colors.black,
+                                        valueColor:
+                                            new AlwaysStoppedAnimation<Color>(
+                                                Colors.blue[800])),
+                                  )
+                                : SignIn();
+                      }
+                      if (app is ApplicationIntroView) {
+                        return IntroPreview();
+                      }
+                      return SplashScreen();
+                    },
+                  ),
+                );
+              });
             },
           );
         },

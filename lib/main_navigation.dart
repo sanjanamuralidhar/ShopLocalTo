@@ -30,16 +30,16 @@ class _MainNavigationState extends State<MainNavigation> {
   }
 
   _checkLocation() async {
-      // the method below returns a Future
-      var connectivityResult = await (new Connectivity().checkConnectivity());
-      bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
-      if (!connectedToWifi) {
-        _showAlert(context);
-      }
-      if (_tryAgain != !connectedToWifi) {
-        setState(() => _tryAgain = !connectedToWifi);
-      }
+    // the method below returns a Future
+    var connectivityResult = await (new Connectivity().checkConnectivity());
+    bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
+    if (!connectedToWifi) {
+      _showAlert(context);
     }
+    if (_tryAgain != !connectedToWifi) {
+      setState(() => _tryAgain = !connectedToWifi);
+    }
+  }
 
   ///Support Notification listen
   void _fcmHandle() async {
@@ -173,34 +173,38 @@ class _MainNavigationState extends State<MainNavigation> {
       ),
     );
   }
+
   void _showAlert(BuildContext context) {
-      showDialog(
-          context: context,
-          builder: (context) =>  AlertDialog(
-        title: Text('Confirmation'),
-        content: SingleChildScrollView(
-          child: ListBody(
-            children: <Widget>[
-              Text('Are you in "Bloor West"?'),
-              Text('Would you like to change the location to "ChinaTown Toronto" or continue with Bloor West'),
-            ],
-          ),
-        ),
-        actions: <Widget>[
-          TextButton(
-            child: Text('Continue',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-          TextButton(
-            child: Text('Cancel',style: TextStyle(color: Colors.blue[700],fontSize: 17)),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          ),
-        ],
-      )
-      );
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Confirmation'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text('Are you in "Bloor West"?'),
+                    Text(
+                        'Would you like to change the location to "ChinaTown Toronto" or continue with Bloor West'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Continue',
+                      style: TextStyle(color: Colors.blue[700], fontSize: 17)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Cancel',
+                      style: TextStyle(color: Colors.blue[700], fontSize: 17)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            )
+          );
   }
 }

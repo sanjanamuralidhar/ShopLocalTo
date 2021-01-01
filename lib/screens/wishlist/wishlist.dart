@@ -19,23 +19,30 @@ class WishList extends StatefulWidget {
 class _WishListState extends State<WishList> {
   final _controller = RefreshController(initialRefresh: false);
   WishListPageModel _listPage;
-
+List<ShopModel> _wishlistPage = [];
   @override
   void initState() {
-    _loadData();
+    // _loadData();
+    _loadWishlist();
     super.initState();
   }
 
   ///Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getWishList();
-    if (result.success) {
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getWishList();
+  //   if (result.success) {
+  //     setState(() {
+  //       _listPage = new WishListPageModel.fromJson(result.data);
+  //     });
+  //   }
+  // }
+Future<void> _loadWishlist() async {
+    final List<ShopModel> result = await Api.getWishList();
       setState(() {
-        _listPage = new WishListPageModel.fromJson(result.data);
+        _wishlistPage = result;
       });
-    }
+  
   }
-
   ///On load more
   Future<void> _onLoading() async {
     await Future.delayed(Duration(seconds: 1));
@@ -54,6 +61,47 @@ class _WishListState extends State<WishList> {
         ? Routes.productDetail
         : Routes.productDetailTab;
     Navigator.pushNamed(context, route, arguments: item.id);
+  }
+
+  ///BuildList Sanjana
+  Widget _buildWishList() {
+    if (_wishlistPage == null) {
+      return ListView(
+        padding: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          top: 15,
+        ),
+        children: List.generate(8, (index) => index).map(
+          (item) {
+            return Padding(
+              padding: EdgeInsets.only(bottom: 15),
+              child: AppProductItem(type: ProductViewType.small),
+            );
+          },
+        ).toList(),
+      );
+    }
+
+    return ListView.builder(
+      padding: EdgeInsets.only(
+        left: 20,
+        right: 20,
+        top: 15,
+      ),
+      itemCount: _wishlistPage.length,
+      itemBuilder: (context, index) {
+        final item =_wishlistPage[index];
+        return Padding(
+          padding: EdgeInsets.only(bottom: 15),
+          child: AppProductItem(
+            onPressed: _onProductDetail,
+            // item: item,
+            type: ProductViewType.small,
+          ),
+        );
+      },
+    );
   }
 
   ///Build list
@@ -135,7 +183,7 @@ class _WishListState extends State<WishList> {
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
           ),
-          child: _buildList(),
+          child: _buildWishList(),
         ),
       ),
     );

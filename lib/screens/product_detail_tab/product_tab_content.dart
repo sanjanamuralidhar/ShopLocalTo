@@ -397,7 +397,7 @@ class TabContent extends StatelessWidget {
                           child: Ink(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              color: Colors.blue[800],
+                              color: Theme.of(context).buttonColor,
                             ),
                             child: InkWell(
                                 onTap: () {},
