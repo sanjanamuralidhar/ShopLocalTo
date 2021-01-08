@@ -88,7 +88,7 @@ class AppNeighbourItem extends StatelessWidget {
                       Radius.circular(8),
                     ),
                     image: DecorationImage(
-                      image: AssetImage(item.imageUrl),
+                      image: AssetImage(item.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -114,7 +114,7 @@ class AppNeighbourItem extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.all(5),
                             child: Icon(
-                              item.favorite
+                              item.favourite
                                   ? Icons.favorite
                                   : Icons.favorite_border,
                               color: Colors.white,
@@ -147,12 +147,12 @@ class AppNeighbourItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     AppTag(
-                      "${item.rating}",
+                      "${item.num_rate}",
                       type: TagType.rateSmall,
                     ),
                     Padding(padding: EdgeInsets.only(left: 5)),
                     StarRating(
-                      rating: item.ratingCount,
+                      rating: item.rate,
                       size: 14,
                       color: AppTheme.yellowColor,
                       borderColor: AppTheme.yellowColor,

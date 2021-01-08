@@ -1,14 +1,19 @@
+
+
 import 'package:flutter/cupertino.dart';
 import 'package:listar_flutter/models/model.dart';
+
+
 
 class CategoryModel2 {
   int id;
   String title;
-  int count;
+  String count;
   String image;
-  IconData icon;
-  Color color;
+  String icon;
+  String color;
   ProductType type;
+
 
   CategoryModel2({
     this.id,
@@ -20,15 +25,39 @@ class CategoryModel2 {
     this.type,
   });
 
+  static ProductType _setType(String type) {
+    switch (type) {
+      case 'shop':
+        return ProductType.shop;
+      case 'drink':
+        return ProductType.drink;
+      case 'event':
+        return ProductType.event;
+      case 'estate':
+        return ProductType.estate;
+      case 'job':
+        return ProductType.job;
+      case 'restaurant':
+        return ProductType.restaurant;
+      case 'automotive':
+        return ProductType.automotive;
+      case 'hotel':
+        return ProductType.hotel;
+      default:
+        return ProductType.more;
+    }
+  }
+
    CategoryModel2.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['id'];
     title = json['title'];
     count = json['count'];
     image = json['image'];
-    icon = icon;
-    color = color;
-    type = type;
+    icon =  json['icon'];
+    color =  json['color'];
+    type = _setType(json['type']);
+
   }
 
   Map<String, dynamic> toJson() {
@@ -37,9 +66,9 @@ class CategoryModel2 {
     if (title != null) json['title'] = title;
     if (count != null) json['count'] = count;
     if (image != null) json['image'] = image;
-    if (icon != null) icon = icon;
-    if (color != null) color = color;
-    if (type != null) type = type;
+    if (icon != null)  json['icon'] = icon;
+    if (color != null)  json['color'] = color;
+    if(type != null) json['type'] = type;
     return json;
   }
 
@@ -48,4 +77,5 @@ class CategoryModel2 {
         ? List<CategoryModel2>()
         : json.map((value) => CategoryModel2.fromJson(value)).toList();
   }
+
 }

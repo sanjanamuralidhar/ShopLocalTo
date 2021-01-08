@@ -104,13 +104,15 @@ class _SignInState extends State<SignIn> {
       },
     );
   }
-   void _performLogin() {
+
+  void _performLogin() {
     String username = _usernameController.text;
     String password = _passwordController.text;
 
     print('login attempt: $username with $password');
   }
-final _usernameController = TextEditingController();
+
+  final _usernameController = TextEditingController();
   final _passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -130,12 +132,12 @@ final _usernameController = TextEditingController();
               children: <Widget>[
                 Image.asset(Images.ShopLocalTOLogo, width: 250, height: 150),
                 SizedBox(height: 10),
-        //         TextFormField(controller: _usernameController,),
-        // TextFormField(controller: _passwordController, obscureText: true,),
-        // RaisedButton(
-        //   onPressed: _performLogin,
-        //   child: Text('Login'),
-        // ),
+                //         TextFormField(controller: _usernameController,),
+                // TextFormField(controller: _passwordController, obscureText: true,),
+                // RaisedButton(
+                //   onPressed: _performLogin,
+                //   child: Text('Login'),
+                // ),
                 AppTextInput(
                   hintText: Translate.of(context).translate('account'),
                   // errorText: _validID != null
@@ -159,7 +161,7 @@ final _usernameController = TextEditingController();
                     await Future.delayed(Duration(milliseconds: 100));
                     _textEmailController.clear();
                   },
-                  
+
                   keyboardType: TextInputType.emailAddress,
                 ),
                 Padding(
@@ -226,10 +228,10 @@ final _usernameController = TextEditingController();
                               ),
                             );
                             print('email:${_textEmailController.text}');
-                             print('password:${_textPassController.text}');
+                            print('password:${_textPassController.text}');
                           });
                           // _login();
-                          
+
                           print(setlogin);
                         },
                         text: Translate.of(context).translate('Login'),

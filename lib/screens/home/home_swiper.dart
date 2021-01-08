@@ -8,6 +8,7 @@ import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+// ignore: must_be_immutable
 class HomeSwipe extends StatefulWidget {
   HomeSwipe({
     Key key,
@@ -17,39 +18,35 @@ class HomeSwipe extends StatefulWidget {
   final double height;
   final List<ImageModel> images;
   List<ShopModel> shops;
-  
-
 
   @override
   _HomeSwipeState createState() => _HomeSwipeState();
 }
 
 class _HomeSwipeState extends State<HomeSwipe> {
-
   // String location;
   List<ShopModel> shops;
   String value;
   bool isSwitched = false;
-   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
-Future<dynamic> getLocation() async{
-  String location1;
-    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'location');
+  FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+  Future<dynamic> getLocation() async {
+    String location1;
+    bool isLoggedIn = await flutterSecureStorage.containsKey(key: 'location');
     print('isloggedin:$isLoggedIn');
-    if(isLoggedIn){
-      String location = await flutterSecureStorage.read(key:'location');
+    if (isLoggedIn) {
+      String location = await flutterSecureStorage.read(key: 'location');
       location1 = location;
       print('location:$location');
     }
-final nullable = location1.isEmpty?null:location1;
-value=nullable;
-print('location2:$location1');
+    final nullable = location1.isEmpty ? null : location1;
+    value = nullable;
+    print('location2:$location1');
   }
 
   @override
   Widget build(BuildContext context) {
-  
     getLocation();
-    if(value==null){
+    if (value == null) {
       Text('novalue');
     }
     //new code to add button,icon,toggle
@@ -57,18 +54,19 @@ print('location2:$location1');
       children: <Widget>[
         Container(child: _swipperBanner(context)),
         InkWell(
-          onTap: (){
-            // Navigate to neighbourhood information page
-          },
-                  child: Padding(
-            padding: const EdgeInsets.only(top: 35,right:20),
+          // onTap: (){
+
+          // },
+          child: Padding(
+            padding: const EdgeInsets.only(top: 35, right: 20),
             child: Align(
               alignment: Alignment.topRight,
               child: InkWell(
-                onTap: () => Navigator.pushNamed(context, Routes.productDetail,arguments: 11) ,
+                onTap: () => Navigator.pushNamed(context, Routes.productDetail,
+                    arguments: 11),
                 //itemid should be the argument we will get it during login(location id)
                 // Navigator.pushNamed(context, Routes.neighbourInfo,arguments: "Brampton"),
-                              child: Icon(
+                child: Icon(
                   Icons.info_outline,
                   color: Colors.white,
                   size: 30,
@@ -77,7 +75,7 @@ print('location2:$location1');
             ),
           ),
         ),
-        _buildValue(),
+        _buildValue(context),
         Padding(
           padding: const EdgeInsets.only(top: 30),
           child: Align(
@@ -94,9 +92,12 @@ print('location2:$location1');
           ),
         ),
         Padding(
-          padding: const EdgeInsets.only(top: 42, left: 210),
+          padding: const EdgeInsets.only(top: 42, left: 220),
           child: Text("10 km",
-              style: TextStyle(color:Colors.white,fontSize: 17,fontWeight: FontWeight.bold)),
+              style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 17,
+                  fontWeight: FontWeight.bold)),
         ),
       ],
     );
@@ -131,43 +132,40 @@ print('location2:$location1');
     );
   }
 
-Widget _buildValue(){
-BuildContext context;
-if(value==null){
-  return Shimmer.fromColors(
-            child: Row(
-              children: <Widget>[
-              Container(
-                        height: 10,
-                        width: 100,
-                        color: Colors.white,
-                      ),
-              ],
+  Widget _buildValue(BuildContext context) {
+    if (value == null) {
+      return Shimmer.fromColors(
+        child:Padding(
+      padding: const EdgeInsets.only(top: 30, left: 10),
+      child: Align(
+          alignment: Alignment.topLeft,
+          child: FlatButton(child: Text(""),
+          onPressed: (){_openPopup(context);},),
+    ),
+        ),
+        baseColor: Colors.white,
+        highlightColor: Colors.white,
+      );
+    }
+    return Padding(
+      padding: const EdgeInsets.only(top: 30, left: 10),
+      child: Align(
+          alignment: Alignment.topLeft,
+          child: FlatButton(
+            height: 30,
+            color: Colors.white,
+            textColor: Colors.black,
+            onPressed: () {
+              _openPopup(context);
+            },
+            child: Text(
+              value,
+              //  "Bloor West",
+              style: TextStyle(fontSize: 13.0),
             ),
-            baseColor: Colors.white,
-            highlightColor: Colors.white,
-          );
-}
-return Padding(
-          padding: const EdgeInsets.only(top:30,left:10),
-          child: Align(
-              alignment: Alignment.topLeft,
-              child: FlatButton(
-                height: 30,
-                color: Colors.white,
-                textColor: Colors.black,
-                onPressed: () {
-                  _openPopup(context);
-                },
-                child: Text(
-                  // value from flutter secure storage
-                  value,
-                  //  "Bloor West",
-                  style: TextStyle(fontSize: 13.0),
-                ),
-              )),
-        );
-}
+          )),
+    );
+  }
 }
 
 // openpopup sanjana old
@@ -201,69 +199,68 @@ return Padding(
 //           )
 //         ]).show();
 //   }
+
 // changed code _swipperbanner to widget
 // openpopup sanjana
-_openPopup(context){
-    Alert(
-        context: context,
-        title: "Neighbourhood",
-        content: Column(
-          children: <Widget>[
-Container(
-                      decoration: BoxDecoration(
-                        color: Theme.of(context).hoverColor,
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(8),
-                        ),
-                      ),
-                      child: TypeAheadField(
-                          textFieldConfiguration: TextFieldConfiguration(
-                            autofocus: false,
-                            // enabled: enable,
-                            onTap: () {},
-                            decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.search),
-                              border: InputBorder.none,
-                              hintText: "Search by",
-                            ),
-                          ),
-                          // ignore: non_constant_identifier_names
-                          suggestionsCallback: (Pattern) async {
-                            List<ShopModel> list = shopModels;
-                            var suggetionList = Pattern.isEmpty
-                                ? null
-                                : list
-                                    .where((e) => e.title
-                                        .toLowerCase()
-                                        .contains(Pattern.toLowerCase()))
-                                    .toList();
-
-                            return suggetionList;
-                          },
-                          itemBuilder: (context, suggestion) {
-                            return ListTile(
-                              leading: Icon(Icons.location_city),
-                              title: Text(suggestion.title),
-                            );
-                          },
-                          onSuggestionSelected: (suggestion) {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return ProductDetailTab(id:suggestion.id);
-                            }));
-                          })
-
-                      // previous search by sanjana search.txt
-                      ),
-          ]),
-          buttons: [
-          DialogButton(
-color: Theme.of(context).buttonColor,
-            onPressed: () => Navigator.pop(context),
-            child: Text(
-              "Cancel",
-              style: TextStyle(color: Colors.white, fontSize: 20),
+_openPopup(context) {
+  Alert(
+      context: context,
+      title: "Neighbourhood",
+      content: Column(children: <Widget>[
+        Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).hoverColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
             ),
-          )
-        ]
-          ).show();}
+            child: TypeAheadField(
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: false,
+                  // enabled: enable,
+                  onTap: () {},
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    border: InputBorder.none,
+                    hintText: "Search by",
+                  ),
+                ),
+                // ignore: non_constant_identifier_names
+                suggestionsCallback: (Pattern) async {
+                  // List<ShopModel> list = shopModels;
+                  // var suggetionList = Pattern.isEmpty
+                  //     ? null
+                  //     : list
+                  //         .where((e) => e.title
+                  //             .toLowerCase()
+                  //             .contains(Pattern.toLowerCase()))
+                  //         .toList();
+
+                  // return suggetionList;
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    leading: Icon(Icons.location_city),
+                    title: Text(suggestion.title),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ProductDetailTab(id: suggestion.id);
+                  }));
+                })
+
+            // previous search by sanjana search.txt
+            ),
+      ]),
+      buttons: [
+        DialogButton(
+          color: Theme.of(context).buttonColor,
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
+}

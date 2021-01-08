@@ -1,3 +1,4 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
@@ -5,6 +6,7 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/home/home_category_item.dart';
 import 'package:listar_flutter/screens/home/home_category_list.dart';
+import 'package:listar_flutter/screens/home/home_category_page.dart';
 import 'package:listar_flutter/screens/home/home_sliver_app_bar.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
@@ -25,9 +27,11 @@ class _HomeState extends State<Home> {
   List<MyLocation> _locations = [];
   List<ShopModel> _shops = [];
   List<CategoryModel2> _categoryList = [];
+  bool _tryAgain = false;
 
   @override
   void initState() {
+     _checkLocation();
     _loadData();
     _loadPopular();
     _loadShops();
@@ -70,6 +74,18 @@ class _HomeState extends State<Home> {
     );
   }
 
+   _checkLocation() async {
+    // the method below returns a Future
+    var connectivityResult = await (new Connectivity().checkConnectivity());
+    bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
+    if (!connectedToWifi) {
+      _showAlert(context);
+    }
+    if (_tryAgain != !connectedToWifi) {
+      setState(() => _tryAgain = !connectedToWifi);
+    }
+  }
+
   ///Fetch API
   Future<void> _loadData() async {
     final ResultApiModel result = await Api.getHome();
@@ -92,6 +108,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _shops = result;
     });
+    print('ShopModel list ************:${_shops.length}');
   }
 
    Future<void> _loadCategoryList() async {
@@ -99,6 +116,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _categoryList = result;
     });
+    print('category list *************:${_categoryList.length}');
   }
 
   ///On navigate product detail
@@ -128,7 +146,7 @@ class _HomeState extends State<Home> {
     final more = CategoryModel.fromJson({
       "id": 9,
       "title": Translate.of(context).translate("more"),
-      "icon": "more_horiz",
+      "icon": "http://dev.shoplocalto.ca/images/category/qVXlZTwRQDl3c0S.png",
       "color": "#ff8a65",
       "type": "more"
     });
@@ -155,13 +173,14 @@ class _HomeState extends State<Home> {
   }
 //Build category @SANJANA
    Widget _buildCategoryItem() {
+     print('category list ///////////////////:${_categoryList.length}');
     if (_categoryList == null) {
       return Wrap(
         runSpacing: 10,
         alignment: WrapAlignment.center,
         children: List.generate(8, (index) => index).map(
           (item) {
-            return HomeCategoryItem();
+            return HomeCategoryPage();
           },
         ).toList(),
       );
@@ -171,8 +190,8 @@ class _HomeState extends State<Home> {
     final more = CategoryModel2.fromJson({
       "id": 9,
       "title": Translate.of(context).translate("more"),
-      "icon": "more_horiz",
-      "color": "#ff8a65",
+      "icon": "http://dev.shoplocalto.ca/images/category/qVXlZTwRQDl3c0S.png",
+      "color": "#DD0000",
       "type": "more"
     });
 
@@ -186,10 +205,10 @@ class _HomeState extends State<Home> {
       alignment: WrapAlignment.center,
       children: listBuild.map(
         (item) {
-          return HomeCategoryItem(
-            // item: item,
+          return HomeCategoryPage(
+            item: item,
             onPressed: (item) {
-              _onTapService(item);
+              // _onTapService(item);
             },
           );
         },
@@ -199,7 +218,7 @@ class _HomeState extends State<Home> {
 
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
-
+print('_buildPopLocation list ///////////////////:${_locations.length}');
     print(_locations.toString());
     if (_locations == null) {
       return ListView.builder(
@@ -242,7 +261,7 @@ class _HomeState extends State<Home> {
   }
 
   //Build shops @SANJANA
-   Widget _buildShopList() {
+ Widget _buildShopList() {
     if (_shops == null) {
       return Column(
         children: List.generate(8, (index) => index).map(
@@ -262,7 +281,7 @@ class _HomeState extends State<Home> {
           padding: EdgeInsets.only(bottom: 15),
           child: AppLocation(
             onPressed: _onProductDetail,
-            // item: item,
+            shopModel: item,
             type: LocationViewType.small,
           ),
         );
@@ -271,7 +290,7 @@ class _HomeState extends State<Home> {
   }
 
   ///Build popular UI
-  Widget _buildPopular(_popularPageModel) {
+  Widget _buildPopular() {
     print('popular location api call _popularPageModel2:$_popularPageModel');
     if (_homePage?.popular == null) {
       return ListView.builder(
@@ -368,7 +387,10 @@ class _HomeState extends State<Home> {
                         left: 10,
                         right: 10,
                       ),
-                      child: _buildCategoryItem(),
+                      child: 
+                      _buildCategoryItem(),
+                      // _buildCategory(),
+
                     ),
                     Container(
                       padding: EdgeInsets.only(
@@ -401,8 +423,9 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       height: 195,
-                      child: _buildPopLocation(),
-                      //  _buildPopular(_popularPageModel),
+                      child:
+                       _buildPopLocation(),
+                      //  _buildPopular(),
                     ),
                     Container(
                       padding: EdgeInsets.only(
@@ -437,7 +460,8 @@ class _HomeState extends State<Home> {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 20, right: 20),
-                      child: _buildShopList(),
+                      child: 
+                      _buildShopList(),
                       // _buildList()
                     ),
                   ],
@@ -448,5 +472,39 @@ class _HomeState extends State<Home> {
         ],
       ),
     );
+  }
+  
+  void _showAlert(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+              title: Text('Confirmation'),
+              content: SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text('Are you in "Bloor West"?'),
+                    Text(
+                        'Would you like to change the location to "ChinaTown Toronto" or continue with Bloor West'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Continue',
+                      style: TextStyle(color: Colors.blue[700], fontSize: 17)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                TextButton(
+                  child: Text('Cancel',
+                      style: TextStyle(color: Colors.blue[700], fontSize: 17)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            )
+          );
   }
 }

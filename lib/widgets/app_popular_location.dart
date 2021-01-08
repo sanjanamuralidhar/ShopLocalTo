@@ -85,8 +85,8 @@ class AppLocation extends StatelessWidget {
             children: <Widget>[
               ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                child: Image.asset(
-                  shopModel.imageUrl,
+                child: Image.network(
+                  shopModel.image,
                   width: 80,
                   height: 80,
                   fit: BoxFit.cover,
@@ -113,29 +113,29 @@ class AppLocation extends StatelessWidget {
                     ),
                     Padding(padding: EdgeInsets.only(top: 5)),
                     Text(
-                      shopModel.description,
+                      shopModel.subtitle,
                       style: Theme.of(context)
                           .textTheme
                           .caption
                           .copyWith(fontWeight: FontWeight.w600),
                     ),
                     Padding(padding: EdgeInsets.only(top: 10)),
-                    // Row(
-                    //   crossAxisAlignment: CrossAxisAlignment.center,
-                    //   children: <Widget>[
-                    //     AppTag(
-                    //       "${item.id}",
-                    //       type: TagType.rateSmall,
-                    //     ),
-                    //     Padding(padding: EdgeInsets.only(left: 5)),
-                    //     StarRating(
-                    //       rating: item.rate,
-                    //       size: 14,
-                    //       color: AppTheme.yellowColor,
-                    //       borderColor: AppTheme.yellowColor,
-                    //     )
-                    //   ],
-                    // )
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        AppTag(
+                          "${shopModel.id}",
+                          type: TagType.rateSmall,
+                        ),
+                        Padding(padding: EdgeInsets.only(left: 5)),
+                        StarRating(
+                          rating: shopModel.rate,
+                          size: 14,
+                          color: AppTheme.yellowColor,
+                          borderColor: AppTheme.yellowColor,
+                        )
+                      ],
+                    )
                   ],
                 ),
               )
@@ -221,11 +221,11 @@ class AppLocation extends StatelessWidget {
                     children: <Widget>[
                       Row(
                         children: <Widget>[
-                          item.name != null
+                          item.title != null
                               ? Padding(
                                   padding: EdgeInsets.all(5),
                                   child: AppTag(
-                                    item.name,
+                                    item.title,
                                     type: TagType.status,
                                   ),
                                 )
@@ -251,7 +251,7 @@ class AppLocation extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(top: 3)),
                 Text(
-                  item.description,
+                  item.subtitle,
                   style: Theme.of(context)
                       .textTheme
                       .caption
@@ -259,7 +259,7 @@ class AppLocation extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(top: 5)),
                 Text(
-                  item.name,
+                  item.title,
                   maxLines: 1,
                   style: Theme.of(context)
                       .textTheme
@@ -285,7 +285,7 @@ class AppLocation extends StatelessWidget {
                 ),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 Text(
-                  item.description,
+                  item.subtitle,
                   maxLines: 1,
                   style: Theme.of(context).textTheme.caption,
                 ),
@@ -405,11 +405,11 @@ class AppLocation extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    item.name != null
+                    item.title != null
                         ? Padding(
                             padding: EdgeInsets.all(5),
                             child: AppTag(
-                              item.name,
+                              item.title,
                               type: TagType.status,
                             ),
                           )
@@ -429,14 +429,14 @@ class AppLocation extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        item.description,
+                        item.subtitle,
                         style: Theme.of(context).textTheme.caption.copyWith(
                               fontWeight: FontWeight.w600,
                             ),
                       ),
                       Padding(padding: EdgeInsets.only(top: 5)),
                       Text(
-                        item.name,
+                        item.title,
                         maxLines: 1,
                         style: Theme.of(context)
                             .textTheme
@@ -471,7 +471,7 @@ class AppLocation extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(left: 3, right: 3),
-                              child: Text(item.description,
+                              child: Text(item.subtitle,
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.caption),
                             ),
@@ -489,7 +489,7 @@ class AppLocation extends StatelessWidget {
                           Expanded(
                             child: Padding(
                               padding: EdgeInsets.only(left: 3, right: 3),
-                              child: Text(item.latitude,
+                              child: Text(item.subtitle,
                                   maxLines: 1,
                                   style: Theme.of(context).textTheme.caption),
                             ),
@@ -631,7 +631,7 @@ class AppLocation extends StatelessWidget {
                                         Padding(
                                           padding: EdgeInsets.only(left: 3),
                                           child: Text(
-                                            item.name,
+                                            item.title,
                                             style: Theme.of(context)
                                                 .textTheme
                                                 .caption
@@ -683,7 +683,7 @@ class AppLocation extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      item.description,
+                      item.subtitle,
                       style: Theme.of(context)
                           .textTheme
                           .caption
@@ -691,7 +691,7 @@ class AppLocation extends StatelessWidget {
                     ),
                     Padding(padding: EdgeInsets.only(top: 5)),
                     Text(
-                      item.name,
+                      item.title,
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
@@ -710,7 +710,7 @@ class AppLocation extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(left: 3, right: 3),
                             child: Text(
-                              item.description,
+                              item.subtitle,
                               maxLines: 1,
                               style: Theme.of(context).textTheme.caption,
                             ),
@@ -730,7 +730,7 @@ class AppLocation extends StatelessWidget {
                           child: Padding(
                             padding: EdgeInsets.only(left: 3, right: 3),
                             child: Text(
-                              item.latitude,
+                              item.title,
                               maxLines: 1,
                               style: Theme.of(context).textTheme.caption,
                             ),
@@ -783,7 +783,7 @@ class AppLocation extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
-                    image: AssetImage('assets/pictures/Bloor west.jpg'),
+                    image: NetworkImage(item.image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -794,7 +794,7 @@ class AppLocation extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        item.name,
+                        item.title,
                         style: Theme.of(context).textTheme.subtitle2.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -846,7 +846,7 @@ class AppLocation extends StatelessWidget {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
-                      image: AssetImage('assets/images/avata.png'),
+                      image: NetworkImage(item.image),
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -857,7 +857,7 @@ class AppLocation extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.all(10),
                         child: Text(
-                          item.description,
+                          item.subtitle,
                           style: Theme.of(context).textTheme.subtitle2.copyWith(
                 color: Colors.white,
                 fontWeight: FontWeight.w600,

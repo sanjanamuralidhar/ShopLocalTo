@@ -164,24 +164,24 @@ class Api {
 
   static Future<List<MyLocation>> getPopular() async {
     await Future.delayed(Duration(seconds: 1));
-   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
-   print('getPopular():$result.runT');
-   return MyLocation.listFromJson(result['locations']);
+   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+   print('getPopular():${result['data']['locations']}');
+   return MyLocation.listFromJson(result['data']['popular']);
 
-  }
-
-  static Future<List<ShopModel>> getShops() async {
-    await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
-   print('getPopular():$result.runT');
-   return ShopModel.listFromJson(result['locations']);
   }
    
    static Future<List<CategoryModel2>> getCategoryList() async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
-   print('getPopular():$result.runT');
-   return CategoryModel2.listFromJson(result['locations']);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+   print('getCategoryList():${result['data']['category']}');
+   return CategoryModel2.listFromJson(result['data']['category']);
+  }
+
+   static Future<List<ShopModel>> getShops() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+   print('getShops():$result.runT');
+   return ShopModel.listFromJson(result['data']['list']);
   }
 
   ///Singleton factory

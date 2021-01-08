@@ -150,7 +150,7 @@ class _SignUpState extends State<SignUp> {
                     _textIDController.clear();
                   },
                 ),
-                SizedBox(height:10),
+                SizedBox(height: 10),
                 AppTextInput(
                   hintText: Translate.of(context).translate('Your Email'),
                   errorText: _validEmail != null
@@ -271,8 +271,8 @@ class _SignUpState extends State<SignUp> {
                 BlocBuilder<SignUpBloc, SignUpState>(
                   builder: (context, signup) {
                     return BlocListener<SignUpBloc, SignUpState>(
-                      listener: (context, loginListener) {
-                        if (loginListener is SignUpFail) {
+                      listener: (context, signupListener) {
+                        if (signupListener is SignUpFail) {
                           print("signup failed");
                           Navigator.of(context).pop();
                         } else {
@@ -284,8 +284,8 @@ class _SignUpState extends State<SignUp> {
                               backgroundColor: Colors.blue[800],
                               textColor: Colors.white,
                               fontSize: 16.0);
-                             Navigator.of(context).pop();
-                              // Navigator.pushNamed(context, "signin");
+                          Navigator.of(context).pop();
+                          // Navigator.pushNamed(context, "signin");
                         }
                       },
                       child: AppButton(
@@ -298,11 +298,11 @@ class _SignUpState extends State<SignUp> {
                             location: _textLocationController.text,
                           ));
                           // _signUp();
-                            print('username:${_textIDController.text}');
-                            print('email:${_textEmailController.text}');
-                            print('password:${_textPassController.text}');
-                            print('phone:${_textPhoneController.text}');
-                            print('location:${_textLocationController.text}');
+                          print('username:${_textIDController.text}');
+                          print('email:${_textEmailController.text}');
+                          print('password:${_textPassController.text}');
+                          print('phone:${_textPhoneController.text}');
+                          print('location:${_textLocationController.text}');
                         },
                         text: Translate.of(context).translate('sign_up'),
                         loading: signup is SignUpLoading,
