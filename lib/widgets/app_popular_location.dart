@@ -10,9 +10,10 @@ class AppLocation extends StatelessWidget {
   final ShopModel shopModel;
   final MyLocation item;
   final LocationViewType type;
-  final Function(ProductModel) onPressed;
+  final Function(MyLocation) onPressed;
+  final Function(ShopModel) onPress;
 
-  const AppLocation({Key key, this.item, this.type, this.onPressed, this.shopModel}) : super(key: key);
+  const AppLocation({Key key, this.item, this.type,this.shopModel, this.onPressed, this.onPress}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -75,7 +76,7 @@ class AppLocation extends StatelessWidget {
 
         return FlatButton(
           onPressed: () {
-            // onPressed(item);
+            onPress(shopModel);
           },
           padding: EdgeInsets.all(0),
           shape: RoundedRectangleBorder(
@@ -770,7 +771,7 @@ class AppLocation extends StatelessWidget {
           height: 160,
           child: GestureDetector(
             onTap: () {
-              // onPressed(item);
+              onPressed(item);
             },
             child: Card(
               elevation: 2,

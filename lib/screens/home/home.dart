@@ -41,38 +41,38 @@ class _HomeState extends State<Home> {
 // try dark and white theme
 
   ///On select category
-  void _onTapService(CategoryModel item) {
-    switch (item.type) {
-      case ProductType.more:
-        _onOpenMore();
-        break;
+  // void _onTapService(CategoryModel item) {
+  //   switch (item.type) {
+  //     case ProductType.more:
+  //       _onOpenMore();
+  //       break;
 
-      default:
-        Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
-        break;
-    }
-  }
+  //     default:
+  //       Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
+  //       break;
+  //   }
+  // }
 
-  ///On Open More
-  void _onOpenMore() {
-    showModalBottomSheet<void>(
-      backgroundColor: Colors.transparent,
-      context: context,
-      builder: (BuildContext context) {
-        return HomeCategoryList(
-          category: _homePage?.category,
-          onOpenList: () async {
-            Navigator.pushNamed(context, Routes.category);
-          },
-          onPress: (item) async {
-            Navigator.pop(context);
-            await Future.delayed(Duration(milliseconds: 250));
-            _onTapService(item);
-          },
-        );
-      },
-    );
-  }
+  // ///On Open More
+  // void _onOpenMore() {
+  //   showModalBottomSheet<void>(
+  //     backgroundColor: Colors.transparent,
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return HomeCategoryList(
+  //         category: _homePage?.category,
+  //         onOpenList: () async {
+  //           Navigator.pushNamed(context, Routes.category);
+  //         },
+  //         onPress: (item) async {
+  //           Navigator.pop(context);
+  //           await Future.delayed(Duration(milliseconds: 250));
+  //           _onTapService(item);
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
    _checkLocation() async {
     // the method below returns a Future
@@ -120,55 +120,95 @@ class _HomeState extends State<Home> {
   }
 
   ///On navigate product detail
-  void _onProductDetail(ProductModel item) {
-    String route = item.type == ProductType.place
+  void _onProductDetail(MyLocation item) {
+    String route = item.type == LocationType.place
         ? Routes.productDetail
         : Routes.productDetailTab;
     Navigator.pushNamed(context, route, arguments: item.id);
   }
 
+void _onShopDetail(ShopModel item) {
+    // ignore: unrelated_type_equality_checks
+    String route = item.type == ShopType.place
+        ? Routes.productDetail
+        :Routes.productDetailTab;
+    Navigator.pushNamed(context, route, arguments: item.id);
+  }
   // /Build category UI
-  Widget _buildCategory() {
-    if (_homePage?.category == null) {
-      return Wrap(
-        runSpacing: 10,
-        alignment: WrapAlignment.center,
-        children: List.generate(8, (index) => index).map(
-          (item) {
-            return HomeCategoryItem();
+  // Widget _buildCategory() {
+  //   if (_homePage?.category == null) {
+  //     return Wrap(
+  //       runSpacing: 10,
+  //       alignment: WrapAlignment.center,
+  //       children: List.generate(8, (index) => index).map(
+  //         (item) {
+  //           return HomeCategoryItem();
+  //         },
+  //       ).toList(),
+  //     );
+  //   }
+
+  //   List<CategoryModel> listBuild = _homePage.category;
+
+  //   final more = CategoryModel.fromJson({
+  //     "id": 9,
+  //     "title": Translate.of(context).translate("more"),
+  //     "icon": "http://dev.shoplocalto.ca/images/category/qVXlZTwRQDl3c0S.png",
+  //     "color": "#ff8a65",
+  //     "type": "more"
+  //   });
+
+  //   if (_homePage.category.length > 7) {
+  //     listBuild = _homePage.category.take(7).toList();
+  //     listBuild.add(more);
+  //   }
+
+  //   return Wrap(
+  //     runSpacing: 10,
+  //     alignment: WrapAlignment.center,
+  //     children: listBuild.map(
+  //       (item) {
+  //         return HomeCategoryItem(
+  //           item: item,
+  //           onPressed: (item) {
+  //             _onTapService(item);
+  //           },
+  //         );
+  //       },
+  //     ).toList(),
+  //   );
+  // }
+  // ontaps for catagory@sanjana
+   void _onTapService(CategoryModel2 item) {
+    switch (item.type) {
+      case ProductType.more:
+        _onOpenMore();
+        break;
+
+      default:
+        Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
+        break;
+    }
+  }
+
+  ///On Open More
+  void _onOpenMore() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.transparent,
+      context: context,
+      builder: (BuildContext context) {
+        return HomeCategoryList(
+          category: _categoryList,
+          onOpenList: () async {
+            Navigator.pushNamed(context, Routes.category);
           },
-        ).toList(),
-      );
-    }
-
-    List<CategoryModel> listBuild = _homePage.category;
-
-    final more = CategoryModel.fromJson({
-      "id": 9,
-      "title": Translate.of(context).translate("more"),
-      "icon": "http://dev.shoplocalto.ca/images/category/qVXlZTwRQDl3c0S.png",
-      "color": "#ff8a65",
-      "type": "more"
-    });
-
-    if (_homePage.category.length > 7) {
-      listBuild = _homePage.category.take(7).toList();
-      listBuild.add(more);
-    }
-
-    return Wrap(
-      runSpacing: 10,
-      alignment: WrapAlignment.center,
-      children: listBuild.map(
-        (item) {
-          return HomeCategoryItem(
-            item: item,
-            onPressed: (item) {
-              _onTapService(item);
-            },
-          );
-        },
-      ).toList(),
+          onPress: (item) async {
+            Navigator.pop(context);
+            await Future.delayed(Duration(milliseconds: 250));
+            _onTapService(item);
+          },
+        );
+      },
     );
   }
 //Build category @SANJANA
@@ -208,7 +248,7 @@ class _HomeState extends State<Home> {
           return HomeCategoryPage(
             item: item,
             onPressed: (item) {
-              // _onTapService(item);
+              _onTapService(item);
             },
           );
         },
@@ -280,7 +320,7 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
         return Padding(
           padding: EdgeInsets.only(bottom: 15),
           child: AppLocation(
-            onPressed: _onProductDetail,
+            onPress: _onShopDetail,
             shopModel: item,
             type: LocationViewType.small,
           ),
@@ -290,75 +330,75 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
   }
 
   ///Build popular UI
-  Widget _buildPopular() {
-    print('popular location api call _popularPageModel2:$_popularPageModel');
-    if (_homePage?.popular == null) {
-      return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: AppProductItem(
-              type: ProductViewType.cardLarge,
-            ),
-          );
-        },
-        itemCount: List.generate(8, (index) => index).length,
-      );
-    }
+  // Widget _buildPopular() {
+  //   print('popular location api call _popularPageModel2:$_popularPageModel');
+  //   if (_homePage?.popular == null) {
+  //     return ListView.builder(
+  //       scrollDirection: Axis.horizontal,
+  //       padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
+  //       itemBuilder: (context, index) {
+  //         return Padding(
+  //           padding: EdgeInsets.only(left: 15),
+  //           child: AppProductItem(
+  //             type: ProductViewType.cardLarge,
+  //           ),
+  //         );
+  //       },
+  //       itemCount: List.generate(8, (index) => index).length,
+  //     );
+  //   }
 
-    return ListView.builder(
-      scrollDirection: Axis.horizontal,
-      padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
-      itemBuilder: (context, index) {
-        final item = _homePage.popular[index];
-        return Padding(
-          padding: EdgeInsets.only(left: 15),
-          child: SizedBox(
-            width: 135,
-            height: 160,
-            child: AppProductItem(
-              item: item,
-              type: ProductViewType.cardLarge,
-              onPressed: _onProductDetail,
-            ),
-          ),
-        );
-      },
-      itemCount: _homePage.popular.length,
-    );
-  }
+  //   return ListView.builder(
+  //     scrollDirection: Axis.horizontal,
+  //     padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
+  //     itemBuilder: (context, index) {
+  //       final item = _homePage.popular[index];
+  //       return Padding(
+  //         padding: EdgeInsets.only(left: 15),
+  //         child: SizedBox(
+  //           width: 135,
+  //           height: 160,
+  //           child: AppProductItem(
+  //             item: item,
+  //             type: ProductViewType.cardLarge,
+  //             onPressed: _onProductDetail,
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //     itemCount: _homePage.popular.length,
+  //   );
+  // }
 
 
   ///Build list recent
-  Widget _buildList() {
-    if (_homePage?.list == null) {
-      return Column(
-        children: List.generate(8, (index) => index).map(
-          (item) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 15),
-              child: AppProductItem(type: ProductViewType.small),
-            );
-          },
-        ).toList(),
-      );
-    }
+  // Widget _buildList() {
+  //   if (_homePage?.list == null) {
+  //     return Column(
+  //       children: List.generate(8, (index) => index).map(
+  //         (item) {
+  //           return Padding(
+  //             padding: EdgeInsets.only(bottom: 15),
+  //             child: AppProductItem(type: ProductViewType.small),
+  //           );
+  //         },
+  //       ).toList(),
+  //     );
+  //   }
 
-    return Column(
-      children: _homePage.list.map((item) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: 15),
-          child: AppProductItem(
-            onPressed: _onProductDetail,
-            item: item,
-            type: ProductViewType.small,
-          ),
-        );
-      }).toList(),
-    );
-  }
+  //   return Column(
+  //     children: _homePage.list.map((item) {
+  //       return Padding(
+  //         padding: EdgeInsets.only(bottom: 15),
+  //         child: AppProductItem(
+  //           onPressed: _onProductDetail,
+  //           item: item,
+  //           type: ProductViewType.small,
+  //         ),
+  //       );
+  //     }).toList(),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {

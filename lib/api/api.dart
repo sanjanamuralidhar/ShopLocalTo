@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:listar_flutter/api/http_manager.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 
 class Api {
@@ -35,6 +36,21 @@ class Api {
     // final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
     // final result = await UtilAsset.loadJson("assets/data/signup.json");
     return result;
+  }
+
+  // Get sHOP DETAIL @SANJANA
+  static Future<dynamic> getDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    return result;
+  }
+
+  // sanjana
+   static Future<ProductModel> getShopDataDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    print('...........getShopDataDetail()............:$result.runT');
+    return ProductModel.fromJson(result['data']);
   }
 
   ///Validate token valid
@@ -115,6 +131,7 @@ class Api {
     final result = await UtilAsset.loadJson(path);
     return ResultApiModel.fromJson(result);
   }
+  
 
   ///Get History Search
   static Future<dynamic> getHistorySearch() async {
@@ -165,7 +182,7 @@ class Api {
   static Future<List<MyLocation>> getPopular() async {
     await Future.delayed(Duration(seconds: 1));
    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
-   print('getPopular():${result['data']['locations']}');
+  //  print('getPopular():${result['data']['locations']}');
    return MyLocation.listFromJson(result['data']['popular']);
 
   }
@@ -173,16 +190,23 @@ class Api {
    static Future<List<CategoryModel2>> getCategoryList() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
-   print('getCategoryList():${result['data']['category']}');
+  //  print('getCategoryList():${result['data']['category']}');
    return CategoryModel2.listFromJson(result['data']['category']);
   }
 
    static Future<List<ShopModel>> getShops() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
-   print('getShops():$result.runT');
+  //  print('getShops():$result.runT');
    return ShopModel.listFromJson(result['data']['list']);
   }
+ static Future<List<PopularPageModel>> getHomeData() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+  //  print('getHomeData():$result.runT');
+   return PopularPageModel.listFromJson(result['data']);
+  }
+
 
   ///Singleton factory
   static final Api _instance = Api._internal();

@@ -1,6 +1,18 @@
-import 'package:listar_flutter/configs/image.dart';
+
 import 'package:listar_flutter/models/model.dart';
 
+enum ShopType {
+  place,
+  hotel,
+  shop,
+  drink,
+  event,
+  estate,
+  job,
+  restaurant,
+  automotive,
+  more
+}
 class ShopModel {
   int id;
   String type;
@@ -16,6 +28,7 @@ class ShopModel {
   String address;
   String phone;
   List<LocationModel> location;
+  ShopType model;
 
   ShopModel({
    this.id,
@@ -31,7 +44,8 @@ this.rate,
   this.favourite,
   this.address,
   this.phone,
-  List<LocationModel> location,
+  this.location,
+  this.model
   });
 
   
@@ -39,7 +53,7 @@ this.rate,
     if (json == null) return;
     id = json['id'];
     address = json['address'];
-    _setLocation(json['location']);
+    // location = _setLocation(json['location']);
     type = json['type'];
     image= json['image'];
     created_date = json['created_date'];
@@ -51,6 +65,8 @@ this.rate,
     status = json['status'];
     subtitle = json['subtitle'];
     title = json['title'];
+    model=_setType(json['type']);
+    
   }
 
   Map<String, dynamic> toJson() {
@@ -69,7 +85,31 @@ this.rate,
         if (status != null) json['status'] = status;
     if (subtitle != null) json['subtitle'] = subtitle;
     if (title != null) json['title'] = title;
+   if (model!=null) json['model'] = model;
     return json;
+  }
+
+  static ShopType _setType(String type) {
+    switch (type) {
+      case 'hotel':
+        return ShopType.hotel;
+      case 'shop':
+        return ShopType.shop;
+      case 'drink':
+        return ShopType.drink;
+      case 'event':
+        return ShopType.event;
+      case 'estate':
+        return ShopType.estate;
+      case 'job':
+        return ShopType.job;
+      case 'restaurant':
+        return ShopType.restaurant;
+      case 'automotive':
+        return ShopType.automotive;
+      default:
+        return ShopType.place;
+    }
   }
 
   static List<ShopModel> listFromJson(List<dynamic> json) {
@@ -78,12 +118,13 @@ this.rate,
         : json.map((value) => ShopModel.fromJson(value)).toList();
   }
 
-   static LocationModel _setLocation(Map<String, dynamic> location) {
-    if (location != null) {
-      return LocationModel.fromJson(location);
-    }
-    return null;
+  static List<LocationModel> _setLocation(List<dynamic> json) {
+    return json == null
+        ? List<LocationModel>()
+        : json.map((value) => LocationModel.fromJson(value)).toList();
   }
+
+  
 
 }
 

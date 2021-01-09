@@ -14,34 +14,34 @@ enum ProductType {
 }
 
 class ProductModel {
-  final int id;
-  final String title;
-  final String subtitle;
-  final String image;
-  final String createDate;
-  final bool like;
-  final num rate;
-  final num numRate;
-  final String rateText;
-  final String status;
-  final bool favorite;
-  final String address;
-  final String phone;
-  final String email;
-  final String website;
-  final String hour;
-  final String description;
-  final String date;
-  final String priceRange;
-  final List<ImageModel> photo;
-  final List<HourModel> hourDetail;
-  final List<IconModel> service;
-  final List<ProductModel> feature;
-  final List<ProductModel> related;
-  final LocationModel location;
-  final UserModel author;
-  final ProductType type;
-  final List<SocialIcon> socialicon; 
+  int id;
+  String title;
+  String subtitle;
+  String image;
+  String createDate;
+  bool like;
+  num rate;
+  num numRate;
+  String rateText;
+  String status;
+  bool favorite;
+  String address;
+  String phone;
+  String email;
+  String website;
+  String hour;
+  String description;
+  String date;
+  String priceRange;
+  List<ImageModel> photo;
+  List<HourModel> hourDetail;
+  List<IconModel> service;
+  List<ProductModel> feature;
+  List<ProductModel> related;
+  LocationModel location;
+  UserModel author;
+  ProductType type;
+  List<SocialIcon> socialicon;
 
   ProductModel(
     this.id,
@@ -74,15 +74,94 @@ class ProductModel {
     this.socialicon,
   );
 
-  static List<HourModel> _setHourDetail(hour) {
-    if (hour != null) {
-      final Iterable refactorHour = hour;
-      return refactorHour.map((item) {
-        return HourModel.fromJson(item);
-      }).toList();
-    }
-    return null;
+  @override
+  String toString() {
+    return toJson().toString();
   }
+
+  ProductModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    id = json['id'];
+    title = json['title'];
+    subtitle = json['subtitle'];
+    image = json['image'];
+    createDate = json['createDate'];
+    like = json['like'];
+    rate = json['rate'];
+    numRate = json['numRate'];
+    rateText = json['rateText'];
+    status = json['status'];
+    favorite = json['favorite'];
+    address = json['address'];
+    phone = json['phone'];
+    email = json['email'];
+    website = json['website'];
+    // _setHourDetail(json['hour']);
+    description = json['description'];
+    date = json['date'];
+    priceRange = json['priceRange'];
+    hourDetail = json['hourDetail'];
+    _setService(json['service']);
+    _setPhoto(json['photo']);
+    _setFeature(json['feature']);
+     _setRelated(json['related']);
+    _setLocation(json['location']);
+     _setAuthor(json['author']);
+    type = _setType(json['type']);
+    _setSocial(json['socialicon']);
+    
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (id != null) json['id'] = id;
+    if (title != null) json['title'] = title;
+    if (subtitle != null) json['subtitle'] = subtitle;
+    if (image != null) json['image'] = image;
+    if (type != null) json['type'] = type;
+    if (createDate != null) json['createDate'] = createDate;
+    if (like != null) json['like'] = like;
+    if (rate != null) json['rate'] = rate;
+    if (numRate != null) json['numRate'] = numRate;
+    if (rateText != null) json['rateText'] = rateText;
+    if (status != null) json['status'] = status;
+    if (favorite != null) json['favorite'] = favorite;
+    if (address != null) json['address'] = address;
+    if (phone != null) json['phone'] = phone;
+    if (email != null) json['email'] = email;
+    if (website != null) json['website'] = website;
+    if (hour != null) json['hour'] = hour;
+    if (description != null) json['description'] = description;
+    if (date != null) json['date'] = date;
+    if (priceRange != null) json['priceRange'] = priceRange;
+    if (hourDetail != null) json['hourDetail'] = hourDetail;
+    if (service != null) json['service'] = service;
+    if (photo != null) json['photo'] = photo;
+    if (feature != null) json['feature'] = feature;
+    if (related != null) json['related'] = related;
+    if (location != null) json['location'] = location;
+    if (author != null) json['author'] = author;
+    if (type != null) json['type'] = type;
+    if (socialicon != null) json['socialicon'] = socialicon;
+
+    return json;
+  }
+
+  static List<ProductModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? List<ProductModel>()
+        : json.map((value) => ProductModel.fromJson(value)).toList();
+  }
+
+  // static List<HourModel> _setHourDetail(hour) {
+  //   if (hour != null) {
+  //     final Iterable refactorHour = hour;
+  //     return refactorHour.map((item) {
+  //       return HourModel.fromJson(item);
+  //     }).toList();
+  //   }
+  //   return null;
+  // }
 
   static List<IconModel> _setService(icon) {
     if (icon != null) {
@@ -171,37 +250,37 @@ class ProductModel {
     }
   }
 
-  factory ProductModel.fromJson(Map<String, dynamic> json) {
-    return ProductModel(
-      json['id'] as int ?? 0,
-      json['title'] as String ?? 'Unknown',
-      json['subtitle'] as String ?? 'Unknown',
-      json['image'] as String ?? 'Unknown',
-      json['created_date'] as String ?? 'Unknown',
-      json['like'] as bool ?? false,
-      json['rate'] as num ?? 0,
-      json['num_rate'] as num ?? 0,
-      json['rate_text'] as String ?? 'Unknown',
-      json['status'] as String ?? null,
-      json['favorite'] as bool ?? false,
-      json['address'] as String ?? 'Unknown',
-      json['phone'] as String ?? 'Unknown',
-      json['email'] as String ?? 'Unknown',
-      json['website'] as String ?? 'Unknown',
-      json['hour'] as String ?? 'Unknown',
-      json['description'] as String ?? 'Unknown',
-      json['date'] as String ?? 'Unknown',
-      json['price_range'] as String ?? 'Unknown',
-      _setHourDetail(json['hour_detail']),
-      _setService(json['service']),
-      _setPhoto(json['photo']),
-      _setFeature(json['feature']),
-      _setRelated(json['related']),
-      _setLocation(json['location']),
-      _setAuthor(json['author']),
-      _setType(json['type']),
-      _setSocial(json['socialicon']),
-      
-    );
-  }
+  // factory ProductModel.fromJson(Map<String, dynamic> json) {
+  //   return ProductModel(
+  //     json['id'] as int ?? 0,
+  //     json['title'] as String ?? 'Unknown',
+  //     json['subtitle'] as String ?? 'Unknown',
+  //     json['image'] as String ?? 'Unknown',
+  //     json['created_date'] as String ?? 'Unknown',
+  //     json['like'] as bool ?? false,
+  //     json['rate'] as num ?? 0,
+  //     json['num_rate'] as num ?? 0,
+  //     json['rate_text'] as String ?? 'Unknown',
+  //     json['status'] as String ?? null,
+  //     json['favorite'] as bool ?? false,
+  //     json['address'] as String ?? 'Unknown',
+  //     json['phone'] as String ?? 'Unknown',
+  //     json['email'] as String ?? 'Unknown',
+  //     json['website'] as String ?? 'Unknown',
+  //     json['hour'] as String ?? 'Unknown',
+  //     json['description'] as String ?? 'Unknown',
+  //     json['date'] as String ?? 'Unknown',
+  //     json['price_range'] as String ?? 'Unknown',
+  //     _setHourDetail(json['hour_detail']),
+  //     _setService(json['service']),
+  //     _setPhoto(json['photo']),
+  //     _setFeature(json['feature']),
+  //     _setRelated(json['related']),
+  //     _setLocation(json['location']),
+  //     _setAuthor(json['author']),
+  //     _setType(json['type']),
+  //     _setSocial(json['socialicon']),
+
+  //   );
+  // }
 }

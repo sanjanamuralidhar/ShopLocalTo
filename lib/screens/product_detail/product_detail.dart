@@ -22,16 +22,18 @@ class ProductDetail extends StatefulWidget {
 
 class _ProductDetailState extends State<ProductDetail> {
   bool _like = false;
+  ProductModel _detail;
   // bool _showHour = false;
   ProductDetailPageModel _detailPage;
 
   @override
   void initState() {
     _loadData();
+    _loadDetail();
     super.initState();
   }
 
-  ///Fetch API
+  // /Fetch API
   Future<void> _loadData() async {
     final ResultApiModel result = await Api.getProductDetail(id: widget.id);
     if (result.success) {
@@ -40,6 +42,13 @@ class _ProductDetailState extends State<ProductDetail> {
         _like = _detailPage?.product?.like;
       });
     }
+  }
+  Future<void> _loadDetail() async {
+    final dynamic result = await Api.getShopDataDetail(id: widget.id);
+    print('id is .................${widget.id}');
+    setState(() {
+        _detail = result;
+      });
   }
 
   ///On navigate gallery
@@ -79,25 +88,6 @@ class _ProductDetailState extends State<ProductDetail> {
       _like = !_like;
     });
   }
-
-  ///Build banner UI
-  // Widget _buildBanner() {
-  //   if (_detailPage?.product?.image == null) {
-  //     return Shimmer.fromColors(
-  //       baseColor: Theme.of(context).hoverColor,
-  //       highlightColor: Theme.of(context).highlightColor,
-  //       enabled: true,
-  //       child: Container(
-  //         color: Colors.white,
-  //       ),
-  //     );
-  //   }
-
-  //   return Image.asset(
-  //     _detailPage?.product?.image,
-  //     fit: BoxFit.cover,
-  //   );
-  // }
 Widget _buildBanner() {
     return ListView(
   scrollDirection: Axis.horizontal, // <-- Like so
@@ -549,8 +539,8 @@ Widget _buildBanner() {
                 child: Column(
                   children: <Widget>[
                     _buildInfo(),
-                    _buildFeature(),
-                    _buildRelated()
+                    // _buildFeature(),
+                    // _buildRelated()
                   ],
                 ),
               ),

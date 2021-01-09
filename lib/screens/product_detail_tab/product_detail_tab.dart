@@ -33,12 +33,14 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   bool _like = false;
   List<double> _offsetContentOrigin = [];
   int _indexTab = 0;
+  ProductModel _product;
   ProductDetailTabPageModel _page;
 
   @override
   void initState() {
     _scrollController.addListener(_scrollListener);
     _loadData();
+    _loadDetail();
     super.initState();
   }
 
@@ -56,6 +58,20 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
         _setOriginOffset();
       });
     }
+  }
+
+  // sanjana
+  Future<void> _loadDetail() async {
+    final ProductModel result = await Api.getShopDataDetail(
+      id: widget.id,
+    );
+    print('id is .................${widget.id}');
+      setState(() {
+        _product = result;
+      });
+      Timer(Duration(milliseconds: 150), () {
+        _setOriginOffset();
+      });
   }
 
   ///ScrollListenerEvent
@@ -238,11 +254,11 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     }
 
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _page.tab.map((item) {
-        return TabContent(
-            item: item, page: _page, onProductDetail: _onProductDetail);
-      }).toList(),
+      // crossAxisAlignment: CrossAxisAlignment.start,
+      // children: _page.tab.map((item) {
+      //   return TabContent(
+      //       item: item, page: _page, onProductDetail: _onProductDetail);
+      // }).toList(),
     );
   }
 

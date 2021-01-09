@@ -1,8 +1,8 @@
 class LocationModel {
-  final int id;
-  final String name;
-  final double lat;
-  final double long;
+  int id;
+  String name;
+  double lat;
+  double long;
 
   LocationModel(
     this.id,
@@ -10,13 +10,27 @@ class LocationModel {
     this.lat,
     this.long,
   );
-
-  factory LocationModel.fromJson(Map<String, dynamic> json) {
-    return LocationModel(
-      json['id'] as int ?? 0,
-      json['name'] as String ?? "Unknown",
-      json['lat'] as double ?? 0.0,
-      json['long'] as double ?? 0.0,
-    );
+LocationModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    id = json['id'];
+    name = json['name'];
+    lat = json['lat'];
+    long= json['long'];
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (id != null) json['id'] = id;
+    if (name != null) json['address'] = name;
+    if (lat != null) json['location'] = lat;
+    if (long!=null) json['type'] = long;
+    return json;
+  }
+
+  static List<LocationModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? List<LocationModel>()
+        : json.map((value) => LocationModel.fromJson(value)).toList();
+  }
+  
 }
