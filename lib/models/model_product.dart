@@ -102,11 +102,11 @@ class ProductModel {
     priceRange = json['priceRange'];
     hourDetail = json['hourDetail'];
     _setService(json['service']);
-    _setPhoto(json['photo']);
-    _setFeature(json['feature']);
+    photo=_setPhoto(json['photo']);
+    feature=_setFeature(json['feature']);
      _setRelated(json['related']);
     _setLocation(json['location']);
-     _setAuthor(json['author']);
+     author=_setAuthor(json['author']);
     type = _setType(json['type']);
     _setSocial(json['socialicon']);
     

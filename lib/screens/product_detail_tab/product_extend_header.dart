@@ -3,6 +3,7 @@ import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:listar_flutter/models/model.dart';
 
 class ProductHeader extends SliverPersistentHeaderDelegate {
   final double height;
@@ -10,20 +11,23 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
   final bool like;
   final VoidCallback onPressLike;
   final VoidCallback onPressReview;
+  final ProductModel productModel;
+  final UserModel userModel;
 
-  ProductHeader({
+  ProductHeader(  {
     this.height,
     this.productTabPage,
     this.like,
     this.onPressLike,
-    this.onPressReview,
+    this.onPressReview, this.productModel, this.userModel,
   });
+
 
   @override
   Widget build(context, shrinkOffset, overlapsContent) {
     ///Build info
     Widget information() {
-      if (productTabPage == null) {
+      if (productModel == null) {
         return Shimmer.fromColors(
           baseColor: Theme.of(context).hoverColor,
           highlightColor: Theme.of(context).highlightColor,
@@ -80,7 +84,7 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
-                productTabPage?.product?.title,
+                productModel.title,
                 style: Theme.of(context)
                     .textTheme
                     .headline6
@@ -104,7 +108,7 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      productTabPage?.product?.subtitle,
+                      productModel.subtitle,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
                     Padding(
@@ -114,12 +118,12 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         AppTag(
-                          "${productTabPage?.product?.rate}",
+                          "${productModel.rate}",
                           type: TagType.rateSmall,
                         ),
                         Padding(padding: EdgeInsets.only(left: 5)),
                         StarRating(
-                          rating: productTabPage?.product?.rate,
+                          rating: productModel.rate,
                           size: 14,
                           color: AppTheme.yellowColor,
                           borderColor: AppTheme.yellowColor,
@@ -129,7 +133,7 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
                         ),
                         Padding(padding: EdgeInsets.only(left: 5)),
                         Text(
-                          "(${productTabPage?.product?.numRate})",
+                          "(${productModel.numRate})",
                           style: Theme.of(context).textTheme.bodyText1,
                         ),
                       ],
@@ -137,9 +141,9 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
                   ],
                 ),
               ),
-              productTabPage?.product?.status != null
+              productModel.status != null
                   ? AppTag(
-                      productTabPage?.product?.status,
+                      productModel.status,
                       type: TagType.status,
                     )
                   : Container(),
@@ -161,7 +165,7 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
         child: Column(
           children: <Widget>[
             AppUserInfo(
-              user: productTabPage?.product?.author,
+              user: productModel.author,
               onPressed: () {},
               type: AppUserType.basic,
             ),

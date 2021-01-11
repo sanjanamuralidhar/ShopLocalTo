@@ -130,31 +130,31 @@ class AppUserInfo extends StatelessWidget {
               Stack(
                 alignment: Alignment.bottomRight,
                 children: <Widget>[
-                  Container(
-                    width: 60,
-                    height: 60,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage(user.image),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    padding: EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                    child: Text(
-                      "${user.rate}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                    ),
-                  )
+                  // Container(
+                  //   width: 60,
+                  //   height: 60,
+                  //   decoration: BoxDecoration(
+                  //     shape: BoxShape.circle,
+                  //     image: DecorationImage(
+                  //       image: AssetImage(user.image),
+                  //       fit: BoxFit.cover,
+                  //     ),
+                  //   ),
+                  // ),
+                  // Container(
+                  //   padding: EdgeInsets.all(5),
+                  //   decoration: BoxDecoration(
+                  //     shape: BoxShape.circle,
+                  //     color: Theme.of(context).primaryColor,
+                  //   ),
+                  //   child: Text(
+                  //     "${user.rate}",
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 8,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               Expanded(
@@ -166,19 +166,19 @@ class AppUserInfo extends StatelessWidget {
                       Text(user.name,
                           maxLines: 1,
                           style: Theme.of(context).textTheme.subtitle2),
-                      Padding(
-                        padding: EdgeInsets.only(top: 3, bottom: 3),
-                        child: Text(
-                          user.description,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ),
-                      Text(
-                        user.tag,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: 3, bottom: 3),
+                      //   child: Text(
+                      //     user.description,
+                      //     maxLines: 1,
+                      //     style: Theme.of(context).textTheme.caption,
+                      //   ),
+                      // ),
+                      // Text(
+                      //   user.tag,
+                      //   maxLines: 1,
+                      //   style: Theme.of(context).textTheme.caption,
+                      // ),
                     ],
                   ),
                 ),
@@ -190,19 +190,19 @@ class AppUserInfo extends StatelessWidget {
         return Container(
           child: Row(
             children: <Widget>[
-              Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  image: DecorationImage(
-                    image: AssetImage(
-                      user.image,
-                    ),
-                    fit: BoxFit.cover,
-                  ),
-                ),
-              ),
+              // Container(
+              //   width: 40,
+              //   height: 40,
+              //   decoration: BoxDecoration(
+              //     shape: BoxShape.circle,
+              //     image: DecorationImage(
+              //       image: AssetImage(
+              //         user.image,
+              //       ),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
+              // ),
               Padding(
                 padding: EdgeInsets.only(left: 10, right: 10),
                 child: Column(
@@ -215,10 +215,10 @@ class AppUserInfo extends StatelessWidget {
                           .subtitle1
                           .copyWith(fontWeight: FontWeight.w600),
                     ),
-                    Text(
-                      user.description,
-                      style: Theme.of(context).textTheme.caption,
-                    )
+                    // Text(
+                    //   user.description,
+                    //   style: Theme.of(context).textTheme.caption,
+                    // )
                   ],
                 ),
               )

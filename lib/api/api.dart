@@ -50,7 +50,16 @@ class Api {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
     print('...........getShopDataDetail()............:$result.runT');
+     print('...........getShopDataDetail()............:${result['data']['id']}');
     return ProductModel.fromJson(result['data']);
+  }
+
+  // sanjana
+   static Future<UserModel> getUserDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    print('...........getUserDetail()............:${result['data']['author']}');
+    return UserModel.fromJson(result['data']['author']);
   }
 
   ///Validate token valid
@@ -206,6 +215,16 @@ class Api {
   //  print('getHomeData():$result.runT');
    return PopularPageModel.listFromJson(result['data']);
   }
+
+  // sanjana TAB
+    static Future<List<TabModel>> getTabDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    print('...........getTabDetail()............:$result');
+    return TabModel.listFromJson(result['data']['tab']);
+  }
+
+   
 
 
   ///Singleton factory

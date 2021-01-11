@@ -89,10 +89,10 @@ class AppMessageItem extends StatelessWidget {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            AppGroupCircleAvatar(
-              size: 48,
-              member: item.member,
-            ),
+            // AppGroupCircleAvatar(
+            //   size: 48,
+            //   member: item.member,
+            // ),
             Expanded(
               child: Container(
                 padding: EdgeInsets.only(left: 8, right: 8),

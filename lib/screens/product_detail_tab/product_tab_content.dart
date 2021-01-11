@@ -8,18 +8,18 @@ import 'package:url_launcher/url_launcher.dart';
 class TabContent extends StatelessWidget {
   final TabModel item;
   final ProductDetailTabPageModel page;
+  final ProductModel productModel;
   final Function(ProductModel) onProductDetail;
 
   TabContent({
     Key key,
     this.item,
     this.page,
-    this.onProductDetail,
+    this.onProductDetail, this.productModel,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    print(page?.product?.phone);
     switch (item.key) {
       case 'information':
         return Container(

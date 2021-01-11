@@ -35,12 +35,16 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   int _indexTab = 0;
   ProductModel _product;
   ProductDetailTabPageModel _page;
+  List<TabModel> _tabModel;
+  UserModel _userModel;
 
   @override
   void initState() {
     _scrollController.addListener(_scrollListener);
     _loadData();
     _loadDetail();
+    _loadUser();
+    // _loadTab();
     super.initState();
   }
 
@@ -69,6 +73,31 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       setState(() {
         _product = result;
       });
+      print('ProductModel is .................${_product.author.name}');
+       print('FeatureModel is .................${_product.feature.length}');
+      Timer(Duration(milliseconds: 150), () {
+        _setOriginOffset();
+      });
+  }
+  //sanjana
+  // Future<void> _loadTab() async {
+  //   final List<TabModel> result = await Api.getTabDetail();
+  //   setState(() {
+  //     _tabModel = result;
+  //   });
+  //   print('ShopModel list ************:${_tabModel.length}');
+  // }
+
+  // sanjana
+Future<void> _loadUser() async {
+    final UserModel result = await Api.getUserDetail(
+      id: widget.id,
+    );
+    print('id is .................${widget.id}');
+      setState(() {
+        _userModel = result;
+      });
+      print('usermodel  is .................${_userModel.name}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
@@ -171,61 +200,61 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     });
   }
 
-  ///Build banner UI
-  // Widget _buildBanner() {
-  //   if (_page?.product?.image == null) {
-  //     return Shimmer.fromColors(
-  //       baseColor: Theme.of(context).hoverColor,
-  //       highlightColor: Theme.of(context).highlightColor,
-  //       enabled: true,
-  //       child: Container(
-  //         color: Colors.white,
-  //       ),
-  //     );
-  //   }
-
-  //   return Image.asset(
-  //     _page?.product?.image,
-  //     fit: BoxFit.cover,
-  //   );
-  // }
+  // /Build banner UI
   Widget _buildBanner() {
-    return ListView(
-  scrollDirection: Axis.horizontal, // <-- Like so
-  children: <Widget>[
-    Container(
-      child: Image.asset(Images.Trip1,
-      // "assets/images/trip.png",
+    if (_page?.product?.image == null) {
+      return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Container(
+          color: Colors.white,
+        ),
+      );
+    }
+
+    return Image.asset(
+      _page?.product?.image,
       fit: BoxFit.cover,
-    )),
-    Container(
-      child: Image.asset(Images.Trip2,
-      // "assets/images/trip1.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip3,
-      // "assets/images/trip2.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip4,
-      // "assets/images/trip3.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip5,
-      // "assets/images/trip4.png",
-      fit: BoxFit.cover,
-    )
-    ),
-  ],
-);
-    
+    );
   }
+//   Widget _buildBanner() {
+//     return ListView(
+//   scrollDirection: Axis.horizontal, // <-- Like so
+//   children: <Widget>[
+//     Container(
+//       child: Image.asset(Images.Trip1,
+//       // "assets/images/trip.png",
+//       fit: BoxFit.cover,
+//     )),
+//     Container(
+//       child: Image.asset(Images.Trip2,
+//       // "assets/images/trip1.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip3,
+//       // "assets/images/trip2.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip4,
+//       // "assets/images/trip3.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip5,
+//       // "assets/images/trip4.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//   ],
+// );
+    
+//   }
 
   ///Build Tab Content UI
   Widget _buildTabContent() {
@@ -254,11 +283,11 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     }
 
     return Column(
-      // crossAxisAlignment: CrossAxisAlignment.start,
-      // children: _page.tab.map((item) {
-      //   return TabContent(
-      //       item: item, page: _page, onProductDetail: _onProductDetail);
-      // }).toList(),
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: _page.tab.map((item) {
+        return TabContent(
+            item: item, page: _page, onProductDetail: _onProductDetail);
+      }).toList(),
     );
   }
 
@@ -290,8 +319,10 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
             pinned: false,
             floating: false,
             delegate: ProductHeader(
+              productModel:_product,
+              // userModel: _userModel,
               height: expandedBarHeight,
-              productTabPage: _page,
+              // productTabPage: _page,
               like: _like,
               onPressLike: _onLike,
               onPressReview: _onReview,

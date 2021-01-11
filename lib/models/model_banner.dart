@@ -1,23 +1,28 @@
 class ImageModel {
-  final int id;
-  final String image;
+  int id;
+  String image;
 
   ImageModel(
     this.id,
     this.image,
   );
 
-  factory ImageModel.fromJson(Map<String, dynamic> json) {
-    return ImageModel(
-      json['id'] as int ?? 0,
-      json['image'] as String ?? "Unknown",
-    );
+  ImageModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    id = json['id'];
+    image = json['image'];
+    
   }
 
   Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'image': image,
-    };
+    Map<String, dynamic> json = {};
+    if (id != null) json['id'] = id;
+    if (image != null) json['image'] = image;
+    return json;
+  }
+  static List<ImageModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? List<ImageModel>()
+        : json.map((value) => ImageModel.fromJson(value)).toList();
   }
 }
