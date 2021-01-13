@@ -1,10 +1,13 @@
+import 'dart:async';
+
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
-import 'package:listar_flutter/screens/home/home_category_item.dart';
 import 'package:listar_flutter/screens/home/home_category_list.dart';
 import 'package:listar_flutter/screens/home/home_category_page.dart';
 import 'package:listar_flutter/screens/home/home_sliver_app_bar.dart';
@@ -28,6 +31,13 @@ class _HomeState extends State<Home> {
   List<ShopModel> _shops = [];
   List<CategoryModel2> _categoryList = [];
   bool _tryAgain = false;
+  List<Address> addresses;
+  Address first;
+  Address last;
+  Position _currentPosition;
+  Position _lastKnown;
+  final Geolocator geolocator = Geolocator();
+
 
   @override
   void initState() {
@@ -36,8 +46,34 @@ class _HomeState extends State<Home> {
     _loadPopular();
     _loadShops();
     _loadCategoryList();
+  //  _geoCode();
+  //  getLocation();
+  //  _geoLastKnownCode();
     super.initState();
   }
+  void getLocation() async {
+  _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+    print('${_currentPosition.latitude}:::::::${_currentPosition.longitude}');
+  }
+
+  _geoCode() async{
+Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+     final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
+    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    first = addresses.first;
+    print(":::::::::::::::::::::: ${first.thoroughfare}");
+    print(position);
+  }
+  _geoLastKnownCode() async{
+Position position = await Geolocator.getLastKnownPosition();
+     final coordinates = new Coordinates(position.latitude,position.longitude);
+    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    last = addresses.last;
+    print(":::::::::::::::::::::: ${last.thoroughfare}");
+    print(position);
+  }
+
+ 
 // try dark and white theme
 
   ///On select category
@@ -522,9 +558,9 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
-                    Text('Are you in "Bloor West"?'),
+                    Text('Are you in bloor west'),
                     Text(
-                        'Would you like to change the location to "ChinaTown Toronto" or continue with Bloor West'),
+                        'Would you like to change the location to "ChinaTown Toronto" or continue with bloor west'),
                   ],
                 ),
               ),

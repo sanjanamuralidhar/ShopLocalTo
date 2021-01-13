@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/http_manager.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
@@ -41,14 +42,14 @@ class Api {
   // Get sHOP DETAIL @SANJANA
   static Future<dynamic> getDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id=14'+id.toString());
     return result;
   }
 
   // sanjana
    static Future<ProductModel> getShopDataDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
     print('...........getShopDataDetail()............:$result.runT');
      print('...........getShopDataDetail()............:${result['data']['id']}');
     return ProductModel.fromJson(result['data']);
@@ -57,9 +58,22 @@ class Api {
   // sanjana
    static Future<UserModel> getUserDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
     print('...........getUserDetail()............:${result['data']['author']}');
     return UserModel.fromJson(result['data']['author']);
+  }
+   static Future<List<ImageModel>> getUserPhoto({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
+  //  print('getShops():$result.runT');
+   return ImageModel.listFromJson(result['data']['photo']);
+  }
+
+   static Future<List<TabModel>> getTabDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
+  //  print('getShops():$result.runT');
+   return TabModel.listFromJson(result['data']['tabs']);
   }
 
   ///Validate token valid
@@ -130,7 +144,7 @@ class Api {
     return ResultApiModel.fromJson(result);
   }
 
-  ///Get ProductDetail and Product Detail Tab
+  // /Get ProductDetail and Product Detail Tab
   static Future<dynamic> getProductDetail({id: 0, tabExtend: false}) async {
     await Future.delayed(Duration(seconds: 1));
     String path = "assets/data/product_detail_$id.json";
@@ -139,6 +153,14 @@ class Api {
     }
     final result = await UtilAsset.loadJson(path);
     return ResultApiModel.fromJson(result);
+  }
+
+  // sanjana
+  static Future<List<TabModel>> getTabtabDetail({id: 0, tabExtend: false}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
+    print('this is the result tab data${result['data']['tabs']}');
+    return TabModel.listFromJson(result['data']['tabs']);
   }
   
 
@@ -216,13 +238,7 @@ class Api {
    return PopularPageModel.listFromJson(result['data']);
   }
 
-  // sanjana TAB
-    static Future<List<TabModel>> getTabDetail({id: 0}) async {
-    await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendor?id='+id.toString());
-    print('...........getTabDetail()............:$result');
-    return TabModel.listFromJson(result['data']['tab']);
-  }
+ 
 
    
 

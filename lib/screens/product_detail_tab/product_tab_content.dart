@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/models/model.dart';
-import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class TabContent extends StatelessWidget {
   final TabModel item;
-  final ProductDetailTabPageModel page;
+  final ProductModel page;
   final ProductModel productModel;
   final Function(ProductModel) onProductDetail;
 
@@ -21,7 +20,12 @@ class TabContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (item.key) {
+      
       case 'information':
+      print('+++++++++++++++++++++${item.key}+++++++++++');
+      print('++++++productmodel+++++++++++++++${page.address}+++++++++++');
+      print('++++++feature+++++++++++++++${page.feature.length}+++++++++++');
+      print('++++related+++++++++++++++++${page.related.length}+++++++++++');
         return Container(
           key: item.keyContentItem,
           padding: EdgeInsets.only(left: 20, right: 20),
@@ -73,7 +77,7 @@ class TabContent extends StatelessWidget {
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
-                              page?.product?.address,
+                              page.address,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -89,7 +93,7 @@ class TabContent extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {launch("tel:903 98027892");},
+                  onTap: () {launch("tel:${page.phone}");},
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -118,7 +122,7 @@ class TabContent extends StatelessWidget {
                             ),
                             Text(
                               
-                              page?.product?.phone,
+                              page.phone,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -136,7 +140,7 @@ class TabContent extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {launch("mailto:liststar@passionui.com");},
+                  onTap: () {launch("mailto:${page.email}");},
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -161,7 +165,7 @@ class TabContent extends StatelessWidget {
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
-                              page?.product?.email,
+                              page.email,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -177,7 +181,7 @@ class TabContent extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {launch("https://passionui.com/");},
+                  onTap: () {launch('${page.website}');},
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -202,7 +206,7 @@ class TabContent extends StatelessWidget {
                               style: Theme.of(context).textTheme.caption,
                             ),
                             Text(
-                              page?.product?.website,
+                              page.website,
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1
@@ -245,7 +249,7 @@ class TabContent extends StatelessWidget {
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                                 Text(
-                                  page?.product?.hour,
+                                  page.hour,
                                   style: Theme.of(context)
                                       .textTheme
                                       .bodyText1
@@ -261,7 +265,7 @@ class TabContent extends StatelessWidget {
                 ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: page.product.hourDetail.map((item) {
+                  children: page.hourDetail.map((item) {
                     return Container(
                       decoration: BoxDecoration(
                         border: Border(
@@ -302,7 +306,7 @@ class TabContent extends StatelessWidget {
                   padding: EdgeInsets.only(top: 20),
                 ),
                 Text(
-                  page?.product?.description,
+                  page.description,
                   style: Theme.of(context)
                       .textTheme
                       .bodyText1
@@ -323,7 +327,7 @@ class TabContent extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Text(
-                              page?.product?.date,
+                              page.date,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
@@ -342,7 +346,7 @@ class TabContent extends StatelessWidget {
                           Padding(
                             padding: EdgeInsets.only(top: 3),
                             child: Text(
-                              page?.product?.priceRange,
+                              page.priceRange,
                               style: Theme.of(context)
                                   .textTheme
                                   .subtitle2
@@ -383,34 +387,34 @@ class TabContent extends StatelessWidget {
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Wrap(spacing: 10, runSpacing: 10, 
-                  children: page.product.service.map((item) {
-                    return IntrinsicWidth(
-                        child: SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: Material(
-                          type: MaterialType
-                              .transparency,
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).buttonColor,
-                            ),
-                            child: InkWell(
-                                onTap: () {},
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Image.asset(item.image),
-                                )
-                                ),
-                          )),
-                    ));
-                     }).toList(),
-                  ),
-                ),
+                // Padding(
+                //   padding: EdgeInsets.only(bottom: 20),
+                //   child: Wrap(spacing: 10, runSpacing: 10, 
+                //   children: page.service.map((item) {
+                //     return IntrinsicWidth(
+                //         child: SizedBox(
+                //       height: 35,
+                //       width: 35,
+                //       child: Material(
+                //           type: MaterialType
+                //               .transparency,
+                //           child: Ink(
+                //             decoration: BoxDecoration(
+                //               borderRadius: BorderRadius.circular(10),
+                //               color: Theme.of(context).buttonColor,
+                //             ),
+                //             child: InkWell(
+                //                 onTap: () {},
+                //                 child: Padding(
+                //                   padding: const EdgeInsets.all(8),
+                //                   child: Image.asset(item.image),
+                //                 )
+                //                 ),
+                //           )),
+                //     ));
+                //      }).toList(),
+                //   ),
+                // ),
               ],
             ),
           ),
@@ -446,7 +450,7 @@ class TabContent extends StatelessWidget {
                   child: Wrap(
                     spacing: 10,
                     runSpacing: 10,
-                    children: page.product.service.map((item) {
+                    children: page.service.map((item) {
                       return IntrinsicWidth(
                         child: AppTag(
                           item.title,
@@ -466,63 +470,64 @@ class TabContent extends StatelessWidget {
           ),
         );
 
-      case 'related':
-        return Container(
-          key: item.keyContentItem,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  bottom: 15,
-                  top: 15,
-                ),
-                child: Text(
-                  Translate.of(context).translate('Related'),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-              Container(
-                height: 220,
-                child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  padding: EdgeInsets.only(left: 20),
-                  itemBuilder: (context, index) {
-                    final ProductModel item = page?.product?.feature[index];
-                    return Container(
-                      width: MediaQuery.of(context).size.width / 2,
-                      padding: EdgeInsets.only(right: 15),
-                      child: AppProductItem(
-                        onPressed: onProductDetail,
-                        item: item,
-                        type: ProductViewType.gird,
-                      ),
-                    );
-                  },
-                  itemCount: page.product.feature.length,
-                ),
-              ),
-              Container(
-                height: 15,
-                margin: EdgeInsets.only(left: 20, right: 20),
-                decoration: BoxDecoration(
-                  border: Border(
-                    bottom: BorderSide(
-                      color: Theme.of(context).dividerColor,
-                    ),
-                  ),
-                ),
-              )
-            ],
-          ),
-        );
+      // case 'related':
+      //   return Container(
+      //     key: item.keyContentItem,
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: <Widget>[
+      //         Padding(
+      //           padding: EdgeInsets.only(
+      //             left: 20,
+      //             right: 20,
+      //             bottom: 15,
+      //             top: 15,
+      //           ),
+      //           child: Text(
+      //             Translate.of(context).translate('Related'),
+      //             style: Theme.of(context)
+      //                 .textTheme
+      //                 .headline6
+      //                 .copyWith(fontWeight: FontWeight.w600),
+      //           ),
+      //         ),
+      //         Container(
+      //           height: 220,
+      //           child: ListView.builder(
+      //             scrollDirection: Axis.horizontal,
+      //             padding: EdgeInsets.only(left: 20),
+      //             itemBuilder: (context, index) {
+      //               final item = page.related[index];
+      //               return Container(
+      //                 width: MediaQuery.of(context).size.width / 2,
+      //                 padding: EdgeInsets.only(right: 15),
+      //                 child: AppProductItem(
+      //                   item: item,
+      //                   onPressed: onProductDetail,
+      //                   type: ProductViewType.gird,
+      //                 ),
+      //               );
+      //             },
+      //             itemCount: page.related.length,
+      //           ),
+      //         ),
+      //         Container(
+      //           height: 15,
+      //           margin: EdgeInsets.only(left: 20, right: 20),
+      //           decoration: BoxDecoration(
+      //             border: Border(
+      //               bottom: BorderSide(
+      //                 color: Theme.of(context).dividerColor,
+      //               ),
+      //             ),
+      //           ),
+      //         )
+      //       ],
+      //     ),
+      //   );
 
       case 'nearly':
+      //  print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&${page.nearly.length}");
         return Container(
           key: item.keyContentItem,
           child: Column(
@@ -549,7 +554,7 @@ class TabContent extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   padding: EdgeInsets.only(left: 20),
                   itemBuilder: (context, index) {
-                    final ProductModel item = page?.product?.feature[index];
+                    final item = page.nearly[index];
                     return Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       padding: EdgeInsets.only(right: 15),
@@ -560,7 +565,7 @@ class TabContent extends StatelessWidget {
                       ),
                     );
                   },
-                  itemCount: page.product.feature.length,
+                  itemCount: page.nearly.length,
                 ),
               ),
               Container(
@@ -578,40 +583,40 @@ class TabContent extends StatelessWidget {
           ),
         );
 
-      case 'ordinary':
-        return Container(
-          key: item.keyContentItem,
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Container(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: 15, bottom: 15),
-                  child: Text(
-                    Translate.of(context).translate('Ordinary Listing'),
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ),
-                Column(
-                  children: page.product.related.map((item) {
-                    return Padding(
-                      padding: EdgeInsets.only(bottom: 15),
-                      child: AppProductItem(
-                        onPressed: onProductDetail,
-                        item: item,
-                        type: ProductViewType.small,
-                      ),
-                    );
-                  }).toList(),
-                )
-              ],
-            ),
-          ),
-        );
+      // case 'ordinary':
+      //   return Container(
+      //     key: item.keyContentItem,
+      //     padding: EdgeInsets.only(left: 20, right: 20),
+      //     child: Container(
+      //       child: Column(
+      //         crossAxisAlignment: CrossAxisAlignment.start,
+      //         children: <Widget>[
+      //           Padding(
+      //             padding: EdgeInsets.only(top: 15, bottom: 15),
+      //             child: Text(
+      //               Translate.of(context).translate('Ordinary Listing'),
+      //               style: Theme.of(context)
+      //                   .textTheme
+      //                   .headline6
+      //                   .copyWith(fontWeight: FontWeight.w600),
+      //             ),
+      //           ),
+      //           Column(
+      //             children: page.related.map((item) {
+      //               return Padding(
+      //                 padding: EdgeInsets.only(bottom: 15),
+      //                 child: AppProductItem(
+      //                   onPressed: onProductDetail,
+      //                   item: item,
+      //                   type: ProductViewType.small,
+      //                 ),
+      //               );
+      //             }).toList(),
+      //           )
+      //         ],
+      //       ),
+      //     ),
+      //   );
 
       default:
         return Container(

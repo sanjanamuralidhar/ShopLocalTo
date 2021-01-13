@@ -9,7 +9,7 @@ class ImageModel {
 
   ImageModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    id = json['id'];
+   id = json['id'];
     image = json['image'];
     
   }

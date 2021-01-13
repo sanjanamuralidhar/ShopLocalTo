@@ -1,8 +1,8 @@
 import 'package:listar_flutter/models/model.dart';
 
 class ProductDetailTabPageModel {
-  final ProductModel product;
-  final List<TabModel> tab;
+   ProductModel product;
+   List<TabModel> tab;
 
   ProductDetailTabPageModel(
     this.product,
@@ -18,11 +18,30 @@ class ProductDetailTabPageModel {
     }
     return null;
   }
-
-  factory ProductDetailTabPageModel.fromJson(Map<String, dynamic> json) {
-    return ProductDetailTabPageModel(
-      ProductModel.fromJson(json),
-      _setTab(json['tab']),
-    );
+ ProductDetailTabPageModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    product = json['product'];
+    tab =_setTab( json['tab']); 
   }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (product != null) json['product'] = product;
+    if (tab != null) json['tab'] = tab;
+
+    return json;
+  }
+
+  static List<ProductDetailTabPageModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? List<ProductDetailTabPageModel>()
+        : json.map((value) => ProductDetailTabPageModel.fromJson(value)).toList();
+  }
+  // factory ProductDetailTabPageModel.fromJson(Map<String, dynamic> json) {
+  //   return ProductDetailTabPageModel(
+  //     ProductModel.fromJson(json),
+  //     _setTab(json['tab']),
+  //   );
+  // }
+
 }

@@ -12,9 +12,7 @@ class UserModel {
   String email;
   String phone;
 String location;
-  // final String access_token;
-  // final String token_type;
-  // final int expires_in;
+ 
 
   UserModel(
     this.id,
@@ -30,9 +28,6 @@ String location;
     this.email,
     this.location,
     this.phone,
-    // this.access_token,
-    // this.token_type,
-    // this.expires_in
   );
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -40,7 +35,7 @@ String location;
     id = json['id'];
     name = json['full_name'];
     nickname = json['nickname'];
-    image= json['image'];
+    image= json['photo'];
     link = json['link'];
     level = json['level'];
     description = json['description'];
@@ -53,23 +48,7 @@ String location;
     
   }
 
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (id != null) json['id'] = id;
-    if(name!=null) json['full_name']=name;
-    if(nickname!=null) json['nickname']=nickname;
-    if(image!=null) json['image']=image;
-    if(link!=null) json['link']=link;
-    if(level!=null) json['level']=level;
-    if(description!=null) json['description']=description;
-    if(tag!=null) json['tag']=tag;
-    if(rate!=null) json['rate']=rate;
-    if(token!=null) json['token']=token;
-    if(email!=null) json['email']=email;
-    if(location!=null) json['location']=location;
-    if(phone!=null) json['phone']=phone;
-    return json;
-  }
+
  static List<UserModel> listFromJson(List<dynamic> json) {
     return json == null
         ? List<UserModel>()
@@ -90,11 +69,25 @@ String location;
   //     json['email'] as String ?? 'Unknown',
   //     json['phone'] as String ?? 'Unknown',
   //     json['location'] as String ?? 'Unknown',
-  //     // json['access_token'] as String ?? 'Unknown',
-  //     // json['token_type'] as String ?? 'Unknown',
-  //     // json['expires_in'] as int ?? 'Unknown',
   //   );
   // }
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (id != null) json['id'] = id;
+    if(name!=null) json['full_name']=name;
+    if(nickname!=null) json['nickname']=nickname;
+    if(image!=null) json['photo']=image;
+    if(link!=null) json['link']=link;
+    if(level!=null) json['level']=level;
+    if(description!=null) json['description']=description;
+    if(tag!=null) json['tag']=tag;
+    if(rate!=null) json['rate']=rate;
+    if(token!=null) json['token']=token;
+    if(email!=null) json['email']=email;
+    if(location!=null) json['location']=location;
+    if(phone!=null) json['phone']=phone;
+    return json;
+  }
 
   // Map<String, dynamic> toJson() {
   //   return {

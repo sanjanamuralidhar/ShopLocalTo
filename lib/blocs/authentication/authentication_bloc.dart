@@ -27,7 +27,7 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
         );
         final user = UserModel.fromJson(jsonDecode(getUserPreferences));
         httpManager.baseOptions.headers["Authorization"] =
-            "Bearer " + user.token;
+            "Bearer "+ user.token;
         await Future.delayed(Duration(seconds: 1));
         final ResultApiModel result = await Api.validateToken();
 

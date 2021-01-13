@@ -28,21 +28,21 @@ class _ProductDetailState extends State<ProductDetail> {
 
   @override
   void initState() {
-    _loadData();
+    // _loadData();
     _loadDetail();
     super.initState();
   }
 
   // /Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getProductDetail(id: widget.id);
-    if (result.success) {
-      setState(() {
-        _detailPage = ProductDetailPageModel.fromJson(result.data);
-        _like = _detailPage?.product?.like;
-      });
-    }
-  }
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getProductDetail(id: widget.id);
+  //   if (result.success) {
+  //     setState(() {
+  //       _detailPage = ProductDetailPageModel.fromJson(result.data);
+  //       _like = _detailPage?.product?.like;
+  //     });
+  //   }
+  // }
   Future<void> _loadDetail() async {
     final dynamic result = await Api.getShopDataDetail(id: widget.id);
     print('id is .................${widget.id}');
@@ -51,6 +51,7 @@ class _ProductDetailState extends State<ProductDetail> {
       });
       print('featureModel is .................${_detail.feature.length}');
   }
+
 
   ///On navigate gallery
   // void _onPhotoPreview() {

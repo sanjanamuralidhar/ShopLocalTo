@@ -38,10 +38,13 @@ class ProductModel {
   List<IconModel> service;
   List<ProductModel> feature;
   List<ProductModel> related;
+   List<ProductModel> nearly;
+  List<ProductModel> tabs;
   LocationModel location;
   UserModel author;
   ProductType type;
-  List<SocialIcon> socialicon;
+  // List<SocialIcon> socialicon;
+  SocialIcon socialicon;
 
   ProductModel(
     this.id,
@@ -72,6 +75,8 @@ class ProductModel {
     this.author,
     this.type,
     this.socialicon,
+    this.tabs,
+    this.nearly,
   );
 
   @override
@@ -96,19 +101,21 @@ class ProductModel {
     phone = json['phone'];
     email = json['email'];
     website = json['website'];
-    // _setHourDetail(json['hour']);
+    hourDetail = _setHourDetail(json['hour_detail']);
     description = json['description'];
     date = json['date'];
-    priceRange = json['priceRange'];
-    hourDetail = json['hourDetail'];
-    _setService(json['service']);
+    priceRange = json['price_range'];
+    hour = json['hour'];
+    service=_setService(json['service']);
     photo=_setPhoto(json['photo']);
     feature=_setFeature(json['feature']);
-     _setRelated(json['related']);
-    _setLocation(json['location']);
+    related= _setRelated(json['related']);
+    location=_setLocation(json['location']);
      author=_setAuthor(json['author']);
     type = _setType(json['type']);
-    _setSocial(json['socialicon']);
+    tabs = _setTab(json['tabs']);
+    socialicon=_setSocial(json['socialicon']);
+    nearly=_setNearly(json['nearly']);
     
   }
 
@@ -133,7 +140,7 @@ class ProductModel {
     if (hour != null) json['hour'] = hour;
     if (description != null) json['description'] = description;
     if (date != null) json['date'] = date;
-    if (priceRange != null) json['priceRange'] = priceRange;
+    if (priceRange != null) json['price_range'] = priceRange;
     if (hourDetail != null) json['hourDetail'] = hourDetail;
     if (service != null) json['service'] = service;
     if (photo != null) json['photo'] = photo;
@@ -142,7 +149,9 @@ class ProductModel {
     if (location != null) json['location'] = location;
     if (author != null) json['author'] = author;
     if (type != null) json['type'] = type;
-    if (socialicon != null) json['socialicon'] = socialicon;
+    if(tabs !=null) json['tabs'] = tabs;
+     if(nearly !=null) json['nearly'] = nearly;
+    // if (socialicon != null) json['socialicon'] = socialicon;
 
     return json;
   }
@@ -153,15 +162,15 @@ class ProductModel {
         : json.map((value) => ProductModel.fromJson(value)).toList();
   }
 
-  // static List<HourModel> _setHourDetail(hour) {
-  //   if (hour != null) {
-  //     final Iterable refactorHour = hour;
-  //     return refactorHour.map((item) {
-  //       return HourModel.fromJson(item);
-  //     }).toList();
-  //   }
-  //   return null;
-  // }
+  static List<HourModel> _setHourDetail(hourDetail) {
+    if (hourDetail != null) {
+      final Iterable refactorHour = hourDetail;
+      return refactorHour.map((item) {
+        return HourModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
 
   static List<IconModel> _setService(icon) {
     if (icon != null) {
@@ -193,6 +202,26 @@ class ProductModel {
     return null;
   }
 
+  static List<ProductModel> _setNearly(nearly) {
+    if (nearly != null) {
+      final Iterable refactorFeature = nearly;
+      return refactorFeature.map((item) {
+        return ProductModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+  
+  static List<ProductModel> _setTab(tabs) {
+    if (tabs != null) {
+      final Iterable refactorFeature = tabs;
+      return refactorFeature.map((item) {
+        return ProductModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+
   static List<ProductModel> _setRelated(related) {
     if (related != null) {
       final Iterable refactorRelated = related;
@@ -216,16 +245,23 @@ class ProductModel {
     }
     return null;
   }
-
-  static List<SocialIcon> _setSocial(socialicon) {
+  // temporary social icon
+  static SocialIcon _setSocial(socialicon) {
     if (socialicon != null) {
-      final Iterable refactorSocial = socialicon;
-      return refactorSocial.map((item) {
-        return SocialIcon.fromJson(item);
-      }).toList();
+      return SocialIcon.fromJson(socialicon);
     }
     return null;
   }
+// real social icon
+  // static List<SocialIcon> _setSocial(socialicon) {
+  //   if (socialicon != null) {
+  //     final Iterable refactorSocial = socialicon;
+  //     return refactorSocial.map((item) {
+  //       return SocialIcon.fromJson(item);
+  //     }).toList();
+  //   }
+  //   return null;
+  // }
 
   static ProductType _setType(String type) {
     switch (type) {

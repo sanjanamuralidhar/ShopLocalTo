@@ -29,23 +29,10 @@ class _HomeSwipeState extends State<HomeSwipe> {
   String value;
   bool isSwitched = false;
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
-  Future<dynamic> getLocation() async {
-    String location1;
-    bool isLoggedIn = await flutterSecureStorage.containsKey(key: 'location');
-    print('isloggedin:$isLoggedIn');
-    if (isLoggedIn) {
-      String location = await flutterSecureStorage.read(key: 'location');
-      location1 = location;
-      print('location:$location');
-    }
-    final nullable = location1.isEmpty ? null : location1;
-    value = nullable;
-    print('location2:$location1');
-  }
+
 
   @override
   Widget build(BuildContext context) {
-    getLocation();
     if (value == null) {
       Text('novalue');
     }

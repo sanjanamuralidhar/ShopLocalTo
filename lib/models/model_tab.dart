@@ -27,7 +27,7 @@ class TabModel {
     keyContentItem = json['keyContentItem'];
     keyTabItem = json['keyTabItem'];
     title = json['title'];
-    _setList(json['list']);
+    list=_setList(json['list']);
 
     
   }

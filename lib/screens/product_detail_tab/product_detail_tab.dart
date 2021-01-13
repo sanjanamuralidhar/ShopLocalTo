@@ -7,6 +7,7 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:shimmer/shimmer.dart';
 
+import 'product_banner_photo.dart';
 import 'product_extend_header.dart';
 import 'product_tab_bar.dart';
 import 'product_tab_content.dart';
@@ -37,31 +38,33 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   ProductDetailTabPageModel _page;
   List<TabModel> _tabModel;
   UserModel _userModel;
+    List<ImageModel> _images = [];
 
   @override
   void initState() {
-    _scrollController.addListener(_scrollListener);
+    // _loadPhoto();
     _loadData();
     _loadDetail();
-    _loadUser();
+    _scrollController.addListener(_scrollListener);
     // _loadTab();
+    
+    // _loadUser();
+    
     super.initState();
   }
 
-  ///Fetch API
+  // /Fetch API
   Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getProductDetail(
-      tabExtend: true,
+    final List<TabModel> result = await Api.getTabtabDetail(
       id: widget.id,
     );
-    if (result.success) {
       setState(() {
-        _page = ProductDetailTabPageModel.fromJson(result.data);
+        _tabModel = result;
       });
+      print('TabModel is .................${_tabModel.length}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
-    }
   }
 
   // sanjana
@@ -75,18 +78,11 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       });
       print('ProductModel is .................${_product.author.name}');
        print('FeatureModel is .................${_product.feature.length}');
+       print('TabModel is .................${_product.tabs.length}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
   }
-  //sanjana
-  // Future<void> _loadTab() async {
-  //   final List<TabModel> result = await Api.getTabDetail();
-  //   setState(() {
-  //     _tabModel = result;
-  //   });
-  //   print('ShopModel list ************:${_tabModel.length}');
-  // }
 
   // sanjana
 Future<void> _loadUser() async {
@@ -103,9 +99,18 @@ Future<void> _loadUser() async {
       });
   }
 
+  Future<void> _loadPhoto() async {
+    final List<ImageModel> result = await Api.getUserPhoto();
+    setState(() {
+      _images = result;
+    });
+    print('ImageModel list ************:${_images.length}');
+  }
+
+
   ///ScrollListenerEvent
   void _scrollListener() {
-    if (_page?.tab != null) {
+    if (_tabModel != null) {
       int activeTab = 0;
       double offsetTab;
       double widthDevice = MediaQuery.of(context).size.width;
@@ -137,9 +142,9 @@ Future<void> _loadUser() async {
 
   ///Set Origin Offset default when render success
   void _setOriginOffset() {
-    if (_page?.tab != null && _offsetContentOrigin.isEmpty) {
+    if (_tabModel != null && _offsetContentOrigin.isEmpty) {
       setState(() {
-        _offsetContentOrigin = _page.tab.map((item) {
+        _offsetContentOrigin = _tabModel.map((item) {
           final RenderBox box =
               item.keyContentItem.currentContext.findRenderObject();
           final position = box.localToGlobal(Offset.zero);
@@ -202,22 +207,49 @@ Future<void> _loadUser() async {
 
   // /Build banner UI
   Widget _buildBanner() {
-    if (_page?.product?.image == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Container(
-          color: Colors.white,
-        ),
+   if (_images == null) {
+      return ListView.builder(
+        scrollDirection: Axis.horizontal,
+        padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
+        itemBuilder: (context, index) {
+          final item = _images[index];
+          return Padding(
+            padding: EdgeInsets.only(left: 15),
+            child: SliverPersistentHeader(
+              pinned: true,
+            floating: false,
+            delegate:ProductBannerHeader(
+             height: expandedBarHeight,
+             productModel:item
+            ),
+            )
+          );
+        },
+        itemCount: List.generate(8, (index) => index).length,
       );
     }
-
     return Image.asset(
-      _page?.product?.image,
+      Images.Trip4,
       fit: BoxFit.cover,
     );
   }
+    // if (_page?.product?.image == null) {
+    //   return Shimmer.fromColors(
+    //     baseColor: Theme.of(context).hoverColor,
+    //     highlightColor: Theme.of(context).highlightColor,
+    //     enabled: true,
+    //     child: Container(
+    //       color: Colors.white,
+    //     ),
+    //   );
+    // }
+
+    // return Image.asset(
+    //   _page?.product?.image,
+    //   fit: BoxFit.cover,
+    // );
+  // }
+  
 //   Widget _buildBanner() {
 //     return ListView(
 //   scrollDirection: Axis.horizontal, // <-- Like so
@@ -258,7 +290,8 @@ Future<void> _loadUser() async {
 
   ///Build Tab Content UI
   Widget _buildTabContent() {
-    if (_page?.tab == null) {
+    // print('(((((((((((((((((((((((((((${_tabModel.length})))))))))))))))))))))))))');
+    if (_tabModel == null) {
       return Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Shimmer.fromColors(
@@ -284,9 +317,9 @@ Future<void> _loadUser() async {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: _page.tab.map((item) {
+      children: _tabModel.map((item) {
         return TabContent(
-            item: item, page: _page, onProductDetail: _onProductDetail);
+            item: item, page: _product, onProductDetail: _onProductDetail);
       }).toList(),
     );
   }
@@ -336,7 +369,7 @@ Future<void> _loadUser() async {
               tabController: _tabController,
               onIndexChanged: _onChangeTab,
               indexTab: _indexTab,
-              tab: _page?.tab,
+              tab: _tabModel,
             ),
           ),
           SliverToBoxAdapter(
