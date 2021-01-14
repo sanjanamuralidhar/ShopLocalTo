@@ -36,8 +36,8 @@ class _SignInState extends State<SignIn> {
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
-    _textEmailController.text = "test@gmail.com";
-    _textPassController.text = "123456";
+    _textEmailController.text;
+    _textPassController.text;
     super.initState();
   }
 
@@ -139,7 +139,7 @@ class _SignInState extends State<SignIn> {
                 //   child: Text('Login'),
                 // ),
                 AppTextInput(
-                  hintText: Translate.of(context).translate('account'),
+                  hintText: Translate.of(context).translate('email'),
                   // errorText: _validID != null
                   //     ? Translate.of(context).translate(_validID)
                   //     : null,
@@ -206,14 +206,6 @@ class _SignInState extends State<SignIn> {
                       listener: (context, loginListener) {
                         if (loginListener is LoginFail) {
                           _showMessage(loginListener.message);
-                          Fluttertoast.showToast(
-                              msg: "Verified...!!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.blue[800],
-                              textColor: Colors.white,
-                              fontSize: 16.0);
                         }
                       },
                       child: AppButton(

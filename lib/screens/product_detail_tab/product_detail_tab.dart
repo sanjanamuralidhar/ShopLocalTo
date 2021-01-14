@@ -319,7 +319,7 @@ Future<void> _loadUser() async {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: _tabModel.map((item) {
         return TabContent(
-            item: item, page: _product, onProductDetail: _onProductDetail);
+            item: item, page: _product, onNearlyModelDetail: _onProductDetail);
       }).toList(),
     );
   }

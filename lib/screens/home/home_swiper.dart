@@ -27,12 +27,26 @@ class _HomeSwipeState extends State<HomeSwipe> {
   // String location;
   List<ShopModel> shops;
   String value;
+  String locationName;
   bool isSwitched = false;
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
-
+  Future<dynamic> getLocation() async {	
+    String location1;	
+    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'location');	
+    print('isloggedin:$isLoggedIn');	
+    if (isLoggedIn) {	
+      String location = await flutterSecureStorage.read(key:'location');	
+      location1 = location;	
+      print('location:$location');	
+    }	
+    final nullable = location1.isEmpty ? null : location1;	
+    value = nullable;	
+    print('location2:$location1');	
+  }
 
   @override
   Widget build(BuildContext context) {
+   getLocation();
     if (value == null) {
       Text('novalue');
     }
@@ -120,6 +134,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
   }
 
   Widget _buildValue(BuildContext context) {
+     
     if (value == null) {
       return Shimmer.fromColors(
         child:Padding(
@@ -214,16 +229,17 @@ _openPopup(context) {
                 ),
                 // ignore: non_constant_identifier_names
                 suggestionsCallback: (Pattern) async {
-                  // List<ShopModel> list = shopModels;
-                  // var suggetionList = Pattern.isEmpty
-                  //     ? null
-                  //     : list
-                  //         .where((e) => e.title
-                  //             .toLowerCase()
-                  //             .contains(Pattern.toLowerCase()))
-                  //         .toList();
+                  // //hardcoded datas to be changed
+                  List<ShopModel> list = shopModels;
+                  var suggetionList = Pattern.isEmpty
+                      ? null
+                      : list
+                          .where((e) => e.title
+                              .toLowerCase()
+                              .contains(Pattern.toLowerCase()))
+                          .toList();
 
-                  // return suggetionList;
+                  return suggetionList;
                 },
                 itemBuilder: (context, suggestion) {
                   return ListTile(

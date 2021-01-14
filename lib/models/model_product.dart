@@ -38,7 +38,7 @@ class ProductModel {
   List<IconModel> service;
   List<ProductModel> feature;
   List<ProductModel> related;
-   List<ProductModel> nearly;
+   List<NearlyModel> nearly;
   List<ProductModel> tabs;
   LocationModel location;
   UserModel author;
@@ -202,11 +202,11 @@ class ProductModel {
     return null;
   }
 
-  static List<ProductModel> _setNearly(nearly) {
+  static List<NearlyModel> _setNearly(nearly) {
     if (nearly != null) {
       final Iterable refactorFeature = nearly;
       return refactorFeature.map((item) {
-        return ProductModel.fromJson(item);
+        return NearlyModel.fromJson(item);
       }).toList();
     }
     return null;

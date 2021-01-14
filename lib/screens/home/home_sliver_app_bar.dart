@@ -11,7 +11,6 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
 
   AppBarHomeSliver({this.expandedHeight, this.banners});
   String dropdownValue = 'One';
-
   @override
   Widget build(context, shrinkOffset, overlapsContent) {
     return Stack(
@@ -75,16 +74,17 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                           ),
                           // ignore: non_constant_identifier_names
                           suggestionsCallback: (Pattern) async {
-                            // List<ShopModel> list = shopModel;
-                            // var suggetionList = Pattern.isEmpty
-                            //     ? null
-                            //     : list
-                            //         .where((e) => e.title
-                            //             .toLowerCase()
-                            //             .contains(Pattern.toLowerCase()))
-                            //         .toList();
+                            ////hardcoded datas
+                            List<ShopModel> list = shopModels;
+                            var suggetionList = Pattern.isEmpty
+                                ? null
+                                : list
+                                    .where((e) => e.title
+                                        .toLowerCase()
+                                        .contains(Pattern.toLowerCase()))
+                                    .toList();
 
-                            // return suggetionList;
+                            return suggetionList;
                           },
                           itemBuilder: (context, suggestion) {
                             return ListTile(

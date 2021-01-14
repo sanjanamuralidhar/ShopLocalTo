@@ -7,6 +7,7 @@ import 'package:url_launcher/url_launcher.dart';
 class TabContent extends StatelessWidget {
   final TabModel item;
   final ProductModel page;
+  final Function(NearlyModel) onNearlyModelDetail;
   final ProductModel productModel;
   final Function(ProductModel) onProductDetail;
 
@@ -14,7 +15,7 @@ class TabContent extends StatelessWidget {
     Key key,
     this.item,
     this.page,
-    this.onProductDetail, this.productModel,
+    this.onProductDetail, this.productModel, this.onNearlyModelDetail,
   }) : super(key: key);
 
   @override
@@ -527,18 +528,13 @@ class TabContent extends StatelessWidget {
       //   );
 
       case 'nearly':
-      //  print("&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&${page.nearly.length}");
         return Container(
           key: item.keyContentItem,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(
-                  left: 20,
-                  right: 20,
-                  bottom: 15,
-                  top: 15,
+                padding: EdgeInsets.only(left: 20,right: 20,bottom: 15,top: 15,
                 ),
                 child: Text(
                   Translate.of(context).translate('nearly'),
@@ -559,8 +555,8 @@ class TabContent extends StatelessWidget {
                       width: MediaQuery.of(context).size.width * 0.9,
                       padding: EdgeInsets.only(right: 15),
                       child: AppProductItem(
-                        onPressed: onProductDetail,
-                        item: item,
+                        onPress: onNearlyModelDetail,
+                        nearlyModel: item,
                         type: ProductViewType.list,
                       ),
                     );

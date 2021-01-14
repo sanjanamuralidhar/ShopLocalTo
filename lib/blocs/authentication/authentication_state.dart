@@ -7,3 +7,5 @@ class AuthenticationBeginCheck extends AuthenticationState {}
 class AuthenticationSuccess extends AuthenticationState {}
 
 class AuthenticationFail extends AuthenticationState {}
+
+class AuthenticationSignupSuccess extends AuthenticationState{}

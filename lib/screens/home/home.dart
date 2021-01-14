@@ -46,32 +46,33 @@ class _HomeState extends State<Home> {
     _loadPopular();
     _loadShops();
     _loadCategoryList();
-  //  _geoCode();
+   _geoCode();
   //  getLocation();
   //  _geoLastKnownCode();
     super.initState();
   }
-  void getLocation() async {
-  _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-    print('${_currentPosition.latitude}:::::::${_currentPosition.longitude}');
-  }
+  // void getLocation() async {
+  // _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+  //   print('${_currentPosition.latitude}::::ggggggg:::${_currentPosition.longitude}');
+  // }
 
   _geoCode() async{
+     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
 Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
      final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     first = addresses.first;
-    print(":::::::::::::::::::::: ${first.thoroughfare}");
+    print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
     print(position);
   }
-  _geoLastKnownCode() async{
-Position position = await Geolocator.getLastKnownPosition();
-     final coordinates = new Coordinates(position.latitude,position.longitude);
-    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    last = addresses.last;
-    print(":::::::::::::::::::::: ${last.thoroughfare}");
-    print(position);
-  }
+//   _geoLastKnownCode() async{
+// Position position = await Geolocator.getLastKnownPosition();
+//      final coordinates = new Coordinates(position.latitude,position.longitude);
+//     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+//     last = addresses.last;
+//     print(":::::::::::mmmmmmmmmmmm::::::::::: ${last.thoroughfare}");
+//     print(position);
+//   }
 
  
 // try dark and white theme

@@ -25,7 +25,7 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       ///Notify loading to UI
       yield LoginLoading();
 
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 1));
 
       ///Fetch API
       final dynamic result = await Api.login(

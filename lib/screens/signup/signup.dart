@@ -39,11 +39,11 @@ class _SignUpState extends State<SignUp> {
 
   void initState() {
     _signUpBloc = BlocProvider.of<SignUpBloc>(context);
-    _textIDController.text = "test";
-    _textPassController.text = "123456";
-    _textEmailController.text = "test@gmail.com";
-    _textPhoneController.text = "56787689";
-    _textLocationController.text = "testlocation";
+    _textIDController.text;
+    _textPassController.text;
+    _textEmailController.text;
+    _textPhoneController.text ;
+    _textLocationController.text;
 
     super.initState();
   }
@@ -132,7 +132,7 @@ class _SignUpState extends State<SignUp> {
                       : null,
                   icon: Icon(Icons.clear),
                   controller: _textIDController,
-                  focusNode: _focusLocation,
+                  focusNode: _focusID,
                   textInputAction: TextInputAction.next,
                   // onChanged: (text) {
                   //   setState(() {

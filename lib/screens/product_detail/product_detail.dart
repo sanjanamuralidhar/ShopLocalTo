@@ -23,13 +23,19 @@ class ProductDetail extends StatefulWidget {
 class _ProductDetailState extends State<ProductDetail> {
   bool _like = false;
   ProductModel _detail;
+  NearlyModel _nearly;
+  List<RelatedModel> _related;
+  List<FeatureModel> _feature;
   // bool _showHour = false;
   ProductDetailPageModel _detailPage;
 
   @override
   void initState() {
     // _loadData();
+    // _loadNearly();
     _loadDetail();
+    _loadFeature();
+    _loadRelated();
     super.initState();
   }
 
@@ -49,9 +55,32 @@ class _ProductDetailState extends State<ProductDetail> {
     setState(() {
         _detail = result;
       });
-      print('featureModel is .................${_detail.feature.length}');
+      print('featureModel is .................${_detail.nearly.length}');
   }
 
+   Future<void> _loadFeature() async {
+    final List<FeatureModel> result = await Api.getFeatureDetail(id: widget.id);
+    print('id is .................${widget.id}');
+    setState(() {
+        _feature = result;
+      });
+      print('featureModel is .................${_feature.length}');
+  }
+
+   Future<void> _loadRelated() async {
+    final List<RelatedModel> result = await Api.getRelatedDetail(id: widget.id);
+    print('id is .................${widget.id}');
+    setState(() {
+        _related = result;
+      });
+      print('..........................Related is .................${_related.length}');
+  }
+  // Future<void> _loadNearly() async {
+  //   final NearlyModel result = await Api.getNearlyDetail(id: widget.id);
+  //   setState(() {
+  //       _nearly = result;
+  //     });
+  // }
 
   ///On navigate gallery
   // void _onPhotoPreview() {
@@ -74,6 +103,18 @@ class _ProductDetailState extends State<ProductDetail> {
   ///On navigate product detail
   void _onProductDetail(ProductModel item) {
     String route = item.type == ProductType.place
+        ? Routes.productDetail
+        : Routes.productDetailTab;
+    Navigator.pushNamed(context, route, arguments: item.id);
+  }
+  void _onRelatedDetail(RelatedModel item) {
+    String route = item.type == RelatedType.place
+        ? Routes.productDetail
+        : Routes.productDetailTab;
+    Navigator.pushNamed(context, route, arguments: item.id);
+  }
+  void _onFeatureDetail(FeatureModel item) {
+    String route = item.type == FeatureType.place
         ? Routes.productDetail
         : Routes.productDetailTab;
     Navigator.pushNamed(context, route, arguments: item.id);
@@ -427,7 +468,7 @@ Widget _buildBanner() {
 
   ///Build list feature
   Widget _buildFeature() {
-    if (_detail.feature == null) {
+    if (_feature == null) {
       return Container();
     }
 
@@ -456,18 +497,18 @@ Widget _buildBanner() {
               scrollDirection: Axis.horizontal,
               padding: EdgeInsets.only(left: 20),
               itemBuilder: (context, index) {
-                final ProductModel item = _detail.feature[index];
+                final item = _feature[index];
                 return Container(
                   width: MediaQuery.of(context).size.width / 2,
                   padding: EdgeInsets.only(right: 15),
                   child: AppProductItem(
-                    onPressed: _onProductDetail,
-                    item: item,
+                    onPressFeature: _onFeatureDetail,
+                    featureModel: item,
                     type: ProductViewType.gird,
                   ),
                 );
               },
-              itemCount: _detail.feature.length,
+              itemCount: _feature.length,
             ),
           )
         ],
@@ -477,7 +518,7 @@ Widget _buildBanner() {
 
   ///Build list related
   Widget _buildRelated() {
-    if (_detail.related == null) {
+    if (_related == null) {
       return Container();
     }
 
@@ -497,12 +538,12 @@ Widget _buildBanner() {
             ),
           ),
           Column(
-            children: _detail.related.map((item) {
+            children: _related.map((item) {
               return Padding(
                 padding: EdgeInsets.only(bottom: 15),
                 child: AppProductItem(
-                  onPressed: _onProductDetail,
-                  item: item,
+                  onPressRelated: _onRelatedDetail,
+                  relatedModel: item,
                   type: ProductViewType.small,
                 ),
               );
@@ -541,8 +582,8 @@ Widget _buildBanner() {
                 child: Column(
                   children: <Widget>[
                     _buildInfo(),
-                    // _buildFeature(),
-                    // _buildRelated()
+                    _buildFeature(),
+                    _buildRelated()
                   ],
                 ),
               ),
@@ -552,301 +593,5 @@ Widget _buildBanner() {
       ),
     );
   }
-  Widget _buildVendorInfo(BuildContext context){
-    if (_detail == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Padding(
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Container(
-                margin: EdgeInsets.only(
-                  bottom: 20,
-                  top: 20,
-                ),
-                height: 10,
-                width: 150,
-                color: Colors.white,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        height: 10,
-                        width: 100,
-                        color: Colors.white,
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 5),
-                      ),
-                      Container(
-                        height: 20,
-                        width: 150,
-                        color: Colors.white,
-                      ),
-                    ],
-                  ),
-                  Container(
-                    height: 10,
-                    width: 100,
-                    color: Colors.white,
-                  ),
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 25),
-                child: Container(height: 10, color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(height: 10, color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(height: 10, color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(height: 10, color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(height: 10, color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(height: 10, color: Colors.white),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 5),
-                child: Container(height: 10, width: 50, color: Colors.white),
-              )
-            ],
-          ),
-        ),
-      );
-    }
-
-    return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Text(
-                _detail.title,
-                style: Theme.of(context)
-                    .textTheme
-                    .headline6
-                    .copyWith(fontWeight: FontWeight.w600),
-              ),
-              IconButton(
-                icon: Icon(Icons.location_on),
-                onPressed: _onLocation,
-              ),
-             
-            ],
-          ),
-         
-          Padding(
-            padding: EdgeInsets.only(top: 10),
-          ),
-          Text(
-            _detail.description,
-            style: Theme.of(context).textTheme.bodyText1.copyWith(height: 1.3),
-          ),
-        ],
-      ),
-    );
-
-  }
+  
 }

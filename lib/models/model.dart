@@ -18,3 +18,6 @@ export 'model_social.dart';
 export 'model_mylocation.dart';
 export 'model_shops.dart';
 export 'model_category2.dart';
+export 'model_nearly.dart';
+export 'model_feature.dart';
+export 'model_related.dart';

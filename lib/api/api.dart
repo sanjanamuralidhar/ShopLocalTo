@@ -33,7 +33,7 @@ class Api {
   //SignUp api
   static Future<dynamic> signup({String username, String email, String password, String phone, String location}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/signup?name='+location+'&password='+password+'&email='+email+'&phone='+phone);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/signup?name='+username+'&password='+password+'&email='+email+'&phone='+phone+'&location='+location);
     // final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
     // final result = await UtilAsset.loadJson("assets/data/signup.json");
     return result;
@@ -45,7 +45,6 @@ class Api {
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id=14'+id.toString());
     return result;
   }
-
   // sanjana
    static Future<ProductModel> getShopDataDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
@@ -53,6 +52,28 @@ class Api {
     print('...........getShopDataDetail()............:$result.runT');
      print('...........getShopDataDetail()............:${result['data']['id']}');
     return ProductModel.fromJson(result['data']);
+  }
+
+  // // sanjana
+  //  static Future<NearlyModel> getNearlyDetail({id: 0}) async {
+  //   await Future.delayed(Duration(seconds: 1));
+  //   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
+  //    print('...........getNearlyDetail()............:${result['data']['nearly']}');
+  //   return NearlyModel.fromJson(result['data']['nearly']);
+  // }
+  // sanjana
+   static Future<List<RelatedModel>> getRelatedDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
+     print('...........getRelatedDetail()............:${result['data']['feature']}');
+    return RelatedModel.listFromJson(result['data']['related']);
+  }
+  // sanjana
+   static Future<List<FeatureModel>> getFeatureDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
+     print('...........getFeatureDetail()............:${result['data']['related']}');
+    return FeatureModel.listFromJson(result['data']['feature']);
   }
 
   // sanjana

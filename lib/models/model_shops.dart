@@ -128,76 +128,43 @@ this.rate,
 
 }
 
-// List<ShopModel> shopModels = [
-//   ShopModel(
-//     id:1,
-//     address:"667 Wegyard Garden Suit",
-//     favorite: false,
-//     imageUrl: Images.Location1,
-//     rating: "4.0",
-//     ratingCount: 4,
-//     status: "Open Now",
-//     subtitle: "Arts and Humanities",
-//     title: "Launge Coffe Bar",
-//     description: "urban neighbourhood, lot to explore make your day good",
-//     locationDescription: "Urban oasis feature hiking & equestrian trails,plus city views,the Greek Theater and LA zoo"
+List<ShopModel> shopModels = [
+  ShopModel(
+    id:1,
+    
+    title: "Launge Coffe Bar",
+   
 
 
-//   ),
-//   ShopModel(
-//     id:2,
-//    address:"667 Wegyard Garden Suit",
-//     favorite: false,
-//     imageUrl: Images.Location2,
-//     rating: "4.0",
-//     ratingCount: 4,
-//     status: "Open Now",
-//     subtitle: "Arts and Humanities",
-//     title: "cozy royal room",
-//     description: "urban neighbourhood, lot to explore make your day good",
-//     locationDescription: "Urban oasis feature hiking & equestrian trails,plus city views,the Greek Theater and LA zoo"
-//   ),
-//   ShopModel(
-//     id:3,
-//     address:"667 Wegyard Garden Suit",
-//     favorite: false,
-//     imageUrl: Images.Location3,
-//     rating: "4.0",
-//     ratingCount: 4,
-//     status: "Open Now",
-//     subtitle: "Arts and Humanities",
-//     title: "Adorable Room",
-//     description: "urban neighbourhood, lot to explore make your day good",
-//     locationDescription: "Urban oasis feature hiking & equestrian trails,plus city views,the Greek Theater and LA zoo"
+  ),
+  ShopModel(
+    id:2,
+  
+   
+    title: "cozy royal room",
+  
+  ),
+  ShopModel(
+    id:3,
+   
+    title: "Adorable Room",
+  
 
-//   ),
-//   ShopModel(
-//     id:4,
-//     address:"667 Wegyard Garden Suit",
-//     favorite: false,
-//     imageUrl: Images.Location4,
-//     rating: "4.0",
-//     ratingCount: 4,
-//     status: "Open Now",
-//     subtitle: "Arts and Humanities",
-//     title: "Vallejo",
-//     description: "urban neighbourhood, lot to explore make your day good",
-//     locationDescription: "Urban oasis feature hiking & equestrian trails,plus city views,the Greek Theater and LA zoo"
-//   ),
-//   ShopModel(
-//     id:5,
-//     address:"667 Wegyard Garden Suit",
-//     favorite: false,
-//     imageUrl: Images.Location5,
-//     rating: "4.0",
-//     ratingCount: 4,
-//     status: "Open Now",
-//     subtitle: "Arts and Humanities",
-//     title: "Park loyal",
-//     description: "urban neighbourhood, lot to explore make your day good",
-//     locationDescription: "Urban oasis feature hiking & equestrian trails,plus city views,the Greek Theater and LA zoo"
-//   ),
-// ];
+  ),
+  ShopModel(
+    id:4,
+   
+    title: "Vallejo",
+   
+  ),
+  ShopModel(
+    id:5,
+   
+
+    title: "Park loyal",
+   
+  ),
+];
 
 // class LeaderBoard {
 //   // List<NeighbourImages> images; 

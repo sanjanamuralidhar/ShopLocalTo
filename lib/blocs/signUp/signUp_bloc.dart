@@ -27,7 +27,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
       ///Notify loading to UI
       yield SignUpLoading();
 
-      await Future.delayed(Duration(seconds: 5));
+      await Future.delayed(Duration(seconds: 1));
 
       ///Fetch API
       final dynamic result = await Api.signup(
@@ -64,7 +64,7 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 print('signup success');
         try {
           ///Begin start AuthBloc Event AuthenticationSave
-          authBloc.add(AuthenticationSave(user));
+          authBloc.add(AuthenticationSignupSave(user));
 
           ///Notify loading to UI
           yield SignUpSuccess();
