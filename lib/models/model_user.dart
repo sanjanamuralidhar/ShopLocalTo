@@ -12,6 +12,10 @@ class UserModel {
   String email;
   String phone;
 String location;
+String address;
+String city;
+String province;
+// String country;
  
 
   UserModel(
@@ -28,26 +32,36 @@ String location;
     this.email,
     this.location,
     this.phone,
+    this.address,
+    this.city,
+    this.province,
   );
 
   UserModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['id'];
-    name = json['full_name'];
+    name = json['name'];
     nickname = json['nickname'];
-    image= json['photo'];
+    image= json['profile_image'];
     link = json['link'];
     level = json['level'];
     description = json['description'];
     tag = json['tag'];
     rate = json['rate'];
-    token = json['token'];
+    token = json['access_token'];
     email = json['email'];
     location = json['location'];
     phone=json['phone'];
+    address=json['address'];
+    city = json['city'];
+    province=json['province'];
     
   }
 
+  @override
+  String toString() {
+    return toJson().toString();
+  }
 
  static List<UserModel> listFromJson(List<dynamic> json) {
     return json == null
@@ -74,7 +88,7 @@ String location;
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     if (id != null) json['id'] = id;
-    if(name!=null) json['full_name']=name;
+    if(name!=null) json['name']=name;
     if(nickname!=null) json['nickname']=nickname;
     if(image!=null) json['photo']=image;
     if(link!=null) json['link']=link;
@@ -82,7 +96,7 @@ String location;
     if(description!=null) json['description']=description;
     if(tag!=null) json['tag']=tag;
     if(rate!=null) json['rate']=rate;
-    if(token!=null) json['token']=token;
+    if(token!=null) json['access_token']=token;
     if(email!=null) json['email']=email;
     if(location!=null) json['location']=location;
     if(phone!=null) json['phone']=phone;

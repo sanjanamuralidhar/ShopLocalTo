@@ -23,28 +23,30 @@ class _ProfileState extends State<Profile> {
   ProfilePageModel _profilePage;
   bool setProfile = true;
   String value;
+  UserModel _userData;
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
 
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
     _loadData();
+    _loadProfile();
     super.initState();
   }
   // Fetch flutterSecureStoragedata
-  Future<dynamic> getLocation() async{
-  String name;
-    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'username');
-    print('isloggedin:$isLoggedIn');
-    if(isLoggedIn){
-      String username = await flutterSecureStorage.read(key:'location');
-      name = username;
-      print('location:$username');
-    }
-final nullable = name.isEmpty?null:name;
-value=nullable;
-print('location2:$name');
-  }
+//   Future<dynamic> getLocation() async{
+//   String name;
+//     bool isLoggedIn = await flutterSecureStorage.containsKey(key:'username');
+//     print('isloggedin:$isLoggedIn');
+//     if(isLoggedIn){
+//       String username = await flutterSecureStorage.read(key:'location');
+//       name = username;
+//       print('location:$username');
+//     }
+// final nullable = name.isEmpty?null:name;
+// value=nullable;
+// print('location2:$name');
+//   }
   ///Fetch API
   Future<void> _loadData() async {
     final ResultApiModel result = await Api.getProfile();
@@ -53,6 +55,14 @@ print('location2:$name');
         _profilePage = ProfilePageModel.fromJson(result.data);
       });
     }
+  }
+   Future<void> _loadProfile() async {
+    final UserModel result = await Api.getUserProfile();
+      setState(() {
+        _userData = result;
+      });
+      return _userData;
+       
   }
 
   ///On logout
@@ -63,19 +73,19 @@ print('location2:$name');
   ///Build profile UI
   Widget _buildProfile() {
     return AppUserInfo(
-      user: _profilePage?.user,
+      user: _userData,
       onPressed: () {},
       type: AppUserType.information,
     );
   }
 
   ///Build value
-  Widget _buildValue() {
-    return AppProfilePerformance(
-      data: _profilePage?.value,
-      onPressed: (item) {},
-    );
-  }
+  // Widget _buildValue() {
+  //   return AppProfilePerformance(
+  //     data: _profilePage?.value,
+  //     onPressed: (item) {},
+  //   );
+  // }
 
   ///On navigation
   void _onNavigate(String route) {
@@ -105,7 +115,7 @@ print('location2:$name');
                     child: Column(
                       children: <Widget>[
                         _buildProfile(),
-                        _buildValue(),
+                        // _buildValue(),
                       ],
                     ),
                   ),

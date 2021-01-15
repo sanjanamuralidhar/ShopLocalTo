@@ -28,3 +28,4 @@ export 'signin/signin.dart';
 export 'signup/signup.dart';
 export 'theme_setting/theme_setting.dart';
 export 'wishlist/wishlist.dart';
+export 'LocationDetail/location_detail.dart';

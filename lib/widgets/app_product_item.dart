@@ -10,16 +10,20 @@ enum ProductViewType { small, gird, list, block, cardLarge, cardSmall }
 class AppProductItem extends StatelessWidget {
 
   final ProductModel item;
+  final ShopModel shopModel;//ProductViewType.cardSmall
+  final MyLocation mylocation;//productViewType:cardLarge
   final NearlyModel nearlyModel;//productViewType:list
   final FeatureModel featureModel;//productViewType:grid
   final RelatedModel relatedModel;//productViewType:small
   final ProductViewType type;
+  final LocationViewType locationtype;
   final Function(NearlyModel) onPress;
   final Function(ProductModel) onPressed;
   final Function(FeatureModel) onPressFeature;
   final Function(RelatedModel) onPressRelated;
-
-  const AppProductItem({Key key, this.item, this.type, this.onPressed, this.nearlyModel, this.onPress, this.featureModel, this.relatedModel, this.onPressFeature, this.onPressRelated}) : super(key: key);
+  final Function(MyLocation) onPressLocation;
+final Function(ShopModel) onPressshop;
+  const AppProductItem({Key key, this.item, this.type, this.onPressed, this.nearlyModel, this.onPress, this.featureModel, this.relatedModel, this.onPressFeature, this.onPressRelated, this.mylocation, this.locationtype, this.onPressLocation, this.onPressshop, this.shopModel}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -591,11 +595,11 @@ class AppProductItem extends StatelessWidget {
               Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                    image: NetworkImage(nearlyModel.image),
-                    fit: BoxFit.cover,
-                  ),
+                  // image: DecorationImage(
+                  //   // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                  //   image: NetworkImage(nearlyModel.image),
+                  //   fit: BoxFit.cover,
+                  // ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -759,7 +763,7 @@ class AppProductItem extends StatelessWidget {
     
       ///Case View Card large
       case ProductViewType.cardLarge:
-        if (nearlyModel == null) {
+        if (mylocation == null) {
           return SizedBox(
             width: 135,
             height: 160,
@@ -782,7 +786,9 @@ class AppProductItem extends StatelessWidget {
           height: 160,
           child: GestureDetector(
             onTap: () {
-              onPress(nearlyModel);
+              // **************************
+              onPressLocation(mylocation);//from here go to home.dart
+              // *************************
             },
             child: Card(
               elevation: 2,
@@ -795,7 +801,7 @@ class AppProductItem extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
-                    image: AssetImage(nearlyModel.image),
+                    image: NetworkImage(mylocation.image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -806,7 +812,7 @@ class AppProductItem extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(10),
                       child: Text(
-                        nearlyModel.title,
+                        mylocation.title,
                         style: Theme.of(context).textTheme.subtitle2.copyWith(
                               color: Colors.white,
                               fontWeight: FontWeight.w600,
@@ -822,66 +828,188 @@ class AppProductItem extends StatelessWidget {
 
       ///Case View Card small
       case ProductViewType.cardSmall:
-        if (nearlyModel == null) {
-          return SizedBox(
-            width: 100,
-            height: 100,
-            child: Shimmer.fromColors(
-              baseColor: Theme.of(context).hoverColor,
-              highlightColor: Theme.of(context).highlightColor,
-              enabled: true,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
+      if (shopModel == null) {
+          return Shimmer.fromColors(
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
                   borderRadius: BorderRadius.circular(8),
+                  child: Container(
+                    width: 80,
+                    height: 80,
+                    color: Colors.white,
+                  ),
                 ),
-              ),
-            ),
-          );
-        }
-
-        return SizedBox(
-          width: 100,
-          height: 100,
-          child: GestureDetector(
-            onTap: () {
-              onPress(nearlyModel);
-            },
-            child: Card(
-              elevation: 2,
-              margin: EdgeInsets.all(0),
-              clipBehavior: Clip.antiAliasWithSaveLayer,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
-                      image: AssetImage(nearlyModel.image),
-                      fit: BoxFit.cover,
-                    ),
+                Padding(
+                  padding: EdgeInsets.only(
+                    left: 10,
+                    right: 10,
+                    top: 5,
+                    bottom: 5,
                   ),
                   child: Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Container(
+                        height: 10,
+                        width: 180,
+                        color: Colors.white,
+                      ),
                       Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Text(
-                          nearlyModel.title,
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                color: Colors.white,
-                fontWeight: FontWeight.w600,
-              ),
-                        ),
-                      )
+                        padding: EdgeInsets.only(top: 5),
+                      ),
+                      Container(
+                        height: 10,
+                        width: 150,
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 10),
+                      ),
+                      Container(
+                        height: 10,
+                        width: 100,
+                        color: Colors.white,
+                      ),
                     ],
                   ),
                 ),
+              ],
             ),
+            baseColor: Theme.of(context).hoverColor,
+            highlightColor: Theme.of(context).highlightColor,
+          );
+        }
+
+        return FlatButton(
+          onPressed: () {
+            onPressshop(shopModel);
+          },
+          padding: EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Row(
+            children: <Widget>[
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  shopModel.image,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 10,
+                  right: 10,
+                  top: 5,
+                  bottom: 5, 
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      shopModel.title,
+                      maxLines: 1,
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 5)),
+                    Text(
+                      shopModel.subtitle,
+                      style: Theme.of(context)
+                          .textTheme
+                          .caption
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                    Padding(padding: EdgeInsets.only(top: 10)),
+                    Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        AppTag(
+                          "${shopModel.id}",
+                          type: TagType.rateSmall,
+                        ),
+                        Padding(padding: EdgeInsets.only(left: 5)),
+                        StarRating(
+                          rating: shopModel.rate,
+                          size: 14,
+                          color: AppTheme.yellowColor,
+                          borderColor: AppTheme.yellowColor,
+                        )
+                      ],
+                    )
+                  ],
+                ),
+              )
+            ],
           ),
         );
+        // if (shopModel == null) {
+        //   return SizedBox(
+        //     width: 100,
+        //     height: 100,
+        //     child: Shimmer.fromColors(
+        //       baseColor: Theme.of(context).hoverColor,
+        //       highlightColor: Theme.of(context).highlightColor,
+        //       enabled: true,
+        //       child: Container(
+        //         decoration: BoxDecoration(
+        //           color: Colors.white,
+        //           borderRadius: BorderRadius.circular(8),
+        //         ),
+        //       ),
+        //     ),
+        //   );
+        // }
+
+        // return SizedBox(
+        //   width: 100,
+        //   height: 100,
+        //   child: GestureDetector(
+        //     onTap: () {
+        //       onPressshop(shopModel);
+        //     },
+        //     child: Card(
+        //       elevation: 2,
+        //       margin: EdgeInsets.all(0),
+        //       clipBehavior: Clip.antiAliasWithSaveLayer,
+        //       shape: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(8),
+        //       ),
+        //       child: Container(
+        //           decoration: BoxDecoration(
+        //             image: DecorationImage(
+        //               colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.35), BlendMode.darken),
+        //               image: AssetImage(shopModel.image),
+        //               fit: BoxFit.cover,
+        //             ),
+        //           ),
+        //           child: Column(
+        //             mainAxisAlignment: MainAxisAlignment.end,
+        //             crossAxisAlignment: CrossAxisAlignment.start,
+        //             children: <Widget>[
+        //               Padding(
+        //                 padding: EdgeInsets.all(10),
+        //                 child: Text(
+        //                   shopModel.title,
+        //                   style: Theme.of(context).textTheme.subtitle2.copyWith(
+        //         color: Colors.white,
+        //         fontWeight: FontWeight.w600,
+        //       ),
+        //                 ),
+        //               )
+        //             ],
+        //           ),
+        //         ),
+        //     ),
+        //   ),
+        // );
 
       default:
         return Container(width: 160.0);

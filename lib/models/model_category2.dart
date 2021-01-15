@@ -3,7 +3,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:listar_flutter/models/model.dart';
 
-
+enum CategoryType2 {
+  place,
+  hotel,
+  shop,
+  drink,
+  event,
+  estate,
+  job,
+  restaurant,
+  automotive,
+  more
+}
 
 class CategoryModel2 {
   int id;
@@ -12,7 +23,8 @@ class CategoryModel2 {
   String image;
   String icon;
   String color;
-  ProductType type;
+  List<ListModel> list;
+  CategoryType2 type;
 
 
   CategoryModel2({
@@ -23,28 +35,29 @@ class CategoryModel2 {
     this.icon,
     this.color,
     this.type,
+    this.list,
   });
 
-  static ProductType _setType(String type) {
+  static CategoryType2 _setType(String type) {
     switch (type) {
       case 'shop':
-        return ProductType.shop;
+        return CategoryType2.shop;
       case 'drink':
-        return ProductType.drink;
+        return CategoryType2.drink;
       case 'event':
-        return ProductType.event;
+        return CategoryType2.event;
       case 'estate':
-        return ProductType.estate;
+        return CategoryType2.estate;
       case 'job':
-        return ProductType.job;
+        return CategoryType2.job;
       case 'restaurant':
-        return ProductType.restaurant;
+        return CategoryType2.restaurant;
       case 'automotive':
-        return ProductType.automotive;
+        return CategoryType2.automotive;
       case 'hotel':
-        return ProductType.hotel;
+        return CategoryType2.hotel;
       default:
-        return ProductType.more;
+        return CategoryType2.more;
     }
   }
 
@@ -57,6 +70,7 @@ class CategoryModel2 {
     icon =  json['icon'];
     color =  json['color'];
     type = _setType(json['type']);
+    list = _setCategory(json['list']);
 
   }
 
@@ -76,6 +90,11 @@ class CategoryModel2 {
     return json == null
         ? List<CategoryModel2>()
         : json.map((value) => CategoryModel2.fromJson(value)).toList();
+  }
+  static List<ListModel> _setCategory(List<dynamic> json) {
+    return json == null
+        ? List<ListModel>()
+        : json.map((value) => ListModel.fromJson(value)).toList();
   }
 
 }

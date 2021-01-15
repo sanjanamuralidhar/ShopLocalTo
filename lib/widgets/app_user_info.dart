@@ -130,31 +130,31 @@ class AppUserInfo extends StatelessWidget {
               Stack(
                 alignment: Alignment.bottomRight,
                 children: <Widget>[
-                  // Container(
-                  //   width: 60,
-                  //   height: 60,
-                  //   decoration: BoxDecoration(
-                  //     shape: BoxShape.circle,
-                  //     image: DecorationImage(
-                  //       image: NetworkImage(user.image),
-                  //       fit: BoxFit.cover,
-                  //     ),
-                  //   ),
-                  // ),
                   Container(
-                    padding: EdgeInsets.all(5),
+                    width: 60,
+                    height: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: Theme.of(context).primaryColor,
+                      // image: DecorationImage(
+                      //   image: NetworkImage(user.image),
+                      //   fit: BoxFit.cover,
+                      // ),
                     ),
-                    child: Text(
-                      "${user.rate}",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 8,
-                      ),
-                    ),
-                  )
+                  ),
+                  // Container(
+                  //   padding: EdgeInsets.all(5),
+                  //   decoration: BoxDecoration(
+                  //     shape: BoxShape.circle,
+                  //     color: Theme.of(context).primaryColor,
+                  //   ),
+                  //   child: Text(
+                  //     "${user.rate}",
+                  //     style: TextStyle(
+                  //       color: Colors.white,
+                  //       fontSize: 8,
+                  //     ),
+                  //   ),
+                  // )
                 ],
               ),
               Expanded(
@@ -163,22 +163,22 @@ class AppUserInfo extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Text(user.name,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.subtitle2),
-                      Padding(
-                        padding: EdgeInsets.only(top: 3, bottom: 3),
-                        child: Text(
-                          user.description,
-                          maxLines: 1,
-                          style: Theme.of(context).textTheme.caption,
-                        ),
-                      ),
-                      Text(
-                        user.tag,
-                        maxLines: 1,
-                        style: Theme.of(context).textTheme.caption,
-                      ),
+                      // Text(user.name,
+                      //     maxLines: 1,
+                      //     style: Theme.of(context).textTheme.subtitle2),
+                      // Padding(
+                      //   padding: EdgeInsets.only(top: 3, bottom: 3),
+                      //   child: Text(
+                      //     user.description,
+                      //     maxLines: 1,
+                      //     style: Theme.of(context).textTheme.caption,
+                      //   ),
+                      // ),
+                      // Text(
+                      //   user.tag,
+                      //   maxLines: 1,
+                      //   style: Theme.of(context).textTheme.caption,
+                      // ),
                     ],
                   ),
                 ),
@@ -208,13 +208,13 @@ class AppUserInfo extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
-                    Text(
-                      user.name,
-                      style: Theme.of(context)
-                          .textTheme
-                          .subtitle1
-                          .copyWith(fontWeight: FontWeight.w600),
-                    ),
+                    // Text(
+                    //   user.name,
+                    //   style: Theme.of(context)
+                    //       .textTheme
+                    //       .subtitle1
+                    //       .copyWith(fontWeight: FontWeight.w600),
+                    // ),
                     // Text(
                     //   user.description,
                     //   style: Theme.of(context).textTheme.caption,

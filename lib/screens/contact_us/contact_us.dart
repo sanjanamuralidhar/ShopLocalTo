@@ -4,6 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:listar_flutter/models/model_user.dart';
+import 'package:listar_flutter/api/api.dart';
 
 class ContactUs extends StatefulWidget {
   @override
@@ -26,12 +28,21 @@ class ContactUsState extends State<ContactUs> {
   String _validName;
   String _validEmail;
   String _validInfo;
+  UserModel _userData;
 
   @override
   void initState() {
-    _textNameController.text = 'Steve Garrett';
-    _textEmailController.text = 'steve.garrett@passionui.com';
+    _loadProfile();
+    _textNameController.text;
+    _textEmailController.text;
     super.initState();
+  }
+   Future<void> _loadProfile() async {
+    final UserModel result = await Api.getUserProfile();
+      setState(() {
+        _userData = result;
+      });
+       
   }
 
   ///On send
@@ -56,6 +67,8 @@ class ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
+     _textNameController.text=_userData.name;
+    _textEmailController.text=_userData.email;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

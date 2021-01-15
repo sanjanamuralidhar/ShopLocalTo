@@ -57,7 +57,13 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
         Preferences.user,
         jsonEncode(event.user.toJson()),
       );
-
+      final getUserPreferences = UtilPreferences.getString(
+          Preferences.user,
+        );
+      final user = UserModel.fromJson(jsonDecode(getUserPreferences));
+      httpManager.baseOptions.headers["Authorization"] =
+            "Bearer "+user.token;
+         print('.............................................ooooooooo.................................$user');   
       ///Check result save user
       if (savePreferences) {
         ///Notify loading to UI

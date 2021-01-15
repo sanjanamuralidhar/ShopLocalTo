@@ -15,3 +15,4 @@ export 'app_tag.dart';
 export 'app_text_input.dart';
 export 'app_user_info.dart';
 export 'app_popular_location.dart';
+export 'app_category_View_Item.dart';

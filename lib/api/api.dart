@@ -96,7 +96,12 @@ class Api {
   //  print('getShops():$result.runT');
    return TabModel.listFromJson(result['data']['tabs']);
   }
-
+ static Future<CategoryModel2> getCategoryDetailList({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
+   print('getCategoryDetailList():__________________________________${result['data']}');
+   return CategoryModel2.fromJson(result['data']);
+  }
   ///Validate token valid
   static Future<dynamic> validateToken() async {
     await Future.delayed(Duration(seconds: 1));
@@ -120,6 +125,14 @@ class Api {
     await Future.delayed(Duration(seconds: 1));
     final result = await UtilAsset.loadJson("assets/data/profile.json");
     return ResultApiModel.fromJson(result);
+  }
+
+  // /Get Profile Detail
+  static Future<UserModel> getUserProfile() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/user');
+    print('this is ...............getUserProfile...........$result');
+   return UserModel.fromJson(result);
   }
 
   ///Get Category

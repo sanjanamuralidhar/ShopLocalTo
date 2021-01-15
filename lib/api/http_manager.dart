@@ -38,7 +38,7 @@ class HTTPManager {
     UtilLogger.log("POST URL", url);
     UtilLogger.log("DATA", data);
     Dio dio = new Dio(baseOptions);
-    //  getToken();
+     getToken();
     try {
       final response = await dio.post(
         url,
@@ -60,7 +60,7 @@ class HTTPManager {
     UtilLogger.log("GET URL", url);
     UtilLogger.log("PARAMS", params);
     Dio dio = new Dio(baseOptions);
-    //  getToken();
+     getToken();
     try {
       final response = await dio.get(
         url,
@@ -78,7 +78,7 @@ class HTTPManager {
     bool isLoggedIn = await flutterSecureStorage.containsKey(key:'token');
     if(isLoggedIn){
       String token = await flutterSecureStorage.read(key: 'token');
-      headerParams = {'Authorization':'Bearer$token'};
+      headerParams = {'Authorization':'Bearer $token'};
     }
 final nullableHeaderParams = headerParams.isEmpty?null:headerParams;
 baseOptions.headers=nullableHeaderParams;

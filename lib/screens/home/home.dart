@@ -32,8 +32,9 @@ class _HomeState extends State<Home> {
   List<CategoryModel2> _categoryList = [];
   bool _tryAgain = false;
   List<Address> addresses;
+  List<Address> address;
   Address first;
-  Address last;
+  Address old;
   Position _currentPosition;
   Position _lastKnown;
   final Geolocator geolocator = Geolocator();
@@ -46,7 +47,7 @@ class _HomeState extends State<Home> {
     _loadPopular();
     _loadShops();
     _loadCategoryList();
-   _geoCode();
+  //  _geoCode();
   //  getLocation();
   //  _geoLastKnownCode();
     super.initState();
@@ -56,15 +57,19 @@ class _HomeState extends State<Home> {
   //   print('${_currentPosition.latitude}::::ggggggg:::${_currentPosition.longitude}');
   // }
 
-  _geoCode() async{
-     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-     final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
-    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-    first = addresses.first;
-    print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
-    print(position);
-  }
+//   _geoCode() async{
+//      _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+// Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+//      final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
+//     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+//     setState(() {
+//       first = addresses.first;
+//     });
+//     print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
+//     print(position);
+//     return first;
+//   }
+ 
 //   _geoLastKnownCode() async{
 // Position position = await Geolocator.getLastKnownPosition();
 //      final coordinates = new Coordinates(position.latitude,position.longitude);
@@ -157,12 +162,14 @@ Position position = await Geolocator.getCurrentPosition(desiredAccuracy: Locatio
   }
 
   ///On navigate product detail
-  void _onProductDetail(MyLocation item) {
+  // /**************************************************** */
+  void _onLocationDetail(MyLocation item) {
     String route = item.type == LocationType.place
-        ? Routes.productDetail
-        : Routes.productDetailTab;
+        ? Routes.locationDetail
+        : Routes.locationDetailTab;
     Navigator.pushNamed(context, route, arguments: item.id);
   }
+  // ******************************************************************/
 
 void _onShopDetail(ShopModel item) {
     // ignore: unrelated_type_equality_checks
@@ -218,12 +225,12 @@ void _onShopDetail(ShopModel item) {
   // ontaps for catagory@sanjana
    void _onTapService(CategoryModel2 item) {
     switch (item.type) {
-      case ProductType.more:
+      case CategoryType2.more:
         _onOpenMore();
         break;
 
       default:
-        Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
+        Navigator.pushNamed(context, Routes.listProduct, arguments: item.id);
         break;
     }
   }
@@ -305,9 +312,9 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
           final item = _locations[index];
           return Padding(
             padding: EdgeInsets.only(left: 15),
-            child: AppLocation(
-              item: item,
-              type: LocationViewType.cardLarge,
+            child: AppProductItem(
+              mylocation: item,
+              type: ProductViewType.cardLarge,
             ),
           );
         },
@@ -325,11 +332,13 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
           child: SizedBox(
             width: 135,
             height: 160,
-            child: AppLocation(
-              item: item,
-              type: LocationViewType.cardLarge,
-              onPressed: _onProductDetail,
+            // *************************************************
+            child: AppProductItem(
+              mylocation: item,
+              type: ProductViewType.cardLarge,
+              onPressLocation: _onLocationDetail,//from here go to _onlocation detail
             ),
+            // *****************************************************
           ),
         );
       },
@@ -345,7 +354,7 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
           (item) {
             return Padding(
               padding: EdgeInsets.only(bottom: 15),
-              child: AppLocation(type: LocationViewType.small),
+              child: AppProductItem(type: ProductViewType.cardSmall),
             );
           },
         ).toList(),
@@ -356,10 +365,10 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
       children: _shops.map((item) {
         return Padding(
           padding: EdgeInsets.only(bottom: 15),
-          child: AppLocation(
-            onPress: _onShopDetail,
+          child: AppProductItem(
+            onPressshop: _onShopDetail,
             shopModel: item,
-            type: LocationViewType.small,
+            type: ProductViewType.cardSmall,
           ),
         );
       }).toList(),
@@ -439,6 +448,7 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
 
   @override
   Widget build(BuildContext context) {
+    
     print('popular locatiugbuiiiiibj buiob:$_popularPageModel');
     return Scaffold(
       body: CustomScrollView(
@@ -551,7 +561,19 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
     );
   }
   
-  void _showAlert(BuildContext context) {
+  Future<void> _showAlert(BuildContext context) async {
+     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
+     _lastKnown = await Geolocator.getLastKnownPosition();
+     final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
+     final coordinate = new Coordinates(_lastKnown.latitude,_lastKnown.longitude);
+    addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    address = await Geocoder.local.findAddressesFromCoordinates(coordinate);
+    setState(() {
+      first = addresses.first;
+      old = address.first;
+    });
+     print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
+      print("::::::::::::0000000000:::::::::: ${old.thoroughfare}");
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -559,9 +581,9 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
               content: SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
-                    Text('Are you in bloor west'),
+                    Text('Are you in  ${old.thoroughfare}'),
                     Text(
-                        'Would you like to change the location to "ChinaTown Toronto" or continue with bloor west'),
+                        'Would you like to change the location to "${first.thoroughfare}" or continue with  ${old.thoroughfare}'),
                   ],
                 ),
               ),

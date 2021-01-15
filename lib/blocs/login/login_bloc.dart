@@ -48,7 +48,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           authBloc.add(AuthenticationSave(user));
-
+          // authBloc.add(AuthenticationCheckDone(user));
+print('..............................................................................$user');
           ///Notify loading to UI
           yield LoginSuccess();
         } catch (error) {

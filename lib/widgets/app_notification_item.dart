@@ -93,14 +93,14 @@ class AppNotificationItem extends StatelessWidget {
             Container(
               width: 48,
               height: 48,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: item.category.color,
-              ),
-              child: Icon(
-                item.category.icon,
-                color: Colors.white,
-              ),
+              // decoration: BoxDecoration(
+              //   shape: BoxShape.circle,
+              //   color: item.category.color,
+              // ),
+              // child: Icon(
+              //   item.category.icon,
+              //   color: Colors.white,
+              // ),
             ),
             Expanded(
               child: Container(

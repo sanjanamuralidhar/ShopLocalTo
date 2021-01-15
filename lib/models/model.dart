@@ -21,3 +21,4 @@ export 'model_category2.dart';
 export 'model_nearly.dart';
 export 'model_feature.dart';
 export 'model_related.dart';
+export 'model_list.dart';

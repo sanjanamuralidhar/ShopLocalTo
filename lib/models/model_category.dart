@@ -22,28 +22,28 @@ class CategoryModel {
   });
 
 
-  static ProductType _setType(String type) {
-    switch (type) {
-      case 'shop':
-        return ProductType.shop;
-      case 'drink':
-        return ProductType.drink;
-      case 'event':
-        return ProductType.event;
-      case 'estate':
-        return ProductType.estate;
-      case 'job':
-        return ProductType.job;
-      case 'restaurant':
-        return ProductType.restaurant;
-      case 'automotive':
-        return ProductType.automotive;
-      case 'hotel':
-        return ProductType.hotel;
-      default:
-        return ProductType.more;
-    }
-  }
+  // static ProductType _setType(String type) {
+  //   switch (type) {
+  //     case 'shop':
+  //       return ProductType.shop;
+  //     case 'drink':
+  //       return ProductType.drink;
+  //     case 'event':
+  //       return ProductType.event;
+  //     case 'estate':
+  //       return ProductType.estate;
+  //     case 'job':
+  //       return ProductType.job;
+  //     case 'restaurant':
+  //       return ProductType.restaurant;
+  //     case 'automotive':
+  //       return ProductType.automotive;
+  //     case 'hotel':
+  //       return ProductType.hotel;
+  //     default:
+  //       return ProductType.more;
+  //   }
+  // }
 
 
 
@@ -57,7 +57,7 @@ class CategoryModel {
       image: json['image'] as String ?? 'Unknown',
       icon: icon,
       color: color,
-      type: _setType(json['type'] as String ?? "Unknown"),
+      // type: _setType(json['type'] as String ?? "Unknown"),
     );
   }
 

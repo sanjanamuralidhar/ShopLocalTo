@@ -7,6 +7,8 @@ import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:listar_flutter/models/model_user.dart';
+import 'package:listar_flutter/api/api.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key key}) : super(key: key);
@@ -36,16 +38,17 @@ class _EditProfileState extends State<EditProfile> {
   String _validAddress;
   String _validWebsite;
   String _validInfo;
+  UserModel _userData;
 
   @override
   void initState() {
+    _loadProfile();
     super.initState();
-    _textNameController.text = 'Steve Garrett';
-    _textEmailController.text = 'steve.garrett@passionui.com';
-    _textAddressController.text = 'Singapore, Golden Mile';
-    _textWebsiteController.text = 'passionui.com';
+    _textNameController.text ;
+    _textEmailController.text ;
+    _textAddressController.text ;
+    _textWebsiteController.text ;
   }
-
   ///On async get Image file
   Future _getImage() async {
     // ignore: deprecated_member_use
@@ -55,6 +58,13 @@ class _EditProfileState extends State<EditProfile> {
         _image = image;
       });
     }
+  }
+  Future<void> _loadProfile() async {
+    final UserModel result = await Api.getUserProfile();
+      setState(() {
+        _userData = result;
+      });
+       
   }
 
   ///On update image
@@ -93,6 +103,8 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    _textNameController.text = _userData.name ;
+    _textEmailController.text =  _userData.email;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -118,10 +130,10 @@ class _EditProfileState extends State<EditProfile> {
                                 ? Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      image: DecorationImage(
-                                        fit: BoxFit.cover,
-                                        image: AssetImage(Images.Profile2),
-                                      ),
+                                      // image: DecorationImage(
+                                      //   fit: BoxFit.cover,
+                                      //   image: NetworkImage(_userData.image),
+                                      // ),
                                     ),
                                   )
                                 : ClipRRect(
@@ -157,7 +169,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   AppTextInput(
-                    hintText: Translate.of(context).translate('input_name'),
+                    hintText: Translate.of(context).translate('name'),
                     errorText: _validName != null
                         ? Translate.of(context).translate(_validName)
                         : null,
@@ -195,7 +207,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   AppTextInput(
-                    hintText: Translate.of(context).translate('input_email'),
+                    hintText: Translate.of(context).translate('email'),
                     errorText: _validEmail != null
                         ? Translate.of(context).translate(_validEmail)
                         : null,
@@ -232,7 +244,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   AppTextInput(
-                    hintText: Translate.of(context).translate('input_address'),
+                    hintText: Translate.of(context).translate('address'),
                     errorText: _validAddress != null
                         ? Translate.of(context).translate(_validAddress)
                         : null,
@@ -270,7 +282,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ),
                   AppTextInput(
-                    hintText: Translate.of(context).translate('input_website'),
+                    hintText: Translate.of(context).translate('website'),
                     errorText: _validAddress != null
                         ? Translate.of(context).translate(_validAddress)
                         : null,
@@ -309,7 +321,7 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   AppTextInput(
                     hintText: Translate.of(context).translate(
-                      'input_information',
+                      'information',
                     ),
                     errorText: _validInfo != null
                         ? Translate.of(context).translate(_validInfo)
