@@ -83,6 +83,7 @@ class CategoryModel2 {
     if (icon != null)  json['icon'] = icon;
     if (color != null)  json['color'] = color;
     if(type != null) json['type'] = type;
+    if(list!=null) json['list']=list;
     return json;
   }
 
@@ -91,7 +92,16 @@ class CategoryModel2 {
         ? List<CategoryModel2>()
         : json.map((value) => CategoryModel2.fromJson(value)).toList();
   }
-  static List<ListModel> _setCategory(List<dynamic> json) {
+   static List<ListModel> _setCategory(list) {
+    if (list != null) {
+      final Iterable refactorFeature = list;
+      return refactorFeature.map((item) {
+        return ListModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+   static List<ListModel> listModelfromJson(List<dynamic> json) {
     return json == null
         ? List<ListModel>()
         : json.map((value) => ListModel.fromJson(value)).toList();

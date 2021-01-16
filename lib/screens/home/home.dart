@@ -15,7 +15,8 @@ import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 
 class Home extends StatefulWidget {
-  Home({Key key}) : super(key: key);
+  Home({Key key, this.id}) : super(key: key);
+  final num id;
 
   @override
   _HomeState createState() {
@@ -38,6 +39,7 @@ class _HomeState extends State<Home> {
   Position _currentPosition;
   Position _lastKnown;
   final Geolocator geolocator = Geolocator();
+  CategoryModel2 _categoryModel2;
 
 
   @override
@@ -47,11 +49,21 @@ class _HomeState extends State<Home> {
     _loadPopular();
     _loadShops();
     _loadCategoryList();
+    // _loadDetail();
   //  _geoCode();
   //  getLocation();
   //  _geoLastKnownCode();
     super.initState();
   }
+
+  // Future<void> _loadDetail() async {
+  //   final dynamic result = await Api.getCategoryDetailList(id: widget.id);
+  //   setState(() {
+  //     _categoryModel2 = result;
+  //   });
+  //   print('category list *************:${_categoryModel2.list.length}');
+  //   return _categoryModel2;
+  //   }
   // void getLocation() async {
   // _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
   //   print('${_currentPosition.latitude}::::ggggggg:::${_currentPosition.longitude}');
@@ -150,7 +162,7 @@ class _HomeState extends State<Home> {
     setState(() {
       _shops = result;
     });
-    print('ShopModel list ************:${_shops.length}');
+    // print('ShopModel list ************:${_shops.length}');
   }
 
    Future<void> _loadCategoryList() async {
@@ -164,10 +176,10 @@ class _HomeState extends State<Home> {
   ///On navigate product detail
   // /**************************************************** */
   void _onLocationDetail(MyLocation item) {
-    String route = item.type == LocationType.place
-        ? Routes.locationDetail
-        : Routes.locationDetailTab;
-    Navigator.pushNamed(context, route, arguments: item.id);
+    // String route = item.type == LocationType.place
+    //     ? Routes.locationDetail
+    //     : Routes.locationDetail;
+    Navigator.pushNamed(context, Routes.locationDetail, arguments: item.id);
   }
   // ******************************************************************/
 
@@ -230,7 +242,7 @@ void _onShopDetail(ShopModel item) {
         break;
 
       default:
-        Navigator.pushNamed(context, Routes.listProduct, arguments: item.id);
+        Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
         break;
     }
   }
@@ -257,7 +269,7 @@ void _onShopDetail(ShopModel item) {
   }
 //Build category @SANJANA
    Widget _buildCategoryItem() {
-     print('category list ///////////////////:${_categoryList.length}');
+    //  print('category list ///////////////////:${_categoryList.length}');
     if (_categoryList == null) {
       return Wrap(
         runSpacing: 10,
@@ -302,7 +314,7 @@ void _onShopDetail(ShopModel item) {
 
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
-print('_buildPopLocation list ///////////////////:${_locations.length}');
+// print('_buildPopLocation list ///////////////////:${_locations.length}');
     print(_locations.toString());
     if (_locations == null) {
       return ListView.builder(
@@ -449,7 +461,7 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
   @override
   Widget build(BuildContext context) {
     
-    print('popular locatiugbuiiiiibj buiob:$_popularPageModel');
+    // print('popular locatiugbuiiiiibj buiob:$_popularPageModel');
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
@@ -572,8 +584,8 @@ print('_buildPopLocation list ///////////////////:${_locations.length}');
       first = addresses.first;
       old = address.first;
     });
-     print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
-      print("::::::::::::0000000000:::::::::: ${old.thoroughfare}");
+    //  print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
+      // print("::::::::::::0000000000:::::::::: ${old.thoroughfare}");
     showDialog(
         context: context,
         builder: (context) => AlertDialog(

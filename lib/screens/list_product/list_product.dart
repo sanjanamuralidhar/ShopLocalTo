@@ -14,9 +14,10 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 enum PageType { map, list }
 
 class ListProduct extends StatefulWidget {
-  final int id;
+  final String title;
+   final num id;
 
-  ListProduct({Key key, this.id = 0}) : super(key: key);
+  ListProduct({Key key, this.title, this.id}) : super(key: key);
 
   @override
   _ListProductState createState() {
@@ -40,80 +41,93 @@ class _ListProductState extends State<ListProduct> {
   List<SortModel> _listSort = AppSort.listSortDefault;
   CategoryModel2 _categoryModel2;
    CategoryModel2 categoryModel2;
-  //  List<ListModel> _listModel;
+   List<ListModel> _listModel;
   //  List<ListModel> listModel;
 
   @override
   void initState() {
-    _loadData();
+    // _loadData();
     _loadDetail();
+    _loadListDetail();
     super.initState();
   }
-
-  ///On Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getProduct();
-    if (result.success) {
-      final listProduct = ProductListPageModel.fromJson(result.data);
-
-      ///Setup list marker map from list
-      listProduct.list.forEach((item) {
-        final markerId = MarkerId(item.id.toString());
-        final marker = Marker(
-          markerId: markerId,
-          position: LatLng(item.location.lat, item.location.long),
-          infoWindow: InfoWindow(title: item.title),
-          onTap: () {
-            _onSelectLocation(item);
-          },
-        );
-        _markers[markerId] = marker;
-      });
-
-      setState(() {
-        _productList = listProduct;
-        _initPosition = CameraPosition(
-          target: LatLng(
-            listProduct.list[0].location.lat,
-            listProduct.list[0].location.long,
-          ),
-          zoom: 14.4746,
-        );
-      });
-    }
-  }
-
+  
   Future<void> _loadDetail() async {
-    final CategoryModel2 result = await Api.getCategoryDetailList();
+    final CategoryModel2 result = await Api.getCategoryDetailList(id: widget.id);
     setState(() {
       _categoryModel2 = result;
     });
     print('category list *************:${_categoryModel2.list.length}');
+    _categoryModel2.list.forEach((item) { 
+        
+    });
       ///Setup list marker map from list
-      _categoryModel2.list.forEach((item) {
-        final markerId = MarkerId(item.id.toString());
-        final marker = Marker(
-          markerId: markerId,
-          // position: LatLng(item.location.lat, item.location.long),
-          infoWindow: InfoWindow(title: item.title),
-          onTap: () {
-            _onSelectedLocation(item);
-          },
-        );
-        _markers[markerId] = marker;
-      });
+      // _categoryModel2.list.forEach((item) {
+      //   final markerId = MarkerId(item.id.toString());
+      //   final marker = Marker(
+      //     markerId: markerId,
+      //     // position: LatLng(item.location.lat, item.location.long),
+      //     infoWindow: InfoWindow(title: item.title),
+      //     onTap: () {
+      //       _onSelectedLocation(item);
+      //     },
+      //   );
+      //   _markers[markerId] = marker;
+      // });
 
-      setState(() {
-        categoryModel2 = _categoryModel2;
-        // _initPosition = CameraPosition(
-          // target: LatLng(
-          //   _categoryModel2.list[0].location.lat,
-          //   _categoryModel2.list[0].location.long,
-          // ),
-        //   zoom: 14.4746,
-        // );
-      });
+      // setState(() {
+      //   categoryModel2 = _categoryModel2;
+      //   // _initPosition = CameraPosition(
+      //     // target: LatLng(
+      //     //   _categoryModel2.list[0].location.lat,
+      //     //   _categoryModel2.list[0].location.long,
+      //     // ),
+      //   //   zoom: 14.4746,
+      //   // );
+      // });
     }
+     Future<void> _loadListDetail() async {
+    final List<ListModel> result = await Api.getListDetailList(id: widget.id);
+    setState(() {
+      _listModel = result;
+    });
+    print('category list *************:${_listModel.length}');
+    return _listModel;
+     }
+
+  // /On Fetch API
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getProduct();
+  //   if (result.success) {
+  //     final listProduct = ProductListPageModel.fromJson(result.data);
+
+  //     ///Setup list marker map from list
+  //     listProduct.list.forEach((item) {
+  //       final markerId = MarkerId(item.id.toString());
+  //       final marker = Marker(
+  //         markerId: markerId,
+  //         position: LatLng(item.location.lat, item.location.long),
+  //         infoWindow: InfoWindow(title: item.title),
+  //         onTap: () {
+  //           _onSelectLocation(item);
+  //         },
+  //       );
+  //       _markers[markerId] = marker;
+  //     });
+
+  //     setState(() {
+  //       _productList = listProduct;
+  //       _initPosition = CameraPosition(
+  //         target: LatLng(
+  //           listProduct.list[0].location.lat,
+  //           listProduct.list[0].location.long,
+  //         ),
+  //         zoom: 14.4746,
+  //       );
+  //     });
+  //   }
+  // }
+
   
   ///On Load More
   Future<void> _onLoading() async {
@@ -247,13 +261,14 @@ class _ListProductState extends State<ListProduct> {
         : Routes.productDetailTab;
     Navigator.pushNamed(context, route, arguments: item.id);
   }
-   void _onCategoryDetail(ListModel item) {
-    // ignore: unrelated_type_equality_checks
-    String route = item.type == ListType.place
-        ? Routes.locationDetail
-        : Routes.locationDetailTab;
-    Navigator.pushNamed(context, route, arguments: item.id);
-  }
+
+  //  void _onCategoryDetail(ListModel item) {
+  //   // ignore: unrelated_type_equality_checks
+  //   String route = item.type == ListType.place
+  //       ? Routes.locationDetail
+  //       : Routes.locationDetailTab;
+  //   Navigator.pushNamed(context, route, arguments: item.title);
+  // }
 
   ///On search
   // void _onSearch() {
@@ -337,63 +352,63 @@ class _ListProductState extends State<ListProduct> {
   //       );
   //   }
   // }
-  Widget _buildCategoryItem(ListModel item, CategoryViewType type) {
-    switch (type) {
-      case CategoryViewType.gird:
-        return FractionallySizedBox(
-          widthFactor: 0.5,
-          child: Container(
-            padding: EdgeInsets.only(left: 15),
-            // ...........................................
-            child: AppCategoryViewItem(
-              onPressed: _onCategoryDetail,//from here go to_onProductdETAIL
-              item: item,
-              type: _modeView,
-            ),
-            // ..................................................
-          ),
-        );
+  // Widget _buildCategoryItem(ListModel item, CategoryViewType type) {
+  //   switch (type) {
+  //     case CategoryViewType.gird:
+  //       return FractionallySizedBox(
+  //         widthFactor: 0.5,
+  //         child: Container(
+  //           padding: EdgeInsets.only(left: 15),
+  //           // ...........................................
+  //           child: AppCategoryViewItem(
+  //             // onPressed: _onCategoryDetail,//from here go to_onProductdETAIL
+  //             item: item,
+  //             type: _modeView,
+  //           ),
+  //           // ..................................................
+  //         ),
+  //       );
 
-      case CategoryViewType.list:
-        return Container(
-          padding: EdgeInsets.only(left: 15),
-          child: AppCategoryViewItem(
-            onPressed: _onCategoryDetail,
-            item: item,
-            type: _modeView,
-          ),
-        );
+  //     case CategoryViewType.list:
+  //       return Container(
+  //         padding: EdgeInsets.only(left: 15),
+  //         child: AppCategoryViewItem(
+  //           // onPressed: _onCategoryDetail,
+  //           item: item,
+  //           type: _modeView,
+  //         ),
+  //       );
 
-      default:
-        return AppCategoryViewItem(
-          onPressed: _onCategoryDetail,
-          item: item,
-          type: _modeView,
-        );
-    }
-  }
+  //     default:
+  //       return AppCategoryViewItem(
+  //         // onPressed: _onCategoryDetail,
+  //         item: item,
+  //         type: _modeView,
+  //       );
+  //   }
+  // }
   ///Widget build Content
-  Widget _buildList() {
-    if (_categoryModel2.list == null) {
-      ///Build Loading
-      return Wrap(
-        runSpacing: 15,
-        alignment: WrapAlignment.spaceBetween,
-        children: List.generate(8, (index) => index).map((item) {
-          return _buildItemLoading(_modeView);
-        }).toList(),
-      );
-    }
+  // Widget _buildList() {
+  //   if (_categoryModel2.list == null) {
+  //     ///Build Loading
+  //     return Wrap(
+  //       runSpacing: 15,
+  //       alignment: WrapAlignment.spaceBetween,
+  //       children: List.generate(8, (index) => index).map((item) {
+  //         return _buildItemLoading(_modeView);
+  //       }).toList(),
+  //     );
+  //   }
 
-    ///Build list
-    return Wrap(
-      runSpacing: 15,
-      alignment: WrapAlignment.spaceBetween,
-      children: _categoryModel2.list.map((item) {
-        return _buildCategoryItem(item, _modeView);
-      }).toList(),
-    );
-  }
+  //   ///Build list
+  //   return Wrap(
+  //     runSpacing: 15,
+  //     alignment: WrapAlignment.spaceBetween,
+  //     children: _categoryModel2.list.map((item) {
+  //       return _buildCategoryItem(item, _modeView);
+  //     }).toList(),
+  //   );
+  // }
 
   ///Build Content Page Style
   Widget _buildContent() {
@@ -436,7 +451,7 @@ class _ListProductState extends State<ListProduct> {
               right: _modeView == CategoryViewType.block ? 0 : 20,
               bottom: 15,
             ),
-            child: _buildList(),
+            // child: _buildList(),
           ),
         ),
       );
@@ -543,7 +558,7 @@ class _ListProductState extends State<ListProduct> {
                               ],
                             ),
                             child: AppCategoryViewItem(
-                              onPressed: _onCategoryDetail,
+                              // onPressed: _onCategoryDetail,
                               item: item,
                               type: CategoryViewType.list,
                             ),
@@ -574,7 +589,7 @@ class _ListProductState extends State<ListProduct> {
       appBar: AppBar(
         centerTitle: true,
         title: Text(
-          widget.id,/////////////////int not string
+          widget.title,/////////////////int not string
         ),
         actions: <Widget>[
           IconButton(
@@ -582,15 +597,15 @@ class _ListProductState extends State<ListProduct> {
             onPressed: (){}
             // _onSearch,
           ),
-          Visibility(
-            visible: _categoryModel2.list != null,
-            child: IconButton(
-              icon: Icon(
-                _pageType == PageType.map ? Icons.view_compact : Icons.map,
-              ),
-              onPressed: _onChangePageStyle,
-            ),
-          )
+          // Visibility(
+          //   visible: _categoryModel2.list != null,
+          //   child: IconButton(
+          //     icon: Icon(
+          //       _pageType == PageType.map ? Icons.view_compact : Icons.map,
+          //     ),
+          //     onPressed: _onChangePageStyle,
+          //   ),
+          // )
         ],
       ),
       body: Column(

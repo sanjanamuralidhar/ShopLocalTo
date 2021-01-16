@@ -51,29 +51,29 @@ class _ProductDetailState extends State<ProductDetail> {
   // }
   Future<void> _loadDetail() async {
     final dynamic result = await Api.getShopDataDetail(id: widget.id);
-    print('id is .................${widget.id}');
+    // print('id is .................${widget.id}');
     setState(() {
         _detail = result;
       });
-      print('featureModel is .................${_detail.nearly.length}');
+      // print('featureModel is .................${_detail.nearly.length}');
   }
 
    Future<void> _loadFeature() async {
     final List<FeatureModel> result = await Api.getFeatureDetail(id: widget.id);
-    print('id is .................${widget.id}');
+    // print('id is .................${widget.id}');
     setState(() {
         _feature = result;
       });
-      print('featureModel is .................${_feature.length}');
+      // print('featureModel is .................${_feature.length}');
   }
 
    Future<void> _loadRelated() async {
     final List<RelatedModel> result = await Api.getRelatedDetail(id: widget.id);
-    print('id is .................${widget.id}');
+    // print('id is .................${widget.id}');
     setState(() {
         _related = result;
       });
-      print('..........................Related is .................${_related.length}');
+      // print('..........................Related is .................${_related.length}');
   }
   // Future<void> _loadNearly() async {
   //   final NearlyModel result = await Api.getNearlyDetail(id: widget.id);

@@ -13,7 +13,7 @@ class Routes {
   static const String productDetail = "/productDetail";
   static const String productDetailTab = "ProductDetailTab";
   static const String locationDetail = "/locationDetail";
-  static const String locationDetailTab = "LocationDetailTab";
+  static const String locationDetailTab = "/locationDetailTab";
   static const String category = "/category";
   static const String editProfile = "/editProfile";
   static const String changePassword = "/changePassword";
@@ -93,14 +93,6 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             return LocationDetail(id: id);
-          },
-        );
-
-      case locationDetailTab:
-        final id = settings.arguments;
-        return MaterialPageRoute(
-          builder: (context) {
-            // return LocationDetailTab(id: id);
           },
         );
 
@@ -216,7 +208,7 @@ class Routes {
         final category = settings.arguments;
         return MaterialPageRoute(
           builder: (context) {
-            return ListProduct(id: category);
+            return ListProduct(title: category);
           },
         );
 

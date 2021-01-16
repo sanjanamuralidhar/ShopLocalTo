@@ -40,6 +40,7 @@ class ProductModel {
   List<ProductModel> related;
    List<NearlyModel> nearly;
   List<ProductModel> tabs;
+  List<NearbyModel> nearby;
   LocationModel location;
   UserModel author;
   ProductType type;
@@ -77,6 +78,7 @@ class ProductModel {
     this.socialicon,
     this.tabs,
     this.nearly,
+    this.nearby,
   );
 
   @override
@@ -116,6 +118,7 @@ class ProductModel {
     tabs = _setTab(json['tabs']);
     socialicon=_setSocial(json['socialicon']);
     nearly=_setNearly(json['nearly']);
+    nearby=_setNearby(json['nearby']);
     
   }
 
@@ -151,6 +154,7 @@ class ProductModel {
     if (type != null) json['type'] = type;
     if(tabs !=null) json['tabs'] = tabs;
      if(nearly !=null) json['nearly'] = nearly;
+     if(nearby !=null) json['nearby'] = nearby;
     // if (socialicon != null) json['socialicon'] = socialicon;
 
     return json;
@@ -207,6 +211,15 @@ class ProductModel {
       final Iterable refactorFeature = nearly;
       return refactorFeature.map((item) {
         return NearlyModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+   static List<NearbyModel> _setNearby(nearly) {
+    if (nearly != null) {
+      final Iterable refactorFeature = nearly;
+      return refactorFeature.map((item) {
+        return NearbyModel.fromJson(item);
       }).toList();
     }
     return null;

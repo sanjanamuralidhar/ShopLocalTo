@@ -14,7 +14,7 @@ class HomeCategoryItem extends StatelessWidget {
   }) : super(key: key);
 
   Color colorConvert(String color) {
-  print('color666666666666666666666///////:$color');
+  // print('color666666666666666666666///////:$color');
   color = color.replaceAll("#", "");
   var converted;
   if (color.length == 6) {

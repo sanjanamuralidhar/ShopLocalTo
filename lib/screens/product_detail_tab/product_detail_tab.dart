@@ -61,7 +61,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       setState(() {
         _tabModel = result;
       });
-      print('TabModel is .................${_tabModel.length}');
+      // print('TabModel is .................${_tabModel.length}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
@@ -72,13 +72,13 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     final ProductModel result = await Api.getShopDataDetail(
       id: widget.id,
     );
-    print('id is .................${widget.id}');
+    // print('id is .................${widget.id}');
       setState(() {
         _product = result;
       });
-      print('ProductModel is .................${_product.author.name}');
-       print('FeatureModel is .................${_product.feature.length}');
-       print('TabModel is .................${_product.tabs.length}');
+      // print('ProductModel is .................${_product.author.name}');
+      //  print('FeatureModel is .................${_product.feature.length}');
+      //  print('TabModel is .................${_product.tabs.length}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
@@ -89,11 +89,11 @@ Future<void> _loadUser() async {
     final UserModel result = await Api.getUserDetail(
       id: widget.id,
     );
-    print('id is .................${widget.id}');
+    // print('id is .................${widget.id}');
       setState(() {
         _userModel = result;
       });
-      print('usermodel  is .................${_userModel.name}');
+      // print('usermodel  is .................${_userModel.name}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
@@ -104,7 +104,7 @@ Future<void> _loadUser() async {
     setState(() {
       _images = result;
     });
-    print('ImageModel list ************:${_images.length}');
+    // print('ImageModel list ************:${_images.length}');
   }
 
 

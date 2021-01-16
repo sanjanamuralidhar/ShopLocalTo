@@ -23,10 +23,10 @@ class TabContent extends StatelessWidget {
     switch (item.key) {
       
       case 'information':
-      print('+++++++++++++++++++++${item.key}+++++++++++');
-      print('++++++productmodel+++++++++++++++${page.address}+++++++++++');
-      print('++++++feature+++++++++++++++${page.feature.length}+++++++++++');
-      print('++++related+++++++++++++++++${page.related.length}+++++++++++');
+      // print('+++++++++++++++++++++${item.key}+++++++++++');
+      // print('++++++productmodel+++++++++++++++${page.address}+++++++++++');
+      // print('++++++feature+++++++++++++++${page.feature.length}+++++++++++');
+      // print('++++related+++++++++++++++++${page.related.length}+++++++++++');
         return Container(
           key: item.keyContentItem,
           padding: EdgeInsets.only(left: 20, right: 20),

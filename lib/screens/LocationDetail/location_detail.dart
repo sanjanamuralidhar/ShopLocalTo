@@ -22,94 +22,56 @@ class LocationDetail extends StatefulWidget {
 
 class _LocationDetailState extends State<LocationDetail> {
   bool _like = false;
-  ProductModel _detail;
-  NearlyModel _nearly;
-  List<RelatedModel> _related;
-  List<FeatureModel> _feature;
+  PopularModel _detail;
+  NearbyModel _nearly;
+  // List<RelatedModel> _related;
+  List<NearbyModel> _nearby;
   // bool _showHour = false;
-  ProductDetailPageModel _detailPage;
+  // ProductDetailPageModel _detailPage;
 
   @override
   void initState() {
-    // _loadData();
-    // _loadNearly();
     _loadDetail();
-    _loadFeature();
-    _loadRelated();
+    _loadNearby();
+    // _loadFeature();
+    // _loadRelated();
     super.initState();
   }
 
-  // /Fetch API
-  // Future<void> _loadData() async {
-  //   final ResultApiModel result = await Api.getProductDetail(id: widget.id);
-  //   if (result.success) {
-  //     setState(() {
-  //       _detailPage = ProductDetailPageModel.fromJson(result.data);
-  //       _like = _detailPage?.product?.like;
-  //     });
-  //   }
-  // }
   Future<void> _loadDetail() async {
-    final dynamic result = await Api.getShopDataDetail(id: widget.id);
-    print('id is .................${widget.id}');
+    final dynamic result = await Api.getLocationDataDetail(id: widget.id);
+    print('..........................................................................................${widget.id}');
     setState(() {
         _detail = result;
       });
-      print('featureModel is .................${_detail.nearly.length}');
+      print('..........................................................................................${_detail.nearby.length}');
   }
 
-   Future<void> _loadFeature() async {
-    final List<FeatureModel> result = await Api.getFeatureDetail(id: widget.id);
-    print('id is .................${widget.id}');
+   Future<void> _loadNearby() async {
+    final List<NearbyModel> result = await Api.getLocationNearbyDetail(id: widget.id);
+    
     setState(() {
-        _feature = result;
+        _nearby = result;
       });
-      print('featureModel is .................${_feature.length}');
+      
   }
 
-   Future<void> _loadRelated() async {
-    final List<RelatedModel> result = await Api.getRelatedDetail(id: widget.id);
-    print('id is .................${widget.id}');
-    setState(() {
-        _related = result;
-      });
-      print('..........................Related is .................${_related.length}');
-  }
-  // Future<void> _loadNearly() async {
-  //   final NearlyModel result = await Api.getNearlyDetail(id: widget.id);
-  //   setState(() {
-  //       _nearly = result;
-  //     });
-  // }
-
-  ///On navigate gallery
-  // void _onPhotoPreview() {
-  //   Navigator.pushNamed(
-  //     context,
-  //     Routes.gallery,
-  //     arguments: _detail.photo,
-  //   );
-  // }
+  
+  
 
   ///On navigate map
   void _onLocation() {
     Navigator.pushNamed(
       context,
       Routes.location,
-      arguments: _detail.location,
+      arguments: _detail.latitude,
     );
   }
-  void _onRelatedDetail(RelatedModel item) {
-    String route = item.type == RelatedType.place
-        ? Routes.productDetail
-        : Routes.productDetailTab;
-    Navigator.pushNamed(context, route, arguments: item.id);
-  }
-  void _onFeatureDetail(FeatureModel item) {
-    String route = item.type == FeatureType.place
-        ? Routes.productDetail
-        : Routes.productDetailTab;
-    Navigator.pushNamed(context, route, arguments: item.id);
+  void _onNearbyDetail(NearbyModel item) {
+    // String route = item.type == RelatedType.place
+    //     ? Routes.locationDetail
+    //     : Routes.locationDetailTab;
+    Navigator.pushNamed(context, Routes.locationDetail, arguments: item.id);
   }
 
   ///On navigate review
@@ -162,59 +124,59 @@ Widget _buildBanner() {
   }
   ///Build info
 
-  ///Build list feature
-  Widget _buildFeature() {
-    if (_feature == null) {
-      return Container();
-    }
+  // ///Build list feature
+  // Widget _buildFeature() {
+  //   if ( _nearby == null) {
+  //     return Container();
+  //   }
 
-    return Padding(
-      padding: EdgeInsets.only(top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(
-              left: 20,
-              right: 20,
-              bottom: 15,
-            ),
-            child: Text(
-              Translate.of(context).translate('featured'),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(fontWeight: FontWeight.w600),
-            ),
-          ),
-          Container(
-            height: 220,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.only(left: 20),
-              itemBuilder: (context, index) {
-                final item = _feature[index];
-                return Container(
-                  width: MediaQuery.of(context).size.width / 2,
-                  padding: EdgeInsets.only(right: 15),
-                  child: AppProductItem(
-                    onPressFeature: _onFeatureDetail,
-                    featureModel: item,
-                    type: ProductViewType.gird,
-                  ),
-                );
-              },
-              itemCount: _feature.length,
-            ),
-          )
-        ],
-      ),
-    );
-  }
+  //   return Padding(
+  //     padding: EdgeInsets.only(top: 10),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: EdgeInsets.only(
+  //             left: 20,
+  //             right: 20,
+  //             bottom: 15,
+  //           ),
+  //           child: Text(
+  //             Translate.of(context).translate('featured'),
+  //             style: Theme.of(context)
+  //                 .textTheme
+  //                 .headline6
+  //                 .copyWith(fontWeight: FontWeight.w600),
+  //           ),
+  //         ),
+  //         Container(
+  //           height: 220,
+  //           child: ListView.builder(
+  //             scrollDirection: Axis.horizontal,
+  //             padding: EdgeInsets.only(left: 20),
+  //             itemBuilder: (context, index) {
+  //               final item = _nearby[index];
+  //               return Container(
+  //                 width: MediaQuery.of(context).size.width / 2,
+  //                 padding: EdgeInsets.only(right: 15),
+  //                 child: AppPopularItem(
+  //                   onPressNearby: _onNearbyDetail,
+  //                   nearbyModel: item,
+  //                   type: PopularViewType.gird,
+  //                 ),
+  //               );
+  //             },
+  //             itemCount: _nearby.length,
+  //           ),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   ///Build list related
-  Widget _buildRelated() {
-    if (_related == null) {
+  Widget _buildNearBy() {
+    if (_nearby == null) {
       return Container();
     }
 
@@ -226,7 +188,7 @@ Widget _buildBanner() {
           Padding(
             padding: EdgeInsets.only(bottom: 15),
             child: Text(
-              Translate.of(context).translate('Ordinary Listings'),
+              Translate.of(context).translate('NearBy'),
               style: Theme.of(context)
                   .textTheme
                   .headline6
@@ -234,13 +196,13 @@ Widget _buildBanner() {
             ),
           ),
           Column(
-            children: _related.map((item) {
+            children: _nearby.map((item) {
               return Padding(
                 padding: EdgeInsets.only(bottom: 15),
-                child: AppProductItem(
-                  onPressRelated: _onRelatedDetail,
-                  relatedModel: item,
-                  type: ProductViewType.small,
+                child: AppPopularItem(
+                  onPressNearby: _onNearbyDetail,
+                  nearbyModel: item,
+                  type: PopularViewType.small,
                 ),
               );
             }).toList(),
@@ -278,8 +240,8 @@ Widget _buildBanner() {
                 child: Column(
                   children: <Widget>[
                     // _buildInfo(),
-                    _buildFeature(),
-                    _buildRelated()
+                    // _buildFeature(),
+                    _buildNearBy()
                   ],
                 ),
               ),
