@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/screens/screen.dart';
@@ -29,6 +30,22 @@ class _HomeSwipeState extends State<HomeSwipe> {
   String value;
   String locationName;
   bool isSwitched = false;
+   List<ShopModel> _shops = [];
+
+@override
+  void initState() {
+    _loadShops();
+    super.initState();
+  }
+
+  Future<void> _loadShops() async {
+    final List<ShopModel> result = await Api.getShops();
+    setState(() {
+      _shops = result;
+    });
+    // print('ShopModel list ************:${_shops.length}');
+  }
+
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
   Future<dynamic> getLocation() async {	
     String location1;	
@@ -43,6 +60,8 @@ class _HomeSwipeState extends State<HomeSwipe> {
     value = nullable;	
     print('location2:$location1');	
   }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -67,39 +86,39 @@ class _HomeSwipeState extends State<HomeSwipe> {
                     arguments: 11),
                 //itemid should be the argument we will get it during login(location id)
                 // Navigator.pushNamed(context, Routes.neighbourInfo,arguments: "Brampton"),
-                child: Icon(
-                  Icons.info_outline,
-                  color: Colors.white,
-                  size: 30,
-                ),
+                // child: Icon(
+                //   Icons.info_outline,
+                //   color: Colors.white,
+                //   size: 30,
+                // ),
               ),
             ),
           ),
         ),
         _buildValue(context),
-        Padding(
-          padding: const EdgeInsets.only(top: 30),
-          child: Align(
-            alignment: Alignment.topCenter,
-            child: Switch(
-              value: isSwitched,
-              onChanged: (value) {
-                setState(() {
-                  isSwitched = value;
-                  print(isSwitched);
-                });
-              },
-            ),
-          ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(top: 42, left: 220),
-          child: Text("10 km",
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold)),
-        ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 30),
+        //   child: Align(
+        //     alignment: Alignment.topCenter,
+        //     child: Switch(
+        //       value: isSwitched,
+        //       onChanged: (value) {
+        //         setState(() {
+        //           isSwitched = value;
+        //           print(isSwitched);
+        //         });
+        //       },
+        //     ),
+        //   ),
+        // ),
+        // Padding(
+        //   padding: const EdgeInsets.only(top: 42, left: 220),
+        //   child: Text("10 km",
+        //       style: TextStyle(
+        //           color: Colors.white,
+        //           fontSize: 17,
+        //           fontWeight: FontWeight.bold)),
+        // ),
       ],
     );
   }
@@ -134,7 +153,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
   }
 
   Widget _buildValue(BuildContext context) {
-     
+      //  _loadShops();
     if (value == null) {
       return Shimmer.fromColors(
         child:Padding(
@@ -142,7 +161,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
       child: Align(
           alignment: Alignment.topLeft,
           child: FlatButton(child: Text(""),
-          onPressed: (){_openPopup(context);},),
+          onPressed: (){_openPopup(context,_shops);},),
     ),
         ),
         baseColor: Colors.white,
@@ -150,7 +169,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
       );
     }
     return Padding(
-      padding: const EdgeInsets.only(top: 30, left: 10),
+      padding: const EdgeInsets.only(top: 30, left: 20),
       child: Align(
           alignment: Alignment.topLeft,
           child: FlatButton(
@@ -158,7 +177,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
             color: Colors.white,
             textColor: Colors.black,
             onPressed: () {
-              _openPopup(context);
+              _openPopup(context,_shops);
             },
             child: Text(
               value,
@@ -204,7 +223,8 @@ class _HomeSwipeState extends State<HomeSwipe> {
 
 // changed code _swipperbanner to widget
 // openpopup sanjana
-_openPopup(context) {
+_openPopup(context,List<ShopModel> shops) {
+  
   Alert(
       context: context,
       title: "Neighbourhood",
@@ -230,7 +250,7 @@ _openPopup(context) {
                 // ignore: non_constant_identifier_names
                 suggestionsCallback: (Pattern) async {
                   // //hardcoded datas to be changed
-                  List<ShopModel> list = shopModels;
+                  List<ShopModel> list = shops;
                   var suggetionList = Pattern.isEmpty
                       ? null
                       : list

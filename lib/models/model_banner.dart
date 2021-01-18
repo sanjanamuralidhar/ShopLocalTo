@@ -6,6 +6,10 @@ class ImageModel {
     this.id,
     this.image,
   );
+   @override
+  String toString() {
+    return toJson().toString();
+  }
 
   ImageModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;

@@ -40,8 +40,8 @@ class _HomeState extends State<Home> {
   Position _lastKnown;
   final Geolocator geolocator = Geolocator();
   CategoryModel2 _categoryModel2;
-
-
+// ProductListPageModel _productListPageModel;
+List<ListModel> _list;
   @override
   void initState() {
      _checkLocation();
@@ -49,84 +49,9 @@ class _HomeState extends State<Home> {
     _loadPopular();
     _loadShops();
     _loadCategoryList();
-    // _loadDetail();
-  //  _geoCode();
-  //  getLocation();
-  //  _geoLastKnownCode();
     super.initState();
   }
 
-  // Future<void> _loadDetail() async {
-  //   final dynamic result = await Api.getCategoryDetailList(id: widget.id);
-  //   setState(() {
-  //     _categoryModel2 = result;
-  //   });
-  //   print('category list *************:${_categoryModel2.list.length}');
-  //   return _categoryModel2;
-  //   }
-  // void getLocation() async {
-  // _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-  //   print('${_currentPosition.latitude}::::ggggggg:::${_currentPosition.longitude}');
-  // }
-
-//   _geoCode() async{
-//      _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-// Position position = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-//      final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
-//     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-//     setState(() {
-//       first = addresses.first;
-//     });
-//     print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
-//     print(position);
-//     return first;
-//   }
- 
-//   _geoLastKnownCode() async{
-// Position position = await Geolocator.getLastKnownPosition();
-//      final coordinates = new Coordinates(position.latitude,position.longitude);
-//     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
-//     last = addresses.last;
-//     print(":::::::::::mmmmmmmmmmmm::::::::::: ${last.thoroughfare}");
-//     print(position);
-//   }
-
- 
-// try dark and white theme
-
-  ///On select category
-  // void _onTapService(CategoryModel item) {
-  //   switch (item.type) {
-  //     case ProductType.more:
-  //       _onOpenMore();
-  //       break;
-
-  //     default:
-  //       Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
-  //       break;
-  //   }
-  // }
-
-  // ///On Open More
-  // void _onOpenMore() {
-  //   showModalBottomSheet<void>(
-  //     backgroundColor: Colors.transparent,
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return HomeCategoryList(
-  //         category: _homePage?.category,
-  //         onOpenList: () async {
-  //           Navigator.pushNamed(context, Routes.category);
-  //         },
-  //         onPress: (item) async {
-  //           Navigator.pop(context);
-  //           await Future.delayed(Duration(milliseconds: 250));
-  //           _onTapService(item);
-  //         },
-  //       );
-  //     },
-  //   );
-  // }
 
    _checkLocation() async {
     // the method below returns a Future
@@ -276,7 +201,8 @@ void _onShopDetail(ShopModel item) {
         alignment: WrapAlignment.center,
         children: List.generate(8, (index) => index).map(
           (item) {
-            return HomeCategoryPage();
+            return HomeCategoryPage(
+            );
           },
         ).toList(),
       );
@@ -302,7 +228,7 @@ void _onShopDetail(ShopModel item) {
       children: listBuild.map(
         (item) {
           return HomeCategoryPage(
-            item: item,
+            categoryModel2: item,
             onPressed: (item) {
               _onTapService(item);
             },
@@ -314,8 +240,7 @@ void _onShopDetail(ShopModel item) {
 
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
-// print('_buildPopLocation list ///////////////////:${_locations.length}');
-    print(_locations.toString());
+    // print(_locations.toString());
     if (_locations == null) {
       return ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -327,6 +252,7 @@ void _onShopDetail(ShopModel item) {
             child: AppProductItem(
               mylocation: item,
               type: ProductViewType.cardLarge,
+              onPressLocation: _onLocationDetail,
             ),
           );
         },

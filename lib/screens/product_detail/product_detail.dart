@@ -8,7 +8,8 @@ import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
-
+import 'package:listar_flutter/screens/product_detail_tab/product_banner_photo.dart';
+  const expandedBannerHeight = 150.0;
 class ProductDetail extends StatefulWidget {
   ProductDetail({Key key, this.id = 0}) : super(key: key);
 
@@ -28,11 +29,13 @@ class _ProductDetailState extends State<ProductDetail> {
   List<FeatureModel> _feature;
   // bool _showHour = false;
   ProductDetailPageModel _detailPage;
+List<ImageModel> _images = [];
 
   @override
   void initState() {
     // _loadData();
     // _loadNearly();
+    _loadPhoto();
     _loadDetail();
     _loadFeature();
     _loadRelated();
@@ -49,6 +52,13 @@ class _ProductDetailState extends State<ProductDetail> {
   //     });
   //   }
   // }
+   Future<void> _loadPhoto() async {
+    final List<ImageModel> result = await Api.getbannerPhoto(id: widget.id);
+    setState(() {
+      _images = result;
+    });
+    print('ImageModel list *****88888888888888888888*******:${_images.length}');
+  }
   Future<void> _loadDetail() async {
     final dynamic result = await Api.getShopDataDetail(id: widget.id);
     // print('id is .................${widget.id}');
@@ -57,7 +67,6 @@ class _ProductDetailState extends State<ProductDetail> {
       });
       // print('featureModel is .................${_detail.nearly.length}');
   }
-
    Future<void> _loadFeature() async {
     final List<FeatureModel> result = await Api.getFeatureDetail(id: widget.id);
     // print('id is .................${widget.id}');
@@ -75,6 +84,7 @@ class _ProductDetailState extends State<ProductDetail> {
       });
       // print('..........................Related is .................${_related.length}');
   }
+
   // Future<void> _loadNearly() async {
   //   final NearlyModel result = await Api.getNearlyDetail(id: widget.id);
   //   setState(() {
@@ -131,43 +141,59 @@ class _ProductDetailState extends State<ProductDetail> {
       _like = !_like;
     });
   }
-Widget _buildBanner() {
-    return ListView(
-  scrollDirection: Axis.horizontal, // <-- Like so
-  children: <Widget>[
-    Container(
-      child: Image.asset(Images.Trip1,
-      // "assets/images/trip.png",
+    Widget _buildBanner() {
+   if (_detail == null) {
+ return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Container(
+          color: Colors.white,
+        ),
+      );
+    }
+    return Image.network(
+      _detail.image,
       fit: BoxFit.cover,
-    )),
-    Container(
-      child: Image.asset(Images.Trip2,
-      // "assets/images/trip1.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip3,
-      // "assets/images/trip2.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip4,
-      // "assets/images/trip3.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip5,
-      // "assets/images/trip4.png",
-      fit: BoxFit.cover,
-    )
-    ),
-  ],
-);
-    
+    );
   }
+// Widget _buildBanner() {
+//     return ListView(
+//   scrollDirection: Axis.horizontal, // <-- Like so
+//   children: <Widget>[
+//     Container(
+//       child: Image.asset(Images.Trip1,
+//       // "assets/images/trip.png",
+//       fit: BoxFit.cover,
+//     )),
+//     Container(
+//       child: Image.asset(Images.Trip2,
+//       // "assets/images/trip1.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip3,
+//       // "assets/images/trip2.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip4,
+//       // "assets/images/trip3.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip5,
+//       // "assets/images/trip4.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//   ],
+// );
+    
+//   }
   ///Build info
   Widget _buildInfo() {
     if (_detail == null) {

@@ -41,12 +41,16 @@ this.description,
   this.nearby,
   });
 
+  @override
+  String toString() {
+    return toJson().toString();
+  }
+
   
  PopularModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['id'];
     name = json['name'];
-    // location = _setLocation(json['location']);
     message = json['message'];
     slug= json['slug'];
     picture = json['picture'];
@@ -104,15 +108,9 @@ this.description,
         ? List<PopularModel>()
         : json.map((value) => PopularModel.fromJson(value)).toList();
   }
-
-  static List<LocationModel> _setLocation(List<dynamic> json) {
-    return json == null
-        ? List<LocationModel>()
-        : json.map((value) => LocationModel.fromJson(value)).toList();
-  }
-   static List<NearbyModel> _setNearby(nearly) {
-    if (nearly != null) {
-      final Iterable refactorFeature = nearly;
+   static List<NearbyModel> _setNearby(nearby) {
+    if (nearby != null) {
+      final Iterable refactorFeature = nearby;
       return refactorFeature.map((item) {
         return NearbyModel.fromJson(item);
       }).toList();

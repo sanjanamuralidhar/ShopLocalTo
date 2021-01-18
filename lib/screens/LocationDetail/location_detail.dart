@@ -22,7 +22,7 @@ class LocationDetail extends StatefulWidget {
 
 class _LocationDetailState extends State<LocationDetail> {
   bool _like = false;
-  PopularModel _detail;
+  PopularModel _popular;
   NearbyModel _nearly;
   // List<RelatedModel> _related;
   List<NearbyModel> _nearby;
@@ -42,18 +42,19 @@ class _LocationDetailState extends State<LocationDetail> {
     final dynamic result = await Api.getLocationDataDetail(id: widget.id);
     print('..........................................................................................${widget.id}');
     setState(() {
-        _detail = result;
+        _popular = result;
       });
-      print('..........................................................................................${_detail.nearby.length}');
+      print('..........................................................................................${_popular.name}');
   }
 
    Future<void> _loadNearby() async {
     final List<NearbyModel> result = await Api.getLocationNearbyDetail(id: widget.id);
-    
+    print('..............................................222222222............................................${widget.id}');
     setState(() {
         _nearby = result;
       });
-      
+    print('..............................................222222222............................................${_nearby.length}');  
+    return _nearby;
   }
 
   
@@ -64,15 +65,15 @@ class _LocationDetailState extends State<LocationDetail> {
     Navigator.pushNamed(
       context,
       Routes.location,
-      arguments: _detail.latitude,
+      arguments: _popular.id,
     );
   }
-  void _onNearbyDetail(NearbyModel item) {
-    // String route = item.type == RelatedType.place
-    //     ? Routes.locationDetail
-    //     : Routes.locationDetailTab;
-    Navigator.pushNamed(context, Routes.locationDetail, arguments: item.id);
-  }
+  // void _onNearbyDetail(NearbyModel item) {
+  //   // String route = item.type == RelatedType.place
+  //   //     ? Routes.locationDetail
+  //   //     : Routes.locationDetailTab;
+  //   Navigator.pushNamed(context, Routes.locationDetailTab, arguments: item.id);
+  // }
 
   ///On navigate review
   // void _onReview() {
@@ -85,43 +86,60 @@ class _LocationDetailState extends State<LocationDetail> {
       _like = !_like;
     });
   }
-Widget _buildBanner() {
-    return ListView(
-  scrollDirection: Axis.horizontal, // <-- Like so
-  children: <Widget>[
-    Container(
-      child: Image.asset(Images.Trip1,
-      // "assets/images/trip.png",
-      fit: BoxFit.cover,
-    )),
-    Container(
-      child: Image.asset(Images.Trip2,
-      // "assets/images/trip1.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip3,
-      // "assets/images/trip2.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip4,
-      // "assets/images/trip3.png",
-      fit: BoxFit.cover,
-    )
-    ),
-    Container(
-      child: Image.asset(Images.Trip5,
-      // "assets/images/trip4.png",
-      fit: BoxFit.cover,
-    )
-    ),
-  ],
-);
-    
+   Widget _buildBanner() {
+   if (_popular == null) {
+ return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Container(
+          color: Colors.white,
+        ),
+      );
+    }
+    return Container();
+    // Image.network(
+    //   _popular.picture,
+    //   fit: BoxFit.cover,
+    // );
   }
+// Widget _buildBanner() {
+//     return ListView(
+//   scrollDirection: Axis.horizontal, // <-- Like so
+//   children: <Widget>[
+//     Container(
+//       child: Image.asset(Images.Trip1,
+//       // "assets/images/trip.png",
+//       fit: BoxFit.cover,
+//     )),
+//     Container(
+//       child: Image.asset(Images.Trip2,
+//       // "assets/images/trip1.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip3,
+//       // "assets/images/trip2.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip4,
+//       // "assets/images/trip3.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//     Container(
+//       child: Image.asset(Images.Trip5,
+//       // "assets/images/trip4.png",
+//       fit: BoxFit.cover,
+//     )
+//     ),
+//   ],
+// );
+    
+//   }
   ///Build info
 
   // ///Build list feature
@@ -173,9 +191,305 @@ Widget _buildBanner() {
   //     ),
   //   );
   // }
+Widget _buildInfo() {
+    if (_popular == null) {
+      return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                margin: EdgeInsets.only(
+                  bottom: 20,
+                  top: 20,
+                ),
+                height: 10,
+                width: 150,
+                color: Colors.white,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        height: 10,
+                        width: 100,
+                        color: Colors.white,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(top: 5),
+                      ),
+                      Container(
+                        height: 20,
+                        width: 150,
+                        color: Colors.white,
+                      ),
+                    ],
+                  ),
+                  Container(
+                    height: 10,
+                    width: 100,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 200,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 200,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 200,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 200,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                  Container(
+                    width: 32,
+                    height: 32,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 10,
+                          width: 200,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 25),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, width: 50, color: Colors.white),
+              )
+            ],
+          ),
+        ),
+      );
+    }
 
+    return Padding(
+      padding: EdgeInsets.only(left: 20, right: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                _popular.name,
+                style: Theme.of(context)
+                    .textTheme
+                    .headline6
+                    .copyWith(fontWeight: FontWeight.w600),
+              ),
+              // IconButton(
+              //   icon: Icon(Icons.location_on),
+              //   onPressed: _onLocation,
+              // ),
+             
+            ],
+          ),
+         
+          Padding(
+            padding: EdgeInsets.only(top: 10),
+          ),
+          // Text(
+          //   _popular.description,
+          //   style: Theme.of(context).textTheme.bodyText1.copyWith(height: 1.3),
+          // ),
+        ],
+      ),
+    );
+  }
   ///Build list related
   Widget _buildNearBy() {
+    print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb${_nearby.length}');
     if (_nearby == null) {
       return Container();
     }
@@ -200,7 +514,7 @@ Widget _buildBanner() {
               return Padding(
                 padding: EdgeInsets.only(bottom: 15),
                 child: AppPopularItem(
-                  onPressNearby: _onNearbyDetail,
+                  // onPressNearby: _onNearbyDetail,
                   nearbyModel: item,
                   type: PopularViewType.small,
                 ),
@@ -239,8 +553,7 @@ Widget _buildBanner() {
                 padding: EdgeInsets.only(top: 15, bottom: 15),
                 child: Column(
                   children: <Widget>[
-                    // _buildInfo(),
-                    // _buildFeature(),
+                    _buildInfo(),
                     _buildNearBy()
                   ],
                 ),

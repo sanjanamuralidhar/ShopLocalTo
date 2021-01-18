@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/screens/success/success.dart';
+import 'package:listar_flutter/screens/location_Detail_Tab/location_detail_tab.dart';
 
 class Routes {
   static const String signIn = "/signIn";
@@ -93,6 +94,14 @@ class Routes {
         return MaterialPageRoute(
           builder: (context) {
             return LocationDetail(id: id);
+          },
+        );
+
+         case locationDetailTab:
+        final id = settings.arguments;
+        return MaterialPageRoute(
+          builder: (context) {
+            return LocationDetailTab(id: id);
           },
         );
 

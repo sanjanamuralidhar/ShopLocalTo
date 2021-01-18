@@ -63,7 +63,7 @@ class Api {
     // print('...........getUserDetail()............:${result['data']['author']}');
     return UserModel.fromJson(result['data']['author']);
   }
-   static Future<List<ImageModel>> getUserPhoto({id: 0}) async {
+   static Future<List<ImageModel>> getbannerPhoto({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
   //  print('getShops():$result.runT');
@@ -97,7 +97,7 @@ class Api {
     //  print('...........getShopDataDetail()............:${result['data']['id']}');
     return ProductModel.fromJson(result['data']);
   }
-  // sanjana
+  // // sanjana
    static Future<PopularModel> getLocationDataDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/location-details?id='+id.toString());
@@ -219,7 +219,23 @@ class Api {
     print('this is the result tab data${result['data']['tabs']}');
     return TabModel.listFromJson(result['data']['tabs']);
   }
+
   
+    ///Get Product List
+  static Future<ProductListPageModel> getList({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']}');
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhgetListhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']['list']}');
+    return ProductListPageModel.fromJson(result['data']);
+  }
+    static Future<List<ListModel>> getListList({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']}');
+    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhgetListhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']['list']}');
+    return ListModel.listFromJson(result['data']['list']);
+  }
 
   ///Get History Search
   static Future<dynamic> getHistorySearch() async {
@@ -258,6 +274,7 @@ class Api {
     final result = await UtilAsset.loadJson("assets/data/product_list.json");
     return ResultApiModel.fromJson(result);
   }
+
 
   ///Get Review
   static Future<dynamic> getReview() async {

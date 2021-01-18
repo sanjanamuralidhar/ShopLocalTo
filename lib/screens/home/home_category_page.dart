@@ -4,13 +4,12 @@ import 'package:listar_flutter/utils/utils.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeCategoryPage extends StatelessWidget {
-  final CategoryModel2 item;
+  final CategoryModel2 categoryModel2;
   final ValueChanged<CategoryModel2> onPressed;
 
   HomeCategoryPage({
     Key key,
-    this.item,
-    this.onPressed,
+    this.onPressed, this.categoryModel2,
   }) : super(key: key);
 
 Color colorConvert(String color) {
@@ -26,8 +25,8 @@ Color colorConvert(String color) {
 }
   @override
   Widget build(BuildContext context) {
-    print('this is the color you are looking for:${item.color}');
-    if (item == null) {
+    print('this is the color you are looking for:${categoryModel2.color}');
+    if (categoryModel2 == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -66,7 +65,9 @@ Color colorConvert(String color) {
     return Container(
       width: MediaQuery.of(context).size.width * 0.21,
       child: GestureDetector(
-        onTap: () => onPressed(item),
+        onTap: () {
+          onPressed(categoryModel2);
+        } ,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
@@ -77,15 +78,15 @@ Color colorConvert(String color) {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: colorConvert(item.color),
+                color: colorConvert(categoryModel2.color),
               ),
-              child:Image.network(item.icon,width: 18,height: 18,),
+              child:Image.network(categoryModel2.icon,width: 18,height: 18,),
 
             ),
             Padding(
               padding: EdgeInsets.only(top: 3, left: 2, right: 2),
               child: Text(
-                item.title,
+                categoryModel2.title,
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context)

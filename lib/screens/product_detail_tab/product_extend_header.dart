@@ -132,10 +132,10 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
                           },
                         ),
                         Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          "(${productModel.numRate})",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
+                        // Text(
+                        //   "(${productModel.numRate})",
+                        //   style: Theme.of(context).textTheme.bodyText1,
+                        // ),
                       ],
                     )
                   ],

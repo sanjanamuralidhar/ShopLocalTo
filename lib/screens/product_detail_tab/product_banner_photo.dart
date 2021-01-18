@@ -2,15 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:shimmer/shimmer.dart';
 
-class ProductBannerHeader extends SliverPersistentHeaderDelegate {
+class ProductBannerHeader extends StatelessWidget {
   final double height;
-  final ImageModel productModel;
+  final ImageModel imageModel;
 
 
-  ProductBannerHeader({this.height, this.productModel});
+  ProductBannerHeader({this.height, this.imageModel});
   @override
-  Widget build(context,shrinkOffset, overlapsContent) {
-    if(productModel==null){
+  Widget build(context) {
+    print('...............................ooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooo${imageModel.image}');
+    if(imageModel==null){
      return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -23,19 +24,18 @@ class ProductBannerHeader extends SliverPersistentHeaderDelegate {
    return ListView(
   scrollDirection: Axis.horizontal, // <-- Like so
   children: <Widget>[
-    Container(
-      child: Image.network(productModel.image,
-      fit: BoxFit.cover,
-    )),
+    Expanded(
+      flex: 5,
+          child: SizedBox(
+        height:40,
+        width:40,
+        child: Container(
+          child: Image.network(imageModel.image,
+          fit: BoxFit.cover,
+        )),
+      ),
+    ),
   ],
 );
   }
-  @override
-  double get maxExtent => height;
-
-  @override
-  double get minExtent => height;
-
-  @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }

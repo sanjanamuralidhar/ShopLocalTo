@@ -52,7 +52,11 @@ class ListModel {
     this.status,
     this.subtitle,
   });
-
+  
+ @override
+  String toString() {
+    return toJson().toString();
+  }
   
 
    ListModel.fromJson(Map<String, dynamic> json) {

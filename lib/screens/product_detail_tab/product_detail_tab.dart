@@ -42,7 +42,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   @override
   void initState() {
-    // _loadPhoto();
+    _loadPhoto();
     _loadData();
     _loadDetail();
     _scrollController.addListener(_scrollListener);
@@ -100,11 +100,11 @@ Future<void> _loadUser() async {
   }
 
   Future<void> _loadPhoto() async {
-    final List<ImageModel> result = await Api.getUserPhoto();
+    final List<ImageModel> result = await Api.getbannerPhoto(id: widget.id);
     setState(() {
       _images = result;
     });
-    // print('ImageModel list ************:${_images.length}');
+    print('ImageModel list *****88888888888888888888*******:${_images.length}');
   }
 
 
@@ -208,28 +208,17 @@ Future<void> _loadUser() async {
   // /Build banner UI
   Widget _buildBanner() {
    if (_images == null) {
-      return ListView.builder(
-        scrollDirection: Axis.horizontal,
-        padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
-        itemBuilder: (context, index) {
-          final item = _images[index];
-          return Padding(
-            padding: EdgeInsets.only(left: 15),
-            child: SliverPersistentHeader(
-              pinned: true,
-            floating: false,
-            delegate:ProductBannerHeader(
-             height: expandedBarHeight,
-             productModel:item
-            ),
-            )
-          );
-        },
-        itemCount: List.generate(8, (index) => index).length,
+     return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Container(
+          color: Colors.white,
+        ),
       );
     }
-    return Image.asset(
-      Images.Trip4,
+    return Image.network(
+      _product.image,
       fit: BoxFit.cover,
     );
   }
