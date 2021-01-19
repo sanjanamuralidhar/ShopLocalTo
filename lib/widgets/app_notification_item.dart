@@ -91,7 +91,7 @@ class AppNotificationItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 48,
+              // width: 48,
               height: 48,
               // decoration: BoxDecoration(
               //   shape: BoxShape.circle,

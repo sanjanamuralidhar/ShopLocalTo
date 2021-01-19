@@ -163,9 +163,9 @@ class AppUserInfo extends StatelessWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      // Text(user.name,
-                      //     maxLines: 1,
-                      //     style: Theme.of(context).textTheme.subtitle2),
+                      Text(user.name,
+                          maxLines: 1,
+                          style: Theme.of(context).textTheme.subtitle2),
                       // Padding(
                       //   padding: EdgeInsets.only(top: 3, bottom: 3),
                       //   child: Text(

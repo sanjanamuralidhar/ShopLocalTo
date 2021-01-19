@@ -5,6 +5,8 @@ import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
+import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/api/api.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -21,6 +23,7 @@ class _SignUpState extends State<SignUp> {
   final _textEmailController = TextEditingController();
   final _textLocationController = TextEditingController();
   final _textPhoneController = TextEditingController();
+  final TextEditingController _controller = new TextEditingController();
   // ignore: unused_field
   final _focusID = FocusNode();
   final _focusPass = FocusNode();
@@ -34,18 +37,31 @@ class _SignUpState extends State<SignUp> {
   String _validEmail;
   String _validPhone;
   String _validLocation;
+  List<MyLocation> _locations = [];
 
   SignUpBloc _signUpBloc;
-
+  var items = [
+    'Working a lot harder',
+    'Being a lot smarter',
+    'Being a self-starter',
+    'Placed in charge of trading charter'
+  ];
   void initState() {
     _signUpBloc = BlocProvider.of<SignUpBloc>(context);
     _textIDController.text;
     _textPassController.text;
     _textEmailController.text;
-    _textPhoneController.text ;
+    _textPhoneController.text;
     _textLocationController.text;
-
+    _loadPopular();
     super.initState();
+  }
+
+  Future<void> _loadPopular() async {
+    final List<MyLocation> result = await Api.getPopular();
+    setState(() {
+      _locations = result;
+    });
   }
 
   ///On sign up
@@ -126,7 +142,7 @@ class _SignUpState extends State<SignUp> {
                   height: 30,
                 ),
                 AppTextInput(
-                  hintText: Translate.of(context).translate('username'),
+                  hintText: Translate.of(context).translate('Full Name'),
                   errorText: _validID != null
                       ? Translate.of(context).translate(_validID)
                       : null,
@@ -240,31 +256,91 @@ class _SignUpState extends State<SignUp> {
                 SizedBox(
                   height: 10,
                 ),
-                AppTextInput(
-                  hintText: Translate.of(context).translate('Select Location'),
-                  errorText: _validLocation != null
-                      ? Translate.of(context).translate(_validLocation)
-                      : null,
-                  icon: Icon(Icons.clear),
-                  controller: _textLocationController,
-                  focusNode: _focusLocation,
-                  textInputAction: TextInputAction.next,
-                  // onChanged: (text) {
-                  //   setState(() {
-                  //     _validLocation = UtilValidator.validate(
-                  //       data: _textLocationController.text,
-                  //     );
-                  //   });
-                  // },
-                  // onSubmitted: (text) {
-                  //   UtilOther.fieldFocusChange(
-                  //       context, _focusLocation, _focusLocation);
-                  // },
-                  onTapIcon: () async {
-                    await Future.delayed(Duration(milliseconds: 100));
-                    _textLocationController.clear();
-                  },
-                ),
+                // AppTextInput(
+                //   hintText: Translate.of(context).translate('Select Location'),
+                //   errorText: _validLocation != null
+                //       ? Translate.of(context).translate(_validLocation)
+                //       : null,
+                //   icon: Icon(Icons.clear),
+                //   controller: _textLocationController,
+                //   focusNode: _focusLocation,
+                //   textInputAction: TextInputAction.next,
+
+                //   // onChanged: (text) {
+                //   //   setState(() {
+                //   //     _validLocation = UtilValidator.validate(
+                //   //       data: _textLocationController.text,
+                //   //     );
+                //   //   });
+                //   // },
+                //   // onSubmitted: (text) {
+                //   //   UtilOther.fieldFocusChange(
+                //   //       context, _focusLocation, _focusLocation);
+                //   // },
+                //   onTapIcon: () async {
+                //     await Future.delayed(Duration(milliseconds: 100));
+                //     _textLocationController.clear();
+                //   },
+                // ),
+                Padding(
+                    padding: const EdgeInsets.only(left: 1, right: 1),
+                    child: new Row(children: <Widget>[
+                      new Expanded(
+                          child: SizedBox(
+                            height: 50,
+                            child: new TextField(
+                              
+                        controller: _textLocationController,
+                        decoration: InputDecoration(
+                          
+                          border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),),
+                          filled:true,
+                          fillColor: Theme.of(context).highlightColor,
+                            hintText: Translate.of(context)
+                                .translate('Select Location'),
+                            suffix: PopupMenuButton<String>(
+                              icon: const Icon(Icons.arrow_drop_down,color: Colors.grey,),
+                              onSelected: (String value) {
+                                _textLocationController.text = value;
+                              },
+                              itemBuilder: (BuildContext context) {
+                                return _locations.map<PopupMenuItem<String>>(
+                                    (MyLocation value) {
+                                  return new PopupMenuItem(
+                                      child: new Text(value.title),
+                                      value: value.title);
+                                }).toList();
+                              },
+                            ),
+                        ),
+                      ),
+                          )),
+                      // new PopupMenuButton<String>(
+                      //   icon: const Icon(Icons.arrow_drop_down),
+                      //   onSelected: (String value) {
+                      //     _textLocationController.text = value;
+                      //   },
+                      //   itemBuilder: (BuildContext context) {
+                      //     return _locations.map<PopupMenuItem<String>>((MyLocation value) {
+                      //       return new PopupMenuItem(child: new Text(value.title), value: value.title);
+                      //     }).toList();
+                      //   },
+                      // ),
+                    ])),
+                // **********important***************
+                //              Column(
+                //   children: _shops.map((item) {
+                //     return Padding(
+                //       padding: EdgeInsets.only(bottom: 15),
+                //       child: AppProductItem(
+                //         onPressshop: _onShopDetail,
+                //         shopModel: item,
+                //         type: ProductViewType.cardSmall,
+                //       ),
+                //     );
+                //   }).toList(),
+                // );
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),

@@ -91,7 +91,7 @@ class _WriteReviewState extends State<WriteReview> {
                       color: Colors.red,
                       shape: BoxShape.circle,
                       image: DecorationImage(
-                        image: AssetImage(widget.author.image),
+                        image: AssetImage(widget.author.profile_image),
                       ),
                     ),
                   ),

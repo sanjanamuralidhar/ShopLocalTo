@@ -25,11 +25,14 @@ class _EditProfileState extends State<EditProfile> {
   final _textAddressController = TextEditingController();
   final _textWebsiteController = TextEditingController();
   final _textInfoController = TextEditingController();
+  final _textPhoneController = TextEditingController();
+  
   final _focusName = FocusNode();
   final _focusEmail = FocusNode();
   final _focusAddress = FocusNode();
   final _focusWebsite = FocusNode();
   final _focusInfo = FocusNode();
+  final _focusPhone = FocusNode();
 
   File _image;
   bool _loading = false;
@@ -38,8 +41,9 @@ class _EditProfileState extends State<EditProfile> {
   String _validAddress;
   String _validWebsite;
   String _validInfo;
+  String _validPhone;
   UserModel _userData;
-
+SignUpBloc _signUpBloc;
   @override
   void initState() {
     _loadProfile();
@@ -48,6 +52,7 @@ class _EditProfileState extends State<EditProfile> {
     _textEmailController.text ;
     _textAddressController.text ;
     _textWebsiteController.text ;
+    _textPhoneController.text;
   }
   ///On async get Image file
   Future _getImage() async {
@@ -68,38 +73,38 @@ class _EditProfileState extends State<EditProfile> {
   }
 
   ///On update image
-  Future<void> _update() async {
-    UtilOther.hiddenKeyboard(context);
-    setState(() {
-      _validName = UtilValidator.validate(
-        data: _textNameController.text,
-      );
-      _validEmail = UtilValidator.validate(
-        data: _textEmailController.text,
-        type: Type.email,
-      );
-      _validAddress = UtilValidator.validate(
-        data: _textAddressController.text,
-      );
-      _validWebsite = UtilValidator.validate(
-        data: _textWebsiteController.text,
-      );
-      _validInfo = UtilValidator.validate(
-        data: _textInfoController.text,
-      );
-    });
-    if (_validName == null &&
-        _validEmail == null &&
-        _validAddress == null &&
-        _validWebsite == null &&
-        _validInfo == null) {
-      setState(() {
-        _loading = true;
-      });
-      await Future.delayed(Duration(seconds: 1));
-      Navigator.pop(context);
-    }
-  }
+  // Future<void> _update() async {
+  //   UtilOther.hiddenKeyboard(context);
+  //   setState(() {
+  //     _validName = UtilValidator.validate(
+  //       data: _textNameController.text,
+  //     );
+  //     _validEmail = UtilValidator.validate(
+  //       data: _textEmailController.text,
+  //       type: Type.email,
+  //     );
+  //     _validAddress = UtilValidator.validate(
+  //       data: _textAddressController.text,
+  //     );
+  //     _validWebsite = UtilValidator.validate(
+  //       data: _textWebsiteController.text,
+  //     );
+  //     _validInfo = UtilValidator.validate(
+  //       data: _textInfoController.text,
+  //     );
+  //   });
+  //   if (_validName == null &&
+  //       _validEmail == null &&
+  //       _validAddress == null &&
+  //       _validWebsite == null &&
+  //       _validInfo == null) {
+  //     setState(() {
+  //       _loading = true;
+  //     });
+  //     await Future.delayed(Duration(seconds: 1));
+  //     Navigator.pop(context);
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -179,20 +184,20 @@ class _EditProfileState extends State<EditProfile> {
                       await Future.delayed(Duration(milliseconds: 100));
                       _textNameController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                        context,
-                        _focusName,
-                        _focusEmail,
-                      );
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validName = UtilValidator.validate(
-                          data: _textNameController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //     context,
+                    //     _focusName,
+                    //     _focusEmail,
+                    //   );
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validName = UtilValidator.validate(
+                    //       data: _textNameController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textNameController,
                   ),
@@ -217,23 +222,58 @@ class _EditProfileState extends State<EditProfile> {
                       await Future.delayed(Duration(milliseconds: 100));
                       _textEmailController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                          context, _focusEmail, _focusAddress);
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validEmail = UtilValidator.validate(
-                          data: _textEmailController.text,
-                          type: Type.email,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //       context, _focusEmail, _focusAddress);
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validEmail = UtilValidator.validate(
+                    //       data: _textEmailController.text,
+                    //       type: Type.email,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textEmailController,
                     keyboardType: TextInputType.emailAddress,
                   ),
                   Padding(
+                    padding: EdgeInsets.only(top: 10, bottom: 10),
+                    child: Text(
+                      Translate.of(context).translate('address'),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle2
+                          .copyWith(fontWeight: FontWeight.w600),
+                    ),
+                  ),
+                  AppTextInput(
+                  hintText: Translate.of(context).translate('phone'),
+                  errorText: _validPhone != null
+                      ? Translate.of(context).translate(_validPhone)
+                      : null,
+                  icon: Icon(Icons.clear),
+                  controller: _textPhoneController,
+                  focusNode: _focusPhone,
+                  textInputAction: TextInputAction.next,
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validPhone = UtilValidator.validate(
+                  //       data: _textPhoneController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(
+                  //       context, _focusPhone, _focusPhone);
+                  // },
+                  onTapIcon: () async {
+                    await Future.delayed(Duration(milliseconds: 100));
+                    _textPhoneController.clear();
+                  },
+                ),
+                Padding(
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     child: Text(
                       Translate.of(context).translate('address'),
@@ -254,20 +294,20 @@ class _EditProfileState extends State<EditProfile> {
                       await Future.delayed(Duration(milliseconds: 100));
                       _textAddressController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                        context,
-                        _focusAddress,
-                        _focusWebsite,
-                      );
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validAddress = UtilValidator.validate(
-                          data: _textAddressController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //     context,
+                    //     _focusAddress,
+                    //     _focusWebsite,
+                    //   );
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validAddress = UtilValidator.validate(
+                    //       data: _textAddressController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textAddressController,
                   ),
@@ -283,29 +323,29 @@ class _EditProfileState extends State<EditProfile> {
                   ),
                   AppTextInput(
                     hintText: Translate.of(context).translate('website'),
-                    errorText: _validAddress != null
-                        ? Translate.of(context).translate(_validAddress)
+                    errorText: _validWebsite != null
+                        ? Translate.of(context).translate(_validWebsite)
                         : null,
-                    focusNode: _focusAddress,
+                    focusNode: _focusWebsite,
                     textInputAction: TextInputAction.next,
                     onTapIcon: () async {
                       await Future.delayed(Duration(milliseconds: 100));
                       _textWebsiteController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                        context,
-                        _focusWebsite,
-                        _focusInfo,
-                      );
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validAddress = UtilValidator.validate(
-                          data: _textWebsiteController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //     context,
+                    //     _focusWebsite,
+                    //     _focusInfo,
+                    //   );
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validAddress = UtilValidator.validate(
+                    //       data: _textWebsiteController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textWebsiteController,
                   ),
@@ -332,17 +372,17 @@ class _EditProfileState extends State<EditProfile> {
                       await Future.delayed(Duration(milliseconds: 100));
                       _textInfoController.clear();
                     },
-                    onSubmitted: (text) {
-                      _update();
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validInfo = UtilValidator.validate(
-                          data: _textInfoController.text,
-                          type: Type.email,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   _update();
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validInfo = UtilValidator.validate(
+                    //       data: _textInfoController.text,
+                    //       type: Type.email,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textInfoController,
                   ),
@@ -356,18 +396,55 @@ class _EditProfileState extends State<EditProfile> {
                 top: 15,
                 bottom: 15,
               ),
-              child: BlocBuilder<LoginBloc, LoginState>(
-                builder: (context, login) {
-                  return AppButton(
-                    onPressed: () {
-                      _update();
-                    },
-                    text: Translate.of(context).translate('confirm'),
-                    loading: _loading,
-                    disableTouchWhenLoading: true,
-                  );
-                },
-              ),
+              child:BlocBuilder<SignUpBloc, SignUpState>(
+                  builder: (context, signup) {
+                    return BlocListener<SignUpBloc, SignUpState>(
+                      listener: (context, signupListener) {
+                        if (signupListener is SignUpFail) {
+                          print("signup failed");
+                          Navigator.of(context).pop();
+                        } else {
+                          Navigator.of(context).pop();
+                          // Navigator.pushNamed(context, "signin");
+                        }
+                      },
+                      child: AppButton(
+                        onPressed: () {
+                          _signUpBloc.add(OnSignUp(
+                            username: _textNameController.text,
+                            email: _textEmailController.text,
+                            password: _textAddressController.text,
+                            phone: _textPhoneController.text,
+                            location: _textWebsiteController.text,
+                          ));
+                          // _signUp();
+                          print('username.........:${_textNameController.text}');
+                          print('email.........:${_textEmailController.text}');
+                          print('Adress...........:${_textAddressController.text}');
+                          print('phone....................:${_textPhoneController.text}');
+                          print('website...............:${_textWebsiteController.text}');
+                        },
+                        text: Translate.of(context).translate('sign_up'),
+                        loading: signup is SignUpLoading,
+                        disableTouchWhenLoading: true,
+                      ),
+                    );
+                  },
+                ),
+              // .........................................................
+              //  BlocBuilder<LoginBloc, LoginState>(
+              //   builder: (context, login) {
+              //     return AppButton(
+              //       onPressed: () {
+              //         // _update();
+              //       },
+              //       text: Translate.of(context).translate('confirm'),
+              //       loading: _loading,
+              //       disableTouchWhenLoading: true,
+              //     );
+              //   },
+              // ),
+              // .............................................................
             )
           ],
         ),

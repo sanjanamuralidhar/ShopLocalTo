@@ -11,8 +11,10 @@ class LocationDetailTab extends StatefulWidget {
 class _LocationDetailTabState extends State<LocationDetailTab> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("LocationDetailPage"),
+      ),
     );
   }
 }

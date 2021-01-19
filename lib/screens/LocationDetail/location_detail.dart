@@ -68,12 +68,12 @@ class _LocationDetailState extends State<LocationDetail> {
       arguments: _popular.id,
     );
   }
-  // void _onNearbyDetail(NearbyModel item) {
-  //   // String route = item.type == RelatedType.place
-  //   //     ? Routes.locationDetail
-  //   //     : Routes.locationDetailTab;
-  //   Navigator.pushNamed(context, Routes.locationDetailTab, arguments: item.id);
-  // }
+  void _onNearbyDetail(NearbyModel item) {
+    // String route = item.type == RelatedType.place
+    //     ? Routes.locationDetail
+    //     : Routes.locationDetailTab;
+    Navigator.pushNamed(context, Routes.locationDetailTab, arguments: item.id);
+  }
 
   ///On navigate review
   // void _onReview() {
@@ -97,11 +97,11 @@ class _LocationDetailState extends State<LocationDetail> {
         ),
       );
     }
-    return Container();
-    // Image.network(
-    //   _popular.picture,
-    //   fit: BoxFit.cover,
-    // );
+    return Image.network(
+      // 'http://dev.shoplocalto.ca/images/neighbourhoods/Eo4lpejKzoXO4UKdu02KUmhdQhVhn9.png',
+      _popular.picture,
+      fit: BoxFit.cover,
+    );
   }
 // Widget _buildBanner() {
 //     return ListView(
@@ -489,7 +489,7 @@ Widget _buildInfo() {
   }
   ///Build list related
   Widget _buildNearBy() {
-    print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb${_nearby.length}');
+    // print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb${_nearby.length}');
     if (_nearby == null) {
       return Container();
     }
@@ -514,7 +514,7 @@ Widget _buildInfo() {
               return Padding(
                 padding: EdgeInsets.only(bottom: 15),
                 child: AppPopularItem(
-                  // onPressNearby: _onNearbyDetail,
+                  onPressNearby: _onNearbyDetail,
                   nearbyModel: item,
                   type: PopularViewType.small,
                 ),

@@ -153,7 +153,7 @@ class _AboutUsState extends State<AboutUs> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(10),
               image: DecorationImage(
-                image: AssetImage(item.image),
+                image: AssetImage(item.profile_image),
                 fit: BoxFit.cover,
               ),
             ),
@@ -165,7 +165,7 @@ class _AboutUsState extends State<AboutUs> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        item.level,
+                        item.status,
                         style: Theme.of(context)
                             .textTheme
                             .caption

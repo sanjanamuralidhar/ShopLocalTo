@@ -18,19 +18,21 @@ class HomeSwipe extends StatefulWidget {
   }) : super(key: key);
   final double height;
   final List<ImageModel> images;
-  List<ShopModel> shops;
-
+  // List<ShopModel> shops;
+ List<MyLocation> myLocation;
   @override
   _HomeSwipeState createState() => _HomeSwipeState();
 }
 
 class _HomeSwipeState extends State<HomeSwipe> {
   // String location;
-  List<ShopModel> shops;
+  // List<ShopModel> shops;
+   List<MyLocation> myLocation;
   String value;
   String locationName;
   bool isSwitched = false;
-   List<ShopModel> _shops = [];
+  //  List<ShopModel> _shops = [];
+    List<MyLocation> _myLocation = [];
 
 @override
   void initState() {
@@ -39,11 +41,11 @@ class _HomeSwipeState extends State<HomeSwipe> {
   }
 
   Future<void> _loadShops() async {
-    final List<ShopModel> result = await Api.getShops();
+    final List<MyLocation> result = await Api.getPopular();
     setState(() {
-      _shops = result;
+      _myLocation = result;
     });
-    // print('ShopModel list ************:${_shops.length}');
+    print('ShopModel list ************:${_myLocation.length}');
   }
 
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
@@ -73,28 +75,28 @@ class _HomeSwipeState extends State<HomeSwipe> {
     return Stack(
       children: <Widget>[
         Container(child: _swipperBanner(context)),
-        InkWell(
-          // onTap: (){
+        // InkWell(
+        //   // onTap: (){
 
-          // },
-          child: Padding(
-            padding: const EdgeInsets.only(top: 35, right: 20),
-            child: Align(
-              alignment: Alignment.topRight,
-              child: InkWell(
-                onTap: () => Navigator.pushNamed(context, Routes.productDetail,
-                    arguments: 11),
-                //itemid should be the argument we will get it during login(location id)
-                // Navigator.pushNamed(context, Routes.neighbourInfo,arguments: "Brampton"),
-                // child: Icon(
-                //   Icons.info_outline,
-                //   color: Colors.white,
-                //   size: 30,
-                // ),
-              ),
-            ),
-          ),
-        ),
+        //   // },
+        //   child: Padding(
+        //     padding: const EdgeInsets.only(top: 35, right: 20),
+        //     child: Align(
+        //       alignment: Alignment.topRight,
+        //       child: InkWell(
+        //         onTap: () => Navigator.pushNamed(context, Routes.productDetail,
+        //             arguments: 11),
+        //         //itemid should be the argument we will get it during login(location id)
+        //         // Navigator.pushNamed(context, Routes.neighbourInfo,arguments: "Brampton"),
+        //         child: Icon(
+        //           Icons.info_outline,
+        //           color: Colors.white,
+        //           size: 30,
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        // ),
         _buildValue(context),
         // Padding(
         //   padding: const EdgeInsets.only(top: 30),
@@ -161,7 +163,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
       child: Align(
           alignment: Alignment.topLeft,
           child: FlatButton(child: Text(""),
-          onPressed: (){_openPopup(context,_shops);},),
+          onPressed: (){_openPopup(context,_myLocation);},),
     ),
         ),
         baseColor: Colors.white,
@@ -177,7 +179,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
             color: Colors.white,
             textColor: Colors.black,
             onPressed: () {
-              _openPopup(context,_shops);
+              _openPopup(context,_myLocation);
             },
             child: Text(
               value,
@@ -223,7 +225,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
 
 // changed code _swipperbanner to widget
 // openpopup sanjana
-_openPopup(context,List<ShopModel> shops) {
+_openPopup(context,List<MyLocation> mylocation) {
   
   Alert(
       context: context,
@@ -250,7 +252,7 @@ _openPopup(context,List<ShopModel> shops) {
                 // ignore: non_constant_identifier_names
                 suggestionsCallback: (Pattern) async {
                   // //hardcoded datas to be changed
-                  List<ShopModel> list = shops;
+                  List<MyLocation> list = mylocation;
                   var suggetionList = Pattern.isEmpty
                       ? null
                       : list
@@ -269,7 +271,7 @@ _openPopup(context,List<ShopModel> shops) {
                 },
                 onSuggestionSelected: (suggestion) {
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return ProductDetailTab(id: suggestion.id);
+                    return LocationDetail(id: suggestion.id);
                   }));
                 })
 

@@ -1,60 +1,94 @@
 class UserModel {
  int id;
+ String token;
  String name;
  String nickname;
- String image;
- String link;
- String level;
- String description;
- String tag;
- double rate;
- String token;
-  String email;
+ String email;
   String phone;
 String location;
 String address;
 String city;
 String province;
-// String country;
- 
+String profile_image;
+ String country;
+ String event_date;
+  String event_role;
+String mail_allow;
+String role;
+String provider;
+String provider_id;
+String status;
+String verify;
+ String guest;
+ String api_token;
+  String category_id;
+String website;
+String information;
+String created_at;
+String updated_at;
+
 
   UserModel(
     this.id,
+    this.token,
     this.name,
     this.nickname,
-    this.image,
-    this.link,
-    this.level,
-    this.description,
-    this.tag,
-    this.rate,
-    this.token,
     this.email,
     this.location,
     this.phone,
     this.address,
     this.city,
     this.province,
+    //
+    this.api_token,
+    this.category_id,
+    this.country,
+    this.created_at,
+    this.event_date,
+    this.event_role,
+    this.guest,
+    this.information,
+    this.mail_allow,
+    this.profile_image,
+    this.provider,
+    this.provider_id,
+    this.role,
+    this.status,
+    this.updated_at,
+    this.verify,
+    this.website,
   );
 
   UserModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
     id = json['id'];
+    token = json['access_token'];
     name = json['name'];
     nickname = json['nickname'];
-    image= json['profile_image'];
-    link = json['link'];
-    level = json['level'];
-    description = json['description'];
-    tag = json['tag'];
-    rate = json['rate'];
-    token = json['access_token'];
     email = json['email'];
     location = json['location'];
     phone=json['phone'];
     address=json['address'];
     city = json['city'];
     province=json['province'];
+    //
+    api_token = json['api_token'];
+    category_id = json['category_id'];
+    country = json['country'];
+    created_at = json['created_at'];
+    event_date = json['event_date'];
+    event_role=json['event_role'];
+    guest=json['guest'];
+    mail_allow = json['mail_allow'];
+    profile_image=json['profile_image'];
+    //
+    provider = json['provider'];
+    provider_id = json['provider_id'];
+    role = json['role'];
+    status = json['status'];
+    updated_at = json['updated_at'];
+    verify=json['verify'];
+    website=json['website'];
     
   }
 
@@ -68,7 +102,39 @@ String province;
         ? List<UserModel>()
         : json.map((value) => UserModel.fromJson(value)).toList();
   }
-  // factory UserModel.fromJson(Map<String, dynamic> json) {
+  
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (id != null) json['id'] = id;
+    if(token!=null) json['access_token'] = token;
+    if(name!=null) json['name']=name;
+    if(nickname!=null) json['nickname']=nickname;
+    if(email!=null) json['email']=email;
+    if(location!=null) json['location']=location;
+    if(phone!=null) json['phone']=phone;
+    //
+    if(api_token!=null) json['api_token']=api_token;
+    if(category_id!=null) json['category_id']=category_id;
+    if(country!=null) json['country']=country;
+    if(created_at!=null) json['created_at']=created_at;
+    if(event_date!=null) json['event_date']=event_date;
+    //
+    if(event_role!=null) json['event_role']=event_role;
+    if(guest!=null) json['guest']=guest;
+    if(information!=null) json['information']=information;
+    if(mail_allow!=null) json['mail_allow']=mail_allow;
+    if(profile_image!=null) json['profile_image']=profile_image;
+    //
+    if(provider!=null) json['provider']=provider;
+    if(provider_id!=null) json['provider_id']=provider_id;
+    if(role!=null) json['role']=role;
+    if(status!=null) json['status']=status;
+    if(updated_at!=null) json['phone']=updated_at;
+     if(verify!=null) json['verify']=verify;
+    if(website!=null) json['website']=website;
+    return json;
+  }
+// factory UserModel.fromJson(Map<String, dynamic> json) {
   //   return UserModel(
   //     json['id'] as int ?? 0,
   //     json['full_name'] as String ?? 'Unknown',
@@ -85,24 +151,6 @@ String province;
   //     json['location'] as String ?? 'Unknown',
   //   );
   // }
-  Map<String, dynamic> toJson() {
-    Map<String, dynamic> json = {};
-    if (id != null) json['id'] = id;
-    if(name!=null) json['name']=name;
-    if(nickname!=null) json['nickname']=nickname;
-    if(image!=null) json['photo']=image;
-    if(link!=null) json['link']=link;
-    if(level!=null) json['level']=level;
-    if(description!=null) json['description']=description;
-    if(tag!=null) json['tag']=tag;
-    if(rate!=null) json['rate']=rate;
-    if(token!=null) json['access_token']=token;
-    if(email!=null) json['email']=email;
-    if(location!=null) json['location']=location;
-    if(phone!=null) json['phone']=phone;
-    return json;
-  }
-
   // Map<String, dynamic> toJson() {
   //   return {
   //     'id': id,

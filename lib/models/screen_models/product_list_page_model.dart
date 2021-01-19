@@ -1,9 +1,13 @@
 import 'package:listar_flutter/models/model.dart';
 
 class ProductListPageModel {
+  bool success;
+    String message;
    List<ListModel> list;
 
   ProductListPageModel(
+    this.success,
+    this.message,
     this.list,
   );
 
@@ -14,22 +18,22 @@ class ProductListPageModel {
 
   ProductListPageModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-   list=_setList(json['list']);
-
-    
+    success = json['success'];
+    message = json['message'];
+   list=_setList(json['list']);  
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
+    if(success!=null) json['success']=success;
+    if(message!=null) json['message']=message;
     if (list != null) json['list'] = list;
-
-    
     return json;
   }
 
-    static List<ListModel> _setList(nearby) {
-    if (nearby != null) {
-      final Iterable refactorFeature = nearby;
+    static List<ListModel> _setList(list) {
+    if (list != null) {
+      final Iterable refactorFeature = list;
       return refactorFeature.map((item) {
         return ListModel.fromJson(item);
       }).toList();

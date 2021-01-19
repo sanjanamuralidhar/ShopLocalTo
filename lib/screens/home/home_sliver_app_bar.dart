@@ -8,8 +8,9 @@ import 'package:listar_flutter/screens/product_detail_tab/product_detail_tab.dar
 class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final List<ImageModel> banners;
+  final List<ShopModel> shopModel;
 
-  AppBarHomeSliver({this.expandedHeight, this.banners});
+  AppBarHomeSliver({this.shopModel,this.expandedHeight, this.banners});
   String dropdownValue = 'One';
   @override
   Widget build(context, shrinkOffset, overlapsContent) {
@@ -75,7 +76,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
                           // ignore: non_constant_identifier_names
                           suggestionsCallback: (Pattern) async {
                             ////hardcoded datas
-                            List<ShopModel> list = shopModels;
+                            List<ShopModel> list = shopModel;
                             var suggetionList = Pattern.isEmpty
                                 ? null
                                 : list

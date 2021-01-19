@@ -19,14 +19,14 @@ class ListModel {
   String title;
   String subtitle;
   String created_date;
-  String rate;
-  String num_rate;
+  double rate;
+  int num_rate;
   String rate_text;
   String status;
   bool favourite;
   String address;
   String phone;
-  List<LocationModel> location;
+  LocationModel location;
   String count;
   String image;
   String icon;
@@ -71,7 +71,7 @@ class ListModel {
     address = json['address'];
     created_date = json['created_date'];
     favourite = json['favourite'];
-    location = json['location'];
+    location = _setLocation(json['location']);
     num_rate =  json['num_rate'];
     phone =  json['phone'];
     rate = json['rate'];
@@ -125,7 +125,14 @@ class ListModel {
         return ListType.more;
     }
   }
-
+   static LocationModel _setLocation(Map<String, dynamic> location) {
+    if (location != null) {
+      return LocationModel.fromJson(location);
+    }
+    return null;
+  }
+  
+ 
   static List<ListModel> listFromJson(List<dynamic> json) {
     return json == null
         ? List<ListModel>()

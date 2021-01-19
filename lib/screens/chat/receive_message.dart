@@ -16,7 +16,7 @@ class ReceiveMessage extends StatelessWidget {
       child: Row(
         children: <Widget>[
           AppCircleAvatar(
-            imgUrl: item.from.image,
+            imgUrl: item.from.profile_image,
           ),
           Padding(
             padding: EdgeInsets.only(left: 8, right: 8),

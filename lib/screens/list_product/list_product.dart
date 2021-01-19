@@ -14,9 +14,8 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 enum PageType { map, list }
 
 class ListProduct extends StatefulWidget {
-   final num id;
   final String title;
- 
+  final num id;
 
   ListProduct({Key key, this.title = 'Place', this.id = 0}) : super(key: key);
 
@@ -40,7 +39,6 @@ class _ListProductState extends State<ListProduct> {
   ProductListPageModel _productList;
   SortModel _currentSort = AppSort.defaultSort;
   List<SortModel> _listSort = AppSort.listSortDefault;
-  ProductListPageModel _productListPageModel;
 
   @override
   void initState() {
@@ -49,70 +47,35 @@ class _ListProductState extends State<ListProduct> {
   }
 
   ///On Fetch API
-  // Future<void> _loadData() async {
-  //   final ResultApiModel result = await Api.getProduct();
-  //   if (result.success) {
-  //     final listProduct = ProductListPageModel.fromJson(result.data);
-
-  //     ///Setup list marker map from list
-  //     listProduct.list.forEach((item) {
-  //       final markerId = MarkerId(item.id.toString());
-  //       final marker = Marker(
-  //         markerId: markerId,
-  //         position: LatLng(item.location.lat, item.location.long),
-  //         infoWindow: InfoWindow(title: item.title),
-  //         onTap: () {
-  //           _onSelectLocation(item);
-  //         },
-  //       );
-  //       _markers[markerId] = marker;
-  //     });
-
-  //     setState(() {
-  //       _productList = listProduct;
-  //       _initPosition = CameraPosition(
-  //         target: LatLng(
-  //           listProduct.list[0].location.lat,
-  //           listProduct.list[0].location.long,
-  //         ),
-  //         zoom: 14.4746,
-  //       );
-  //     });
-  //   }
-  // }
-
   Future<void> _loadData() async {
-    final ProductListPageModel result = await Api.getList(id: widget.id);
-    setState(() {
-      _productListPageModel = result;
-    });
+    final dynamic result = await Api.getList(id: widget.id);
+// print('....................................get  L IST...........${widget.id}');
+      final listProduct = result;
+// print('....................................get  L IST...........${listProduct.list.length}');
+      ///Setup list marker map from list
+      listProduct.list.forEach((item) {
+        final markerId = MarkerId(item.id.toString());
+        final marker = Marker(
+          markerId: markerId,
+          position: LatLng(item.location.lat, item.location.long),
+          infoWindow: InfoWindow(title: item.title),
+          onTap: () {
+            _onSelectLocation(item);
+          },
+        );
+        _markers[markerId] = marker;
+      });
 
-    print(
-        '.....................ProductListPageModel.....................................................................${widget.id}');
-    //Setup list marker map from list
-    _productListPageModel.list.forEach((item) {
-      final markerId = MarkerId(item.id.toString());
-      final marker = Marker(
-        markerId: markerId,
-        position: LatLng(item.location[0].lat, item.location[0].long),
-        infoWindow: InfoWindow(title: item.title),
-        onTap: () {
-          _onSelectLocation(item);
-        },
-      );
-      _markers[markerId] = marker;
-    });
-
-    setState(() {
-      _productList = _productListPageModel;
-      _initPosition = CameraPosition(
-        target: LatLng(
-          _productListPageModel.list[0].location[0].lat,
-          _productListPageModel.list[0].location[0].long,
-        ),
-        zoom: 14.4746,
-      );
-    });
+      setState(() {
+        _productList = listProduct;
+        _initPosition = CameraPosition(
+          target: LatLng(
+            listProduct.list[0].location.lat,
+            listProduct.list[0].location.long,
+          ),
+          zoom: 14.4746,
+        );
+      });
   }
 
   ///On Load More
@@ -224,8 +187,8 @@ class _ListProductState extends State<ListProduct> {
         CameraPosition(
           bearing: 270.0,
           target: LatLng(
-            _productList.list[_indexLocation].location[0].lat,
-            _productList.list[_indexLocation].location[0].long,
+            _productList.list[_indexLocation].location.lat,
+            _productList.list[_indexLocation].location.long,
           ),
           tilt: 30.0,
           zoom: 15.0,
@@ -242,7 +205,7 @@ class _ListProductState extends State<ListProduct> {
     Navigator.pushNamed(context, route, arguments: item.id);
   }
 
-  // ///On search
+  ///On search
   // void _onSearch() {
   //   Navigator.pushNamed(context, Routes.searchHistory);
   // }
@@ -299,7 +262,7 @@ class _ListProductState extends State<ListProduct> {
           child: Container(
             padding: EdgeInsets.only(left: 15),
             child: AppCategoryViewItem(
-              // onPressed: _onProductDetail,
+              onPressed: _onProductDetail,
               item: item,
               type: _modeView,
             ),
@@ -310,7 +273,7 @@ class _ListProductState extends State<ListProduct> {
         return Container(
           padding: EdgeInsets.only(left: 15),
           child: AppCategoryViewItem(
-            // onPressed: _onProductDetail,
+            onPressed: _onProductDetail,
             item: item,
             type: _modeView,
           ),
@@ -318,7 +281,7 @@ class _ListProductState extends State<ListProduct> {
 
       default:
         return AppCategoryViewItem(
-          // onPressed: _onProductDetail,
+          onPressed: _onProductDetail,
           item: item,
           type: _modeView,
         );
@@ -496,7 +459,7 @@ class _ListProductState extends State<ListProduct> {
                               ],
                             ),
                             child: AppCategoryViewItem(
-                              // onPressed: _onProductDetail,
+                              onPressed: _onProductDetail,
                               item: item,
                               type: CategoryViewType.list,
                             ),
@@ -631,6 +594,7 @@ class _ListProductState extends State<ListProduct> {
     );
   }
 }
+
 
 // import 'dart:async';
 

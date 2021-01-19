@@ -29,7 +29,7 @@ class _ProfileState extends State<Profile> {
   @override
   void initState() {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
-    _loadData();
+    // _loadData();
     _loadProfile();
     super.initState();
   }
@@ -61,6 +61,7 @@ class _ProfileState extends State<Profile> {
       setState(() {
         _userData = result;
       });
+      print(".............................................${_userData.name}");
       return _userData;
        
   }

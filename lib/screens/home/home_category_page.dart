@@ -13,7 +13,7 @@ class HomeCategoryPage extends StatelessWidget {
   }) : super(key: key);
 
 Color colorConvert(String color) {
-  print('color666666666666666666666///////:$color');
+  // print('color666666666666666666666///////:$color');
   color = color.replaceAll("#", "");
   var converted;
   if (color.length == 6) {
@@ -25,7 +25,7 @@ Color colorConvert(String color) {
 }
   @override
   Widget build(BuildContext context) {
-    print('this is the color you are looking for:${categoryModel2.color}');
+    // print('this is the color you are looking for:${categoryModel2.color}');
     if (categoryModel2 == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,

@@ -88,15 +88,15 @@ final Function(ShopModel) onPressshop;
           ),
           child: Row(
             children: <Widget>[
-              // ClipRRect(
-              //   borderRadius: BorderRadius.circular(8),
-              //   child: Image.network(
-              //     nearbyModel.picture,
-              //     width: 80,
-              //     height: 80,
-              //     fit: BoxFit.cover,
-              //   ),
-              // ),
+              ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image.network(
+                  nearbyModel.picture,
+                  width: 80,
+                  height: 80,
+                  fit: BoxFit.cover,
+                ),
+              ),
               Padding(
                 padding: EdgeInsets.only(
                   left: 10,

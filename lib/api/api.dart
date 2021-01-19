@@ -38,6 +38,12 @@ class Api {
     // final result = await UtilAsset.loadJson("assets/data/signup.json");
     return result;
   }
+  // /Update profile api
+   static Future<dynamic> editProfile({String username, String email, String address, String webSite, String location}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&webSite='+webSite);
+    return result;
+  }
 
   // Get sHOP DETAIL @SANJANA
   static Future<dynamic> getDetail({id: 0}) async {
@@ -79,13 +85,13 @@ class Api {
  static Future<CategoryModel2> getCategoryDetailList({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
-   print('getCategoryDetailList():__________________________________${result['data']['list']}');
+  //  print('getCategoryDetailList():__________________________________${result['data']['list']}');
    return CategoryModel2.fromJson(result['data']);
   }
   static Future<List<ListModel>> getListDetailList({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
-   print('getListDetailList():__________________________________${result['data']['list']}');
+  //  print('getListDetailList():__________________________________${result['data']['list']}');
    return ListModel.listFromJson(result['data']['list']);
   }
 
@@ -122,7 +128,7 @@ class Api {
    static Future<List<NearbyModel>> getLocationNearbyDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/location-details?id='+id.toString());
-    print("//////////////////////////////////////////////////////////////////////////////////////////////////${result['data']['nearby']}");
+    // print("//////////////////////////////////////////////////////////////////////////////////////////////////${result['data']['nearby']}");
     return NearbyModel.listFromJson(result['data']['nearby']);
    }
   ///Validate token valid
@@ -154,7 +160,7 @@ class Api {
   static Future<UserModel> getUserProfile() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/user');
-    // print('this is ...............getUserProfile...........$result');
+    print('this is ...............getUserProfile...........$result');
    return UserModel.fromJson(result);
   }
 
@@ -216,26 +222,33 @@ class Api {
   static Future<List<TabModel>> getTabtabDetail({id: 0, tabExtend: false}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
-    print('this is the result tab data${result['data']['tabs']}');
+    // print('this is the result tab data${result['data']['tabs']}');
     return TabModel.listFromJson(result['data']['tabs']);
   }
+// getLIST SANJANA
 
+static Future<ProductListPageModel> getList({id:0}) async{
+  await Future.delayed(Duration(seconds: 1));
+  final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
+  // print('/././//............./////...getList${result['data']}');
+  return ProductListPageModel.fromJson(result['data']);
+}
   
     ///Get Product List
-  static Future<ProductListPageModel> getList({id: 0}) async {
-    await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
-    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']}');
-    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhgetListhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']['list']}');
-    return ProductListPageModel.fromJson(result['data']);
-  }
-    static Future<List<ListModel>> getListList({id: 0}) async {
-    await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
-    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']}');
-    print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhgetListhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']['list']}');
-    return ListModel.listFromJson(result['data']['list']);
-  }
+  // static Future<ProductListPageModel> getList({id: 0}) async {
+  //   await Future.delayed(Duration(seconds: 1));
+  //   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
+  //   print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']}');
+  //   print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhgetListhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']['list']}');
+  //   return ProductListPageModel.fromJson(result['data']);
+  // }
+  //   static Future<List<ListModel>> getListList({id: 0}) async {
+  //   await Future.delayed(Duration(seconds: 1));
+  //   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
+  //   print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']}');
+  //   print('hhhhhhhhhhhhhhhhhhhhhhhhhhhhhgetListhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh${result['data']['list']}');
+  //   return ListModel.listFromJson(result['data']['list']);
+  // }
 
   ///Get History Search
   static Future<dynamic> getHistorySearch() async {

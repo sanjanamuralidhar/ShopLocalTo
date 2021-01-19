@@ -214,10 +214,11 @@ class Routes {
         );
 
       case listProduct:
-        final category = settings.arguments;
+        // final category = settings.arguments;
+        final id = settings.arguments;
         return MaterialPageRoute(
           builder: (context) {
-            return ListProduct(title: category);
+            return ListProduct(id: id);
           },
         );
 

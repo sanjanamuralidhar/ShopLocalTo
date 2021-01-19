@@ -13,6 +13,7 @@ import 'package:listar_flutter/screens/home/home_category_page.dart';
 import 'package:listar_flutter/screens/home/home_sliver_app_bar.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:listar_flutter/screens/list_product/list_product.dart';
 
 class Home extends StatefulWidget {
   Home({Key key, this.id}) : super(key: key);
@@ -42,6 +43,8 @@ class _HomeState extends State<Home> {
   CategoryModel2 _categoryModel2;
 // ProductListPageModel _productListPageModel;
 List<ListModel> _list;
+String title;
+int id;
   @override
   void initState() {
      _checkLocation();
@@ -95,7 +98,7 @@ List<ListModel> _list;
     setState(() {
       _categoryList = result;
     });
-    print('category list *************:${_categoryList.length}');
+    // print('category list *************:${_categoryList.length}');
   }
 
   ///On navigate product detail
@@ -167,7 +170,11 @@ void _onShopDetail(ShopModel item) {
         break;
 
       default:
-        Navigator.pushNamed(context, Routes.listProduct, arguments: item.title);
+      Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListProduct(id: item.id,title: item.title,)),
+            );
+        // Navigator.pushNamed(context, Routes.listProduct, arguments: item.id);
         break;
     }
   }
@@ -395,6 +402,7 @@ void _onShopDetail(ShopModel item) {
             delegate: AppBarHomeSliver(
               expandedHeight: 250,
               banners: _homePage?.banner ?? [],
+              shopModel:_shops,
             ),
             pinned: true,
           ),
