@@ -14,8 +14,8 @@ class HomeCategoryItem extends StatelessWidget {
   }) : super(key: key);
 
   Color colorConvert(String color) {
-  // print('color666666666666666666666///////:$color');
-  color = color.replaceAll("#", "");
+  print('color666666666666666666666///////:$color');
+  color = color.replaceFirst("#", "");
   var converted;
   if (color.length == 6) {
     converted = Color(int.parse("0xFF" + color));
@@ -27,6 +27,7 @@ class HomeCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+     print("..............................................................${item.color}");
     if (item == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
@@ -79,6 +80,7 @@ class HomeCategoryItem extends StatelessWidget {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               shape: BoxShape.circle,
+              // ............................
               color: colorConvert(item.color),
             ),
             child: Image.network(item.icon,width: 18,height: 18,),

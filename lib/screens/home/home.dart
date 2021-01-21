@@ -47,7 +47,7 @@ String title;
 int id;
   @override
   void initState() {
-     _checkLocation();
+    //  _checkLocation();
     _loadData();
     _loadPopular();
     _loadShops();
@@ -201,7 +201,7 @@ void _onShopDetail(ShopModel item) {
   }
 //Build category @SANJANA
    Widget _buildCategoryItem() {
-    //  print('category list ///////////////////:${_categoryList.length}');
+     print('category list ///////////////////:${_categoryList.length}');
     if (_categoryList == null) {
       return Wrap(
         runSpacing: 10,

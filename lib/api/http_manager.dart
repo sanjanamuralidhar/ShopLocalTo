@@ -82,6 +82,7 @@ class HTTPManager {
     }
 final nullableHeaderParams = headerParams.isEmpty?null:headerParams;
 baseOptions.headers=nullableHeaderParams;
+return baseOptions.headers;
   }
 
   factory HTTPManager() {

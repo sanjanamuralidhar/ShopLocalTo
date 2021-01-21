@@ -26,8 +26,8 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
           Preferences.user,
         );
         final user = UserModel.fromJson(jsonDecode(getUserPreferences));
-        httpManager.baseOptions.headers["Authorization"] =
-            "Bearer "+user.token;
+        // httpManager.baseOptions.headers["Authorization"] =
+        //     "Bearer "+user.token;
         await Future.delayed(Duration(seconds: 1));
         final ResultApiModel result = await Api.validateToken();
 
@@ -97,6 +97,21 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
       if (savePreferences) {
         ///Notify loading to UI
         yield AuthenticationSignupSuccess();
+      } else {
+        final String message = "Cannot save user data to storage phone";
+        throw Exception(message);
+      }
+    }
+     if (event is AuthenticationUpdateSave) {
+      ///Save to Storage phone
+      final savePreferences = await UtilPreferences.setString(
+        Preferences.user,
+        jsonEncode(event.user.toJson()),
+      );
+      ///Check result save user
+      if (savePreferences) {
+        ///Notify loading to UI
+        yield AuthenticationUpdateSuccess();
       } else {
         final String message = "Cannot save user data to storage phone";
         throw Exception(message);

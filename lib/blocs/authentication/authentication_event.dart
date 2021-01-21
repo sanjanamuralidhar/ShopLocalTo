@@ -17,3 +17,8 @@ class AuthenticationSignupSave extends AuthenticationEvent {
 
   AuthenticationSignupSave(this.user);
 }
+class AuthenticationUpdateSave extends AuthenticationEvent {
+  final UserModel user;
+
+  AuthenticationUpdateSave(this.user);
+}

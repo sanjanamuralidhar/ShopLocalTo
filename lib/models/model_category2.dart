@@ -23,8 +23,10 @@ class CategoryModel2 {
   String image;
   String icon;
   String color;
+  String picture;
   List<ListModel> list;
   CategoryType2 type;
+  String icon_bg;
 
 
   CategoryModel2({
@@ -36,6 +38,8 @@ class CategoryModel2 {
     this.color,
     this.type,
     this.list,
+    this.picture,
+    this.icon_bg,
   });
 
   static CategoryType2 _setType(String type) {
@@ -69,6 +73,8 @@ class CategoryModel2 {
     image = json['image'];
     icon =  json['icon'];
     color =  json['color'];
+    icon_bg = json['icon_bg'];
+    picture = json['picture'];
     type = _setType(json['type']);
     list = _setCategory(json['list']);
 
@@ -84,6 +90,8 @@ class CategoryModel2 {
     if (color != null)  json['color'] = color;
     if(type != null) json['type'] = type;
     if(list!=null) json['list']=list;
+    if(picture!=null) json['picture'] = picture;
+    if(icon_bg!=null) json['icon_bg'] = icon_bg;
     return json;
   }
 

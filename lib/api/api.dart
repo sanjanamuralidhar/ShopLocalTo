@@ -34,14 +34,12 @@ class Api {
   static Future<dynamic> signup({String username, String email, String password, String phone, String location}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/signup?name='+username+'&password='+password+'&email='+email+'&phone='+phone+'&location='+location);
-    // final result = await httpManager.post(url:Post_Signup,data:{'email':email,'password':password,'phone':phone,'name':location});
-    // final result = await UtilAsset.loadJson("assets/data/signup.json");
     return result;
   }
   // /Update profile api
-   static Future<dynamic> editProfile({String username, String email, String address, String webSite, String location}) async {
+   static Future<dynamic> editProfile({String username, String email, String address, String website, String phone,String info}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&webSite='+webSite);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&website='+website+'&info='+info+'&phone='+phone);
     return result;
   }
 
@@ -88,6 +86,12 @@ class Api {
   //  print('getCategoryDetailList():__________________________________${result['data']['list']}');
    return CategoryModel2.fromJson(result['data']);
   }
+  static Future<CategoryPageModel> getCategoryViewList() async{
+  await Future.delayed(Duration(seconds: 1));
+  final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+  // print('/././//............./////...getList${result['data']}');
+  return CategoryPageModel.fromJson(result['data']);
+}
   static Future<List<ListModel>> getListDetailList({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/category-vendors?id='+id.toString());
@@ -308,7 +312,7 @@ static Future<ProductListPageModel> getList({id:0}) async{
    static Future<List<CategoryModel2>> getCategoryList() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
-  //  print('getCategoryList():${result['data']['category']}');
+   print('getCategoryList()..........................................................................................:${result['data']['category']}');
    return CategoryModel2.listFromJson(result['data']['category']);
   }
 

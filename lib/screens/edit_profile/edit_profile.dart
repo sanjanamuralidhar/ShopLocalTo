@@ -1,10 +1,11 @@
+
+
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:listar_flutter/blocs/bloc.dart';
-import 'package:listar_flutter/configs/config.dart';
+import 'package:listar_flutter/blocs/Update/bloc.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/models/model_user.dart';
@@ -43,16 +44,17 @@ class _EditProfileState extends State<EditProfile> {
   String _validInfo;
   String _validPhone;
   UserModel _userData;
-SignUpBloc _signUpBloc;
-  @override
+UpdateBloc _updateBloc;
+
   void initState() {
-    _loadProfile();
-    super.initState();
+    _updateBloc = BlocProvider.of<UpdateBloc>(context);
     _textNameController.text ;
-    _textEmailController.text ;
+    _textEmailController.text;
     _textAddressController.text ;
     _textWebsiteController.text ;
     _textPhoneController.text;
+    _loadProfile();
+    super.initState();
   }
   ///On async get Image file
   Future _getImage() async {
@@ -110,6 +112,10 @@ SignUpBloc _signUpBloc;
   Widget build(BuildContext context) {
     _textNameController.text = _userData.name ;
     _textEmailController.text =  _userData.email;
+    _textInfoController.text = _userData.information;
+    _textAddressController.text = _userData.address;
+    _textWebsiteController.text = _userData.website;
+    _textPhoneController.text = _userData.phone;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -241,7 +247,7 @@ SignUpBloc _signUpBloc;
                   Padding(
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     child: Text(
-                      Translate.of(context).translate('address'),
+                      Translate.of(context).translate('phone'),
                       style: Theme.of(context)
                           .textTheme
                           .subtitle2
@@ -386,36 +392,40 @@ SignUpBloc _signUpBloc;
                     icon: Icon(Icons.clear),
                     controller: _textInfoController,
                   ),
+                  Padding(
+                  padding: EdgeInsets.only(top: 20),
+                ),
+                
                 ],
               ),
             ),
-            Padding(
+              Padding(
               padding: EdgeInsets.only(
                 left: 20,
                 right: 20,
                 top: 15,
                 bottom: 15,
               ),
-              child:BlocBuilder<SignUpBloc, SignUpState>(
-                  builder: (context, signup) {
-                    return BlocListener<SignUpBloc, SignUpState>(
-                      listener: (context, signupListener) {
-                        if (signupListener is SignUpFail) {
-                          print("signup failed");
+               child: BlocBuilder<UpdateBloc, UpdateState>(
+                  builder: (context, update) {
+                    return BlocListener<UpdateBloc, UpdateState>(
+                      listener: (context, updateListener) {
+                        if (updateListener is UpdateFail) {
+                          print("update failed");
                           Navigator.of(context).pop();
                         } else {
                           Navigator.of(context).pop();
-                          // Navigator.pushNamed(context, "signin");
                         }
                       },
                       child: AppButton(
                         onPressed: () {
-                          _signUpBloc.add(OnSignUp(
+                          _updateBloc.add(OnUpdate(
                             username: _textNameController.text,
                             email: _textEmailController.text,
-                            password: _textAddressController.text,
                             phone: _textPhoneController.text,
-                            location: _textWebsiteController.text,
+                            address: _textAddressController.text,
+                            info: _textInfoController.text,
+                            website: _textWebsiteController.text,
                           ));
                           // _signUp();
                           print('username.........:${_textNameController.text}');
@@ -424,28 +434,14 @@ SignUpBloc _signUpBloc;
                           print('phone....................:${_textPhoneController.text}');
                           print('website...............:${_textWebsiteController.text}');
                         },
-                        text: Translate.of(context).translate('sign_up'),
-                        loading: signup is SignUpLoading,
+                        text: Translate.of(context).translate('confirm'),
+                        loading: update is UpdateLoading,
                         disableTouchWhenLoading: true,
                       ),
                     );
                   },
                 ),
-              // .........................................................
-              //  BlocBuilder<LoginBloc, LoginState>(
-              //   builder: (context, login) {
-              //     return AppButton(
-              //       onPressed: () {
-              //         // _update();
-              //       },
-              //       text: Translate.of(context).translate('confirm'),
-              //       loading: _loading,
-              //       disableTouchWhenLoading: true,
-              //     );
-              //   },
-              // ),
-              // .............................................................
-            )
+               ),
           ],
         ),
       ),

@@ -1,14 +1,16 @@
-abstract class UpdateEvent{}
-class OnUpdate extends UpdateEvent{
- final String username;
- final String email;
- final String address;
- final String website;
- final String phone;
- final String info;
+abstract class UpdateEvent {}
 
-  OnUpdate(this.username, this.email, this.address, this.website, this.phone, this.info);
+class OnUpdate extends UpdateEvent {
+  final String username;
+  final String email;
+  final String phone;
+  final String address;
+  final String info;
+  final String website;
+
+OnUpdate({this.phone, this.address, this.info, this.website, this.username,this.email,});
 }
-class AfterUpdate extends UpdateEvent{
-  
+
+class AfterUpdate extends UpdateEvent {
+  AfterUpdate();
 }

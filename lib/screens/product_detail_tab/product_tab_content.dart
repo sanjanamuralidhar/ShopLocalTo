@@ -18,6 +18,41 @@ class TabContent extends StatelessWidget {
     this.onProductDetail, this.productModel, this.onNearlyModelDetail,
   }) : super(key: key);
 
+
+Widget _buildSocial(BuildContext context){
+if(page.socialicon == null){
+  return Text('not available');
+}
+return Padding(
+                  padding: EdgeInsets.only(bottom: 20),
+                  child: Wrap(spacing: 10, runSpacing: 10, 
+                  children: page.service.map((item) {
+                    return IntrinsicWidth(
+                        child: SizedBox(
+                      height: 35,
+                      width: 35,
+                      child: Material(
+                          type: MaterialType
+                              .transparency,
+                          child: Ink(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Theme.of(context).buttonColor,
+                            ),
+                            child: InkWell(
+                                onTap: () {},
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8),
+                                  child: Image.network(page.socialicon.image),
+                                )
+                                ),
+                          )),
+                    ));
+                     }).toList(),
+                  ),
+                );
+}
+
   @override
   Widget build(BuildContext context) {
     switch (item.key) {
@@ -246,7 +281,7 @@ class TabContent extends StatelessWidget {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: <Widget>[
                                 Text(
-                                  Translate.of(context).translate('open_time'),
+                                  Translate.of(context).translate('Open Time (Today)'),
                                   style: Theme.of(context).textTheme.caption,
                                 ),
                                 Text(
@@ -388,34 +423,8 @@ class TabContent extends StatelessWidget {
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
-                // Padding(
-                //   padding: EdgeInsets.only(bottom: 20),
-                //   child: Wrap(spacing: 10, runSpacing: 10, 
-                //   children: page.service.map((item) {
-                //     return IntrinsicWidth(
-                //         child: SizedBox(
-                //       height: 35,
-                //       width: 35,
-                //       child: Material(
-                //           type: MaterialType
-                //               .transparency,
-                //           child: Ink(
-                //             decoration: BoxDecoration(
-                //               borderRadius: BorderRadius.circular(10),
-                //               color: Theme.of(context).buttonColor,
-                //             ),
-                //             child: InkWell(
-                //                 onTap: () {},
-                //                 child: Padding(
-                //                   padding: const EdgeInsets.all(8),
-                //                   child: Image.asset(item.image),
-                //                 )
-                //                 ),
-                //           )),
-                //     ));
-                //      }).toList(),
-                //   ),
-                // ),
+               _buildSocial(context),
+                
               ],
             ),
           ),
@@ -455,11 +464,11 @@ class TabContent extends StatelessWidget {
                       return IntrinsicWidth(
                         child: AppTag(
                           item.title,
-                          type: TagType.chip,
+                          type: TagType.white,
                           icon: Icon(
                             UtilIcon.getIconData(item.icon),
                             size: 12,
-                            color: Theme.of(context).canvasColor,
+                            color: Theme.of(context).selectedRowColor
                           ),
                         ),
                       );

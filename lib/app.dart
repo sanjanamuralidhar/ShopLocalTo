@@ -23,6 +23,7 @@ class _AppState extends State<App> {
   LoginBloc _loginBloc;
   SearchBloc _searchBloc;
   SignUpBloc _signUpBloc;
+  UpdateBloc _updateBloc;
 
   @override
   void initState() {
@@ -32,6 +33,7 @@ class _AppState extends State<App> {
     _authBloc = AuthBloc();
     _loginBloc = LoginBloc(authBloc: _authBloc);
     _signUpBloc = SignUpBloc(authBloc: _authBloc);
+    _updateBloc = UpdateBloc(authBloc: _authBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
       themeBloc: _themeBloc,
@@ -50,6 +52,7 @@ class _AppState extends State<App> {
     _loginBloc.close();
     _signUpBloc.close();
     _searchBloc.close();
+    _updateBloc.close();
     super.dispose();
   }
 
@@ -74,6 +77,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<SignUpBloc>(
           create: (context) => _signUpBloc,
+        ),
+        BlocProvider<UpdateBloc>(
+          create: (context) => _updateBloc,
         ),
         BlocProvider<SearchBloc>(
           create: (context) => _searchBloc,

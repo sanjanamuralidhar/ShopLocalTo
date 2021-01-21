@@ -82,6 +82,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
+      return _product;
   }
 
   // sanjana
@@ -184,7 +185,7 @@ Future<void> _loadUser() async {
     Navigator.pushNamed(
       context,
       Routes.location,
-      arguments: _page?.product?.location,
+      arguments:_product.location,
     );
   }
 
@@ -206,9 +207,25 @@ Future<void> _loadUser() async {
   }
 
   // /Build banner UI
-  Widget _buildBanner() {
-   if (_images == null) {
-     return Shimmer.fromColors(
+  // Widget _buildBanner() {
+  //  if (_product == null) {
+  //    return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Container(
+  //         color: Colors.white,
+  //       ),
+  //     );
+  //   }
+  //   return Image.network(
+  //     _product.image,
+  //     fit: BoxFit.cover,
+  //   );
+  // }
+   Widget _buildBanner() {
+   if (_product == null) {
+ return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
         enabled: true,
@@ -218,7 +235,8 @@ Future<void> _loadUser() async {
       );
     }
     return Image.network(
-      _product.image,
+      // 'http://dev.shoplocalto.ca/images/neighbourhoods/Eo4lpejKzoXO4UKdu02KUmhdQhVhn9.png',
+      _product.address,
       fit: BoxFit.cover,
     );
   }

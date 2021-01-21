@@ -122,6 +122,7 @@ class ProductModel {
     nearly=_setNearly(json['nearly']);
     nearby=_setNearby(json['nearby']);
     list=_setList(json['list']);
+
     
   }
 

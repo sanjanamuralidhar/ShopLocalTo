@@ -57,15 +57,13 @@ class _LocationDetailState extends State<LocationDetail> {
     return _nearby;
   }
 
-  
-  
 
   ///On navigate map
   void _onLocation() {
     Navigator.pushNamed(
       context,
       Routes.location,
-      arguments: _popular.id,
+      arguments: _popular.latitude,
     );
   }
   void _onNearbyDetail(NearbyModel item) {
@@ -468,10 +466,10 @@ Widget _buildInfo() {
                     .headline6
                     .copyWith(fontWeight: FontWeight.w600),
               ),
-              // IconButton(
-              //   icon: Icon(Icons.location_on),
-              //   onPressed: _onLocation,
-              // ),
+              IconButton(
+                icon: Icon(Icons.location_on),
+                onPressed: _onLocation,
+              ),
              
             ],
           ),

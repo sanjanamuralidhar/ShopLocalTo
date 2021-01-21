@@ -8,8 +8,8 @@ import 'package:listar_flutter/widgets/widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class Category extends StatefulWidget {
-  Category({Key key}) : super(key: key);
-
+  Category({Key key, this.id = 0}) : super(key: key);
+final num id;
   @override
   _CategoryState createState() {
     return _CategoryState();
@@ -22,7 +22,7 @@ class _CategoryState extends State<Category> {
 
   CategoryType _type = CategoryType.full;
   CategoryPageModel _categoryPage;
-  List<CategoryModel> _category;
+  List<CategoryModel2> _category;
 
   @override
   void initState() {
@@ -57,13 +57,11 @@ class _CategoryState extends State<Category> {
 
   ///Fetch API
   Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getCategory();
-    if (result.success) {
+    final dynamic result = await Api.getCategoryViewList();
       setState(() {
-        _categoryPage = CategoryPageModel.fromJson(result.data);
+        _categoryPage = result;
         _category = _categoryPage.category;
       });
-    }
   }
 
   ///On refresh list
@@ -73,7 +71,7 @@ class _CategoryState extends State<Category> {
   }
 
   ///On navigate list product
-  void _onProductList(CategoryModel item) {
+  void _onProductList(CategoryModel2 item) {
     Navigator.pushNamed(
       context,
       Routes.listProduct,

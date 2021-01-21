@@ -48,7 +48,7 @@ class HomeCategoryList extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        Translate.of(context).translate('explore_product'),
+                        Translate.of(context).translate('explore_shops'),
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1

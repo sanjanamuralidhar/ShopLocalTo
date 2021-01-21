@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:listar_flutter/configs/image.dart';
 
 enum CategoryType { full, icon }
 
@@ -13,8 +14,19 @@ class AppCategory extends StatelessWidget {
   }) : super(key: key);
 
   final CategoryType type;
-  final CategoryModel item;
-  final ValueChanged<CategoryModel> onPressed;
+  final CategoryModel2 item;
+  final ValueChanged<CategoryModel2> onPressed;
+Color colorConvert(String color) {
+  print('color666666666666666666666///////:$color');
+  color = color.replaceFirst("#", "");
+  var converted;
+  if (color.length == 6) {
+    converted = Color(int.parse("0xFF" + color));
+  } else if (color.length == 8) {
+    converted = Color(int.parse("0x" + color));
+  }
+  return converted;
+}
 
   @override
   Widget build(BuildContext context) {
@@ -46,8 +58,9 @@ class AppCategory extends StatelessWidget {
               alignment: Alignment.topLeft,
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
+                // *******************************************item.image**********
                 image: DecorationImage(
-                  image: AssetImage(item.image),
+                  image: AssetImage(Images.Banner3),
                   fit: BoxFit.cover,
                 ),
                 borderRadius: BorderRadius.all(
@@ -65,13 +78,9 @@ class AppCategory extends StatelessWidget {
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: item.color,
+                          color: colorConvert(item.color),
                         ),
-                        child: Icon(
-                          item.icon,
-                          color: Colors.white,
-                          size: 18,
-                        ),
+                        child: Image.network(item.icon,width: 18,height: 18,),
                       ),
                       Padding(
                         padding: EdgeInsets.only(left: 10, right: 10),
@@ -144,13 +153,9 @@ class AppCategory extends StatelessWidget {
                       borderRadius: BorderRadius.all(
                         Radius.circular(8),
                       ),
-                      color: item.color,
+                      color: colorConvert(item.color),
                     ),
-                    child: Icon(
-                      item.icon,
-                      color: Colors.white,
-                      size: 32,
-                    ),
+                    child: Image.network(item.icon,width: 20,height: 20,)
                   ),
                   Padding(
                     padding: EdgeInsets.only(left: 10, right: 10),

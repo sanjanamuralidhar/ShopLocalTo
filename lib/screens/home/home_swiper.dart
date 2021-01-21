@@ -176,8 +176,9 @@ class _HomeSwipeState extends State<HomeSwipe> {
           alignment: Alignment.topLeft,
           child: FlatButton(
             height: 30,
-            color: Colors.white,
-            textColor: Colors.black,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            color: Theme.of(context).buttonColor,
+            textColor: Theme.of(context).selectedRowColor,
             onPressed: () {
               _openPopup(context,_myLocation);
             },
@@ -229,7 +230,7 @@ _openPopup(context,List<MyLocation> mylocation) {
   
   Alert(
       context: context,
-      title: "Neighbourhood",
+      title: "Neighbourhood",style: AlertStyle(titleStyle: TextStyle(color:Theme.of(context).primaryColor),),
       content: Column(children: <Widget>[
         Container(
             decoration: BoxDecoration(
@@ -265,7 +266,7 @@ _openPopup(context,List<MyLocation> mylocation) {
                 },
                 itemBuilder: (context, suggestion) {
                   return ListTile(
-                    leading: Icon(Icons.location_city),
+                    // leading: Icon(Icons.location_city),
                     title: Text(suggestion.title),
                   );
                 },

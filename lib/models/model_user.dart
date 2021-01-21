@@ -71,6 +71,7 @@ String updated_at;
     address=json['address'];
     city = json['city'];
     province=json['province'];
+    information = json['info'];
     //
     api_token = json['api_token'];
     category_id = json['category_id'];

@@ -11,7 +11,8 @@ enum TagType {
   gray,
   chip,
   rate,
-  rateSmall
+  rateSmall,
+  white,
 }
 
 class AppTag extends StatelessWidget {
@@ -21,12 +22,14 @@ class AppTag extends StatelessWidget {
     this.type,
     this.icon,
     this.onPressed,
+    this.style,
   }) : super(key: key);
 
   final String data;
   final TagType type;
   final Widget icon;
   final VoidCallback onPressed;
+  final TextStyle style;
 
   @override
   Widget build(BuildContext context) {
@@ -182,7 +185,43 @@ class AppTag extends StatelessWidget {
             ),
           ),
         );
-
+      case TagType.white:
+      return InkWell(
+          onTap: onPressed,
+          child: Container(
+            padding: EdgeInsets.only(
+              top: 3,
+              bottom: 3,
+              left: 6,
+              right: 6,
+            ),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.all(
+                Radius.circular(10),
+              ),
+              color: Theme.of(context).primaryColor,
+            ),
+            child: Container(
+              child: Row(
+                children: <Widget>[
+                  icon != null
+                      ? Padding(
+                          padding: EdgeInsets.only(right: 3),
+                          child: icon,
+                        )
+                      : Container(),
+                  Text(
+                    data,
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(color:Theme.of(context).selectedRowColor),
+                  )
+                ],
+              ),
+            ),
+          ),
+        );
       default:
         return InkWell(
           onTap: onPressed,
