@@ -7,6 +7,7 @@ import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/main_navigation.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/utils.dart';
+import 'package:listar_flutter/blocs/resetPassword/bloc.dart';
 
 class App extends StatefulWidget {
   @override
@@ -24,6 +25,7 @@ class _AppState extends State<App> {
   SearchBloc _searchBloc;
   SignUpBloc _signUpBloc;
   UpdateBloc _updateBloc;
+  ResetBloc _resetBloc;
 
   @override
   void initState() {
@@ -34,6 +36,7 @@ class _AppState extends State<App> {
     _loginBloc = LoginBloc(authBloc: _authBloc);
     _signUpBloc = SignUpBloc(authBloc: _authBloc);
     _updateBloc = UpdateBloc(authBloc: _authBloc);
+    _resetBloc = ResetBloc(authBloc: _authBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
       themeBloc: _themeBloc,
@@ -53,6 +56,7 @@ class _AppState extends State<App> {
     _signUpBloc.close();
     _searchBloc.close();
     _updateBloc.close();
+    _resetBloc.close();
     super.dispose();
   }
 
@@ -80,6 +84,9 @@ class _AppState extends State<App> {
         ),
         BlocProvider<UpdateBloc>(
           create: (context) => _updateBloc,
+        ),
+        BlocProvider<ResetBloc>(
+          create: (context) => _resetBloc,
         ),
         BlocProvider<SearchBloc>(
           create: (context) => _searchBloc,

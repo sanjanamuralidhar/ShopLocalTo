@@ -43,6 +43,13 @@ class Api {
     return result;
   }
 
+  // /Update password api
+   static Future<dynamic> editPassword({String password, String confirm_password}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-password?password='+password+'&confirm_password='+confirm_password);
+    return result;
+  }
+
   // Get sHOP DETAIL @SANJANA
   static Future<dynamic> getDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));

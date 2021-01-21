@@ -42,7 +42,7 @@ class UtilValidator {
         if (!RegExp(_emailPattern).hasMatch(data)) {
           return error_email;
         }
-        return null;
+        return data;
 
       default:
         if (!allowEmpty && data.isEmpty) {
@@ -52,7 +52,7 @@ class UtilValidator {
             max != null && (data.length < min || data.length > max)) {
           return '$error_range ($min-$max)';
         }
-        return null;
+        return data;
     }
   }
 

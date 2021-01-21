@@ -22,3 +22,8 @@ class AuthenticationUpdateSave extends AuthenticationEvent {
 
   AuthenticationUpdateSave(this.user);
 }
+class AuthenticationResetSave extends AuthenticationEvent {
+  final UserModel user;
+
+  AuthenticationResetSave(this.user);
+}

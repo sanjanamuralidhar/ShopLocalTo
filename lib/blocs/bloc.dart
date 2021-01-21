@@ -6,3 +6,4 @@ export 'signUp/bloc.dart';
 export 'search/bloc.dart';
 export 'theme/bloc.dart';
 export 'Update/bloc.dart';
+export 'resetPassword/bloc.dart';

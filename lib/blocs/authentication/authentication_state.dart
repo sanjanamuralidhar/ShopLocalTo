@@ -11,3 +11,5 @@ class AuthenticationFail extends AuthenticationState {}
 class AuthenticationSignupSuccess extends AuthenticationState{}
 
 class AuthenticationUpdateSuccess extends AuthenticationState{}
+
+class AuthenticationResetSuccess extends AuthenticationState{}

@@ -22,6 +22,17 @@ class _ChangePasswordState extends State<ChangePassword> {
   bool _loading = false;
   String _validPass;
   String _validRePass;
+  ResetBloc _resetBloc;
+
+  void initState() {
+    _resetBloc = BlocProvider.of<ResetBloc>(context);
+    _textPassController.text;
+    _textRePassController.text;
+    _validPass;
+    _validRePass;
+    _changePassword();
+    super.initState();
+  }
 
   ///On change password
   Future<void> _changePassword() async {
@@ -33,14 +44,23 @@ class _ChangePasswordState extends State<ChangePassword> {
       _validRePass = UtilValidator.validate(
         data: _textRePassController.text,
       );
+ 
     });
-    if (_validPass == null && _validRePass == null) {
-      setState(() {
-        _loading = true;
-      });
-      await Future.delayed(Duration(seconds: 1));
-      Navigator.pop(context);
-    }
+    // if (_validPass == null && _validRePass == null) {
+    //   setState(() {
+         
+    //     _loading = true;
+    //     _validPass = UtilValidator.validate(
+    //     data: _textPassController.text,
+    //   );
+    //   _validRePass = UtilValidator.validate(
+    //     data: _textRePassController.text,
+    //   );
+    //   });
+    //   await Future.delayed(Duration(seconds: 1));
+    //   Navigator.pop(context);
+    // }
+
   }
 
   @override
@@ -137,24 +157,55 @@ class _ChangePasswordState extends State<ChangePassword> {
                       _validRePass = UtilValidator.validate(
                           data: _textRePassController.text);
                     });
+                    
                   },
                   icon: Icon(Icons.clear),
                   controller: _textRePassController,
                 ),
                 Padding(
                   padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: BlocBuilder<LoginBloc, LoginState>(
-                    builder: (context, login) {
-                      return AppButton(
+                  child: BlocBuilder<ResetBloc, ResetState>(
+                  builder: (context, update) {
+                    return BlocListener<ResetBloc, ResetState>(
+                      listener: (context, updateListener) {
+                        if (updateListener is ResetFail) {
+                          print("update failed");
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: AppButton(
                         onPressed: () {
-                          _changePassword();
+                          _resetBloc.add(OnReset(
+                            confirm_password: _validRePass,
+                            password: _validPass,
+                          ));
+                            Navigator.pop(context);
+                          print('phone....................:${_validPass}');
+                          print('website...............:${_validRePass}');
                         },
                         text: Translate.of(context).translate('confirm'),
-                        loading: _loading,
+                        loading: update is UpdateLoading,
                         disableTouchWhenLoading: true,
-                      );
-                    },
-                  ),
+                      ),
+                    );
+                  },
+                ),
+                  // BlocBuilder<ResetBloc, ResetState>(
+                  //   builder: (context, login) {
+                  //     return AppButton(
+                  //       onPressed: () {
+                  //         _changePassword();
+                  //         _resetBloc.add(OnReset(
+                  //           password = _validPass,
+                  //           confirm_password = _validRePass,
+                  //         ));
+                  //       },
+                  //       text: Translate.of(context).translate('confirm'),
+                  //       loading: _loading,
+                  //       disableTouchWhenLoading: true,
+                  //     );
+                  //   },
+                  // ),
                 ),
               ],
             ),

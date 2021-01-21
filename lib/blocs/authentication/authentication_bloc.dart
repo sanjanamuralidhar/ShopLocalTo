@@ -117,5 +117,20 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
         throw Exception(message);
       }
     }
+    if (event is AuthenticationResetSave) {
+      ///Save to Storage phone
+      final savePreferences = await UtilPreferences.setString(
+        Preferences.user,
+        jsonEncode(event.user.toJson()),
+      );
+      ///Check result save user
+      if (savePreferences) {
+        ///Notify loading to UI
+        yield AuthenticationResetSuccess();
+      } else {
+        final String message = "Cannot save user data to storage phone";
+        throw Exception(message);
+      }
+    }
   }
 }
