@@ -186,6 +186,14 @@ class Api {
   static Future<dynamic> getAboutUs() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await UtilAsset.loadJson("assets/data/about_us.json");
+    return ResultApiModel.fromJson(result['data']['detail']);
+  }
+
+  
+  ///Get About Us sANJANA
+  static Future<dynamic> getAboutUsInfo() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await UtilAsset.loadJson("assets/data/about_us.json");
     return ResultApiModel.fromJson(result);
   }
 
@@ -216,6 +224,13 @@ class Api {
     await Future.delayed(Duration(seconds: 1));
     final result = await UtilAsset.loadJson("assets/data/notification.json");
     return ResultApiModel.fromJson(result);
+  }
+  ///Get Notification sanjana
+  static Future<NotificationPageModel> getUserNotification() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:"http://dev.shoplocalto.ca/api/notifications");
+    print('jcbnujnddjndfvhnfjnvdfvhdfbnjvfvjfbnjbnjbnjdnjcn kjcnjnj fbv d dv f ${result['data']}j');
+    return NotificationPageModel.fromJson(result['data']);
   }
 
   // /Get ProductDetail and Product Detail Tab
@@ -328,6 +343,12 @@ static Future<ProductListPageModel> getList({id:0}) async{
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
   //  print('getShops():$result.runT');
    return ShopModel.listFromJson(result['data']['list']);
+  }
+   static Future<List<ShopModel>> getSearchResult({id:0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id);
+  //  print('getShops():$result.runT');
+   return ShopModel.listFromJson(result);
   }
  static Future<List<PopularPageModel>> getHomeData() async {
     await Future.delayed(Duration(seconds: 1));

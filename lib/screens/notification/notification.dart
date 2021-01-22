@@ -22,18 +22,26 @@ class _NotificationListState extends State<NotificationList> {
 
   @override
   void initState() {
-    _loadData();
+    // _loadData();
+    _loadDetail();
     super.initState();
   }
 
   ///Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getNotification();
-    if (result.success) {
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getNotification();
+  //   if (result.success) {
+  //     setState(() {
+  //       _notificationPage = NotificationPageModel.fromJson(result.data);
+  //     });
+  //   }
+  // }
+
+    Future<void> _loadDetail() async {
+    final dynamic result = await Api.getUserNotification();
       setState(() {
-        _notificationPage = NotificationPageModel.fromJson(result.data);
+        _notificationPage = result;
       });
-    }
   }
 
   ///On load more
@@ -50,7 +58,7 @@ class _NotificationListState extends State<NotificationList> {
 
   ///Build list
   Widget _buildList() {
-    if (_notificationPage?.notification == null) {
+    if (_notificationPage?.notifications == null) {
       return ListView(
         padding: EdgeInsets.only(top: 5),
         children: List.generate(8, (index) => index).map(
@@ -63,16 +71,16 @@ class _NotificationListState extends State<NotificationList> {
 
     return ListView.builder(
       padding: EdgeInsets.only(top: 5),
-      itemCount: _notificationPage.notification.length,
+      itemCount: _notificationPage.notifications.length,
       itemBuilder: (context, index) {
-        final item = _notificationPage.notification[index];
+        final item = _notificationPage.notifications[index];
         return Dismissible(
           key: Key(item.id.toString()),
           direction: DismissDirection.endToStart,
           child: AppNotificationItem(
             item: item,
             onPressed: () {},
-            border: _notificationPage.notification.length - 1 != index,
+            border: _notificationPage.notifications.length - 1 != index,
           ),
           background: Container(
             alignment: Alignment.center,
@@ -89,7 +97,7 @@ class _NotificationListState extends State<NotificationList> {
             ),
           ),
           onDismissed: (direction) {
-            _notificationPage.notification.removeAt(index);
+            _notificationPage.notifications.removeAt(index);
           },
         );
       },

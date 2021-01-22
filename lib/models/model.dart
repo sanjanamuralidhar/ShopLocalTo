@@ -24,3 +24,5 @@ export 'model_related.dart';
 export 'model_list.dart';
 export 'model_popular.dart';
 export 'model_nearby.dart';
+export 'model_time.dart';
+export 'model_aboutUs.dart';

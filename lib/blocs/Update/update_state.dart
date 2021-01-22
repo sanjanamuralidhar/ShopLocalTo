@@ -2,7 +2,8 @@ abstract class UpdateState {}
 
 class InitialUpdateState extends UpdateState {}
 
-class UpdateLoading extends UpdateState {}
+class UpdateLoading extends UpdateState {
+}
 
 class UpdateFail extends UpdateState {
   final String message;

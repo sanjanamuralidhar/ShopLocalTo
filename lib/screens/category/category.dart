@@ -75,7 +75,7 @@ class _CategoryState extends State<Category> {
     Navigator.pushNamed(
       context,
       Routes.listProduct,
-      arguments: item.title,
+      arguments: item.id,
     );
   }
 

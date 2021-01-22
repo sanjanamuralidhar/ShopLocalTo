@@ -19,175 +19,183 @@ class _AboutUsState extends State<AboutUs> {
 
   @override
   void initState() {
-    _loadData();
+    // _loadData();
+    _loadDetail();
     super.initState();
   }
 
   ///Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getAboutUs();
-    if (result.success) {
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getAboutUs();
+  //   if (result.success) {
+  //     setState(() {
+  //       _aboutUsPage = new AboutUsPageModel.fromJson(result.data);
+  //     });
+  //   }
+  // }
+
+  Future<void> _loadDetail() async {
+    final dynamic result = await Api.getAboutUs();
       setState(() {
-        _aboutUsPage = new AboutUsPageModel.fromJson(result.data);
+        _aboutUsPage = result;
       });
-    }
   }
 
   ///Build UI
-  Widget _buildBanner() {
-    if (_aboutUsPage?.banner == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Container(
-          color: Colors.white,
-        ),
-      );
-    }
+  // Widget _buildBanner() {
+  //   if (_aboutUsPage?.team.image == null) {
+  //     return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Container(
+  //         color: Colors.white,
+  //       ),
+  //     );
+  //   }
 
-    return Image.asset(
-      _aboutUsPage.banner,
-      fit: BoxFit.cover,
-    );
-  }
+  //   return Image.asset(
+  //     _aboutUsPage.team.image,
+  //     fit: BoxFit.cover,
+  //   );
+  // }
 
-  ///Build UI
-  Widget _buildWhoWeAre() {
-    if (_aboutUsPage?.whoWeAre == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Column(
-          children: [1, 2, 3, 4, 5].map((item) {
-            return Container(
-              height: 10,
-              margin: EdgeInsets.only(bottom: 3),
-              color: Colors.white,
-            );
-          }).toList(),
-        ),
-      );
-    }
+  // ///Build UI
+  // Widget _buildWhoWeAre() {
+  //   if (_aboutUsPage?.whoWeAre == null) {
+  //     return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Column(
+  //         children: [1, 2, 3, 4, 5].map((item) {
+  //           return Container(
+  //             height: 10,
+  //             margin: EdgeInsets.only(bottom: 3),
+  //             color: Colors.white,
+  //           );
+  //         }).toList(),
+  //       ),
+  //     );
+  //   }
 
-    return Text(
-      _aboutUsPage.whoWeAre,
-      style: Theme.of(context).textTheme.bodyText1,
-    );
-  }
-
-  ///Build UI
-  Widget _buildWhatWeDo() {
-    if (_aboutUsPage?.whatWeDo == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Column(
-          children: [1, 2, 3, 4, 5].map((item) {
-            return Container(
-              height: 15,
-              margin: EdgeInsets.only(bottom: 3),
-              color: Colors.white,
-            );
-          }).toList(),
-        ),
-      );
-    }
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: _aboutUsPage.whatWeDo.map((item) {
-        return Padding(
-          padding: EdgeInsets.only(bottom: 3),
-          child: Text(
-            "$item",
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        );
-      }).toList(),
-    );
-  }
+  //   return Text(
+  //     _aboutUsPage.whoWeAre,
+  //     style: Theme.of(context).textTheme.bodyText1,
+  //   );
+  // }
 
   ///Build UI
-  Widget _buildTeam() {
-    if (_aboutUsPage?.team == null) {
-      return Shimmer.fromColors(
-        baseColor: Theme.of(context).hoverColor,
-        highlightColor: Theme.of(context).highlightColor,
-        enabled: true,
-        child: Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          runSpacing: 15,
-          children: [1, 2, 3, 4].map((item) {
-            return FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Container(
-                margin: EdgeInsets.only(left: 20),
-                alignment: Alignment.bottomLeft,
-                padding: EdgeInsets.all(10),
-                height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
-              ),
-            );
-          }).toList(),
-        ),
-      );
-    }
+  // Widget _buildWhatWeDo() {
+  //   if (_aboutUsPage?.whatWeDo == null) {
+  //     return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Column(
+  //         children: [1, 2, 3, 4, 5].map((item) {
+  //           return Container(
+  //             height: 15,
+  //             margin: EdgeInsets.only(bottom: 3),
+  //             color: Colors.white,
+  //           );
+  //         }).toList(),
+  //       ),
+  //     );
+  //   }
 
-    return Wrap(
-      alignment: WrapAlignment.spaceBetween,
-      runSpacing: 15,
-      children: _aboutUsPage.team.map((item) {
-        return FractionallySizedBox(
-          widthFactor: 0.5,
-          child: Container(
-            margin: EdgeInsets.only(left: 20),
-            alignment: Alignment.bottomLeft,
-            padding: EdgeInsets.all(10),
-            height: 200,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(10),
-              image: DecorationImage(
-                image: AssetImage(item.profile_image),
-                fit: BoxFit.cover,
-              ),
-            ),
-            child: Container(
-              child: Row(
-                children: <Widget>[
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Text(
-                        item.status,
-                        style: Theme.of(context)
-                            .textTheme
-                            .caption
-                            .copyWith(color: Colors.white),
-                      ),
-                      Text(
-                        item.name,
-                        style: Theme.of(context).textTheme.subtitle1.copyWith(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                            ),
-                      )
-                    ],
-                  )
-                ],
-              ),
-            ),
-          ),
-        );
-      }).toList(),
-    );
-  }
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: _aboutUsPage.whatWeDo.map((item) {
+  //       return Padding(
+  //         padding: EdgeInsets.only(bottom: 3),
+  //         child: Text(
+  //           "$item",
+  //           style: Theme.of(context).textTheme.bodyText1,
+  //         ),
+  //       );
+  //     }).toList(),
+  //   );
+  // }
+
+  ///Build UI
+  // Widget _buildTeam() {
+  //   if (_aboutUsPage?.team == null) {
+  //     return Shimmer.fromColors(
+  //       baseColor: Theme.of(context).hoverColor,
+  //       highlightColor: Theme.of(context).highlightColor,
+  //       enabled: true,
+  //       child: Wrap(
+  //         alignment: WrapAlignment.spaceBetween,
+  //         runSpacing: 15,
+  //         children: [1, 2, 3, 4].map((item) {
+  //           return FractionallySizedBox(
+  //             widthFactor: 0.5,
+  //             child: Container(
+  //               margin: EdgeInsets.only(left: 20),
+  //               alignment: Alignment.bottomLeft,
+  //               padding: EdgeInsets.all(10),
+  //               height: 200,
+  //               decoration: BoxDecoration(
+  //                 borderRadius: BorderRadius.circular(10),
+  //                 color: Colors.white,
+  //               ),
+  //             ),
+  //           );
+  //         }).toList(),
+  //       ),
+  //     );
+  //   }
+
+  //   return Wrap(
+  //     alignment: WrapAlignment.spaceBetween,
+  //     runSpacing: 15,
+  //     children: _aboutUsPage.team.map((item) {
+  //       return FractionallySizedBox(
+  //         widthFactor: 0.5,
+  //         child: Container(
+  //           margin: EdgeInsets.only(left: 20),
+  //           alignment: Alignment.bottomLeft,
+  //           padding: EdgeInsets.all(10),
+  //           height: 200,
+  //           decoration: BoxDecoration(
+  //             borderRadius: BorderRadius.circular(10),
+  //             image: DecorationImage(
+  //               image: AssetImage(item.profile_image),
+  //               fit: BoxFit.cover,
+  //             ),
+  //           ),
+  //           child: Container(
+  //             child: Row(
+  //               children: <Widget>[
+  //                 Column(
+  //                   mainAxisAlignment: MainAxisAlignment.end,
+  //                   crossAxisAlignment: CrossAxisAlignment.start,
+  //                   children: <Widget>[
+  //                     Text(
+  //                       item.status,
+  //                       style: Theme.of(context)
+  //                           .textTheme
+  //                           .caption
+  //                           .copyWith(color: Colors.white),
+  //                     ),
+  //                     Text(
+  //                       item.name,
+  //                       style: Theme.of(context).textTheme.subtitle1.copyWith(
+  //                             color: Colors.white,
+  //                             fontWeight: FontWeight.w600,
+  //                           ),
+  //                     )
+  //                   ],
+  //                 )
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       );
+  //     }).toList(),
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -203,7 +211,7 @@ class _AboutUsState extends State<AboutUs> {
             pinned: true,
             flexibleSpace: FlexibleSpaceBar(
               collapseMode: CollapseMode.parallax,
-              background: _buildBanner(),
+              // background: _buildBanner(),
             ),
           ),
           SliverToBoxAdapter(
@@ -229,7 +237,7 @@ class _AboutUsState extends State<AboutUs> {
                                   .copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
-                          _buildWhoWeAre(),
+                          // _buildWhoWeAre(),
                           Padding(
                             padding: EdgeInsets.only(top: 15, bottom: 5),
                             child: Text(
@@ -240,7 +248,7 @@ class _AboutUsState extends State<AboutUs> {
                                   .copyWith(fontWeight: FontWeight.w600),
                             ),
                           ),
-                          _buildWhatWeDo(),
+                          // _buildWhatWeDo(),
                         ],
                       ),
                     ),
@@ -261,7 +269,7 @@ class _AboutUsState extends State<AboutUs> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 20),
-                      child: _buildTeam(),
+                      // child: _buildTeam(),
                     )
                   ],
                 ),

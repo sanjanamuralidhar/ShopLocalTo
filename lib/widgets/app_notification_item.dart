@@ -18,6 +18,8 @@ class AppNotificationItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+//     String dateWithT = item.date.date.substring(0, 8) + 'T' + item.date.date.substring(8);
+// DateTime dateTime = DateTime.parse(dateWithT);
     if (item == null) {
       return Shimmer.fromColors(
         child: Container(
@@ -120,13 +122,13 @@ class AppNotificationItem extends StatelessWidget {
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),
-                        Text(
-                          DateFormat(
-                            'hh:mm, MMM dd yyyy',
-                            AppLanguage.defaultLanguage.languageCode,
-                          ).format(item.date),
-                          style: Theme.of(context).textTheme.caption,
-                        )
+                        // Text(
+                        //   DateFormat(
+                        //     'hh:mm, MMM dd yyyy',
+                        //     AppLanguage.defaultLanguage.languageCode,
+                        //   ).format(dateTime),
+                        //   style: Theme.of(context).textTheme.caption,
+                        // )
                       ],
                     ),
                     Padding(

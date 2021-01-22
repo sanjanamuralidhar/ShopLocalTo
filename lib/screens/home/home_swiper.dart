@@ -163,7 +163,10 @@ class _HomeSwipeState extends State<HomeSwipe> {
       child: Align(
           alignment: Alignment.topLeft,
           child: FlatButton(child: Text(""),
-          onPressed: (){_openPopup(context,_myLocation);},),
+          onPressed: (){
+            // _openPopup(context,_myLocation);
+            },
+            ),
     ),
         ),
         baseColor: Colors.white,
@@ -180,7 +183,75 @@ class _HomeSwipeState extends State<HomeSwipe> {
             color: Theme.of(context).buttonColor,
             textColor: Theme.of(context).selectedRowColor,
             onPressed: () {
-              _openPopup(context,_myLocation);
+              // _openPopup(context,_myLocation);
+              Alert(
+      context: context,
+      title: "Neighbourhood",style: AlertStyle(titleStyle: TextStyle(color:Theme.of(context).primaryColor),),
+      content: Column(children: <Widget>[
+        Container(
+            decoration: BoxDecoration(
+              color: Theme.of(context).hoverColor,
+              borderRadius: BorderRadius.all(
+                Radius.circular(8),
+              ),
+            ),
+            child: TypeAheadField(
+                textFieldConfiguration: TextFieldConfiguration(
+                  autofocus: false,
+                  // enabled: enable,
+                  onTap: () {},
+                  decoration: InputDecoration(
+                    prefixIcon: Icon(Icons.search),
+                    border: InputBorder.none,
+                    hintText: "Search by",
+                  ),
+                ),
+                // ignore: non_constant_identifier_names
+                suggestionsCallback: (Pattern) async {
+                  // //hardcoded datas to be changed
+                  List<MyLocation> list = _myLocation;
+                  var suggetionList = Pattern.isEmpty
+                      ? null
+                      : list
+                          .where((e) => e.title
+                              .toLowerCase()
+                              .contains(Pattern.toLowerCase()))
+                          .toList();
+
+                  return suggetionList;
+                },
+                itemBuilder: (context, suggestion) {
+                  return ListTile(
+                    // leading: Icon(Icons.location_city),
+                    title: Text(suggestion.title),
+                  );
+                },
+                onSuggestionSelected: (suggestion) {
+                  setState(() {
+                    value = suggestion.title;
+                  });
+                  //  flutterSecureStorage.write(key: 'location', value: suggestion.location);
+Navigator.of(context).pop();
+
+                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  //   return LocationDetail(id: suggestion.id);
+                  // }
+                  // ));
+                })
+
+            // previous search by sanjana search.txt
+            ),
+      ]),
+      buttons: [
+        DialogButton(
+          color: Theme.of(context).buttonColor,
+          onPressed: () => Navigator.pop(context),
+          child: Text(
+            "Cancel",
+            style: TextStyle(color: Colors.white, fontSize: 20),
+          ),
+        )
+      ]).show();
             },
             child: Text(
               value,
@@ -226,67 +297,71 @@ class _HomeSwipeState extends State<HomeSwipe> {
 
 // changed code _swipperbanner to widget
 // openpopup sanjana
-_openPopup(context,List<MyLocation> mylocation) {
-  
-  Alert(
-      context: context,
-      title: "Neighbourhood",style: AlertStyle(titleStyle: TextStyle(color:Theme.of(context).primaryColor),),
-      content: Column(children: <Widget>[
-        Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).hoverColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
-            child: TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: false,
-                  // enabled: enable,
-                  onTap: () {},
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    hintText: "Search by",
-                  ),
-                ),
-                // ignore: non_constant_identifier_names
-                suggestionsCallback: (Pattern) async {
-                  // //hardcoded datas to be changed
-                  List<MyLocation> list = mylocation;
-                  var suggetionList = Pattern.isEmpty
-                      ? null
-                      : list
-                          .where((e) => e.title
-                              .toLowerCase()
-                              .contains(Pattern.toLowerCase()))
-                          .toList();
+// _openPopup(context,List<MyLocation> mylocation) {
+//   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+//   Alert(
+//       context: context,
+//       title: "Neighbourhood",style: AlertStyle(titleStyle: TextStyle(color:Theme.of(context).primaryColor),),
+//       content: Column(children: <Widget>[
+//         Container(
+//             decoration: BoxDecoration(
+//               color: Theme.of(context).hoverColor,
+//               borderRadius: BorderRadius.all(
+//                 Radius.circular(8),
+//               ),
+//             ),
+//             child: TypeAheadField(
+//                 textFieldConfiguration: TextFieldConfiguration(
+//                   autofocus: false,
+//                   // enabled: enable,
+//                   onTap: () {},
+//                   decoration: InputDecoration(
+//                     prefixIcon: Icon(Icons.search),
+//                     border: InputBorder.none,
+//                     hintText: "Search by",
+//                   ),
+//                 ),
+//                 // ignore: non_constant_identifier_names
+//                 suggestionsCallback: (Pattern) async {
+//                   // //hardcoded datas to be changed
+//                   List<MyLocation> list = mylocation;
+//                   var suggetionList = Pattern.isEmpty
+//                       ? null
+//                       : list
+//                           .where((e) => e.title
+//                               .toLowerCase()
+//                               .contains(Pattern.toLowerCase()))
+//                           .toList();
 
-                  return suggetionList;
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    // leading: Icon(Icons.location_city),
-                    title: Text(suggestion.title),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return LocationDetail(id: suggestion.id);
-                  }));
-                })
+//                   return suggetionList;
+//                 },
+//                 itemBuilder: (context, suggestion) {
+//                   return ListTile(
+//                     // leading: Icon(Icons.location_city),
+//                     title: Text(suggestion.title),
+//                   );
+//                 },
+//                 onSuggestionSelected: (suggestion) {
+                  
+//                    flutterSecureStorage.write(key: 'location', value: suggestion.location);
+// Navigator.of(context).pop();
+//                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
+//                   //   return LocationDetail(id: suggestion.id);
+//                   // }
+//                   // ));
+//                 })
 
-            // previous search by sanjana search.txt
-            ),
-      ]),
-      buttons: [
-        DialogButton(
-          color: Theme.of(context).buttonColor,
-          onPressed: () => Navigator.pop(context),
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        )
-      ]).show();
-}
+//             // previous search by sanjana search.txt
+//             ),
+//       ]),
+//       buttons: [
+//         DialogButton(
+//           color: Theme.of(context).buttonColor,
+//           onPressed: () => Navigator.pop(context),
+//           child: Text(
+//             "Cancel",
+//             style: TextStyle(color: Colors.white, fontSize: 20),
+//           ),
+//         )
+//       ]).show();
+// }

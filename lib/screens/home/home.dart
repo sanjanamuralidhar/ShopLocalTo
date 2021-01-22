@@ -31,6 +31,7 @@ class _HomeState extends State<Home> {
   //  bool _tryAgain = false;
   List<MyLocation> _locations = [];
   List<ShopModel> _shops = [];
+    List<ShopModel> _categoryshops = [];
   List<CategoryModel2> _categoryList = [];
   bool _tryAgain = false;
   List<Address> addresses;
@@ -52,6 +53,7 @@ int id;
     _loadPopular();
     _loadShops();
     _loadCategoryList();
+    _loadSearchResults();
     super.initState();
   }
 
@@ -92,6 +94,14 @@ int id;
     });
     // print('ShopModel list ************:${_shops.length}');
   }
+   Future<void> _loadSearchResults() async {
+    final List<ShopModel> result = await Api.getSearchResult(id:widget.id);
+    setState(() {
+      _categoryshops = result;
+    });
+    // print('ShopModel list ************:${_shops.length}');
+  }
+
 
    Future<void> _loadCategoryList() async {
     final List<CategoryModel2> result = await Api.getCategoryList();

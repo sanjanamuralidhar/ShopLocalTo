@@ -12,4 +12,4 @@ class AuthenticationSignupSuccess extends AuthenticationState{}
 
 class AuthenticationUpdateSuccess extends AuthenticationState{}
 
-class AuthenticationResetSuccess extends AuthenticationState{}
+// class AuthenticationResetSuccess extends AuthenticationState{}

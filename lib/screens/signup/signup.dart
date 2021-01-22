@@ -357,8 +357,8 @@ class _SignUpState extends State<SignUp> {
                               toastLength: Toast.LENGTH_SHORT,
                               gravity: ToastGravity.CENTER,
                               timeInSecForIosWeb: 1,
-                              backgroundColor: Colors.blue[800],
-                              textColor: Colors.white,
+                              backgroundColor: Theme.of(context).buttonColor,
+                              textColor: Theme.of(context).scaffoldBackgroundColor,
                               fontSize: 16.0);
                           Navigator.of(context).pop();
                           // Navigator.pushNamed(context, "signin");

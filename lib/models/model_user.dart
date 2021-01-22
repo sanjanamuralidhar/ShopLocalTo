@@ -136,33 +136,33 @@ String updated_at;
     return json;
   }
 // factory UserModel.fromJson(Map<String, dynamic> json) {
-  //   return UserModel(
-  //     json['id'] as int ?? 0,
-  //     json['full_name'] as String ?? 'Unknown',
-  //     json['nickname'] as String ?? 'Unknown',
-  //     json['photo'] as String ?? 'Unknown',
-  //     json['url'] as String ?? 'Unknown',
-  //     json['level'] as String ?? 'Unknown',
-  //     json['description'] as String ?? 'Unknown',
-  //     json['tag'] as String ?? 'Unknown',
-  //     json['rate'] as double ?? 0.0,
-  //     json['token'] as String ?? 'Unknown',
-  //     json['email'] as String ?? 'Unknown',
-  //     json['phone'] as String ?? 'Unknown',
-  //     json['location'] as String ?? 'Unknown',
-  //   );
-  // }
+//     return UserModel(
+//       json['id'] as int ?? 0,
+//       json['full_name'] as String ?? 'Unknown',
+//       json['nickname'] as String ?? 'Unknown',
+//       json['photo'] as String ?? 'Unknown',
+//       json['url'] as String ?? 'Unknown',
+//       json['level'] as String ?? 'Unknown',
+//       json['description'] as String ?? 'Unknown',
+//       json['tag'] as String ?? 'Unknown',
+//       // json['rate'] as double ?? 0.0,
+//       json['token'] as String ?? 'Unknown',
+//       json['email'] as String ?? 'Unknown',
+//       json['phone'] as String ?? 'Unknown',
+//       json['location'] as String ?? 'Unknown',
+//     );
+//   }
   // Map<String, dynamic> toJson() {
   //   return {
   //     'id': id,
   //     'full_name': name,
   //     'nickname': nickname,
-  //     'photo': image,
-  //     'url': link,
-  //     'level': level,
-  //     'description': description,
-  //     'tag': tag,
-  //     'rate': rate,
+  //     // 'photo': photo,
+  //     // 'url': url,
+  //     // 'level': level,
+  //     // 'description': description,
+  //     // 'tag': tag,
+  //     // 'rate': rate,
   //     'token': token,
   //     'email': email,
   //     'phone':phone,

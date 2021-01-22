@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/screens/chat/chat.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -299,6 +300,50 @@ return Padding(
                     ),
                   ],
                 ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20),
+                ),
+                 InkWell(
+                  onTap: () { Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Chat(id:page.id)),
+            );},
+                  child: Row(
+                    children: <Widget>[
+                      Container(
+                        width: 32,
+                        height: 32,
+                        decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).buttonColor),
+                        child: Icon(
+                          Icons.message,
+                          color: Colors.white,
+                          size: 18,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Text(
+                              Translate.of(context).translate('message'),
+                              style: Theme.of(context).textTheme.caption,
+                            ),
+                            Text(
+                              page.title,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyText1
+                                  .copyWith(fontWeight: FontWeight.w600),
+                            ),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
+                ),
                 Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: page.hourDetail.map((item) {
@@ -479,63 +524,63 @@ return Padding(
             ),
           ),
         );
-
-      // case 'related':
-      //   return Container(
-      //     key: item.keyContentItem,
-      //     child: Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: <Widget>[
-      //         Padding(
-      //           padding: EdgeInsets.only(
-      //             left: 20,
-      //             right: 20,
-      //             bottom: 15,
-      //             top: 15,
-      //           ),
-      //           child: Text(
-      //             Translate.of(context).translate('Related'),
-      //             style: Theme.of(context)
-      //                 .textTheme
-      //                 .headline6
-      //                 .copyWith(fontWeight: FontWeight.w600),
-      //           ),
-      //         ),
-      //         Container(
-      //           height: 220,
-      //           child: ListView.builder(
-      //             scrollDirection: Axis.horizontal,
-      //             padding: EdgeInsets.only(left: 20),
-      //             itemBuilder: (context, index) {
-      //               final item = page.related[index];
-      //               return Container(
-      //                 width: MediaQuery.of(context).size.width / 2,
-      //                 padding: EdgeInsets.only(right: 15),
-      //                 child: AppProductItem(
-      //                   item: item,
-      //                   onPressed: onProductDetail,
-      //                   type: ProductViewType.gird,
-      //                 ),
-      //               );
-      //             },
-      //             itemCount: page.related.length,
-      //           ),
-      //         ),
-      //         Container(
-      //           height: 15,
-      //           margin: EdgeInsets.only(left: 20, right: 20),
-      //           decoration: BoxDecoration(
-      //             border: Border(
-      //               bottom: BorderSide(
-      //                 color: Theme.of(context).dividerColor,
-      //               ),
-      //             ),
-      //           ),
-      //         )
-      //       ],
-      //     ),
-      //   );
-
+// ++++++++++++++++++++++++++++++++++++++commented+++++++++++++++++
+      case 'related':
+        return Container(
+          key: item.keyContentItem,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(
+                  left: 20,
+                  right: 20,
+                  bottom: 15,
+                  top: 15,
+                ),
+                child: Text(
+                  Translate.of(context).translate('Related'),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              Container(
+                height: 220,
+                child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  padding: EdgeInsets.only(left: 20),
+                  itemBuilder: (context, index) {
+                    final item = page.related[index];
+                    return Container(
+                      width: MediaQuery.of(context).size.width / 2,
+                      padding: EdgeInsets.only(right: 15),
+                      child: AppProductItem(
+                        item: item,
+                        onPressed: onProductDetail,
+                        type: ProductViewType.gird,
+                      ),
+                    );
+                  },
+                  itemCount: page.related.length,
+                ),
+              ),
+              Container(
+                height: 15,
+                margin: EdgeInsets.only(left: 20, right: 20),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Theme.of(context).dividerColor,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        );
+// +++++++++++++++++++++++++++++++
       case 'nearly':
         return Container(
           key: item.keyContentItem,
@@ -587,42 +632,42 @@ return Padding(
             ],
           ),
         );
-
-      // case 'ordinary':
-      //   return Container(
-      //     key: item.keyContentItem,
-      //     padding: EdgeInsets.only(left: 20, right: 20),
-      //     child: Container(
-      //       child: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: <Widget>[
-      //           Padding(
-      //             padding: EdgeInsets.only(top: 15, bottom: 15),
-      //             child: Text(
-      //               Translate.of(context).translate('Ordinary Listing'),
-      //               style: Theme.of(context)
-      //                   .textTheme
-      //                   .headline6
-      //                   .copyWith(fontWeight: FontWeight.w600),
-      //             ),
-      //           ),
-      //           Column(
-      //             children: page.related.map((item) {
-      //               return Padding(
-      //                 padding: EdgeInsets.only(bottom: 15),
-      //                 child: AppProductItem(
-      //                   onPressed: onProductDetail,
-      //                   item: item,
-      //                   type: ProductViewType.small,
-      //                 ),
-      //               );
-      //             }).toList(),
-      //           )
-      //         ],
-      //       ),
-      //     ),
-      //   );
-
+// +++++++++++++++++++++++++++++++commented++++++++++++++++++
+      case 'ordinary':
+        return Container(
+          key: item.keyContentItem,
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: EdgeInsets.only(top: 15, bottom: 15),
+                  child: Text(
+                    Translate.of(context).translate('Ordinary Listing'),
+                    style: Theme.of(context)
+                        .textTheme
+                        .headline6
+                        .copyWith(fontWeight: FontWeight.w600),
+                  ),
+                ),
+                Column(
+                  children: page.related.map((item) {
+                    return Padding(
+                      padding: EdgeInsets.only(bottom: 15),
+                      child: AppProductItem(
+                        onPressed: onProductDetail,
+                        item: item,
+                        type: ProductViewType.small,
+                      ),
+                    );
+                  }).toList(),
+                )
+              ],
+            ),
+          ),
+        );
+// ++++++++++++++++++++++++++++++++++++
       default:
         return Container(
           key: item.keyContentItem,
