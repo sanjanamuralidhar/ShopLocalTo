@@ -4,6 +4,7 @@ import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:rflutter_alert/rflutter_alert.dart';
 import 'package:shimmer/shimmer.dart';
@@ -19,7 +20,8 @@ class HomeSwipe extends StatefulWidget {
   final double height;
   final List<ImageModel> images;
   // List<ShopModel> shops;
- List<MyLocation> myLocation;
+  List<MyLocation> myLocation;
+  num id;
   @override
   _HomeSwipeState createState() => _HomeSwipeState();
 }
@@ -27,16 +29,19 @@ class HomeSwipe extends StatefulWidget {
 class _HomeSwipeState extends State<HomeSwipe> {
   // String location;
   // List<ShopModel> shops;
-   List<MyLocation> myLocation;
+  List<MyLocation> myLocation;
   String value;
   String locationName;
   bool isSwitched = false;
   //  List<ShopModel> _shops = [];
-    List<MyLocation> _myLocation = [];
+  List<MyLocation> _myLocation = [];
+  HomePageModel homepage;
+  num id;
 
-@override
+  @override
   void initState() {
     _loadShops();
+
     super.initState();
   }
 
@@ -48,26 +53,33 @@ class _HomeSwipeState extends State<HomeSwipe> {
     print('ShopModel list ************:${_myLocation.length}');
   }
 
-  FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
-  Future<dynamic> getLocation() async {	
-    String location1;	
-    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'location');	
-    print('isloggedin:$isLoggedIn');	
-    if (isLoggedIn) {	
-      String location = await flutterSecureStorage.read(key:'location');	
-      location1 = location;	
-      print('location:$location');	
-    }	
-    final nullable = location1.isEmpty ? null : location1;	
-    value = nullable;	
-    print('location2:$location1');	
+  Future<void> _loadHomePage() async {
+    final dynamic result = await Api.getHomePage(id: id);
+    setState(() {
+      homepage = result;
+    });
+    print('ShopModel list ************:${homepage.category.length}');
   }
 
-  
+  FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+  Future<dynamic> getLocation() async {
+    String location1;
+    bool isLoggedIn = await flutterSecureStorage.containsKey(key: 'location');
+    print('isloggedin:$isLoggedIn');
+    if (isLoggedIn) {
+      String location = await flutterSecureStorage.read(key: 'location');
+      location1 = location;
+      print('location:$location');
+    }
+    final nullable = location1.isEmpty ? null : location1;
+    value = nullable;
+    print('location2:$location1');
+  }
 
   @override
   Widget build(BuildContext context) {
-   getLocation();
+    
+    getLocation();
     if (value == null) {
       Text('novalue');
     }
@@ -129,7 +141,7 @@ class _HomeSwipeState extends State<HomeSwipe> {
     if (widget.images.length > 0) {
       return Swiper(
         itemBuilder: (BuildContext context, int index) {
-          return Image.asset(
+          return Image.network(
             widget.images[index].image,
             fit: BoxFit.cover,
           );
@@ -155,19 +167,21 @@ class _HomeSwipeState extends State<HomeSwipe> {
   }
 
   Widget _buildValue(BuildContext context) {
-      //  _loadShops();
+    print('jkbbdkjvbdfj kfjdfjk djfnkjvnf dfbjb fdbjfk..........$id');
+    //  _loadShops();
     if (value == null) {
       return Shimmer.fromColors(
-        child:Padding(
-      padding: const EdgeInsets.only(top: 30, left: 10),
-      child: Align(
-          alignment: Alignment.topLeft,
-          child: FlatButton(child: Text(""),
-          onPressed: (){
-            // _openPopup(context,_myLocation);
-            },
+        child: Padding(
+          padding: const EdgeInsets.only(top: 30, left: 10),
+          child: Align(
+            alignment: Alignment.topLeft,
+            child: FlatButton(
+              child: Text(""),
+              onPressed: () {
+                // _openPopup(context,_myLocation);
+              },
             ),
-    ),
+          ),
         ),
         baseColor: Colors.white,
         highlightColor: Colors.white,
@@ -179,79 +193,92 @@ class _HomeSwipeState extends State<HomeSwipe> {
           alignment: Alignment.topLeft,
           child: FlatButton(
             height: 30,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
             color: Theme.of(context).buttonColor,
             textColor: Theme.of(context).selectedRowColor,
             onPressed: () {
               // _openPopup(context,_myLocation);
               Alert(
-      context: context,
-      title: "Neighbourhood",style: AlertStyle(titleStyle: TextStyle(color:Theme.of(context).primaryColor),),
-      content: Column(children: <Widget>[
-        Container(
-            decoration: BoxDecoration(
-              color: Theme.of(context).hoverColor,
-              borderRadius: BorderRadius.all(
-                Radius.circular(8),
-              ),
-            ),
-            child: TypeAheadField(
-                textFieldConfiguration: TextFieldConfiguration(
-                  autofocus: false,
-                  // enabled: enable,
-                  onTap: () {},
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Icons.search),
-                    border: InputBorder.none,
-                    hintText: "Search by",
+                  context: context,
+                  title: "Neighbourhood",
+                  style: AlertStyle(
+                    titleStyle:
+                        TextStyle(color: Theme.of(context).primaryColor),
                   ),
-                ),
-                // ignore: non_constant_identifier_names
-                suggestionsCallback: (Pattern) async {
-                  // //hardcoded datas to be changed
-                  List<MyLocation> list = _myLocation;
-                  var suggetionList = Pattern.isEmpty
-                      ? null
-                      : list
-                          .where((e) => e.title
-                              .toLowerCase()
-                              .contains(Pattern.toLowerCase()))
-                          .toList();
+                  content: Column(children: <Widget>[
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).hoverColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                        ),
+                        child: TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              autofocus: false,
+                              // enabled: enable,
+                              onTap: () {},
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.search),
+                                border: InputBorder.none,
+                                hintText: "Search by",
+                              ),
+                            ),
+                            // ignore: non_constant_identifier_names
+                            suggestionsCallback: (Pattern) async {
+                              // //hardcoded datas to be changed
+                              List<MyLocation> list = _myLocation;
+                              var suggetionList = Pattern.isEmpty
+                                  ? null
+                                  : list
+                                      .where((e) => e.title
+                                          .toLowerCase()
+                                          .contains(Pattern.toLowerCase()))
+                                      .toList();
 
-                  return suggetionList;
-                },
-                itemBuilder: (context, suggestion) {
-                  return ListTile(
-                    // leading: Icon(Icons.location_city),
-                    title: Text(suggestion.title),
-                  );
-                },
-                onSuggestionSelected: (suggestion) {
-                  setState(() {
-                    value = suggestion.title;
-                  });
-                  //  flutterSecureStorage.write(key: 'location', value: suggestion.location);
-Navigator.of(context).pop();
+                              return suggetionList;
+                            },
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                // leading: Icon(Icons.location_city),
+                                title: Text(suggestion.title),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              setState(() {
+                                value = suggestion.title;
+                                id = suggestion.id;
+                              });
+                              print(
+                                  '.........jkbbdkjvbdfj kfjdfjk djfnkjvnf dfbjb fdbjfk..........$id');
+                              //  flutterSecureStorage.write(key: 'location', value: suggestion.location);
+                              // Navigator.of(context).pop();
+                              CircularProgressIndicator(
+                                  backgroundColor: Colors.black,
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      Colors.blue[800]));
+                              _loadHomePage();
 
-                  // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  //   return LocationDetail(id: suggestion.id);
-                  // }
-                  // ));
-                })
+                              // Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              //   return LocationDetail(id: suggestion.id);
+                              // }
+                              // ));
+                            })
 
-            // previous search by sanjana search.txt
-            ),
-      ]),
-      buttons: [
-        DialogButton(
-          color: Theme.of(context).buttonColor,
-          onPressed: () => Navigator.pop(context),
-          child: Text(
-            "Cancel",
-            style: TextStyle(color: Colors.white, fontSize: 20),
-          ),
-        )
-      ]).show();
+                        // previous search by sanjana search.txt
+                        ),
+                  ]),
+                  buttons: [
+                    DialogButton(
+                      color: Theme.of(context).buttonColor,
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    )
+                  ]).show();
             },
             child: Text(
               value,
@@ -342,7 +369,7 @@ Navigator.of(context).pop();
 //                   );
 //                 },
 //                 onSuggestionSelected: (suggestion) {
-                  
+
 //                    flutterSecureStorage.write(key: 'location', value: suggestion.location);
 // Navigator.of(context).pop();
 //                   // Navigator.push(context, MaterialPageRoute(builder: (context) {

@@ -58,7 +58,7 @@ class _SignUpState extends State<SignUp> {
   }
 
   Future<void> _loadPopular() async {
-    final List<MyLocation> result = await Api.getPopular();
+    final List<MyLocation> result = await Api.getSuggestedLocation();
     setState(() {
       _locations = result;
     });
@@ -308,8 +308,8 @@ class _SignUpState extends State<SignUp> {
                                 return _locations.map<PopupMenuItem<String>>(
                                     (MyLocation value) {
                                   return new PopupMenuItem(
-                                      child: new Text(value.title),
-                                      value: value.title);
+                                      child: new Text(value.name),
+                                      value: value.name);
                                 }).toList();
                               },
                             ),

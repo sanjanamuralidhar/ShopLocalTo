@@ -36,36 +36,49 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   int _indexTab = 0;
   ProductModel _product;
   ProductDetailTabPageModel _page;
-  List<TabModel> _tabModel;
+  // List<TabModel> _tabModel;
   UserModel _userModel;
     List<ImageModel> _images = [];
 
   @override
   void initState() {
+     _scrollController.addListener(_scrollListener);
     _loadPhoto();
-    _loadData();
+    // _loadData();
     _loadDetail();
-    _scrollController.addListener(_scrollListener);
+   _loadTab();
     // _loadTab();
     
     // _loadUser();
     
     super.initState();
   }
-
-  // /Fetch API
-  Future<void> _loadData() async {
-    final List<TabModel> result = await Api.getTabtabDetail(
+Future<void> _loadTab() async {
+    final dynamic result = await Api.getLoadTabDetail(
+      tabExtend: true,
       id: widget.id,
     );
       setState(() {
-        _tabModel = result;
+        _page = result;
       });
-      // print('TabModel is .................${_tabModel.length}');
+      print('hsvds ksdjghjks skjdgbjks sgdgu kshdgh kshgkudg ksghdug ksgdhk.........${_page.tab.length}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
   }
+  // /Fetch API
+  // Future<void> _loadData() async {
+  //   final List<TabModel> result = await Api.getTabtabDetail(
+  //     id: widget.id,
+  //   );
+  //     setState(() {
+  //       _tabModel = result;
+  //     });
+  //     // print('TabModel is .................${_tabModel.length}');
+  //     Timer(Duration(milliseconds: 150), () {
+  //       _setOriginOffset();
+  //     });
+  // }
 
   // sanjana
   Future<void> _loadDetail() async {
@@ -86,19 +99,19 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   }
 
   // sanjana
-Future<void> _loadUser() async {
-    final UserModel result = await Api.getUserDetail(
-      id: widget.id,
-    );
-    // print('id is .................${widget.id}');
-      setState(() {
-        _userModel = result;
-      });
-      // print('usermodel  is .................${_userModel.name}');
-      Timer(Duration(milliseconds: 150), () {
-        _setOriginOffset();
-      });
-  }
+// Future<void> _loadUser() async {
+//     final UserModel result = await Api.getUserDetail(
+//       id: widget.id,
+//     );
+//     // print('id is .................${widget.id}');
+//       setState(() {
+//         _userModel = result;
+//       });
+//       // print('usermodel  is .................${_userModel.name}');
+//       Timer(Duration(milliseconds: 150), () {
+//         _setOriginOffset();
+//       });
+//   }
 
   Future<void> _loadPhoto() async {
     final List<ImageModel> result = await Api.getbannerPhoto(id: widget.id);
@@ -111,7 +124,7 @@ Future<void> _loadUser() async {
 
   ///ScrollListenerEvent
   void _scrollListener() {
-    if (_tabModel != null) {
+    if (_page.tab != null) {
       int activeTab = 0;
       double offsetTab;
       double widthDevice = MediaQuery.of(context).size.width;
@@ -143,9 +156,9 @@ Future<void> _loadUser() async {
 
   ///Set Origin Offset default when render success
   void _setOriginOffset() {
-    if (_tabModel != null && _offsetContentOrigin.isEmpty) {
+    if (_page.tab != null && _offsetContentOrigin.isEmpty) {
       setState(() {
-        _offsetContentOrigin = _tabModel.map((item) {
+        _offsetContentOrigin = _page.tab.map((item) {
           final RenderBox box =
               item.keyContentItem.currentContext.findRenderObject();
           final position = box.localToGlobal(Offset.zero);
@@ -176,7 +189,7 @@ Future<void> _loadUser() async {
     Navigator.pushNamed(
       context,
       Routes.gallery,
-      arguments: _page?.product?.photo,
+      arguments: _page.product.photo,
     );
   }
 
@@ -298,7 +311,7 @@ Future<void> _loadUser() async {
   ///Build Tab Content UI
   Widget _buildTabContent() {
     // print('(((((((((((((((((((((((((((${_tabModel.length})))))))))))))))))))))))))');
-    if (_tabModel == null) {
+    if (_page.tab == null) {
       return Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Shimmer.fromColors(
@@ -324,7 +337,7 @@ Future<void> _loadUser() async {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: _tabModel.map((item) {
+      children: _page.tab.map((item) {
         return TabContent(
             item: item, page: _product, onNearlyModelDetail: _onProductDetail);
       }).toList(),
@@ -376,7 +389,7 @@ Future<void> _loadUser() async {
               tabController: _tabController,
               onIndexChanged: _onChangeTab,
               indexTab: _indexTab,
-              tab: _tabModel,
+              tab: _page.tab,
             ),
           ),
           SliverToBoxAdapter(

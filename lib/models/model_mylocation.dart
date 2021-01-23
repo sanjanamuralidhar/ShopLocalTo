@@ -5,6 +5,9 @@ class MyLocation {
   String title;
   String subtitle;
   String image;
+  String name;
+  String latitude;
+  String longitude;
 
 
   MyLocation(
@@ -12,6 +15,9 @@ class MyLocation {
     this.title,
     this.subtitle,
     this.image,
+    this.name,
+    this.latitude,
+    this.longitude
  
     
   );
@@ -28,6 +34,9 @@ class MyLocation {
     title = json['title'];
     subtitle = json['subtitle'];
     image = json['image'];
+    name = json['name'];
+    latitude =json['latitude'];
+    longitude = json['lomgitude'];
 
     
   }
@@ -38,6 +47,9 @@ class MyLocation {
     if (title != null) json['title'] = title;
     if (subtitle != null) json['subtitle'] = subtitle;
     if (image != null) json['image'] = image;
+    if (name != null) json['name'] = name;
+    if (latitude != null) json['latitude'] = latitude;
+    if (longitude != null) json['longitude'] = longitude;
 
     
     return json;

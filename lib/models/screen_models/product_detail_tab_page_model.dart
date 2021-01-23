@@ -20,14 +20,14 @@ class ProductDetailTabPageModel {
   }
  ProductDetailTabPageModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return;
-    product = json['product'];
-    tab =_setTab( json['tab']); 
+    product = json['data'];
+    tab =_setTab( json['tabs']); 
   }
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
-    if (product != null) json['product'] = product;
-    if (tab != null) json['tab'] = tab;
+    if (product != null) json['data'] = product;
+    if (tab != null) json['tabs'] = tab;
 
     return json;
   }

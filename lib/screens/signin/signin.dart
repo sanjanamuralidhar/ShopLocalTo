@@ -261,7 +261,7 @@ class _SignInState extends State<SignIn> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        Translate.of(context).translate('forgot you password?'),
+                        Translate.of(context).translate('Forgot Your Password?'),
                       ),
                       Material(
                           type: MaterialType.transparency,

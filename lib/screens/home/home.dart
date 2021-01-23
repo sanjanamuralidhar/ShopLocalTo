@@ -29,10 +29,10 @@ class _HomeState extends State<Home> {
   HomePageModel _homePage;
   PopularPageModel _popularPageModel;
   //  bool _tryAgain = false;
-  List<MyLocation> _locations = [];
-  List<ShopModel> _shops = [];
-    List<ShopModel> _categoryshops = [];
-  List<CategoryModel2> _categoryList = [];
+  // List<MyLocation> _locations = [];
+  // List<ShopModel> _shops = [];
+  // List<CategoryModel2> _categoryList = [];
+  List<ShopModel> _categoryshops = [];
   bool _tryAgain = false;
   List<Address> addresses;
   List<Address> address;
@@ -50,9 +50,9 @@ int id;
   void initState() {
     //  _checkLocation();
     _loadData();
-    _loadPopular();
-    _loadShops();
-    _loadCategoryList();
+    // _loadPopular();
+    // _loadShops();
+    // _loadCategoryList();
     _loadSearchResults();
     super.initState();
   }
@@ -70,30 +70,28 @@ int id;
     }
   }
 
-  ///Fetch API
+  // ///Fetch API
   Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getHome();
-    if (result.success) {
+    final dynamic result = await Api.getHome();
       setState(() {
-        _homePage = HomePageModel.fromJson(result.data);
+        _homePage = result;
       });
-    }
   }
 
-  Future<void> _loadPopular() async {
-    final List<MyLocation> result = await Api.getPopular();
-    setState(() {
-      _locations = result;
-    });
-  }
+  // Future<void> _loadPopular() async {
+  //   final List<MyLocation> result = await Api.getPopular();
+  //   setState(() {
+  //     _locations = result;
+  //   });
+  // }
 
-  Future<void> _loadShops() async {
-    final List<ShopModel> result = await Api.getShops();
-    setState(() {
-      _shops = result;
-    });
-    // print('ShopModel list ************:${_shops.length}');
-  }
+  // Future<void> _loadShops() async {
+  //   final List<ShopModel> result = await Api.getShops();
+  //   setState(() {
+  //     _shops = result;
+  //   });
+  //   // print('ShopModel list ************:${_shops.length}');
+  // }
    Future<void> _loadSearchResults() async {
     final List<ShopModel> result = await Api.getSearchResult(id:widget.id);
     setState(() {
@@ -103,13 +101,13 @@ int id;
   }
 
 
-   Future<void> _loadCategoryList() async {
-    final List<CategoryModel2> result = await Api.getCategoryList();
-    setState(() {
-      _categoryList = result;
-    });
-    // print('category list *************:${_categoryList.length}');
-  }
+  //  Future<void> _loadCategoryList() async {
+  //   final List<CategoryModel2> result = await Api.getCategoryList();
+  //   setState(() {
+  //     _categoryList = result;
+  //   });
+  //   // print('category list *************:${_categoryList.length}');
+  // }
 
   ///On navigate product detail
   // /**************************************************** */
@@ -196,7 +194,7 @@ void _onShopDetail(ShopModel item) {
       context: context,
       builder: (BuildContext context) {
         return HomeCategoryList(
-          category: _categoryList,
+          category: _homePage.category,
           onOpenList: () async {
             Navigator.pushNamed(context, Routes.category);
           },
@@ -211,8 +209,8 @@ void _onShopDetail(ShopModel item) {
   }
 //Build category @SANJANA
    Widget _buildCategoryItem() {
-     print('category list ///////////////////:${_categoryList.length}');
-    if (_categoryList == null) {
+    //  print('category list ///////////////////:${_categoryList.length}');
+    if (_homePage.category == null) {
       return Wrap(
         runSpacing: 10,
         alignment: WrapAlignment.center,
@@ -225,7 +223,7 @@ void _onShopDetail(ShopModel item) {
       );
     }
 
-    List<CategoryModel2> listBuild = _categoryList;
+    List<CategoryModel2> listBuild = _homePage.category;
     final more = CategoryModel2.fromJson({
       "id": 9,
       "title": Translate.of(context).translate("more"),
@@ -234,8 +232,8 @@ void _onShopDetail(ShopModel item) {
       "type": "more"
     });
 
-    if (_categoryList.length > 7) {
-      listBuild = _categoryList.take(7).toList();
+    if (_homePage.category.length > 7) {
+      listBuild = _homePage.category.take(7).toList();
       listBuild.add(more);
     }
 
@@ -258,12 +256,12 @@ void _onShopDetail(ShopModel item) {
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
     // print(_locations.toString());
-    if (_locations == null) {
+    if (_homePage.locations == null) {
       return ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
         itemBuilder: (context, index) {
-          final item = _locations[index];
+          final item = _homePage.locations[index];
           return Padding(
             padding: EdgeInsets.only(left: 15),
             child: AppProductItem(
@@ -281,7 +279,7 @@ void _onShopDetail(ShopModel item) {
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
       itemBuilder: (context, index) {
-        final item = _locations[index];
+        final item = _homePage.locations[index];
         return Padding(
           padding: EdgeInsets.only(left: 15),
           child: SizedBox(
@@ -297,13 +295,13 @@ void _onShopDetail(ShopModel item) {
           ),
         );
       },
-      itemCount: _locations.length,
+      itemCount: _homePage.locations.length,
     );
   }
 
   //Build shops @SANJANA
  Widget _buildShopList() {
-    if (_shops == null) {
+    if (_homePage.shops == null) {
       return Column(
         children: List.generate(8, (index) => index).map(
           (item) {
@@ -317,7 +315,7 @@ void _onShopDetail(ShopModel item) {
     }
 
     return Column(
-      children: _shops.map((item) {
+      children: _homePage.shops.map((item) {
         return Padding(
           padding: EdgeInsets.only(bottom: 15),
           child: AppProductItem(
@@ -411,8 +409,8 @@ void _onShopDetail(ShopModel item) {
           SliverPersistentHeader(
             delegate: AppBarHomeSliver(
               expandedHeight: 250,
-              banners: _homePage?.banner ?? [],
-              shopModel:_shops,
+              banners: _homePage.banners,
+              shopModel:_homePage.shops,
             ),
             pinned: true,
           ),

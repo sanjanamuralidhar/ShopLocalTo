@@ -110,8 +110,7 @@ class Api {
    static Future<ProductModel> getShopDataDetail({id: 0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString());
-    // print('...........getShopDataDetail()............:$result.runT');
-    //  print('...........getShopDataDetail()............:${result['data']['id']}');
+     print('...........getShopDataDetail()............:${result['data']['id']}');
     return ProductModel.fromJson(result['data']);
   }
   // // sanjana
@@ -199,10 +198,11 @@ class Api {
   }
 
   ///Get Home
-  static Future<dynamic> getHome() async {
+  static Future<HomePageModel> getHome() async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await UtilAsset.loadJson("assets/data/home.json");
-    return ResultApiModel.fromJson(result);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+     print('jdbvjkdbjkvbj fjbkjdb dbfubm fjkbd......mmmmmmmmmmmmmm....${result['data']['banners']}');
+    return HomePageModel.fromJson(result['data']);
   }
 
   ///Get Messages
@@ -243,6 +243,17 @@ class Api {
     }
     final result = await UtilAsset.loadJson(path);
     return ResultApiModel.fromJson(result);
+  }
+
+    static Future<ProductDetailTabPageModel> getLoadTabDetail({id: 0, tabExtend: false}) async {
+    await Future.delayed(Duration(seconds: 1));
+    String path = 'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString();
+    if (tabExtend) {
+      path = 'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString();
+    }
+    final result = await httpManager.post(url:path);
+print('this is the............................... result tab data${result['data']['tabs']}');
+    return ProductDetailTabPageModel.fromJson(result['data']);
   }
 
   // sanjana
@@ -324,11 +335,28 @@ static Future<ProductListPageModel> getList({id:0}) async{
   }
   // @sanjana 
 
+  
+
+   static Future<HomePageModel> getHomePage({id:0}) async {
+    await Future.delayed(Duration(seconds: 1));
+   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home?id='+id);
+  //  print('getPopular():${result['data']['locations']}');
+   return HomePageModel.fromJson(result['data']);
+
+  }
+
   static Future<List<MyLocation>> getPopular() async {
     await Future.delayed(Duration(seconds: 1));
    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
   //  print('getPopular():${result['data']['locations']}');
    return MyLocation.listFromJson(result['data']['popular']);
+
+  }
+// non token api
+   static Future<List<MyLocation>> getSuggestedLocation() async {
+    await Future.delayed(Duration(seconds: 1));
+   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
+   return MyLocation.listFromJson(result['data']['locations']);
 
   }
    
@@ -347,7 +375,7 @@ static Future<ProductListPageModel> getList({id:0}) async{
   }
    static Future<List<ShopModel>> getSearchResult({id:0}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id.toString());
   //  print('getShops():$result.runT');
    return ShopModel.listFromJson(result);
   }
