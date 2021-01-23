@@ -83,6 +83,7 @@ class AppTextInput extends StatelessWidget {
                   : null,
               border: InputBorder.none,
             ),
+            
           ),
           _buildErrorLabel(context)
         ],

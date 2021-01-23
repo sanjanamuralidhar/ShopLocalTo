@@ -16,6 +16,7 @@ class AboutUs extends StatefulWidget {
 
 class _AboutUsState extends State<AboutUs> {
   AboutUsPageModel _aboutUsPage;
+  AboutUsModel _aboutus;
 
   @override
   void initState() {
@@ -35,30 +36,31 @@ class _AboutUsState extends State<AboutUs> {
   // }
 
   Future<void> _loadDetail() async {
-    final dynamic result = await Api.getAboutUs();
+    final dynamic result = await Api.getAboutUsInfo();
       setState(() {
-        _aboutUsPage = result;
+        _aboutus = result;
       });
+      print('.......jjjjjjjjjjj...........kkkkkkkkkkkk........$result');
   }
 
   ///Build UI
-  // Widget _buildBanner() {
-  //   if (_aboutUsPage?.team.image == null) {
-  //     return Shimmer.fromColors(
-  //       baseColor: Theme.of(context).hoverColor,
-  //       highlightColor: Theme.of(context).highlightColor,
-  //       enabled: true,
-  //       child: Container(
-  //         color: Colors.white,
-  //       ),
-  //     );
-  //   }
+  Widget _buildBanner() {
+    if (_aboutUsPage.team.image == null) {
+      return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Container(
+          color: Colors.white,
+        ),
+      );
+    }
 
-  //   return Image.asset(
-  //     _aboutUsPage.team.image,
-  //     fit: BoxFit.cover,
-  //   );
-  // }
+    return Image.asset(
+      _aboutUsPage.team.image,
+      fit: BoxFit.cover,
+    );
+  }
 
   // ///Build UI
   // Widget _buildWhoWeAre() {
@@ -227,27 +229,27 @@ class _AboutUsState extends State<AboutUs> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Padding(
-                            padding: EdgeInsets.only(bottom: 5),
-                            child: Text(
-                              Translate.of(context).translate('who_we_are'),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(fontWeight: FontWeight.w600),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.only(bottom: 5),
+                          //   child: Text(
+                          //     Translate.of(context).translate('who_we_are'),
+                          //     style: Theme.of(context)
+                          //         .textTheme
+                          //         .subtitle1
+                          //         .copyWith(fontWeight: FontWeight.w600),
+                          //   ),
+                          // ),
                           // _buildWhoWeAre(),
-                          Padding(
-                            padding: EdgeInsets.only(top: 15, bottom: 5),
-                            child: Text(
-                              Translate.of(context).translate('what_we_do'),
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .subtitle1
-                                  .copyWith(fontWeight: FontWeight.w600),
-                            ),
-                          ),
+                          // Padding(
+                          //   padding: EdgeInsets.only(top: 15, bottom: 5),
+                          //   child: Text(
+                          //     Translate.of(context).translate('what_we_do'),
+                          //     style: Theme.of(context)
+                          //         .textTheme
+                          //         .subtitle1
+                          //         .copyWith(fontWeight: FontWeight.w600),
+                          //   ),
+                          // ),
                           // _buildWhatWeDo(),
                         ],
                       ),
@@ -269,7 +271,7 @@ class _AboutUsState extends State<AboutUs> {
                     ),
                     Padding(
                       padding: EdgeInsets.only(right: 20),
-                      // child: _buildTeam(),
+                      child: _buildTeam(),
                     )
                   ],
                 ),
@@ -280,4 +282,46 @@ class _AboutUsState extends State<AboutUs> {
       ),
     );
   }
+
+  //  /Build UI
+  Widget _buildTeam() {
+    if (_aboutus.description == null) {
+      return Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Wrap(
+          alignment: WrapAlignment.spaceBetween,
+          runSpacing: 15,
+          children: [1, 2, 3, 4].map((item) {
+            return FractionallySizedBox(
+              widthFactor: 0.5,
+              child: Container(
+                margin: EdgeInsets.only(left: 20),
+                alignment: Alignment.bottomLeft,
+                padding: EdgeInsets.all(10),
+                height: 200,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: Colors.white,
+                ),
+              ),
+            );
+          }).toList(),
+        ),
+      );
+    }
+
+    return Container(
+      child:Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Text(_aboutus.description,
+        style: Theme.of(context)
+                      .textTheme
+                      .bodyText1
+                      .copyWith(height: 1.3),),
+      ),
+    );
+            
+}
 }

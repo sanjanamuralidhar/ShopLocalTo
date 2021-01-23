@@ -2,7 +2,7 @@ import 'package:listar_flutter/models/model.dart';
 
 class AboutUsPageModel {
   String message;
-  String success;
+  bool success;
   // final String banner;
   // final String whoWeAre;
   // final List<String> whatWeDo;

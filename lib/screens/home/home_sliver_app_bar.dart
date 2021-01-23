@@ -30,92 +30,90 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
       height: 10,
       color: Theme.of(context).scaffoldBackgroundColor,
     ),
-    SafeArea(
-      child: Container(
-        height:125,
-        padding: EdgeInsets.only(left: 20, right: 20),
-        child: Card(
-          margin: EdgeInsets.all(0),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8),
-          ),
-          elevation: 3,
-          child: Column(
-            children: [
-
-              Container(
-                padding: EdgeInsets.all(10),
-                child:
-                    Container(
-                        decoration: BoxDecoration(
-                          color: Theme.of(context).hoverColor,
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(8),
-                          ),
-                        ),
-                        child: TypeAheadField(
-                            textFieldConfiguration: TextFieldConfiguration(
-                              autofocus: false,
-                              // enabled: enable,
-                              onTap: () {},
-                              decoration: InputDecoration(
-                                prefixIcon: Icon(Icons.search),
-                                border: InputBorder.none,
-                                hintText: "Search ",
-                                // suffixIcon: Padding(
-                                //   padding: const EdgeInsets.only(
-                                //       right: 10.0, left: 20.0),
-                                //   child: DropPage(),
-
-                                //   //removed dropdown
-                                // ),
-                              ),
-                            ),
-                            // ignore: non_constant_identifier_names
-                            suggestionsCallback: (Pattern) async {
-                              ////hardcoded datas
-                              List<ShopModel> list = shopModel;
-                              var suggetionList = Pattern.isEmpty
-                                  ? null
-                                  : list
-                                      .where((e) => e.title
-                                          .toLowerCase()
-                                          .contains(Pattern.toLowerCase()))
-                                      .toList();
-
-                              return suggetionList;
-                            },
-                            itemBuilder: (context, suggestion) {
-                              return ListTile(
-                                // leading: Icon(Icons.location_city),
-                                title: Text(suggestion.title),
-                              );
-                            },
-                            onSuggestionSelected: (suggestion) {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return ProductDetailTab(id:suggestion.id);
-                              }));
-                            })
-
-                        // previous search by sanjana search.txt
-                        ),
-                        // Container(child:Text("shdui")),
-              ),
-              Padding(
+    Container(
+      height:125,
       padding: EdgeInsets.only(left: 20, right: 20),
-      child:DropPage()
-        //      Wrap(
-        // children: shopModel.map(
-        //   (item) {
-        //     return DropPage(id:item.id,);
-        //       },
-        //     ).toList()
-      
-        //   ),
-              )
-            ],
-          ),
+      child: Card(
+        margin: EdgeInsets.all(0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(8),
+        ),
+        elevation: 3,
+        child: Column(
+          children: [
+
+            Container(
+              padding: EdgeInsets.all(10),
+              child:
+                  Container(
+                      decoration: BoxDecoration(
+                        color: Theme.of(context).hoverColor,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(8),
+                        ),
+                      ),
+                      child: TypeAheadField(
+                          textFieldConfiguration: TextFieldConfiguration(
+                            autofocus: false,
+                            // enabled: enable,
+                            onTap: () {},
+                            decoration: InputDecoration(
+                              prefixIcon: Icon(Icons.search),
+                              border: InputBorder.none,
+                              hintText: "Search ",
+                              // suffixIcon: Padding(
+                              //   padding: const EdgeInsets.only(
+                              //       right: 10.0, left: 20.0),
+                              //   child: DropPage(),
+
+                              //   //removed dropdown
+                              // ),
+                            ),
+                          ),
+                          // ignore: non_constant_identifier_names
+                          suggestionsCallback: (Pattern) async {
+                            ////hardcoded datas
+                            List<ShopModel> list = shopModel;
+                            var suggetionList = Pattern.isEmpty
+                                ? null
+                                : list
+                                    .where((e) => e.title
+                                        .toLowerCase()
+                                        .contains(Pattern.toLowerCase()))
+                                    .toList();
+
+                            return suggetionList;
+                          },
+                          itemBuilder: (context, suggestion) {
+                            return ListTile(
+                              // leading: Icon(Icons.location_city),
+                              title: Text(suggestion.title),
+                            );
+                          },
+                          onSuggestionSelected: (suggestion) {
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return ProductDetailTab(id:suggestion.id);
+                            }));
+                          })
+
+                      // previous search by sanjana search.txt
+                      ),
+                      // Container(child:Text("shdui")),
+            ),
+            Padding(
+    padding: EdgeInsets.only(left: 20, right: 20),
+    child:DropPage()
+      //      Wrap(
+      // children: shopModel.map(
+      //   (item) {
+      //     return DropPage(id:item.id,);
+      //       },
+      //     ).toList()
+    
+      //   ),
+            )
+          ],
         ),
       ),
     ),

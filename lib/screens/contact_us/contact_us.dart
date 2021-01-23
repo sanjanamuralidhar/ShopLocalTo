@@ -33,8 +33,8 @@ class ContactUsState extends State<ContactUs> {
   @override
   void initState() {
     _loadProfile();
-    _textNameController.text;
-    _textEmailController.text;
+    _textNameController.text = 'Steve Garrett';
+    _textEmailController.text = 'steve.garrett@passionui.com';
     super.initState();
   }
    Future<void> _loadProfile() async {
@@ -67,8 +67,6 @@ class ContactUsState extends State<ContactUs> {
 
   @override
   Widget build(BuildContext context) {
-     _textNameController.text=_userData.name;
-    _textEmailController.text=_userData.email;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,

@@ -186,15 +186,16 @@ class Api {
   static Future<dynamic> getAboutUs() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await UtilAsset.loadJson("assets/data/about_us.json");
-    return ResultApiModel.fromJson(result['data']['detail']);
+    return ResultApiModel.fromJson(result);
   }
 
   
   ///Get About Us sANJANA
-  static Future<dynamic> getAboutUsInfo() async {
+  static Future<AboutUsModel> getAboutUsInfo() async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await UtilAsset.loadJson("assets/data/about_us.json");
-    return ResultApiModel.fromJson(result);
+   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/about-us');
+   print('getAboutUsInfo()..............#############>.........${result['data']['details']}');
+    return AboutUsModel.fromJson(result['data']['details']);
   }
 
   ///Get Home

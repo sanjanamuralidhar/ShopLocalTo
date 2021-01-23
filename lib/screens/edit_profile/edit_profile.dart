@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:listar_flutter/blocs/Update/bloc.dart';
 import 'package:listar_flutter/utils/utils.dart';
@@ -47,23 +48,22 @@ class _EditProfileState extends State<EditProfile> {
   String _validPhone;
   UserModel _userData;
 UpdateBloc _updateBloc;
+ String value;
 
   void initState() {
     _updateBloc = BlocProvider.of<UpdateBloc>(context);
-    _textNameController.text;
-    _textEmailController.text;
-    _textAddressController.text ;
-    _textWebsiteController.text ;
-    _textPhoneController.text;
-    _validName;
-    _validAddress;
-    _validEmail;
-    _validInfo;
-    _validPhone;
-    _validWebsite;
+   _textNameController.text = '';
+   _textEmailController.text = '';
+    // _validName;
+    // _validAddress;
+    // _validEmail;
+    // _validInfo;
+    // _validPhone;
+    // _validWebsite;
     _loadProfile();
     super.initState();
   }
+  
   ///On async get Image file
   Future _getImage() async {
     // ignore: deprecated_member_use
@@ -187,6 +187,7 @@ UpdateBloc _updateBloc;
                     ),
                   ),
                   AppTextInput(
+                    // controller: TextEditingController(text: _userData.name),
                     hintText: Translate.of(context).translate('name'),
                     errorText: _validName != null
                         ? Translate.of(context).translate(_validName)
@@ -212,7 +213,7 @@ UpdateBloc _updateBloc;
                       });
                     },
                     icon: Icon(Icons.clear),
-                    controller: _textNameController,
+                    controller:_textNameController,
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -401,7 +402,6 @@ UpdateBloc _updateBloc;
                   Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                
                 ],
               ),
             ),
