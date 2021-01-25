@@ -97,10 +97,10 @@ class ProductModel {
     createDate = json['createDate'];
     like = json['like'];
     rate = json['rate'];
-    numRate = json['numRate'];
-    rateText = json['rateText'];
+    numRate = json['num_rate'];
+    rateText = json['rate_text'];
     status = json['status'];
-    favorite = json['favorite'];
+    favorite = json['favourite'];
     address = json['address'];
     phone = json['phone'];
     email = json['email'];
@@ -136,10 +136,10 @@ class ProductModel {
     if (createDate != null) json['createDate'] = createDate;
     if (like != null) json['like'] = like;
     if (rate != null) json['rate'] = rate;
-    if (numRate != null) json['numRate'] = numRate;
-    if (rateText != null) json['rateText'] = rateText;
+    if (numRate != null) json['num_rate'] = numRate;
+    if (rateText != null) json['rate_text'] = rateText;
     if (status != null) json['status'] = status;
-    if (favorite != null) json['favorite'] = favorite;
+    if (favorite != null) json['favourite'] = favorite;
     if (address != null) json['address'] = address;
     if (phone != null) json['phone'] = phone;
     if (email != null) json['email'] = email;

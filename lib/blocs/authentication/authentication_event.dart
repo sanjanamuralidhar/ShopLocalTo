@@ -27,3 +27,9 @@ class AuthenticationResetSave extends AuthenticationEvent {
 
   AuthenticationResetSave(this.user);
 }
+
+class AuthenticationContactSave extends AuthenticationEvent {
+  final UserModel user;
+
+  AuthenticationContactSave(this.user);
+}

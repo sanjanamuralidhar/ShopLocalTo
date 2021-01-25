@@ -61,6 +61,7 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
           Preferences.user,
         );
       final user = UserModel.fromJson(jsonDecode(getUserPreferences));
+      print(httpManager.baseOptions.toString());
       httpManager.baseOptions.headers["Authorization"] =
             "Bearer "+user.token;
          print('.............................................ooooooooo.................................$user');   

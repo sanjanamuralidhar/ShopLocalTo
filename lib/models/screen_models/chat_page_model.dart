@@ -3,7 +3,7 @@ import 'package:listar_flutter/models/model.dart';
 class ChatPageModel {
   final String roomName;
   final int online;
-  final List<UserModel> member;
+  final List<User> member;
   final List<MessageModel> message;
 
   ChatPageModel(
@@ -23,7 +23,7 @@ class ChatPageModel {
     final Iterable convertUser = json['member'] ?? [];
 
     final listUser = convertUser.map((item) {
-      return UserModel.fromJson(item);
+      return User.fromJson(item);
     }).toList();
 
     return ChatPageModel(

@@ -1,7 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/models/model_user.dart';
@@ -29,9 +31,11 @@ class ContactUsState extends State<ContactUs> {
   String _validEmail;
   String _validInfo;
   UserModel _userData;
+  ContactBloc _contactUsBloc;
 
   @override
   void initState() {
+ _contactUsBloc = BlocProvider.of<ContactBloc>(context);
     _loadProfile();
     _textNameController.text = 'Steve Garrett';
     _textEmailController.text = 'steve.garrett@passionui.com';
@@ -216,6 +220,45 @@ class ContactUsState extends State<ContactUs> {
                         icon: Icon(Icons.clear),
                         controller: _textInfoController,
                       ),
+                    Padding(
+              padding: EdgeInsets.only(
+                left: 20,
+                right: 20,
+                top: 15,
+                bottom: 15,
+              ),
+               child: BlocBuilder<ContactBloc, ContactState>(
+                  builder: (context, update) {
+                    return BlocListener<ContactBloc, ContactState>(
+                      listener: (context, updateListener) {
+                        if (updateListener is ContactFail) {
+                          print("update failed");
+                          
+                        }
+                      },
+                      child: AppButton(
+                        onPressed: () {
+                          _contactUsBloc.add(OnContact(
+                            name: _validName,
+                            email: _validEmail,
+                            comment: _validInfo,
+                          ));
+                          
+                          // Navigator.pop(context);
+                         Navigator.of(context).pop();
+                          // _signUp();
+                          print('username.........:${_validName}');
+                          print('email.........:${_validEmail}');
+                          
+                        },
+                        text: Translate.of(context).translate('confirm'),
+                        loading: update is ContactLoading,
+                        disableTouchWhenLoading: true,
+                      ),
+                    );
+                  },
+                ),
+               ),
                     ],
                   ),
                 ),
@@ -227,3 +270,5 @@ class ContactUsState extends State<ContactUs> {
     );
   }
 }
+
+

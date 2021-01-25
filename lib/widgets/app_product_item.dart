@@ -8,7 +8,6 @@ import 'package:shimmer/shimmer.dart';
 enum ProductViewType { small, gird, list, block, cardLarge, cardSmall }
 
 class AppProductItem extends StatelessWidget {
-
   final ProductModel item;
   final ShopModel shopModel;//ProductViewType.cardSmall
   final MyLocation mylocation;//productViewType:cardLarge
@@ -23,7 +22,7 @@ class AppProductItem extends StatelessWidget {
   final Function(RelatedModel) onPressRelated;
   final Function(MyLocation) onPressLocation;
 final Function(ShopModel) onPressshop;
-  const AppProductItem({Key key, this.item, this.type, this.onPressed, this.nearlyModel, this.onPress, this.featureModel, this.relatedModel, this.onPressFeature, this.onPressRelated, this.mylocation, this.locationtype, this.onPressLocation, this.onPressshop, this.shopModel}) : super(key: key);
+  const AppProductItem({Key key, this.item, this.type, this.onPressed, this.nearlyModel, this.onPress, this.featureModel, this.relatedModel, this.onPressFeature, this.onPressRelated, this.mylocation, this.locationtype, this.onPressLocation, this.onPressshop, this.shopModel,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

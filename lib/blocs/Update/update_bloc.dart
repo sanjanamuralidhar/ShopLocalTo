@@ -25,7 +25,7 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
     ///Event for login
     if (event is OnUpdate) {
       ///Notify loading to UI
-      yield UpdateLoading();
+      yield UpdateProfileLoading();
 
       await Future.delayed(Duration(seconds: 1));
 
@@ -41,6 +41,10 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
        print('event.email at signup bloc:${event.email}');
       flutterSecureStorage.write(key: 'username',value: event.username);
       flutterSecureStorage.write(key: 'email', value: event.email);
+      flutterSecureStorage.write(key: 'address', value: event.address);
+      flutterSecureStorage.write(key: 'info', value: event.info);
+      flutterSecureStorage.write(key: 'website', value: event.website);
+      flutterSecureStorage.write(key: 'phone', value: event.phone);
       Future<String> value = flutterSecureStorage.read(key: 'email') ;
       print('/////////////////////////////');
       print(value.toString());

@@ -26,6 +26,7 @@ String website;
 String information;
 String created_at;
 String updated_at;
+String comment;
 
 
   UserModel(
@@ -57,6 +58,7 @@ String updated_at;
     this.updated_at,
     this.verify,
     this.website,
+    this.comment,
   );
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -90,6 +92,7 @@ String updated_at;
     updated_at = json['updated_at'];
     verify=json['verify'];
     website=json['website'];
+    comment = json['comment'];
     
   }
 
@@ -133,6 +136,7 @@ String updated_at;
     if(updated_at!=null) json['phone']=updated_at;
      if(verify!=null) json['verify']=verify;
     if(website!=null) json['website']=website;
+    if(comment!=null) json['comment']=comment;
     return json;
   }
 // factory UserModel.fromJson(Map<String, dynamic> json) {

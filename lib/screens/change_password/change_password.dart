@@ -184,7 +184,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                           print('website...............:${_validRePass}');
                         },
                         text: Translate.of(context).translate('confirm'),
-                        loading: update is UpdateLoading,
+                        loading: update is ResetLoading,
                         disableTouchWhenLoading: true,
                       ),
                     );

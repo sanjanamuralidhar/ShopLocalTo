@@ -59,6 +59,7 @@ class _NotificationListState extends State<NotificationList> {
   ///Build list
   Widget _buildList() {
     if (_notificationPage?.notifications == null) {
+      print('no notifications');
       return ListView(
         padding: EdgeInsets.only(top: 5),
         children: List.generate(8, (index) => index).map(

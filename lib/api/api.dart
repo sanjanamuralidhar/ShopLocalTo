@@ -37,11 +37,19 @@ class Api {
     return result;
   }
   // /Update profile api
+   static Future<dynamic> contactUs({String username, String email, String comment,}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/contact-us?name='+username+'&email='+email+'&comment='+comment);
+    return result;
+  }
+
+    // /Update profile api
    static Future<dynamic> editProfile({String username, String email, String address, String website, String phone,String info}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&website='+website+'&info='+info+'&phone='+phone);
     return result;
   }
+
 
   // /Update password api
    static Future<dynamic> editPassword({String password, String confirm_password}) async {
@@ -215,8 +223,16 @@ class Api {
   ///Get Detail Messages
   static Future<dynamic> getDetailMessage({int id}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result =
-        await UtilAsset.loadJson("assets/data/message_detail_$id.json");
+    final result = await UtilAsset.loadJson("assets/data/message_detail_$id.json");
+    print('$result');
+    return ResultApiModel.fromJson(result);
+  }
+
+   ///Get Detail Messages
+  static Future<dynamic> getVendorMessage({id:0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/message-list?id='+id);
+    print('$result');
     return ResultApiModel.fromJson(result);
   }
 
@@ -252,8 +268,8 @@ class Api {
       path = 'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString();
     }
     final result = await httpManager.post(url:path);
-print('this is the............................... result tab data${result['data']['tabs']}');
-    return ProductDetailTabPageModel.fromJson(result['data']);
+print('this is the............................... result tab data${result}');
+    return ProductDetailTabPageModel.fromJson(result);
   }
 
   // sanjana

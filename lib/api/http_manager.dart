@@ -5,7 +5,9 @@ import 'package:listar_flutter/utils/logger.dart';
 
 String dioErrorHandle(DioError error) {
   UtilLogger.log("ERROR", error);
+   print('.................................................UtilError${error}');
   switch (error.type) {
+      
     case DioErrorType.RESPONSE:
       return error.response?.data['message'] ?? 'Unknown error';
 

@@ -52,8 +52,7 @@ UpdateBloc _updateBloc;
 
   void initState() {
     _updateBloc = BlocProvider.of<UpdateBloc>(context);
-   _textNameController.text = '';
-   _textEmailController.text = '';
+    // _textNameController.text = value;
     // _validName;
     // _validAddress;
     // _validEmail;
@@ -63,7 +62,6 @@ UpdateBloc _updateBloc;
     _loadProfile();
     super.initState();
   }
-  
   ///On async get Image file
   Future _getImage() async {
     // ignore: deprecated_member_use
@@ -108,17 +106,17 @@ UpdateBloc _updateBloc;
       );
       
     });
-    // if (_validName == null &&
-    //     _validEmail == null &&
-    //     _validAddress == null &&
-    //     _validWebsite == null &&
-    //     _validInfo == null) {
-    //   setState(() {
-    //     _loading = true;
-    //   });
-    //   await Future.delayed(Duration(seconds: 1));
-    //   Navigator.pop(context);
-    // }
+    if (_validName == null &&
+        _validEmail == null &&
+        _validAddress == null &&
+        _validWebsite == null &&
+        _validInfo == null) {
+      setState(() {
+        _loading = true;
+      });
+      await Future.delayed(Duration(seconds: 1));
+      Navigator.pop(context);
+    }
   }
 
   @override
@@ -188,7 +186,7 @@ UpdateBloc _updateBloc;
                   ),
                   AppTextInput(
                     // controller: TextEditingController(text: _userData.name),
-                    hintText: Translate.of(context).translate('name'),
+                    hintText: _userData.name,
                     errorText: _validName != null
                         ? Translate.of(context).translate(_validName)
                         : null,
@@ -226,7 +224,7 @@ UpdateBloc _updateBloc;
                     ),
                   ),
                   AppTextInput(
-                    hintText: Translate.of(context).translate('email'),
+                    hintText: _userData.email,
                     errorText: _validEmail != null
                         ? Translate.of(context).translate(_validEmail)
                         : null,
@@ -442,7 +440,7 @@ UpdateBloc _updateBloc;
                           print('website...............:${_validWebsite}');
                         },
                         text: Translate.of(context).translate('confirm'),
-                        loading: update is UpdateLoading,
+                        loading: update is UpdateProfileLoading,
                         disableTouchWhenLoading: true,
                       ),
                     );

@@ -7,3 +7,4 @@ export 'search/bloc.dart';
 export 'theme/bloc.dart';
 export 'Update/bloc.dart';
 export 'resetPassword/bloc.dart';
+export 'contactUs/bloc.dart';

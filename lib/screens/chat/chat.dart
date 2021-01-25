@@ -47,7 +47,6 @@ class _ChatState extends State<Chat> {
 
   ///On async get Image file
   Future _attachImage() async {
-    // ignore: deprecated_member_use
     final image = await ImagePicker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       final chat = MessageModel.fromJson({
@@ -137,6 +136,119 @@ class _ChatState extends State<Chat> {
 
   ///Build Content
   Widget _buildContent() {
+    if(_message == null){
+      return Column(
+      children: <Widget>[
+        Expanded(
+          child: SmartRefresher(
+            enablePullDown: true,
+            enablePullUp: false,
+            onRefresh: _onRefresh,
+            onLoading: _onLoading,
+            controller: _controller,
+            header: ClassicHeader(
+              idleText: Translate.of(context).translate('pull_down_refresh'),
+              refreshingText: Translate.of(context).translate('refreshing'),
+              completeText:
+                  Translate.of(context).translate('refresh_completed'),
+              releaseText:
+                  Translate.of(context).translate('release_to_refresh'),
+              refreshingIcon: SizedBox(
+                width: 16.0,
+                height: 16.0,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+            footer: ClassicFooter(
+              loadingText: Translate.of(context).translate('loading'),
+              canLoadingText: Translate.of(context).translate(
+                'release_to_load_more',
+              ),
+              idleText: Translate.of(context).translate('pull_to_load_more'),
+              loadStyle: LoadStyle.ShowWhenLoading,
+              loadingIcon: SizedBox(
+                width: 16.0,
+                height: 16.0,
+                child: CircularProgressIndicator(strokeWidth: 2),
+              ),
+            ),
+            // child: ListView.builder(
+            //   padding: EdgeInsets.all(15),
+            //   itemCount: _message.length,
+            //   itemBuilder: (context, index) {
+            //     final item = _message[index];
+            //     return ChatItem(item: item);
+            //   },
+            // ),
+          ),
+        ),
+        Padding(
+          padding: EdgeInsets.only(bottom: 8, top: 8),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Expanded(
+                child: Container(
+                  margin: EdgeInsets.only(left: 16, right: 16),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(40.0),
+                    color: Theme.of(context).dividerColor,
+                  ),
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      IconButton(
+                        icon: Icon(Icons.face),
+                        onPressed: () {},
+                      ),
+                      Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: Translate.of(context).translate(
+                              'type_something',
+                            ),
+                            border: InputBorder.none,
+                          ),
+                          controller: _textChatController,
+                          onSubmitted: (value) {
+                            _onSend();
+                          },
+                        ),
+                      ),
+                      IconButton(
+                        icon: Icon(Icons.attach_file),
+                        onPressed: _attachImage,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 16, right: 16),
+                child: InkWell(
+                  onTap: _onSend,
+                  child: Container(
+                    alignment: Alignment.center,
+                    padding: EdgeInsets.all(16.0),
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).primaryColor,
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.send,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              )
+            ],
+          ),
+        )
+      ],
+    );
+    }
+    
     if (_loading) {
       return Center(
         child: SizedBox(

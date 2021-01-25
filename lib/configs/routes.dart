@@ -23,6 +23,7 @@ class Routes {
   static const String chat = "/chat";
   static const String aboutUs = "/aboutUs";
   static const String gallery = "/gallery";
+   static const String searchHistory = "/searchHistory";
   static const String photoPreview = "/photoPreview";
   static const String themeSetting = "/themeSetting";
   static const String listProduct = "/listProduct";
@@ -88,6 +89,13 @@ class Routes {
             return ProductDetailTab(id: id);
           },
         );
+
+        case searchHistory:
+        return MaterialPageRoute(
+          builder: (context) => SearchHistory(),
+          fullscreenDialog: true,
+        );
+
 
          case locationDetail:
         final id = settings.arguments;

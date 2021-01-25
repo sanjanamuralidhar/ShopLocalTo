@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:listar_flutter/blocs/bloc.dart';
+import 'package:listar_flutter/blocs/contactUs/bloc.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/main_navigation.dart';
@@ -26,6 +27,7 @@ class _AppState extends State<App> {
   SignUpBloc _signUpBloc;
   UpdateBloc _updateBloc;
   ResetBloc _resetBloc;
+  ContactBloc _contactUsBloc;
 
   @override
   void initState() {
@@ -37,6 +39,7 @@ class _AppState extends State<App> {
     _signUpBloc = SignUpBloc(authBloc: _authBloc);
     _updateBloc = UpdateBloc(authBloc: _authBloc);
     _resetBloc = ResetBloc(authBloc: _authBloc);
+    _contactUsBloc = ContactBloc(authBloc: _authBloc);
     _applicationBloc = ApplicationBloc(
       authBloc: _authBloc,
       themeBloc: _themeBloc,
@@ -57,6 +60,7 @@ class _AppState extends State<App> {
     _searchBloc.close();
     _updateBloc.close();
     _resetBloc.close();
+    _contactUsBloc.close();
     super.dispose();
   }
 
@@ -91,6 +95,9 @@ class _AppState extends State<App> {
         BlocProvider<SearchBloc>(
           create: (context) => _searchBloc,
         ),
+         BlocProvider<ContactBloc>(
+          create: (context) => _contactUsBloc,
+        ),
       ],
       child: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, lang) {
@@ -112,6 +119,7 @@ class _AppState extends State<App> {
                   supportedLocales: AppLanguage.supportLanguage,
                   home: BlocBuilder<ApplicationBloc, ApplicationState>(
                     builder: (context, app) {
+                      print('mmmmmmmmmmmmmmmmmmmmlogincheck.............$app');
                       if (app is ApplicationSetupCompleted) {
                         return auth is AuthenticationSuccess
                             ? MainNavigation()
@@ -124,6 +132,9 @@ class _AppState extends State<App> {
                                                 Colors.blue[800])),
                                   )
                                 : SignIn();
+                      }
+                      if(app is AuthenticationFail){
+                        return SignIn();
                       }
                       if (app is ApplicationIntroView) {
                         return IntroPreview();

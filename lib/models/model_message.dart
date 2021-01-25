@@ -8,8 +8,8 @@ enum Type { textMessage, photo }
 class MessageModel {
   final int id;
   final String roomName;
-  final List<UserModel> member;
-  final UserModel from;
+  final List<User> member;
+  final User from;
   final String message;
   final DateTime date;
   final Status status;
@@ -32,8 +32,8 @@ class MessageModel {
     Status status = Status.sent;
     File file;
     Type type = Type.textMessage;
-    List<UserModel> member;
-    UserModel from;
+    List<User> member;
+    User from;
 
     if (json['status'] == 'received') {
       status = Status.received;
@@ -47,12 +47,12 @@ class MessageModel {
     if (json['member'] != null) {
       final Iterable convertUser = json['member'] ?? [];
       member = convertUser.map((item) {
-        return UserModel.fromJson(item);
+        return User.fromJson(item);
       }).toList();
     }
 
     if (json['from'] != null) {
-      from = UserModel.fromJson(json['from']);
+      from = User.fromJson(json['from']);
     }
 
     return MessageModel(

@@ -26,3 +26,4 @@ export 'model_popular.dart';
 export 'model_nearby.dart';
 export 'model_time.dart';
 export 'model_aboutUs.dart';
+export 'model_chatUser.dart';

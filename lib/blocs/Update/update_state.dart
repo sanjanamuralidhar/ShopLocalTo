@@ -2,7 +2,7 @@ abstract class UpdateState {}
 
 class InitialUpdateState extends UpdateState {}
 
-class UpdateLoading extends UpdateState {
+class UpdateProfileLoading extends UpdateState {
 }
 
 class UpdateFail extends UpdateState {

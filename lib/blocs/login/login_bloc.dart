@@ -35,6 +35,8 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       );
       print('event.username at login bloc:${event.email}');
       print('event.password at login bloc:${event.password}');
+      print('${result['message']}');
+      print(state);
       dynamic token = result['access_token'];
       FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
       flutterSecureStorage.write(key: 'token', value: token);

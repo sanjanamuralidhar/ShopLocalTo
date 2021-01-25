@@ -3,6 +3,7 @@ import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/routes.dart';
+import 'package:listar_flutter/main_navigation.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/screen.dart';
@@ -252,18 +253,23 @@ class _HomeSwipeState extends State<HomeSwipe> {
                               });
                               print(
                                   '.........jkbbdkjvbdfj kfjdfjk djfnkjvnf dfbjb fdbjfk..........$id');
-                              //  flutterSecureStorage.write(key: 'location', value: suggestion.location);
-                              // Navigator.of(context).pop();
+                              
+                              Navigator.of(context).pop();
                               CircularProgressIndicator(
                                   backgroundColor: Colors.black,
                                   valueColor: new AlwaysStoppedAnimation<Color>(
                                       Colors.blue[800]));
-                              _loadHomePage();
+                               flutterSecureStorage.write(key: 'location', value: suggestion.location);
+                              // CircularProgressIndicator(
+                              //     backgroundColor: Colors.black,
+                              //     valueColor: new AlwaysStoppedAnimation<Color>(
+                              //         Colors.blue[800]));
+                              // _loadHomePage();
 
-                              // Navigator.push(context, MaterialPageRoute(builder: (context) {
-                              //   return LocationDetail(id: suggestion.id);
-                              // }
-                              // ));
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return MainNavigation();
+                              }
+                              ));
                             })
 
                         // previous search by sanjana search.txt

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:listar_flutter/models/model.dart';
 
 class AppGroupCircleAvatar extends StatelessWidget {
-  final List<UserModel> member;
+  final List<User> member;
   final double size;
 
   const AppGroupCircleAvatar({
@@ -32,7 +32,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
               )
             ],
             image: DecorationImage(
-              image: AssetImage(member[0].profile_image),
+              image: AssetImage(member[0].image),
               fit: BoxFit.cover,
             ),
           ),
@@ -63,7 +63,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(member[0].profile_image),
+                        image: AssetImage(member[0].image),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -78,7 +78,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(member[1].profile_image),
+                        image: AssetImage(member[1].image),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -118,7 +118,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(member[0].profile_image),
+                                image: AssetImage(member[0].image),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -133,7 +133,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(member[1].profile_image),
+                                image: AssetImage(member[1].image),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -150,7 +150,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                   child: Container(
                     decoration: BoxDecoration(
                       image: DecorationImage(
-                        image: AssetImage(member[2].profile_image),
+                        image: AssetImage(member[2].image),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -190,7 +190,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(member[0].profile_image),
+                              image: AssetImage(member[0].image),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -205,7 +205,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(member[1].profile_image),
+                              image: AssetImage(member[1].image),
                               fit: BoxFit.cover,
                             ),
                           ),
@@ -227,7 +227,7 @@ class AppGroupCircleAvatar extends StatelessWidget {
                         child: Container(
                           decoration: BoxDecoration(
                             image: DecorationImage(
-                              image: AssetImage(member[2].profile_image),
+                              image: AssetImage(member[2].image),
                               fit: BoxFit.cover,
                             ),
                           ),
