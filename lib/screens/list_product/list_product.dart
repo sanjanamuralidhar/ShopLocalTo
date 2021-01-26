@@ -50,32 +50,32 @@ class _ListProductState extends State<ListProduct> {
   Future<void> _loadData() async {
     final dynamic result = await Api.getList(id: widget.id);
 // print('....................................get  L IST...........${widget.id}');
-      final listProduct = result;
+    final listProduct = result;
 // print('....................................get  L IST...........${listProduct.list.length}');
-      ///Setup list marker map from list
-      listProduct.list.forEach((item) {
-        final markerId = MarkerId(item.id.toString());
-        final marker = Marker(
-          markerId: markerId,
-          position: LatLng(item.location.lat, item.location.long),
-          infoWindow: InfoWindow(title: item.title),
-          onTap: () {
-            _onSelectLocation(item);
-          },
-        );
-        _markers[markerId] = marker;
-      });
+    ///Setup list marker map from list
+    listProduct.list.forEach((item) {
+      final markerId = MarkerId(item.id.toString());
+      final marker = Marker(
+        markerId: markerId,
+        position: LatLng(item.location.lat, item.location.long),
+        infoWindow: InfoWindow(title: item.title),
+        onTap: () {
+          _onSelectLocation(item);
+        },
+      );
+      _markers[markerId] = marker;
+    });
 
-      setState(() {
-        _productList = listProduct;
-        _initPosition = CameraPosition(
-          target: LatLng(
-            listProduct.list[0].location.lat,
-            listProduct.list[0].location.long,
-          ),
-          zoom: 14.4746,
-        );
-      });
+    setState(() {
+      _productList = listProduct;
+      _initPosition = CameraPosition(
+        target: LatLng(
+          listProduct.list[0].location.lat,
+          listProduct.list[0].location.long,
+        ),
+        zoom: 14.4746,
+      );
+    });
   }
 
   ///On Load More
@@ -596,5 +596,3 @@ class _ListProductState extends State<ListProduct> {
     );
   }
 }
-
-

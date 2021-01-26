@@ -5,6 +5,7 @@ import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
+import 'package:listar_flutter/screens/location/location.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -26,6 +27,7 @@ class _LocationDetailState extends State<LocationDetail> {
   NearbyModel _nearly;
   // List<RelatedModel> _related;
   List<NearbyModel> _nearby;
+  List<ShopModel> _shops;
   // bool _showHour = false;
   // ProductDetailPageModel _detailPage;
 
@@ -33,6 +35,7 @@ class _LocationDetailState extends State<LocationDetail> {
   void initState() {
     _loadDetail();
     _loadNearby();
+    _loadVendor();
     // _loadFeature();
     // _loadRelated();
     super.initState();
@@ -40,11 +43,11 @@ class _LocationDetailState extends State<LocationDetail> {
 
   Future<void> _loadDetail() async {
     final dynamic result = await Api.getLocationDataDetail(id: widget.id);
-    print('..........................................................................................${widget.id}');
+    print('.......................................0000000000...................................................${widget.id}');
     setState(() {
         _popular = result;
       });
-      print('..........................................................................................${_popular.name}');
+      print('.....................................0000000000.....................................................${_popular.name}');
   }
 
    Future<void> _loadNearby() async {
@@ -57,20 +60,40 @@ class _LocationDetailState extends State<LocationDetail> {
     return _nearby;
   }
 
+   Future<void> _loadVendor() async {
+    final List<ShopModel> result = await Api.getLocationShopDetail(id: widget.id);
+    print('..............................................222222222............................................${widget.id}');
+    setState(() {
+        _shops = result;
+      });
+    print('..............................................222222222............................................${_nearby.length}');  
+    return _nearby;
+  }
+
 
   ///On navigate map
   void _onLocation() {
-    Navigator.pushNamed(
-      context,
-      Routes.location,
-      arguments: _popular.latitude,
-    );
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Location(location: _popular.location,)),
+            );
+    // Navigator.pushNamed(
+    //   context,
+    //   Routes.location,
+    //   arguments:_popular.location,
+    // );
   }
   void _onNearbyDetail(NearbyModel item) {
     // String route = item.type == RelatedType.place
     //     ? Routes.locationDetail
     //     : Routes.locationDetailTab;
     Navigator.pushNamed(context, Routes.locationDetailTab, arguments: item.id);
+  }
+    void _onShopDetail(ShopModel item) {
+    // String route = item.type == RelatedType.place
+    //     ? Routes.locationDetail
+    //     : Routes.locationDetailTab;
+    Navigator.pushNamed(context, Routes.productDetail, arguments: item.id);
   }
 
   ///On navigate review
@@ -237,186 +260,7 @@ Widget _buildInfo() {
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 20),
-              ),
-              Row(
-                children: <Widget>[
-                  Container(
-                    width: 32,
-                    height: 32,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(left: 10, right: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Container(
-                          height: 10,
-                          width: 100,
-                          color: Colors.white,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 3),
-                        ),
-                        Container(
-                          height: 10,
-                          width: 200,
-                          color: Colors.white,
-                        ),
-                      ],
-                    ),
-                  )
-                ],
-              ),
+             
               Padding(
                 padding: EdgeInsets.only(top: 25),
                 child: Container(height: 10, color: Colors.white),
@@ -524,6 +368,58 @@ Widget _buildInfo() {
     );
   }
 
+  Widget _buildVendorList() {
+    if (_shops == null) {
+      return Container();
+    }
+
+    return Padding(
+      padding: EdgeInsets.only(top: 10),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Padding(
+            padding: EdgeInsets.only(
+              left: 20,
+              right: 20,
+              bottom: 15,
+            ),
+            child: Text(
+              Translate.of(context).translate('featured'),
+              style: Theme.of(context)
+                  .textTheme
+                  .headline6
+                  .copyWith(fontWeight: FontWeight.w600),
+            ),
+          ),
+          Container(
+            height: 220,
+            child: ListView.builder(
+              scrollDirection: Axis.horizontal,
+              padding: EdgeInsets.only(left: 20),
+              itemBuilder: (context, index) {
+                final item = _shops[index];
+                return Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                  padding: EdgeInsets.only(right: 15),
+                  child: AppPopularItem(
+                    onPressShops: _onShopDetail,
+                    shopModel: item,
+                    type: PopularViewType.gird,
+                  ),
+                );
+              },
+              itemCount: _shops.length,
+            ),
+          )
+        ],
+      ),
+    );
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -536,7 +432,7 @@ Widget _buildInfo() {
               
               // IconButton(
               //   icon: Icon(Icons.photo_library),
-              //   onPressed: _onPhotoPreview,
+              //   // onPressed: _onPhotoPreview,
               // )
             ],
             flexibleSpace: FlexibleSpaceBar(
@@ -552,6 +448,7 @@ Widget _buildInfo() {
                 child: Column(
                   children: <Widget>[
                     _buildInfo(),
+                    _buildVendorList(),
                     _buildNearBy()
                   ],
                 ),

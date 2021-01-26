@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/api.dart';
@@ -61,7 +62,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///ScrollListenerEvent
   void _scrollListener() {
-    if (_page.tab != null) {
+     List<TabModel> tab = _page==null?[]:_page.tab;
+    if (tab != null) {
       int activeTab = 0;
       double offsetTab;
       double widthDevice = MediaQuery.of(context).size.width;
@@ -69,6 +71,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       double offsetStart = widthDevice / 2 - itemSize / 2;
 
       int indexCheck = _offsetContentOrigin.indexWhere((item) {
+        log(item.toString());
+        log(_scrollController.offset.toString());
         return item - 1 > _scrollController.offset;
       });
       if (indexCheck == -1) {
@@ -79,8 +83,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
         offsetTab =
             activeTab > 1 ? offsetStart + itemSize * (activeTab - 2) : 0;
       }
-
       if (activeTab != _indexTab) {
+       
         setState(() {
           _indexTab = activeTab;
         });
@@ -93,9 +97,10 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///Set Origin Offset default when render success
   void _setOriginOffset() {
-    if (_page.tab != null && _offsetContentOrigin.isEmpty) {
+    List<TabModel> tab = _page==null?[]:_page.tab;
+    if (tab != null && _offsetContentOrigin.isEmpty) {
       setState(() {
-        _offsetContentOrigin = _page.tab.map((item) {
+        _offsetContentOrigin = tab.map((item) {
           final RenderBox box =
               item.keyContentItem.currentContext.findRenderObject();
           final position = box.localToGlobal(Offset.zero);
@@ -186,7 +191,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
           enabled: true,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: List.generate(8, (index) => index).map(
+            children: List.generate(5, (index) => index).map(
               (item) {
                 return Column(
                   children: <Widget>[

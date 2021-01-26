@@ -21,9 +21,9 @@ LocationModel.fromJson(Map<String, dynamic> json) {
   Map<String, dynamic> toJson() {
     Map<String, dynamic> json = {};
     if (id != null) json['id'] = id;
-    if (name != null) json['address'] = name;
-    if (lat != null) json['location'] = lat;
-    if (long!=null) json['type'] = long;
+    if (name != null) json['name'] = name;
+    if (lat != null) json['lat'] = lat;
+    if (long!=null) json['long'] = long;
     return json;
   }
 

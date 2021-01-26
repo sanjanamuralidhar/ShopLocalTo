@@ -149,6 +149,12 @@ class Api {
     // print("//////////////////////////////////////////////////////////////////////////////////////////////////${result['data']['nearby']}");
     return NearbyModel.listFromJson(result['data']['nearby']);
    }
+    static Future<List<ShopModel>> getLocationShopDetail({id: 0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/location-details?id='+id.toString());
+    // print("//////////////////////////////////////////////////////////////////////////////////////////////////${result['data']['nearby']}");
+    return ShopModel.listFromJson(result['data']['list']);
+   }
   ///Validate token valid
   static Future<dynamic> validateToken() async {
     await Future.delayed(Duration(seconds: 1));
@@ -287,6 +293,14 @@ static Future<ProductListPageModel> getList({id:0}) async{
   // print('/././//............./////...getList${result['data']}');
   return ProductListPageModel.fromJson(result['data']);
 }
+
+  static Future<ProductListPageModel> getSearchResult({id:0}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id.toString());
+  //  print('getShops():$result.runT');
+   return ProductListPageModel.fromJson(result['data']['data']);
+  }
+
   
     ///Get Product List
   // static Future<ProductListPageModel> getList({id: 0}) async {
@@ -388,12 +402,6 @@ static Future<ProductListPageModel> getList({id:0}) async{
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
   //  print('getShops():$result.runT');
    return ShopModel.listFromJson(result['data']['list']);
-  }
-   static Future<List<ShopModel>> getSearchResult({id:0}) async {
-    await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id.toString());
-  //  print('getShops():$result.runT');
-   return ShopModel.listFromJson(result);
   }
  static Future<List<PopularPageModel>> getHomeData() async {
     await Future.delayed(Duration(seconds: 1));

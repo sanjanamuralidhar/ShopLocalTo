@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:listar_flutter/configs/theme.dart';
 import 'package:listar_flutter/models/model.dart';
+import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -73,13 +74,35 @@ final Function(ShopModel) onPressshop;
                     width: 80,
                     color: Colors.white,
                   ),
+                  
                 ],
               ),
             ),
+            
             baseColor: Theme.of(context).hoverColor,
             highlightColor: Theme.of(context).highlightColor,
           );
         }
+
+    if (item.image.isEmpty) {
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_satisfied),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                Translate.of(context).translate('category_not_found'),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
+      );
+    }
+
+      
 //  print(item);
         return FlatButton(
          

@@ -32,7 +32,7 @@ class _HomeState extends State<Home> {
   // List<MyLocation> _locations = [];
   // List<ShopModel> _shops = [];
   // List<CategoryModel2> _categoryList = [];
-  List<ShopModel> _categoryshops = [];
+  // List<ShopModel> _categoryshops = [];
   bool _tryAgain = false;
   List<Address> addresses;
   List<Address> address;
@@ -53,7 +53,7 @@ int id;
     // _loadPopular();
     // _loadShops();
     // _loadCategoryList();
-    _loadSearchResults();
+    // _loadSearchResults();
     super.initState();
   }
 
@@ -92,13 +92,13 @@ int id;
   //   });
   //   // print('ShopModel list ************:${_shops.length}');
   // }
-   Future<void> _loadSearchResults() async {
-    final List<ShopModel> result = await Api.getSearchResult(id:widget.id);
-    setState(() {
-      _categoryshops = result;
-    });
-    // print('ShopModel list ************:${_shops.length}');
-  }
+  //  Future<void> _loadSearchResults() async {
+  //   final List<ShopModel> result = await Api.getSearchResult(id:widget.id);
+  //   setState(() {
+  //     _categoryshops = result;
+  //   });
+  //   // print('ShopModel list ************:${_shops.length}');
+  // }
 
 
   //  Future<void> _loadCategoryList() async {
@@ -194,7 +194,7 @@ void _onShopDetail(ShopModel item) {
       context: context,
       builder: (BuildContext context) {
         return HomeCategoryList(
-          category: _homePage.category,
+          category: _homePage == null?[]:_homePage.category,
           onOpenList: () async {
             Navigator.pushNamed(context, Routes.category);
           },
@@ -210,7 +210,8 @@ void _onShopDetail(ShopModel item) {
 //Build category @SANJANA
    Widget _buildCategoryItem() {
     //  print('category list ///////////////////:${_categoryList.length}');
-    if (_homePage.category == null) {
+    List<CategoryModel2> category2 = _homePage == null?[]:_homePage.category;
+    if (category2 == null) {
       return Wrap(
         runSpacing: 10,
         alignment: WrapAlignment.center,
@@ -223,7 +224,7 @@ void _onShopDetail(ShopModel item) {
       );
     }
 
-    List<CategoryModel2> listBuild = _homePage.category;
+    List<CategoryModel2> listBuild = _homePage == null?[]:_homePage.category;
     final more = CategoryModel2.fromJson({
       "id": 9,
       "title": Translate.of(context).translate("more"),
@@ -232,8 +233,8 @@ void _onShopDetail(ShopModel item) {
       "type": "more"
     });
 
-    if (_homePage.category.length > 7) {
-      listBuild = _homePage.category.take(7).toList();
+    if (category2.length > 7) {
+      listBuild = category2.take(7).toList();
       listBuild.add(more);
     }
 
@@ -256,12 +257,13 @@ void _onShopDetail(ShopModel item) {
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
     // print(_locations.toString());
-    if (_homePage.locations == null) {
+    List<MyLocation> poplocation = _homePage==null?[]:_homePage.locations;
+    if (poplocation == null) {
       return ListView.builder(
         scrollDirection: Axis.horizontal,
         padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
         itemBuilder: (context, index) {
-          final item = _homePage.locations[index];
+          final item = poplocation[index];
           return Padding(
             padding: EdgeInsets.only(left: 15),
             child: AppProductItem(
@@ -279,7 +281,7 @@ void _onShopDetail(ShopModel item) {
       scrollDirection: Axis.horizontal,
       padding: EdgeInsets.only(left: 5, right: 20, top: 10, bottom: 15),
       itemBuilder: (context, index) {
-        final item = _homePage.locations[index];
+        final item = poplocation[index];
         return Padding(
           padding: EdgeInsets.only(left: 15),
           child: SizedBox(
@@ -295,13 +297,14 @@ void _onShopDetail(ShopModel item) {
           ),
         );
       },
-      itemCount: _homePage.locations.length,
+      itemCount: poplocation.length,
     );
   }
 
   //Build shops @SANJANA
  Widget _buildShopList() {
-    if (_homePage.shops == null) {
+   List<ShopModel> shopss = _homePage == null? []: _homePage.shops;
+    if (shopss == null) {
       return Column(
         children: List.generate(8, (index) => index).map(
           (item) {
@@ -315,7 +318,7 @@ void _onShopDetail(ShopModel item) {
     }
 
     return Column(
-      children: _homePage.shops.map((item) {
+      children: shopss.map((item) {
         return Padding(
           padding: EdgeInsets.only(bottom: 15),
           child: AppProductItem(
@@ -409,7 +412,7 @@ void _onShopDetail(ShopModel item) {
           SliverPersistentHeader(
             delegate: AppBarHomeSliver(
               expandedHeight: 250,
-              banners: _homePage.banners,
+              banners:_homePage == null ? []: _homePage.banners,
               // shopModel:_homePage.shops,
             ),
             pinned: true,

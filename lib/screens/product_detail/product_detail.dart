@@ -5,6 +5,7 @@ import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
+import 'package:listar_flutter/screens/location/location.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -103,11 +104,16 @@ List<ImageModel> _images = [];
 
   ///On navigate map
   void _onLocation() {
-    Navigator.pushNamed(
-      context,
-      Routes.location,
-      arguments: _detail.location,
-    );
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => Location(location: _detail.location)),
+            );
+    // List<LocationModel> detail = _detail==null?[]:_detail.location;
+    // Navigator.pushNamed(
+    //   context,
+    //   Routes.location,
+    //   arguments: _detail.location,
+    // );
   }
 
   ///On navigate product detail

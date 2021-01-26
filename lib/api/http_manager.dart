@@ -9,7 +9,7 @@ String dioErrorHandle(DioError error) {
   switch (error.type) {
       
     case DioErrorType.RESPONSE:
-      return error.response?.data['message'] ?? 'Unknown error';
+      return error.response?.data['message'].toString() ?? 'Unknown error';
 
     case DioErrorType.SEND_TIMEOUT:
     case DioErrorType.RECEIVE_TIMEOUT:

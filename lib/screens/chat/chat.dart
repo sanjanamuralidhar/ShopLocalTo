@@ -76,6 +76,7 @@ class _ChatState extends State<Chat> {
 
   ///On Send message
   void _onSend() {
+    print(_loading.toString());
     final chat = MessageModel.fromJson({
       "id": 6,
       "message": _textChatController.text,
@@ -84,7 +85,11 @@ class _ChatState extends State<Chat> {
     });
     if (_textChatController.text.isNotEmpty) {
       setState(() {
+        if( _message == null) {
+          _message = [];
+        }
         _message.add(chat);
+        _loading = false;
       });
     }
     _textChatController.text = '';

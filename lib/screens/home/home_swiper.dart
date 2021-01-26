@@ -251,25 +251,13 @@ class _HomeSwipeState extends State<HomeSwipe> {
                                 value = suggestion.title;
                                 id = suggestion.id;
                               });
-                              print(
-                                  '.........jkbbdkjvbdfj kfjdfjk djfnkjvnf dfbjb fdbjfk..........$id');
-                              
-                              Navigator.of(context).pop();
-                              CircularProgressIndicator(
-                                  backgroundColor: Colors.black,
-                                  valueColor: new AlwaysStoppedAnimation<Color>(
-                                      Colors.blue[800]));
-                               flutterSecureStorage.write(key: 'location', value: suggestion.location);
-                              // CircularProgressIndicator(
-                              //     backgroundColor: Colors.black,
-                              //     valueColor: new AlwaysStoppedAnimation<Color>(
-                              //         Colors.blue[800]));
-                              // _loadHomePage();
-
+                              flutterSecureStorage.write(key: 'location', value: suggestion.title);
                               Navigator.push(context, MaterialPageRoute(builder: (context) {
                                 return MainNavigation();
                               }
                               ));
+                              
+
                             })
 
                         // previous search by sanjana search.txt

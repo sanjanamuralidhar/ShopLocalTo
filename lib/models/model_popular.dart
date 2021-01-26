@@ -21,9 +21,9 @@ class PopularModel {
   String slug;
   String picture;
   String description;
-  double latitude;
-  int longitude;
-  
+  String latitude;
+  String longitude;
+  LocationModel location;
   List<NearbyModel> nearby;
   PopularType model;
 
@@ -39,6 +39,7 @@ this.description,
   this.longitude,
   this.model,
   this.nearby,
+  this.location,
   });
 
   @override
@@ -61,6 +62,7 @@ this.description,
     success = json['success'];
     model=_setType(json['type']);
     nearby=_setNearby(json['nearby']);
+    location = _setLocation(json['location']);
     
   }
 
@@ -77,6 +79,7 @@ this.description,
     if(model!=null) json['model']=model;
     if(success!=null) json['success']=success;
    if(nearby !=null) json['nearby'] = nearby;
+   if(location!=null) json['location'] = location;
     return json;
   }
 
@@ -117,6 +120,11 @@ this.description,
     }
     return null;
   }
-  
+   static LocationModel _setLocation(Map<String, dynamic> location) {
+    if (location != null) {
+      return LocationModel.fromJson(location);
+    }
+    return null;
+  }
 
 }

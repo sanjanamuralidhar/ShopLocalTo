@@ -98,7 +98,7 @@ final Function(ShopModel) onPressshop;
             children: <Widget>[
               // ClipRRect(
               //   borderRadius: BorderRadius.circular(8),
-              //   child: Image.asset(
+              //   child: Image.network(
               //     item.image,
               //     width: 80,
               //     height: 80,
@@ -226,7 +226,7 @@ final Function(ShopModel) onPressshop;
                     ),
                     // image: DecorationImage(
                     //   // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                    //   image: NetworkImage(nearlyModel.image),
+                    //   image: NetworkImage(featureModel.image),
                     //   fit: BoxFit.cover,
                     // ),
                   ),
@@ -407,11 +407,11 @@ final Function(ShopModel) onPressshop;
                 width: 120,
                 height: 140,
                 decoration: BoxDecoration(
-                  // image: DecorationImage(
-                  //   // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                  //   image: NetworkImage(nearlyModel.image),
-                  //   fit: BoxFit.cover,
-                  // ),
+                  image: DecorationImage(
+                    // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                    image: NetworkImage(nearlyModel.image),
+                    fit: BoxFit.cover,
+                  ),
                   borderRadius: BorderRadius.only(
                     topLeft: Radius.circular(8),
                     bottomLeft: Radius.circular(8),
@@ -594,11 +594,11 @@ final Function(ShopModel) onPressshop;
               Container(
                 height: 200,
                 decoration: BoxDecoration(
-                  // image: DecorationImage(
-                  //   // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                  //   image: NetworkImage(nearlyModel.image),
-                  //   fit: BoxFit.cover,
-                  // ),
+                  image: DecorationImage(
+                    // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                    image: NetworkImage(nearlyModel.image),
+                    fit: BoxFit.cover,
+                  ),
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -10,11 +10,13 @@ enum PopularViewType { small, gird, list, block, cardLarge, cardSmall }
 class AppPopularItem extends StatelessWidget {
 
   final PopularModel item;
-  final NearbyModel nearbyModel;//productViewType:grid
+  final NearbyModel nearbyModel;
+  final ShopModel shopModel;//productViewType:grid
   final PopularViewType type;
   final Function(NearbyModel) onPressNearby;
+  final Function(ShopModel)onPressShops;
 final Function(ShopModel) onPressshop;
-  const AppPopularItem({Key key, this.item, this.type,this.onPressshop,this.onPressNearby, this.nearbyModel}) : super(key: key);
+  const AppPopularItem({Key key, this.item, this.type,this.onPressshop,this.onPressNearby, this.nearbyModel, this.shopModel, this.onPressShops}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -149,156 +151,156 @@ final Function(ShopModel) onPressshop;
         );
     
       // /Mode View Gird
-      // case PopularViewType.gird:
-      //   if (nearbyModel == null) {
-      //     return Shimmer.fromColors(
-      //       child: Container(
-      //         child: Column(
-      //           crossAxisAlignment: CrossAxisAlignment.start,
-      //           children: <Widget>[
-      //             Container(
-      //               height: 120,
-      //               decoration: BoxDecoration(
-      //                 borderRadius: BorderRadius.all(
-      //                   Radius.circular(8),
-      //                 ),
-      //                 color: Colors.white,
-      //               ),
-      //             ),
-      //             Padding(padding: EdgeInsets.only(top: 5)),
-      //             Container(
-      //               height: 10,
-      //               width: 80,
-      //               color: Colors.white,
-      //             ),
-      //             Padding(padding: EdgeInsets.only(top: 5)),
-      //             Container(
-      //               height: 10,
-      //               width: 100,
-      //               color: Colors.white,
-      //             ),
-      //             Padding(padding: EdgeInsets.only(top: 10)),
-      //             Container(
-      //               height: 20,
-      //               width: 100,
-      //               color: Colors.white,
-      //             ),
-      //             Padding(padding: EdgeInsets.only(top: 10)),
-      //             Container(
-      //               height: 10,
-      //               width: 80,
-      //               color: Colors.white,
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       baseColor: Theme.of(context).hoverColor,
-      //       highlightColor: Theme.of(context).highlightColor,
-      //     );
-      //   }
+      case PopularViewType.gird:
+        if (shopModel == null) {
+          return Shimmer.fromColors(
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Container(
+                    height: 120,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                      color: Colors.white,
+                    ),
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 5)),
+                  Container(
+                    height: 10,
+                    width: 80,
+                    color: Colors.white,
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 5)),
+                  Container(
+                    height: 10,
+                    width: 100,
+                    color: Colors.white,
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10)),
+                  Container(
+                    height: 20,
+                    width: 100,
+                    color: Colors.white,
+                  ),
+                  Padding(padding: EdgeInsets.only(top: 10)),
+                  Container(
+                    height: 10,
+                    width: 80,
+                    color: Colors.white,
+                  ),
+                ],
+              ),
+            ),
+            baseColor: Theme.of(context).hoverColor,
+            highlightColor: Theme.of(context).highlightColor,
+          );
+        }
 
-      //   return FlatButton(
+        return FlatButton(
          
-      //     onPressed: () {
-      //       onPressNearby(nearbyModel);
-      //     },
-      //     padding: EdgeInsets.all(0),
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(8),
-      //     ),
-      //     child: Container(
-      //       child: Column(
-      //         crossAxisAlignment: CrossAxisAlignment.start,
-      //         children: <Widget>[
-      //           Container(
-      //             height: 120,
-      //             decoration: BoxDecoration(
-      //               borderRadius: BorderRadius.all(
-      //                 Radius.circular(8),
-      //               ),
-      //               // image: DecorationImage(
-      //               //   // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-      //               //   image: NetworkImage(nearlyModel.image),
-      //               //   fit: BoxFit.cover,
-      //               // ),
-      //             ),
-      //             child: Column(
-      //               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //               children: <Widget>[
-      //                 // Row(
-      //                 //   children: <Widget>[
-      //                 //     nearbyModel.status != null
-      //                 //         ? Padding(
-      //                 //             padding: EdgeInsets.all(5),
-      //                 //             child: AppTag(
-      //                 //               nearbyModel.status,
-      //                 //               type: TagType.status,
-      //                 //             ),
-      //                 //           )
-      //                 //         : Container()
-      //                 //   ],
-      //                 // ),
-      //                 Row(
-      //                   mainAxisAlignment: MainAxisAlignment.end,
-      //                   children: <Widget>[
-      //                     // Padding(
-      //                     //   padding: EdgeInsets.all(5),
-      //                     //   child: Icon(
-      //                     //     nearlyModel.favorite
-      //                     //         ? Icons.favorite
-      //                     //         : Icons.favorite_border,
-      //                     //     color: Colors.white,
-      //                     //   ),
-      //                     // )
-      //                   ],
-      //                 )
-      //               ],
-      //             ),
-      //           ),
-      //           Padding(padding: EdgeInsets.only(top: 3)),
-      //           Text(
-      //             nearbyModel.description,
-      //             style: Theme.of(context)
-      //                 .textTheme
-      //                 .caption
-      //                 .copyWith(fontWeight: FontWeight.w600),
-      //           ),
-      //           Padding(padding: EdgeInsets.only(top: 5)),
-      //           Text(
-      //             nearbyModel.name,
-      //             maxLines: 1,
-      //             style: Theme.of(context)
-      //                 .textTheme
-      //                 .subtitle2
-      //                 .copyWith(fontWeight: FontWeight.w600),
-      //           ),
-      //           Padding(padding: EdgeInsets.only(top: 10)),
-      //           // Row(
-      //           //   crossAxisAlignment: CrossAxisAlignment.center,
-      //           //   children: <Widget>[
-      //           //     AppTag(
-      //           //       "${nearbyModel.rate}",
-      //           //       type: TagType.rateSmall,
-      //           //     ),
-      //           //     Padding(padding: EdgeInsets.only(left: 5)),
-      //           //     StarRating(
-      //           //       rating: nearbyModel.rate,
-      //           //       size: 14,
-      //           //       color: AppTheme.yellowColor,
-      //           //       borderColor: AppTheme.yellowColor,
-      //           //     )
-      //           //   ],
-      //           // ),
-      //           Padding(padding: EdgeInsets.only(top: 10)),
-      //           // Text(
-      //           //   featureModel.address,
-      //           //   maxLines: 1,
-      //           //   style: Theme.of(context).textTheme.caption,
-      //           // ),
-      //         ],
-      //       ),
-      //     ),
-      //   );
+          onPressed: () {
+            onPressShops(shopModel);
+          },
+          padding: EdgeInsets.all(0),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+          ),
+          child: Container(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: <Widget>[
+                Container(
+                  height: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(
+                      Radius.circular(8),
+                    ),
+                    image: DecorationImage(
+                      // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                      image: NetworkImage(shopModel.image),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Row(
+                        children: <Widget>[
+                          shopModel.status != null
+                              ? Padding(
+                                  padding: EdgeInsets.all(5),
+                                  child: AppTag(
+                                    shopModel.status,
+                                    type: TagType.status,
+                                  ),
+                                )
+                              : Container()
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: <Widget>[
+                          Padding(
+                            padding: EdgeInsets.all(5),
+                            child: Icon(
+                              shopModel.favourite
+                                  ? Icons.favorite
+                                  : Icons.favorite_border,
+                              color: Colors.white,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                Padding(padding: EdgeInsets.only(top: 3)),
+                Text(
+                  shopModel.address,
+                  style: Theme.of(context)
+                      .textTheme
+                      .caption
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                Padding(padding: EdgeInsets.only(top: 5)),
+                Text(
+                  shopModel.title,
+                  maxLines: 1,
+                  style: Theme.of(context)
+                      .textTheme
+                      .subtitle2
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    AppTag(
+                      "${shopModel.rate}",
+                      type: TagType.rateSmall,
+                    ),
+                    Padding(padding: EdgeInsets.only(left: 5)),
+                    StarRating(
+                      rating: shopModel.rate,
+                      size: 14,
+                      color: AppTheme.yellowColor,
+                      borderColor: AppTheme.yellowColor,
+                    )
+                  ],
+                ),
+                Padding(padding: EdgeInsets.only(top: 10)),
+                Text(
+                  shopModel.address,
+                  maxLines: 1,
+                  style: Theme.of(context).textTheme.caption,
+                ),
+              ],
+            ),
+          ),
+        );
     
       // // /Mode View List
       // case PopularViewType.list:

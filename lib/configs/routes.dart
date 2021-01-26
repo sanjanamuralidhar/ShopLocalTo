@@ -215,11 +215,11 @@ class Routes {
           ),
         );
 
-      case neighbourLocation:
-        return MaterialPageRoute(
-          builder: (context) => Location(
-          ),
-        );
+      // case neighbourLocation:
+      //   return MaterialPageRoute(
+      //     builder: (context) => Location(
+      //     ),
+      //   );
 
       case listProduct:
         // final category = settings.arguments;

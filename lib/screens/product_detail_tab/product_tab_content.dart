@@ -10,46 +10,48 @@ class TabContent extends StatelessWidget {
   final TabModel item;
   final ProductDetailTabPageModel page;
   final Function(ProductModel) onProductDetail;
-final Function(NearlyModel) onNearlyModelDetail;
+  final Function(NearlyModel) onNearlyModelDetail;
   TabContent({
     Key key,
     this.item,
     this.page,
-    this.onProductDetail, this.onNearlyModelDetail,
+    this.onProductDetail,
+    this.onNearlyModelDetail,
   }) : super(key: key);
-Widget _buildSocial(BuildContext context){
-if(page.product.socialicon == null){
-  return Text('not available');
-}
-return Padding(
-                  padding: EdgeInsets.only(bottom: 20),
-                  child: Wrap(spacing: 10, runSpacing: 10, 
-                  children: page.product.service.map((item) {
-                    return IntrinsicWidth(
-                        child: SizedBox(
-                      height: 35,
-                      width: 35,
-                      child: Material(
-                          type: MaterialType
-                              .transparency,
-                          child: Ink(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Theme.of(context).buttonColor,
-                            ),
-                            child: InkWell(
-                                onTap: () {},
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8),
-                                  child: Image.network(page.product.socialicon.image),
-                                )
-                                ),
-                          )),
-                    ));
-                     }).toList(),
+  Widget _buildSocial(BuildContext context) {
+    if (page.product.socialicon == null) {
+      return Text('not available');
+    }
+    return Padding(
+      padding: EdgeInsets.only(bottom: 20),
+      child: Wrap(
+        spacing: 10,
+        runSpacing: 10,
+        children: page.product.service.map((item) {
+          return IntrinsicWidth(
+              child: SizedBox(
+            height: 35,
+            width: 35,
+            child: Material(
+                type: MaterialType.transparency,
+                child: Ink(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Theme.of(context).buttonColor,
                   ),
-                );
-}
+                  child: InkWell(
+                      onTap: () {},
+                      child: Padding(
+                        padding: const EdgeInsets.all(8),
+                        child: Image.network(page.product.socialicon.image),
+                      )),
+                )),
+          ));
+        }).toList(),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     switch (item.key) {
@@ -121,16 +123,17 @@ return Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {launch("tel:${page.product.phone}");},
+                  onTap: () {
+                    launch("tel:${page.product.phone}");
+                  },
                   child: Row(
                     children: <Widget>[
                       Container(
                         width: 32,
                         height: 32,
                         decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Theme.of(context).buttonColor
-                        ),
+                            shape: BoxShape.circle,
+                            color: Theme.of(context).buttonColor),
                         child: Icon(
                           Icons.phone,
                           color: Colors.white,
@@ -163,7 +166,9 @@ return Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                onTap: () {launch("mailto:${page.product.email}");},
+                  onTap: () {
+                    launch("mailto:${page.product.email}");
+                  },
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -204,7 +209,9 @@ return Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
                 InkWell(
-                  onTap: () {launch('${page.product.website}');},
+                  onTap: () {
+                    launch('${page.product.website}');
+                  },
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -286,14 +293,17 @@ return Padding(
                     ),
                   ],
                 ),
-                 Padding(
+                Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                 InkWell(
-                  onTap: () { Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => Chat(id:page.product.id)),
-            );},
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => Chat(id: page.product.id)),
+                    );
+                  },
                   child: Row(
                     children: <Widget>[
                       Container(
@@ -429,8 +439,8 @@ return Padding(
             ),
           ),
         );
-case 'socialmedia':
-return Container(
+      case 'socialmedia':
+        return Container(
           key: item.keyContentItem,
           padding: EdgeInsets.only(left: 20, right: 20),
           child: Container(
@@ -454,8 +464,7 @@ return Container(
                         .copyWith(fontWeight: FontWeight.w600),
                   ),
                 ),
-               _buildSocial(context),
-                
+                _buildSocial(context),
               ],
             ),
           ),
@@ -509,7 +518,7 @@ return Container(
             ),
           ),
         );
-case 'nearly':
+      case 'nearly':
         return Container(
           key: item.keyContentItem,
           child: Column(
@@ -540,7 +549,7 @@ case 'nearly':
                     return Container(
                       width: MediaQuery.of(context).size.width * 0.9,
                       padding: EdgeInsets.only(right: 15),
-                       child: AppProductItem(
+                      child: AppProductItem(
                         onPress: onNearlyModelDetail,
                         nearlyModel: item,
                         type: ProductViewType.list,
@@ -564,6 +573,33 @@ case 'nearly':
             ],
           ),
         );
+          default:
+        return Container(
+          key: item.keyContentItem,
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.only(top: 15, bottom: 20),
+                child: Text(
+                  Translate.of(context).translate(item.title),
+                  style: Theme.of(context)
+                      .textTheme
+                      .headline6
+                      .copyWith(fontWeight: FontWeight.w600),
+                ),
+              ),
+              Container(
+                height: 200,
+                child: Placeholder(),
+              )
+            ],
+          ),
+        );
+    }
+  }
+}
 
       // case 'featured':
       //   return Container(
@@ -621,7 +657,6 @@ case 'nearly':
       //     ),
       //   );
 
-      
       // case 'related':
       //   return Container(
       //     key: item.keyContentItem,
@@ -691,38 +726,7 @@ case 'nearly':
       //     ),
       //   );
 
-      default:
-        return Container(
-          key: item.keyContentItem,
-          padding: EdgeInsets.only(left: 20, right: 20),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: 15, bottom: 20),
-                child: Text(
-                  Translate.of(context).translate(item.title),
-                  style: Theme.of(context)
-                      .textTheme
-                      .headline6
-                      .copyWith(fontWeight: FontWeight.w600),
-                ),
-              ),
-              Container(
-                height: 200,
-                child: Placeholder(),
-              )
-            ],
-          ),
-        );
-    }
-  }
-}
-
-
-
-
-
+    
 
 // import 'package:flutter/material.dart';
 // import 'package:listar_flutter/models/model.dart';
@@ -745,14 +749,13 @@ case 'nearly':
 //     this.onProductDetail, this.productModel, this.onNearlyModelDetail,
 //   }) : super(key: key);
 
-
 // Widget _buildSocial(BuildContext context){
 // if(page.socialicon == null){
 //   return Text('not available');
 // }
 // return Padding(
 //                   padding: EdgeInsets.only(bottom: 20),
-//                   child: Wrap(spacing: 10, runSpacing: 10, 
+//                   child: Wrap(spacing: 10, runSpacing: 10,
 //                   children: page.service.map((item) {
 //                     return IntrinsicWidth(
 //                         child: SizedBox(
@@ -783,7 +786,7 @@ case 'nearly':
 //   @override
 //   Widget build(BuildContext context) {
 //     switch (item.key) {
-      
+
 //       case 'information':
 //       // print('+++++++++++++++++++++${item.key}+++++++++++');
 //       // print('++++++productmodel+++++++++++++++${page.address}+++++++++++');
@@ -873,10 +876,10 @@ case 'nearly':
 //                         ),
 //                       ),
 //                       Padding(
-                        
+
 //                         padding: EdgeInsets.only(left: 10, right: 10),
 //                         child: Column(
-                          
+
 //                           crossAxisAlignment: CrossAxisAlignment.start,
 //                           children: <Widget>[
 //                             Text(
@@ -884,21 +887,21 @@ case 'nearly':
 //                               style: Theme.of(context).textTheme.caption,
 //                             ),
 //                             Text(
-                              
+
 //                               page.phone,
 //                               style: Theme.of(context)
 //                                   .textTheme
 //                                   .bodyText1
 //                                   .copyWith(fontWeight: FontWeight.w600),
 //                             ),
-                            
+
 //                           ],
 //                         ),
 //                       )
 //                     ],
 //                   ),
 //                 ),
-                
+
 //                 Padding(
 //                   padding: EdgeInsets.only(top: 20),
 //                 ),
@@ -1195,7 +1198,7 @@ case 'nearly':
 //                   ),
 //                 ),
 //                _buildSocial(context),
-                
+
 //               ],
 //             ),
 //           ),
