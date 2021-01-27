@@ -309,7 +309,8 @@ class _SignUpState extends State<SignUp> {
                                     (MyLocation value) {
                                   return new PopupMenuItem(
                                       child: new Text(value.name),
-                                      value: value.name);
+                                      value: value.name
+                                      );
                                 }).toList();
                               },
                             ),

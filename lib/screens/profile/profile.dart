@@ -73,8 +73,9 @@ class _ProfileState extends State<Profile> {
 
   ///Build profile UI
   Widget _buildProfile() {
+    UserModel users = _userData == null?null:_userData;
     return AppUserInfo(
-      user: _userData,
+      user: users,
       onPressed: () {},
       type: AppUserType.information,
     );

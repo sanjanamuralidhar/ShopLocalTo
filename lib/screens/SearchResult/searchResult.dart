@@ -537,56 +537,62 @@ class _SearchResultState extends State<SearchResult> {
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                      IconButton(
-                        icon: Icon(_currentSort.icon),
-                        onPressed: _onChangeSort,
-                      ),
-                      Text(
-                        Translate.of(context).translate(_currentSort.name),
-                        style: Theme.of(context).textTheme.subtitle2,
-                      )
+                        Padding(
+                          padding: const EdgeInsets.only(top:10,left:20,bottom:10),
+                          child: Text('Category Listing',
+                          style: Theme.of(context).textTheme.subtitle2
+                          ),
+                        )
+                      // IconButton(
+                      //   icon: Icon(_currentSort.icon),
+                      //   onPressed: _onChangeSort,
+                      // ),
+                      // Text(
+                      //   Translate.of(context).translate(_currentSort.name),
+                      //   style: Theme.of(context).textTheme.subtitle2,
+                      // )
                     ],
                   ),
                   Row(
                     children: <Widget>[
-                      Visibility(
-                        visible: _pageType == SearchType.list,
-                        child: Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(_exportIconView()),
-                              onPressed: _onChangeView,
-                            ),
-                            Container(
-                              height: 24,
-                              child: VerticalDivider(
-                                color: Theme.of(context).dividerColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Visibility(
-                        visible: _pageType != SearchType.list,
-                        child: Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(
-                                _mapType == MapType.normal
-                                    ? Icons.satellite
-                                    : Icons.map,
-                              ),
-                              onPressed: _onChangeMapStyle,
-                            ),
-                            Container(
-                              height: 24,
-                              child: VerticalDivider(
-                                color: Theme.of(context).dividerColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Visibility(
+                      //   visible: _pageType == SearchType.list,
+                      //   child: Row(
+                      //     children: <Widget>[
+                      //       IconButton(
+                      //         icon: Icon(_exportIconView()),
+                      //         onPressed: _onChangeView,
+                      //       ),
+                      //       Container(
+                      //         height: 24,
+                      //         child: VerticalDivider(
+                      //           color: Theme.of(context).dividerColor,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
+                      // Visibility(
+                      //   visible: _pageType != SearchType.list,
+                      //   child: Row(
+                      //     children: <Widget>[
+                      //       IconButton(
+                      //         icon: Icon(
+                      //           _mapType == MapType.normal
+                      //               ? Icons.satellite
+                      //               : Icons.map,
+                      //         ),
+                      //         onPressed: _onChangeMapStyle,
+                      //       ),
+                      //       Container(
+                      //         height: 24,
+                      //         child: VerticalDivider(
+                      //           color: Theme.of(context).dividerColor,
+                      //         ),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       // **************************REQUIRED FEILD FILTER*********************************************
                       // IconButton(
                       //   icon: Icon(Icons.track_changes),

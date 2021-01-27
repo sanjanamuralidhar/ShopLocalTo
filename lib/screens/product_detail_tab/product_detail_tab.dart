@@ -40,6 +40,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   void initState() {
     _scrollController.addListener(_scrollListener);
     _loadData();
+    
     super.initState();
   }
 
@@ -71,7 +72,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       double offsetStart = widthDevice / 2 - itemSize / 2;
 
       int indexCheck = _offsetContentOrigin.indexWhere((item) {
-        log(item.toString());
+        // log(item.toString());
         log(_scrollController.offset.toString());
         return item - 1 > _scrollController.offset;
       });
@@ -128,6 +129,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///On navigate gallery
   void _onPhotoPreview() {
+    // List<TabModel> tab = _page==null?[]:_page.tab;
     Navigator.pushNamed(
       context,
       Routes.gallery,
@@ -163,7 +165,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///Build banner UI
   Widget _buildBanner() {
-    if (_page.product.image == null) {
+    ProductDetailTabPageModel productMdl = _page==null?null:_page;
+    if (productMdl.product.image == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -175,7 +178,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     }
 
     return Image.network(
-      _page.product.image,
+      productMdl.product.image,
       fit: BoxFit.cover,
     );
   }

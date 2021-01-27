@@ -27,7 +27,7 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
       ///Notify loading to UI
       yield UpdateProfileLoading();
 
-      await Future.delayed(Duration(seconds: 1));
+      await Future.delayed(Duration(seconds: 0));
 
       ///Fetch API
       final dynamic result = await Api.editProfile(

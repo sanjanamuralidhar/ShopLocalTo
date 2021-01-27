@@ -1,6 +1,7 @@
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/configs/application.dart';
 import 'package:listar_flutter/screens/screen.dart';
@@ -20,8 +21,17 @@ class MainNavigation extends StatefulWidget {
 class _MainNavigationState extends State<MainNavigation> {
   final _fcm = FirebaseMessaging();
   int _selectedIndex = 0;
-  
-
+  FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+ Future<dynamic> getToken() async{
+     Map<String, dynamic> headerParams = {};
+    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'token');
+    if(isLoggedIn){
+      String token = await flutterSecureStorage.read(key: 'token');
+      headerParams = {'Authorization':'Bearer $token'};
+    }
+    print('cn kldnkv............. ndfkv nfkvn f...........$headerParams');
+    return headerParams;
+  }
   @override
   void initState() {
    

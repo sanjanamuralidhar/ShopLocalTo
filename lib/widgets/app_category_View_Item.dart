@@ -41,6 +41,7 @@ final Function(ShopModel) onPressshop;
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
+                  Text('no category found',style: Theme.of(context).textTheme.bodyText1,),
                   Container(
                     height: 120,
                     decoration: BoxDecoration(
@@ -84,7 +85,7 @@ final Function(ShopModel) onPressshop;
           );
         }
 
-    if (item.image.isEmpty) {
+    else if (item.id.isNegative) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,

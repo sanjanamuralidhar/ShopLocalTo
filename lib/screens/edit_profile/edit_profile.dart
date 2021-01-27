@@ -186,7 +186,7 @@ UpdateBloc _updateBloc;
                   ),
                   AppTextInput(
                     // controller: TextEditingController(text: _userData.name),
-                    hintText: _userData.name,
+                    hintText: Translate.of(context).translate('name'),
                     errorText: _validName != null
                         ? Translate.of(context).translate(_validName)
                         : null,
@@ -224,7 +224,7 @@ UpdateBloc _updateBloc;
                     ),
                   ),
                   AppTextInput(
-                    hintText: _userData.email,
+                    hintText: Translate.of(context).translate('email'),
                     errorText: _validEmail != null
                         ? Translate.of(context).translate(_validEmail)
                         : null,

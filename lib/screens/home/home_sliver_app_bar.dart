@@ -361,44 +361,39 @@ class _DropPageState extends State<DropPage> {
   @override
   Widget build(BuildContext context) {
     return Container(
+     
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
         color: Theme.of(context).hoverColor,
         // color: Theme.of(context).scaffoldBackgroundColor,
         // border: Border.all()
       ),
-      child: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: DropdownButton<String>(
-          value: dropdownValue,
-          icon: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Icon(Icons.arrow_drop_down,color:Theme.of(context).buttonColor),
-          ),
-          iconSize: 30,
-          elevation: 16,
-          style: Theme.of(context)
-              .textTheme
-              .subtitle2
-              .copyWith(fontWeight: FontWeight.w500),
-          underline: Container(
-            height: 2,
-            // color: Colors.deepPurpleAccent,
-          ),
-          onChanged: (String newValue) {
-            setState(() {
-              dropdownValue = newValue;
-              widget.onChanged(newValue);
-            });
-          },
-          items: _categoryList
-              .map<DropdownMenuItem<String>>((CategoryModel2 value) {
-            return DropdownMenuItem<String>(
-              value: value.id.toString(),
-              child: Text(value.title),
-            );
-          }).toList(),
+      child: DropdownButton<String>(
+        value: dropdownValue,
+        icon: Icon(Icons.arrow_drop_down,color:Theme.of(context).buttonColor),
+        iconSize: 25,
+        elevation: 16,
+        style: Theme.of(context)
+            .textTheme
+            .subtitle2
+            .copyWith(fontWeight: FontWeight.w500),
+        underline: Container(
+          height: 2,
+          // color: Colors.deepPurpleAccent,
         ),
+        onChanged: (String newValue) {
+          setState(() {
+            dropdownValue = newValue;
+            widget.onChanged(newValue);
+          });
+        },
+        items: _categoryList
+            .map<DropdownMenuItem<String>>((CategoryModel2 value) {
+          return DropdownMenuItem<String>(
+            value: value.id.toString(),
+            child: Text(value.title),
+          );
+        }).toList(),
       ),
     );
   }

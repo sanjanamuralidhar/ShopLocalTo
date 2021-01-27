@@ -37,8 +37,8 @@ class ContactUsState extends State<ContactUs> {
   void initState() {
  _contactUsBloc = BlocProvider.of<ContactBloc>(context);
     _loadProfile();
-    _textNameController.text = 'Steve Garrett';
-    _textEmailController.text = 'steve.garrett@passionui.com';
+    _textNameController.text;
+    _textEmailController.text ;
     super.initState();
   }
    Future<void> _loadProfile() async {
@@ -102,13 +102,13 @@ class ContactUsState extends State<ContactUs> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
-                      Container(
-                        height: 250,
-                        child: GoogleMap(
-                          initialCameraPosition: _initPosition,
-                          myLocationEnabled: true,
-                        ),
-                      ),
+                      // Container(
+                      //   height: 250,
+                      //   child: GoogleMap(
+                      //     initialCameraPosition: _initPosition,
+                      //     myLocationEnabled: true,
+                      //   ),
+                      // ),
                       Padding(
                         padding: EdgeInsets.only(top: 10, bottom: 10),
                         child: Text(

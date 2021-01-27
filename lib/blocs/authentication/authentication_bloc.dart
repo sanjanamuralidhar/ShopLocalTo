@@ -15,19 +15,22 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
 
   @override
   Stream<AuthenticationState> mapEventToState(event) async* {
+    print('////////////AuthenticationState.............$event');
     if (event is AuthenticationCheck) {
       ///Notify state AuthenticationBeginCheck
       yield AuthenticationBeginCheck();
       final hasToken = UtilPreferences.containsKey(Preferences.user);
-
+print('////////////AuthenticationState.......................................................$hasToken');
       if (hasToken) {
         ///Getting data from Storage
         final getUserPreferences = UtilPreferences.getString(
           Preferences.user,
         );
         final user = UserModel.fromJson(jsonDecode(getUserPreferences));
-        // httpManager.baseOptions.headers["Authorization"] =
-        //     "Bearer "+user.token;
+          print('<<<<<<<<<AuthenticationState.......................................................${user.token}');
+ httpManager.baseOptions.headers = {};
+        httpManager.baseOptions.headers["Authorization"] =
+            "Bearer "+user.token;
         await Future.delayed(Duration(seconds: 1));
         final ResultApiModel result = await Api.validateToken();
 

@@ -45,7 +45,7 @@ class Api {
 
     // /Update profile api
    static Future<dynamic> editProfile({String username, String email, String address, String website, String phone,String info}) async {
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&website='+website+'&info='+info+'&phone='+phone);
     return result;
   }
@@ -212,7 +212,7 @@ class Api {
   }
 
   ///Get Home
-  static Future<HomePageModel> getHome() async {
+  static Future<HomePageModel> getHome({id:0}) async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
      print('jdbvjkdbjkvbj fjbkjdb dbfubm fjkbd......mmmmmmmmmmmmmm....${result['data']['banners']}');
@@ -252,7 +252,7 @@ class Api {
   static Future<NotificationPageModel> getUserNotification() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:"http://dev.shoplocalto.ca/api/notifications");
-    print('jcbnujnddjndfvhnfjnvdfvhdfbnjvfvjfbnjbnjbnjdnjcn kjcnjnj fbv d dv f ${result['data']}j');
+    print('jcbnujnddjndfvhnfjnvdfvhdfbnjvfvjfbnjbnjbnjdnjcn kjcnjnj fbv d dv f ${result['data']}');
     return NotificationPageModel.fromJson(result['data']);
   }
 

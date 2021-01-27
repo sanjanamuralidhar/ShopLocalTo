@@ -133,9 +133,6 @@ class _AppState extends State<App> {
                                   )
                                 : SignIn();
                       }
-                      if(app is AuthenticationFail){
-                        return SignIn();
-                      }
                       if (app is ApplicationIntroView) {
                         return IntroPreview();
                       }

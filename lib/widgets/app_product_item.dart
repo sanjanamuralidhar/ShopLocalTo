@@ -224,11 +224,11 @@ final Function(ShopModel) onPressshop;
                     borderRadius: BorderRadius.all(
                       Radius.circular(8),
                     ),
-                    // image: DecorationImage(
-                    //   // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                    //   image: NetworkImage(featureModel.image),
-                    //   fit: BoxFit.cover,
-                    // ),
+                    image: DecorationImage(
+                      // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
+                      image: NetworkImage(featureModel.image),
+                      fit: BoxFit.cover,
+                    ),
                   ),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

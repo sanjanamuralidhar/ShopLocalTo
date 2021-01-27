@@ -4,11 +4,13 @@ import 'package:listar_flutter/utils/logger.dart';
 
 
 String dioErrorHandle(DioError error) {
+  
   UtilLogger.log("ERROR", error);
-   print('.................................................UtilError${error}');
+   print('......................dioerror...........................UtilError$error');
   switch (error.type) {
       
     case DioErrorType.RESPONSE:
+    
       return error.response?.data['message'].toString() ?? 'Unknown error';
 
     case DioErrorType.SEND_TIMEOUT:
@@ -41,6 +43,7 @@ class HTTPManager {
     UtilLogger.log("DATA", data);
     Dio dio = new Dio(baseOptions);
      getToken();
+     print('888888888888888888888888888888888888888888888${baseOptions.headers}');
     try {
       final response = await dio.post(
         url,
@@ -63,6 +66,7 @@ class HTTPManager {
     UtilLogger.log("PARAMS", params);
     Dio dio = new Dio(baseOptions);
      getToken();
+      print('9999999999999999999999999999999999999999999999${baseOptions.headers}');
     try {
       final response = await dio.get(
         url,

@@ -38,11 +38,12 @@ class _HomeSwipeState extends State<HomeSwipe> {
   List<MyLocation> _myLocation = [];
   HomePageModel homepage;
   num id;
+    UserModel _userData;
 
   @override
   void initState() {
     _loadShops();
-
+_loadProfile();
     super.initState();
   }
 
@@ -62,6 +63,15 @@ class _HomeSwipeState extends State<HomeSwipe> {
     print('ShopModel list ************:${homepage.category.length}');
   }
 
+    Future<void> _loadProfile() async {
+    final UserModel result = await Api.getUserProfile();
+      setState(() {
+        _userData = result;
+      });
+       print('user user user user user user user ..........${_userData.location}');
+       return _userData;
+  }
+
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
   Future<dynamic> getLocation() async {
     String location1;
@@ -79,7 +89,6 @@ class _HomeSwipeState extends State<HomeSwipe> {
 
   @override
   Widget build(BuildContext context) {
-    
     getLocation();
     if (value == null) {
       Text('novalue');
@@ -171,21 +180,94 @@ class _HomeSwipeState extends State<HomeSwipe> {
     print('jkbbdkjvbdfj kfjdfjk djfnkjvnf dfbjb fdbjfk..........$id');
     //  _loadShops();
     if (value == null) {
-      return Shimmer.fromColors(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 30, left: 10),
-          child: Align(
-            alignment: Alignment.topLeft,
-            child: FlatButton(
-              child: Text(""),
-              onPressed: () {
-                // _openPopup(context,_myLocation);
-              },
-            ),
+      return Padding(
+        padding: const EdgeInsets.only(top: 30, left: 20),
+        child: Align(
+          alignment: Alignment.topLeft,
+          child: FlatButton(
+            child: Text("no location"),
+            height: 30,
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+            color: Theme.of(context).buttonColor,
+            textColor: Theme.of(context).selectedRowColor,
+            onPressed: () {
+              Alert(
+                  context: context,
+                  title: "Neighbourhood",
+                  style: AlertStyle(
+                    titleStyle:
+                        TextStyle(color: Theme.of(context).primaryColor),
+                  ),
+                  content: Column(children: <Widget>[
+                    Container(
+                        decoration: BoxDecoration(
+                          color: Theme.of(context).hoverColor,
+                          borderRadius: BorderRadius.all(
+                            Radius.circular(8),
+                          ),
+                        ),
+                        child: TypeAheadField(
+                            textFieldConfiguration: TextFieldConfiguration(
+                              autofocus: false,
+                              // enabled: enable,
+                              onTap: () {},
+                              decoration: InputDecoration(
+                                prefixIcon: Icon(Icons.search),
+                                border: InputBorder.none,
+                                hintText: "Search by",
+                              ),
+                            ),
+                            // ignore: non_constant_identifier_names
+                            suggestionsCallback: (Pattern) async {
+                              // //hardcoded datas to be changed
+                              List<MyLocation> list = _myLocation;
+                              var suggetionList = Pattern.isEmpty
+                                  ? null
+                                  : list
+                                      .where((e) => e.title
+                                          .toLowerCase()
+                                          .contains(Pattern.toLowerCase()))
+                                      .toList();
+
+                              return suggetionList;
+                            },
+                            itemBuilder: (context, suggestion) {
+                              return ListTile(
+                                // leading: Icon(Icons.location_city),
+                                title: Text(suggestion.title),
+                              );
+                            },
+                            onSuggestionSelected: (suggestion) {
+                              setState(() {
+                                value = suggestion.title;
+                                id = suggestion.id;
+                              });
+                              flutterSecureStorage.write(key: 'location', value: suggestion.title);
+                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                                return MainNavigation();
+                              }
+                              ));
+                              
+
+                            })
+
+                        // previous search by sanjana search.txt
+                        ),
+                  ]),
+                  buttons: [
+                    DialogButton(
+                      color: Theme.of(context).buttonColor,
+                      onPressed: () => Navigator.pop(context),
+                      child: Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      ),
+                    )
+                  ]).show();
+            },
           ),
         ),
-        baseColor: Colors.white,
-        highlightColor: Colors.white,
       );
     }
     return Padding(

@@ -24,8 +24,8 @@ class TabModel {
     if (json == null) return;
     id = json['id'];
     key = json['key'];
-    keyContentItem=GlobalKey();
-    keyTabItem=GlobalKey();
+    keyContentItem = GlobalKey();
+    keyTabItem = GlobalKey();
     title = json['title'];
     list=_setList(json['list']);
 
