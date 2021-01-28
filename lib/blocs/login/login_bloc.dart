@@ -31,7 +31,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       final dynamic result = await Api.login(
         email: event.email,
         password: event.password,
-        
       );
       print('event.username at login bloc:${event.email}');
       print('event.password at login bloc:${event.password}');
@@ -44,14 +43,16 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
       print('result is result access_token:$token');
 
       ///Case API fail but not have token
-      if (result['access_token']!=null) {
+      if (result['access_token'] != null) {
         ///Login API success
         final UserModel user = UserModel.fromJson(result);
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           authBloc.add(AuthenticationSave(user));
           // authBloc.add(AuthenticationCheckDone(user));
-print('..............................................................................$user');
+          print(
+              '..............................................................................$user');
+
           ///Notify loading to UI
           yield LoginSuccess();
         } catch (error) {
@@ -61,7 +62,7 @@ print('.........................................................................
       } else {
         ///Notify loading to UI
         yield LoginFail(result['message']);
-        
+
         print('login attempt result failed: $result');
       }
     }

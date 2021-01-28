@@ -290,22 +290,38 @@ class _ListProductState extends State<ListProduct> {
 
   ///Widget build Content
   Widget _buildList() {
-    if (_productList?.list == null) {
-      ///Build Loading
-      return Wrap(
-        runSpacing: 15,
-        alignment: WrapAlignment.spaceBetween,
-        children: List.generate(8, (index) => index).map((item) {
-          return _buildItemLoading(_modeView);
-        }).toList(),
+ List<ListModel> listM = _productList ==null?[]:_productList.list;
+     if (listM.isEmpty) {
+       return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_satisfied),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                Translate.of(context).translate('category_not_found'),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
       );
+      ///Build Loading
+      // return Wrap(
+      //   runSpacing: 15,
+      //   alignment: WrapAlignment.spaceBetween,
+      //   children: List.generate(8, (index) => index).map((item) {
+      //     return _buildItemLoading(_modeView);
+      //   }).toList(),
+      // );
     }
 
     ///Build list
     return Wrap(
       runSpacing: 15,
       alignment: WrapAlignment.spaceBetween,
-      children: _productList.list.map((item) {
+      children: listM.map((item) {
         return _buildItem(item, _modeView);
       }).toList(),
     );
@@ -574,17 +590,17 @@ class _ListProductState extends State<ListProduct> {
                       //   ),
                       // ),
                       // **************************REQUIRED FEILD FILTER*********************************************
-                      // IconButton(
-                      //   icon: Icon(Icons.track_changes),
-                      //   onPressed: _onChangeFilter,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(right: 20, left: 20),
-                      //   child: Text(
-                      //     Translate.of(context).translate('filter'),
-                      //     style: Theme.of(context).textTheme.subtitle2,
-                      //   ),
-                      // )
+                      IconButton(
+                        icon: Icon(Icons.track_changes),
+                        onPressed: _onChangeFilter,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20, left: 20),
+                        child: Text(
+                          Translate.of(context).translate('filter'),
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      )
                       // ************************************************************************************
                     ],
                   )

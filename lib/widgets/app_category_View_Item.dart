@@ -289,6 +289,7 @@ final Function(ShopModel) onPressshop;
             ),
             baseColor: Theme.of(context).hoverColor,
             highlightColor: Theme.of(context).highlightColor,
+            
           );
         }
 

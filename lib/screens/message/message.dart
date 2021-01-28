@@ -59,14 +59,29 @@ class _MessageListState extends State<MessageList> {
   ///Build list
   Widget _buildList() {
     if (_messagePage?.message == null) {
-      return ListView(
-        padding: EdgeInsets.only(top: 5),
-        children: List.generate(8, (index) => index).map(
-          (item) {
-            return AppMessageItem();
-          },
-        ).toList(),
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_satisfied),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                Translate.of(context).translate('No Messages'),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
       );
+      // return ListView(
+      //   padding: EdgeInsets.only(top: 5),
+      //   children: List.generate(8, (index) => index).map(
+      //     (item) {
+      //       return AppMessageItem();
+      //     },
+      //   ).toList(),
+      // );
     }
 
     return ListView.builder(

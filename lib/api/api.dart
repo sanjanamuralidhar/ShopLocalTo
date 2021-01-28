@@ -252,7 +252,7 @@ class Api {
   static Future<NotificationPageModel> getUserNotification() async {
     await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:"http://dev.shoplocalto.ca/api/notifications");
-    print('jcbnujnddjndfvhnfjnvdfvhdfbnjvfvjfbnjbnjbnjdnjcn kjcnjnj fbv d dv f ${result['data']}');
+    print('jcbnujnddjndfvhnfjnvdfvhdfbnjv ........... fvjfbnjbnjbnjdnjcn kjcnjnj fbv d dv f ${result['data']}');
     return NotificationPageModel.fromJson(result['data']);
   }
 
@@ -295,7 +295,7 @@ static Future<ProductListPageModel> getList({id:0}) async{
 }
 
   static Future<ProductListPageModel> getSearchResult({id:0}) async {
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id.toString());
   //  print('getShops():$result.runT');
    return ProductListPageModel.fromJson(result['data']['data']);
@@ -326,13 +326,16 @@ static Future<ProductListPageModel> getList({id:0}) async{
   }
 
   ///Get Wish List edited sanjana
-  static Future<List<ShopModel>> getWishList() async {
+  static Future<dynamic> getWishList() async {
     await Future.delayed(Duration(seconds: 1));
- final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
+//  final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/locations');
   //  print('getPopular():$result.runT');
-   return ShopModel.listFromJson(result['locations']);
-    // final result = await UtilAsset.loadJson("assets/data/wishlist.json");
-    // return ResultApiModel.fromJson(result);
+  //  return ShopModel.listFromJson(result['locations']);
+    final result = await UtilAsset.loadJson("assets/data/wishlist.json");
+    return ResultApiModel.fromJson(result);
+  }
+  static Future<dynamic> getRefreshToken() async{
+    await httpManager.post(url:'http://dev.shoplocalto.ca/api/refresh');
   }
 
   ///On Search

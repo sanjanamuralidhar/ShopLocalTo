@@ -22,27 +22,28 @@ class _WishListState extends State<WishList> {
 List<ShopModel> _wishlistPage = [];
   @override
   void initState() {
-    // _loadData();
-    _loadWishlist();
+    _loadData();
+    // _loadWishlist();
     super.initState();
   }
 
   ///Fetch API
-  // Future<void> _loadData() async {
-  //   final ResultApiModel result = await Api.getWishList();
-  //   if (result.success) {
-  //     setState(() {
-  //       _listPage = new WishListPageModel.fromJson(result.data);
-  //     });
-  //   }
-  // }
-Future<void> _loadWishlist() async {
-    final List<ShopModel> result = await Api.getWishList();
+  Future<void> _loadData() async {
+    final ResultApiModel result = await Api.getWishList();
+    if (result.success) {
       setState(() {
-        _wishlistPage = result;
+        _listPage = new WishListPageModel.fromJson(result.data);
       });
-  
+    }
   }
+// Future<void> _loadWishlist() async {
+//     final List<ShopModel> result = await Api.getWishList();
+//       setState(() {
+//         _wishlistPage = result;
+//       });
+//       print(_wishlistPage);
+  
+//   }
   ///On load more
   Future<void> _onLoading() async {
     await Future.delayed(Duration(seconds: 1));
@@ -76,7 +77,7 @@ Future<void> _loadWishlist() async {
           (item) {
             return Padding(
               padding: EdgeInsets.only(bottom: 15),
-              child: AppProductItem(type: ProductViewType.small),
+              child: AppProductItem(type: ProductViewType.block),
             );
           },
         ).toList(),
@@ -96,8 +97,8 @@ Future<void> _loadWishlist() async {
           padding: EdgeInsets.only(bottom: 15),
           child: AppProductItem(
             onPressed: _onProductDetail,
-            // item: item,
-            type: ProductViewType.small,
+            wishlistModel: item,
+            type: ProductViewType.block,
           ),
         );
       },
@@ -107,21 +108,37 @@ Future<void> _loadWishlist() async {
   ///Build list
   Widget _buildList() {
     if (_listPage?.list == null) {
-      return ListView(
-        padding: EdgeInsets.only(
-          left: 20,
-          right: 20,
-          top: 15,
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_satisfied),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                Translate.of(context).translate('Wishlist is empty'),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
         ),
-        children: List.generate(8, (index) => index).map(
-          (item) {
-            return Padding(
-              padding: EdgeInsets.only(bottom: 15),
-              child: AppProductItem(type: ProductViewType.small),
-            );
-          },
-        ).toList(),
       );
+      // *********PREVIOUS********
+      // ListView(
+      //   padding: EdgeInsets.only(
+      //     left: 20,
+      //     right: 20,
+      //     top: 15,
+      //   ),
+      //   children: List.generate(8, (index) => index).map(
+      //     (item) {
+      //       return Padding(
+      //         padding: EdgeInsets.only(bottom: 15),
+      //         child: AppProductItem(type: ProductViewType.block),
+      //       );
+      //     },
+      //   ).toList(),
+      // );
     }
 
     return ListView.builder(
@@ -138,7 +155,7 @@ Future<void> _loadWishlist() async {
           child: AppProductItem(
             onPressed: _onProductDetail,
             item: item,
-            type: ProductViewType.small,
+            type: ProductViewType.block,
           ),
         );
       },
@@ -183,7 +200,7 @@ Future<void> _loadWishlist() async {
               child: CircularProgressIndicator(strokeWidth: 2),
             ),
           ),
-          child: _buildWishList(),
+          child: _buildList(),
         ),
       ),
     );

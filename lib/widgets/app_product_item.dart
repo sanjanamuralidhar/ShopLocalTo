@@ -14,6 +14,7 @@ class AppProductItem extends StatelessWidget {
   final NearlyModel nearlyModel;//productViewType:list
   final FeatureModel featureModel;//productViewType:grid
   final RelatedModel relatedModel;//productViewType:small
+  final ShopModel wishlistModel;//productViewType:block
   final ProductViewType type;
   final LocationViewType locationtype;
   final Function(NearlyModel) onPress;
@@ -22,7 +23,7 @@ class AppProductItem extends StatelessWidget {
   final Function(RelatedModel) onPressRelated;
   final Function(MyLocation) onPressLocation;
 final Function(ShopModel) onPressshop;
-  const AppProductItem({Key key, this.item, this.type, this.onPressed, this.nearlyModel, this.onPress, this.featureModel, this.relatedModel, this.onPressFeature, this.onPressRelated, this.mylocation, this.locationtype, this.onPressLocation, this.onPressshop, this.shopModel,}) : super(key: key);
+  const AppProductItem({Key key, this.item, this.type, this.onPressed, this.nearlyModel, this.onPress, this.featureModel, this.relatedModel, this.onPressFeature, this.onPressRelated, this.mylocation, this.locationtype, this.onPressLocation, this.onPressshop, this.shopModel, this.wishlistModel,}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -529,10 +530,10 @@ final Function(ShopModel) onPressshop;
             ],
           ),
         );
-
+// 888888888****************************Wishliststart***************************************
       // ///Mode View Block
       case ProductViewType.block:
-        if (nearlyModel == null) {
+        if (item == null) {
           return Shimmer.fromColors(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -582,10 +583,9 @@ final Function(ShopModel) onPressshop;
             highlightColor: Theme.of(context).highlightColor,
           );
         }
-
         return FlatButton(
           onPressed: () {
-            onPress(nearlyModel);
+            onPressed(item);
           },
           padding: EdgeInsets.all(0),
           child: Column(
@@ -596,7 +596,7 @@ final Function(ShopModel) onPressshop;
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     // colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.5), BlendMode.darken),
-                    image: NetworkImage(nearlyModel.image),
+                    image: NetworkImage(item.image),
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -608,9 +608,9 @@ final Function(ShopModel) onPressshop;
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          nearlyModel.status != null
+                          item.status != null
                               ? AppTag(
-                                  nearlyModel.status,
+                                  item.status,
                                   type: TagType.status,
                                 )
                               : Container(),
@@ -634,7 +634,7 @@ final Function(ShopModel) onPressshop;
                               Row(
                                 children: <Widget>[
                                   AppTag(
-                                    "${nearlyModel.rate}",
+                                    "${item.rate}",
                                     type: TagType.rateSmall,
                                   ),
                                   Padding(
@@ -643,21 +643,21 @@ final Function(ShopModel) onPressshop;
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 3),
-                                          child: Text(
-                                            nearlyModel.rateText,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .caption
-                                                .copyWith(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.w600,
-                                                ),
-                                          ),
-                                        ),
+                                        // Padding(
+                                        //   padding: EdgeInsets.only(left: 3),
+                                        //   child: Text(
+                                        //     wishlistModel.rateText,
+                                        //     style: Theme.of(context)
+                                        //         .textTheme
+                                        //         .caption
+                                        //         .copyWith(
+                                        //           color: Colors.white,
+                                        //           fontWeight: FontWeight.w600,
+                                        //         ),
+                                        //   ),
+                                        // ),
                                         StarRating(
-                                          rating: nearlyModel.rate,
+                                          rating: item.rate,
                                           size: 14,
                                           color: AppTheme.yellowColor,
                                           borderColor: AppTheme.yellowColor,
@@ -667,19 +667,19 @@ final Function(ShopModel) onPressshop;
                                   )
                                 ],
                               ),
-                              Padding(
-                                padding: EdgeInsets.only(top: 3),
-                                child: Text(
-                                  "${nearlyModel.numRate} reviews",
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .caption
-                                      .copyWith(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                ),
-                              )
+                              // Padding(
+                              //   padding: EdgeInsets.only(top: 3),
+                              //   child: Text(
+                              //     "${wishlistModel.numRate} reviews",
+                              //     style: Theme.of(context)
+                              //         .textTheme
+                              //         .caption
+                              //         .copyWith(
+                              //           color: Colors.white,
+                              //           fontWeight: FontWeight.w600,
+                              //         ),
+                              //   ),
+                              // )
                             ],
                           )
                         ],
@@ -698,7 +698,7 @@ final Function(ShopModel) onPressshop;
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      nearlyModel.subtitle,
+                      item.subtitle,
                       style: Theme.of(context)
                           .textTheme
                           .caption
@@ -706,7 +706,7 @@ final Function(ShopModel) onPressshop;
                     ),
                     Padding(padding: EdgeInsets.only(top: 5)),
                     Text(
-                      nearlyModel.title,
+                      item.title,
                       maxLines: 1,
                       style: Theme.of(context)
                           .textTheme
@@ -745,7 +745,7 @@ final Function(ShopModel) onPressshop;
                           child: Padding(
                             padding: EdgeInsets.only(left: 3, right: 3),
                             child: Text(
-                              nearlyModel.phone,
+                              item.phone,
                               maxLines: 1,
                               style: Theme.of(context).textTheme.caption,
                             ),
@@ -759,7 +759,7 @@ final Function(ShopModel) onPressshop;
             ],
           ),
         );
-    
+   // ***************************************WishListEnd*********************************************
       ///Case View Card large
       case ProductViewType.cardLarge:
         if (mylocation == null) {

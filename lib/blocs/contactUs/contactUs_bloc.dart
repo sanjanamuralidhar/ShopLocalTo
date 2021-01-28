@@ -10,7 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 import '../bloc.dart';
 
-class ContactBloc extends Bloc<ContactEvent,ContactState> {
+class ContactBloc extends Bloc<ContactEvent, ContactState> {
   final AuthBloc authBloc;
 
   ContactBloc({
@@ -37,24 +37,24 @@ class ContactBloc extends Bloc<ContactEvent,ContactState> {
         email: event.email,
         comment: event.comment,
       );
-       print('event.email at signup bloc:${event.email}');
-      flutterSecureStorage.write(key: 'username',value: event.name);
+      print('event.email at signup bloc:${event.email}');
+      flutterSecureStorage.write(key: 'username', value: event.name);
       flutterSecureStorage.write(key: 'email', value: event.email);
-      Future<String> value = flutterSecureStorage.read(key: 'email') ;
+      Future<String> value = flutterSecureStorage.read(key: 'email');
       print('/////////////////////////////');
       print(value.toString());
 
-       @override
-  // ignore: unused_element
-  String toString() {
-    return value.toString();
-  }
+      @override
+      // ignore: unused_element
+      String toString() {
+        return value.toString();
+      }
 
       ///Case API fail but not have token
-      if (result['status']!=null) {
+      if (result['status'] != null) {
         ///Login API success
         final UserModel user = UserModel.fromJson(result);
-print('update success');
+        print('update success');
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           authBloc.add(AuthenticationContactSave(user));

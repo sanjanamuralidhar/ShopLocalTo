@@ -20,17 +20,19 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
       ///Notify state AuthenticationBeginCheck
       yield AuthenticationBeginCheck();
       final hasToken = UtilPreferences.containsKey(Preferences.user);
-print('////////////AuthenticationState.......................................................$hasToken');
+      print(
+          '////////////AuthenticationState.......................................................$hasToken');
       if (hasToken) {
         ///Getting data from Storage
         final getUserPreferences = UtilPreferences.getString(
           Preferences.user,
         );
         final user = UserModel.fromJson(jsonDecode(getUserPreferences));
-          print('<<<<<<<<<AuthenticationState.......................................................${user.token}');
- httpManager.baseOptions.headers = {};
+        print(
+            '<<<<<<<<<AuthenticationState.......................................................${user.token}');
+        httpManager.baseOptions.headers = {};
         httpManager.baseOptions.headers["Authorization"] =
-            "Bearer "+user.token;
+            "Bearer " + user.token;
         await Future.delayed(Duration(seconds: 1));
         final ResultApiModel result = await Api.validateToken();
 
@@ -61,15 +63,16 @@ print('////////////AuthenticationState..........................................
         jsonEncode(event.user.toJson()),
       );
       final getUserPreferences = UtilPreferences.getString(
-          Preferences.user,
-        );
+        Preferences.user,
+      );
       final user = UserModel.fromJson(jsonDecode(getUserPreferences));
       httpManager.baseOptions.headers = {};
-     
-      httpManager.baseOptions.headers["Authorization"] =
-            "Bearer "+user.token;
-             print(httpManager.baseOptions.headers.toString());
-         print('.............................................ooooooooo.................................$user');   
+
+      httpManager.baseOptions.headers["Authorization"] = "Bearer " + user.token;
+      print(httpManager.baseOptions.headers.toString());
+      print(
+          '.............................................ooooooooo.................................$user');
+
       ///Check result save user
       if (savePreferences) {
         ///Notify loading to UI
@@ -92,7 +95,7 @@ print('////////////AuthenticationState..........................................
         throw Exception(message);
       }
     }
-     if (event is AuthenticationSignupSave) {
+    if (event is AuthenticationSignupSave) {
       ///Save to Storage phone
       final savePreferences = await UtilPreferences.setString(
         Preferences.user,

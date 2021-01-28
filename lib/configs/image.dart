@@ -75,6 +75,7 @@ class Images {
   static const String Community9 = "assets/pictures/ShopLocalTO-Toronto-04.webp";
   static const String Community10 = "assets/pictures/ShopLocalTO-Toronto-05.jpg";
   static const String Community11 = "assets/pictures/shutterstock_418976134.jpg";
+  static const String Aavtar = "assets/socialicons/person-solid.png";
 
 
 

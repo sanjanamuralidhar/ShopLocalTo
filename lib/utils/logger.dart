@@ -3,7 +3,7 @@ import 'dart:developer' as developer;
 import 'package:listar_flutter/configs/application.dart';
 
 class UtilLogger {
-  static const String TAG = "LISTAR";
+  static const String TAG = "ShopLocalTo";
 
   static log([String tag = TAG, dynamic msg]) {
     if (Application.debug) {

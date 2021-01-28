@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:listar_flutter/blocs/Update/bloc.dart';
+import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/models/model_user.dart';
@@ -52,13 +53,12 @@ UpdateBloc _updateBloc;
 
   void initState() {
     _updateBloc = BlocProvider.of<UpdateBloc>(context);
-    // _textNameController.text = value;
-    // _validName;
-    // _validAddress;
-    // _validEmail;
-    // _validInfo;
-    // _validPhone;
-    // _validWebsite;
+    _textAddressController.text;
+    _textEmailController.text;
+    _textInfoController.text;
+    _textNameController.text;
+    _textPhoneController.text;
+    _textWebsiteController.text;
     _loadProfile();
     super.initState();
   }
@@ -81,43 +81,61 @@ UpdateBloc _updateBloc;
   }
 
   ///On update image
-  Future<void> _update() async {
-    UtilOther.hiddenKeyboard(context);
-    setState(() {
-      _validName = UtilValidator.validate(
-        data: _textNameController.text,
-      );
-      _validEmail = UtilValidator.validate(
-        data: _textEmailController.text,
-        type: Type.email,
-      );
-       _validPhone = UtilValidator.validate(
-        data: _textPhoneController.text,
-        type: Type.phone,
-      );
-      _validAddress = UtilValidator.validate(
-        data: _textAddressController.text,
-      );
-      _validWebsite = UtilValidator.validate(
-        data: _textWebsiteController.text,
-      );
-      _validInfo = UtilValidator.validate(
-        data: _textInfoController.text,
-      );
+  // Future<void> _update() async {
+  //   UtilOther.hiddenKeyboard(context);
+  //   setState(() {
+  //     _validName = UtilValidator.validate(
+  //       data: _textNameController.text,
+  //     );
+  //     _validEmail = UtilValidator.validate(
+  //       data: _textEmailController.text,
+  //       type: Type.email,
+  //     );
+  //      _validPhone = UtilValidator.validate(
+  //       data: _textPhoneController.text,
+  //       type: Type.phone,
+  //     );
+  //     _validAddress = UtilValidator.validate(
+  //       data: _textAddressController.text,
+  //     );
+  //     _validWebsite = UtilValidator.validate(
+  //       data: _textWebsiteController.text,
+  //     );
+  //     _validInfo = UtilValidator.validate(
+  //       data: _textInfoController.text,
+  //     );
       
-    });
-    if (_validName == null &&
-        _validEmail == null &&
-        _validAddress == null &&
-        _validWebsite == null &&
-        _validInfo == null) {
-      setState(() {
-        _loading = true;
-      });
-      await Future.delayed(Duration(seconds: 1));
-      Navigator.pop(context);
-    }
-  }
+  //   });
+  //   if (_validName == null &&
+  //       _validEmail == null &&
+  //       _validAddress == null &&
+  //       _validWebsite == null &&
+  //       _validInfo == null) {
+  //     setState(() {
+  //       _loading = true;
+  //     });
+  //     await Future.delayed(Duration(seconds: 1));
+  //     Navigator.pop(context);
+  //   }
+  // }
+  ///On Change Sort
+  // void _onChangeSort() {
+  //   showModalBottomSheet<void>(
+  //     backgroundColor: Colors.transparent,
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AppCameraSelection(
+  //         selected: _currentSort,
+  //         option: _listSort,
+  //         onChange: (item) {
+  //           setState(() {
+  //             _currentSort = item;
+  //           });
+  //         },
+  //       );
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +164,10 @@ UpdateBloc _updateBloc;
                                 ? Container(
                                     decoration: BoxDecoration(
                                       shape: BoxShape.circle,
-                                      // image: DecorationImage(
-                                      //   fit: BoxFit.cover,
-                                      //   image: NetworkImage(_userData.image),
-                                      // ),
+                                      image: DecorationImage(
+                                        fit: BoxFit.cover,
+                                        image: AssetImage(Images.Aavtar),
+                                      ),
                                     ),
                                   )
                                 : ClipRRect(
@@ -166,6 +184,10 @@ UpdateBloc _updateBloc;
                               color: Colors.white,
                             ),
                             onPressed: _getImage,
+                            // onPressed: (){
+                            //   _onChangeSort();
+                            // }
+                            // _getImage,
                           )
                         ],
                       )
@@ -196,20 +218,20 @@ UpdateBloc _updateBloc;
                       await Future.delayed(Duration(milliseconds: 100));
                       _textNameController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                        context,
-                        _focusName,
-                        _focusEmail,
-                      );
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validName = UtilValidator.validate(
-                          data: _textNameController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //     context,
+                    //     _focusName,
+                    //     _focusEmail,
+                    //   );
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validName = UtilValidator.validate(
+                    //       data: _textNameController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller:_textNameController,
                   ),
@@ -234,18 +256,18 @@ UpdateBloc _updateBloc;
                       await Future.delayed(Duration(milliseconds: 100));
                       _textEmailController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                          context, _focusEmail, _focusAddress);
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validEmail = UtilValidator.validate(
-                          data: _textEmailController.text,
-                          type: Type.email,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //       context, _focusEmail, _focusAddress);
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validEmail = UtilValidator.validate(
+                    //       data: _textEmailController.text,
+                    //       type: Type.email,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textEmailController,
                     keyboardType: TextInputType.emailAddress,
@@ -269,17 +291,17 @@ UpdateBloc _updateBloc;
                   controller: _textPhoneController,
                   focusNode: _focusPhone,
                   textInputAction: TextInputAction.next,
-                  onChanged: (text) {
-                    setState(() {
-                      _validPhone = UtilValidator.validate(
-                        data: _textPhoneController.text,
-                      );
-                    });
-                  },
-                  onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(
-                        context, _focusPhone, _focusPhone);
-                  },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validPhone = UtilValidator.validate(
+                  //       data: _textPhoneController.text,
+                  //     );
+                  //   });
+                  // },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(
+                  //       context, _focusPhone, _focusPhone);
+                  // },
                   onTapIcon: () async {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textPhoneController.clear();
@@ -306,20 +328,20 @@ UpdateBloc _updateBloc;
                       await Future.delayed(Duration(milliseconds: 100));
                       _textAddressController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                        context,
-                        _focusAddress,
-                        _focusWebsite,
-                      );
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validAddress = UtilValidator.validate(
-                          data: _textAddressController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //     context,
+                    //     _focusAddress,
+                    //     _focusWebsite,
+                    //   );
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validAddress = UtilValidator.validate(
+                    //       data: _textAddressController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textAddressController,
                   ),
@@ -344,20 +366,20 @@ UpdateBloc _updateBloc;
                       await Future.delayed(Duration(milliseconds: 100));
                       _textWebsiteController.clear();
                     },
-                    onSubmitted: (text) {
-                      UtilOther.fieldFocusChange(
-                        context,
-                        _focusWebsite,
-                        _focusInfo,
-                      );
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validWebsite = UtilValidator.validate(
-                          data: _textWebsiteController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //     context,
+                    //     _focusWebsite,
+                    //     _focusInfo,
+                    //   );
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validWebsite = UtilValidator.validate(
+                    //       data: _textWebsiteController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textWebsiteController,
                   ),
@@ -384,16 +406,16 @@ UpdateBloc _updateBloc;
                       await Future.delayed(Duration(milliseconds: 100));
                       _textInfoController.clear();
                     },
-                    onSubmitted: (text) {
-                      _update();
-                    },
-                    onChanged: (text) {
-                      setState(() {
-                        _validInfo = UtilValidator.validate(
-                          data: _textInfoController.text,
-                        );
-                      });
-                    },
+                    // onSubmitted: (text) {
+                    //   _update();
+                    // },
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validInfo = UtilValidator.validate(
+                    //       data: _textInfoController.text,
+                    //     );
+                    //   });
+                    // },
                     icon: Icon(Icons.clear),
                     controller: _textInfoController,
                   ),
@@ -422,22 +444,22 @@ UpdateBloc _updateBloc;
                       child: AppButton(
                         onPressed: () {
                           _updateBloc.add(OnUpdate(
-                            username: _validName,
-                            email: _validEmail,
-                            phone: _validPhone,
-                            address: _validAddress,
-                            info: _validInfo,
-                            website:_validWebsite,
+                            username: _textNameController.text,
+                            email: _textEmailController.text,
+                            phone: _textPhoneController.text,
+                            address: _textAddressController.text,
+                            info: _textInfoController.text,
+                            website:_textWebsiteController.text,
                           ));
                           
                           // Navigator.pop(context);
                          Navigator.of(context).pop();
                           // _signUp();
-                          print('username.........:${_validName}');
-                          print('email.........:${_validEmail}');
-                          print('Adress...........:${_validAddress}');
-                          print('phone....................:${_validPhone}');
-                          print('website...............:${_validWebsite}');
+                          print('username.........:${_textNameController.text}');
+                          print('email.........:${_textEmailController.text}');
+                          print('Adress...........:${_textAddressController.text}');
+                          print('phone....................:${_textPhoneController.text}');
+                          print('website...............:${_textWebsiteController.text}');
                         },
                         text: Translate.of(context).translate('confirm'),
                         loading: update is UpdateProfileLoading,

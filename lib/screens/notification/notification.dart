@@ -42,6 +42,7 @@ class _NotificationListState extends State<NotificationList> {
       setState(() {
         _notificationPage = result;
       });
+      print('-----------------------------${_notificationPage.notifications.length}');
   }
 
   ///On load more
@@ -58,16 +59,30 @@ class _NotificationListState extends State<NotificationList> {
 
   ///Build list
   Widget _buildList() {
-    if (_notificationPage?.notifications == null) {
-      print('no notifications');
-      return ListView(
-        padding: EdgeInsets.only(top: 5),
-        children: List.generate(8, (index) => index).map(
-          (item) {
-            return AppNotificationItem();
-          },
-        ).toList(),
+    if (_notificationPage.notifications.isEmpty ) {
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_satisfied),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                Translate.of(context).translate('No Notifications'),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
       );
+      // return ListView(
+      //   padding: EdgeInsets.only(top: 5),
+      //   children: List.generate(8, (index) => index).map(
+      //     (item) {
+      //       return AppNotificationItem();
+      //     },
+      //   ).toList(),
+      // );
     }
 
     return ListView.builder(

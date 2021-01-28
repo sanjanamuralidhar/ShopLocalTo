@@ -220,7 +220,7 @@ class _SignUpState extends State<SignUp> {
                   },
                   obscureText: !_showPassword,
                   icon: Icon(
-                    _showPassword ? Icons.lock_open : Icons.lock_outline,
+                    _showPassword ? Icons.visibility : Icons.visibility_off,
                   ),
                   controller: _textPassController,
                   focusNode: _focusPass,
@@ -293,8 +293,10 @@ class _SignUpState extends State<SignUp> {
                         controller: _textLocationController,
                         decoration: InputDecoration(
                           
-                          border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),),
+                          focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(10),
+                                borderSide: new BorderSide(color: Colors.grey[300]),
+                                ),
                           filled:true,
                           fillColor: Theme.of(context).highlightColor,
                             hintText: Translate.of(context)
@@ -352,17 +354,13 @@ class _SignUpState extends State<SignUp> {
                         if (signupListener is SignUpFail) {
                           print("signup failed");
                           Navigator.of(context).pop();
-                        } else {
-                          Fluttertoast.showToast(
-                              msg: "Signup Successful...!!",
-                              toastLength: Toast.LENGTH_SHORT,
-                              gravity: ToastGravity.CENTER,
-                              timeInSecForIosWeb: 1,
-                              backgroundColor: Theme.of(context).buttonColor,
-                              textColor: Theme.of(context).scaffoldBackgroundColor,
-                              fontSize: 16.0);
-                          Navigator.of(context).pop();
-                          // Navigator.pushNamed(context, "signin");
+                        } 
+                        else if(signupListener is SignUpLoading){
+                            _validID = UtilValidator.validate(data: _textIDController.text);
+                            _validEmail = UtilValidator.validate(data: _textEmailController.text);
+                            _validLocation = UtilValidator.validate(data: _textLocationController.text);
+                            _validPass = UtilValidator.validate(data: _textPassController.text);
+                            _validPhone = UtilValidator.validate(data: _textPhoneController.text);   
                         }
                       },
                       child: AppButton(
@@ -380,10 +378,12 @@ class _SignUpState extends State<SignUp> {
                           print('password:${_textPassController.text}');
                           print('phone:${_textPhoneController.text}');
                           print('location:${_textLocationController.text}');
+                           Navigator.pop(context);
                         },
                         text: Translate.of(context).translate('sign_up'),
                         loading: signup is SignUpLoading,
                         disableTouchWhenLoading: true,
+                        
                       ),
                     );
                   },

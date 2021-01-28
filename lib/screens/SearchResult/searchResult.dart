@@ -290,18 +290,18 @@ class _SearchResultState extends State<SearchResult> {
 
   ///Widget build Content
   Widget _buildList() {
-    if (_productList?.list == null) {
-      ///Build Loading
-      return Wrap(
-        runSpacing: 15,
-        alignment: WrapAlignment.spaceBetween,
-        children: List.generate(8, (index) => index).map((item) {
-          return _buildItemLoading(_modeView);
-        }).toList(),
-      );
-    }
-
-     if (_productList.list.isEmpty) {
+    // if (_productList?.list == null) {
+    //   ///Build Loading
+    //   return Wrap(
+    //     runSpacing: 15,
+    //     alignment: WrapAlignment.spaceBetween,
+    //     children: List.generate(8, (index) => index).map((item) {
+    //       return _buildItemLoading(_modeView);
+    //     }).toList(),
+    //   );
+    // }
+List<ListModel> listM = _productList ==null?[]:_productList.list;
+     if (listM.isEmpty) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -323,7 +323,7 @@ class _SearchResultState extends State<SearchResult> {
     return Wrap(
       runSpacing: 15,
       alignment: WrapAlignment.spaceBetween,
-      children: _productList.list.map((item) {
+      children: listM.map((item) {
         return _buildItem(item, _modeView);
       }).toList(),
     );
@@ -331,6 +331,7 @@ class _SearchResultState extends State<SearchResult> {
 
   ///Build Content Page Style
   Widget _buildContent() {
+    List<ListModel> listM = _productList ==null?[]:_productList.list;
     if (_pageType == SearchType.list) {
       return SafeArea(
         child: SmartRefresher(
@@ -488,7 +489,7 @@ class _SearchResultState extends State<SearchResult> {
                       onIndexChanged: (index) {
                         _onIndexChange(index);
                       },
-                      itemCount: _productList.list.length,
+                      itemCount: listM.length,
                       viewportFraction: 0.8,
                       scale: 0.9,
                     ),
@@ -519,7 +520,7 @@ class _SearchResultState extends State<SearchResult> {
             visible: _productList?.list != null,
             child: IconButton(
               icon: Icon(
-                _pageType == SearchType.map ? Icons.view_compact : Icons.map,
+                _pageType == SearchType.map ? Icons.view_compact : Icons.location_on,
               ),
               onPressed: _onChangePageStyle,
             ),
@@ -594,17 +595,17 @@ class _SearchResultState extends State<SearchResult> {
                       //   ),
                       // ),
                       // **************************REQUIRED FEILD FILTER*********************************************
-                      // IconButton(
-                      //   icon: Icon(Icons.track_changes),
-                      //   onPressed: _onChangeFilter,
-                      // ),
-                      // Padding(
-                      //   padding: EdgeInsets.only(right: 20, left: 20),
-                      //   child: Text(
-                      //     Translate.of(context).translate('filter'),
-                      //     style: Theme.of(context).textTheme.subtitle2,
-                      //   ),
-                      // )
+                      IconButton(
+                        icon: Icon(Icons.track_changes),
+                        onPressed: _onChangeFilter,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(right: 20, left: 20),
+                        child: Text(
+                          Translate.of(context).translate('filter'),
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
+                      )
                       // ************************************************************************************
                     ],
                   )

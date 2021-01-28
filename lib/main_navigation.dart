@@ -8,6 +8,8 @@ import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/logger.dart';
 import 'package:listar_flutter/utils/utils.dart';
 
+import 'api/api.dart';
+
 
 class MainNavigation extends StatefulWidget {
   MainNavigation({Key key}) : super(key: key);
@@ -34,10 +36,14 @@ class _MainNavigationState extends State<MainNavigation> {
   }
   @override
   void initState() {
-   
+  //  _loadUser();
     _fcmHandle();
     super.initState();
   }
+  // Future <dynamic> _loadUser() async {
+  //  final token = await Api.getRefreshToken();
+  //   return token;
+  // }
 
  
 

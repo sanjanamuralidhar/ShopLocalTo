@@ -262,7 +262,7 @@ class _AboutUsState extends State<AboutUs> {
                         right: 20,
                       ),
                       child: Text(
-                        Translate.of(context).translate('meet_our_team'),
+                        Translate.of(context).translate('Description'),
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1

@@ -239,7 +239,8 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
   final _textController = TextEditingController();
 
   var searchDropDownValue;
-
+double container_height = 70;
+double container_width=100;
   Future<void> _onClearTapped() async {
     await Future.delayed(Duration(milliseconds: 100));
     _textController.text = '';
@@ -253,66 +254,101 @@ class _HomeSearchBarState extends State<HomeSearchBar> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 125,
+    return 
+    
+    
+    // Container(
+    //   height:container_height +100,
+    //   child: Center(
+    //     child: Column(
+    //       children: [
+    //         GestureDetector(
+    //           onTap: (){
+    //             setState(() {
+                  
+    //             container_height = 200;
+    //             });
+    //           },
+    //                       child: AnimatedContainer(
+    //             duration: Duration(seconds: 2),
+    //             width :container_width,
+    //             height:container_height,
+    //             color: Colors.teal,
+    //           ),
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
+    
+    Container(
+      height: container_height,
       padding: EdgeInsets.only(left: 20, right: 20),
-      child: Card(
-        margin: EdgeInsets.all(0),
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(8),
-        ),
-        elevation: 3,
-        child: Column(
-          children: [
-            Container(
-              padding: EdgeInsets.all(10),
-              child: Container(
-                decoration: BoxDecoration(
-                  color: Theme.of(context).hoverColor,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
-                ),
-                child: AppTextInput(
-                  hintText: Translate.of(context).translate('search'),
-                  icon: Icon(Icons.search),
-                  controller: _textController,
-                  onSubmitted: _onSearch,
-                  onTapIcon: () {
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => SearchResult(
-                              id: int.parse(searchDropDownValue), title: _textController.text)),
-                    );
-                  },
-                  // onChanged: _onSearch,
-                ),
-
-                // // previous search by sanjana search.txt
-              ),
-              // Container(child:Text("shdui")),
+      child: GestureDetector(
+        onTap: () {
+          setState(() {
+            container_height = 125;
+          });
+        },
+        onDoubleTap: (){
+           setState(() {
+            container_height = 70;
+          });
+        },
+              child: AnimatedContainer(
+          duration: Duration(seconds: 1),
+                child: Card(
+            margin: EdgeInsets.all(0),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8),
             ),
-            Padding(
-                padding: EdgeInsets.only(left: 20, right: 20),
-                child: DropPage(
-                  onChanged: (val) {
-                    log(val);
-                    setState(() {
-                      searchDropDownValue = val;
-                    });
-                  },
-                )
-                //      Wrap(
-                // children: shopModel.map(
-                //   (item) {
-                //     return DropPage(id:item.id,);
-                //       },
-                //     ).toList()
+            elevation: 3,
+            child: Column(
+              children: [
+                Container(
+                  padding: EdgeInsets.only(right: 40,left:10,bottom:10,top:10),
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).hoverColor,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                    ),
+                    child:AppTextInput(
+                        hintText: Translate.of(context).translate('search'),
+                        icon: Icon(Icons.search),
+                        controller: _textController,
+                        onSubmitted: _onSearch,
+                        onTapIcon: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SearchResult(
+                                    id: int.parse(searchDropDownValue), title: _textController.text)),
+                          );
+                        },
+                        // onChanged: _onSearch,
+                      ),
 
-                //   ),
-                )
-          ],
+                    // // previous search by sanjana search.txt
+                  ),
+                  // Container(child:Text("shdui")),
+                ),
+                Padding(
+                    padding: EdgeInsets.only(left: 10, right: 40),
+                    child: DropPage(
+                      onChanged: (val) {
+                        log(val);
+                        setState(() {
+                          searchDropDownValue = val;
+                        });
+                      },
+                    )
+
+                    )
+              ],
+            ),
+          ),
         ),
       ),
     );

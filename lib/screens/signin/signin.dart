@@ -7,7 +7,6 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 
 class SignIn extends StatefulWidget {
   final IconModel item;
@@ -211,10 +210,7 @@ class _SignInState extends State<SignIn> {
                       child: AppButton(
                         onPressed: () {
                           setState(() {
-                            // _validID = "test@gmail.com";
-                            // _validPass = "123456";
-                            _loginBloc.add(
-                              OnLogin(
+                            _loginBloc.add(OnLogin(
                                 email: _textEmailController.text,
                                 password: _textPassController.text,
                               ),
