@@ -447,7 +447,7 @@ void _onShopDetail(ShopModel item) {
                             children: <Widget>[
                               Text(
                                 Translate.of(context)
-                                    .translate('popular_location'),
+                                    .translate('Popular Neighbourhoods in Toronto'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -456,7 +456,7 @@ void _onShopDetail(ShopModel item) {
                               Padding(padding: EdgeInsets.only(top: 3)),
                               Text(
                                 Translate.of(context)
-                                    .translate('let_find_interesting'),
+                                    .translate('Explore the Neighbourhoods in Nearby'),
                                 style: Theme.of(context).textTheme.bodyText1,
                               )
                             ],
@@ -493,7 +493,7 @@ void _onShopDetail(ShopModel item) {
                                 padding: EdgeInsets.only(top: 3),
                               ),
                               Text(
-                                Translate.of(context).translate('what_happen'),
+                                Translate.of(context).translate('Find Out what is popular in Neighbourhood'),
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                             ],

@@ -33,19 +33,16 @@ class _IntroPreviewState extends State<IntroPreview> {
     ///List Intro view page model
     final List<Slide> pages = [
       new Slide(
-       title: "MOONLIGHT",
        description: "Allow miles wound place the leave had. To sitting subject no improve studied limited",
        pathImage: Images.ShopLocalTOLogo,
        backgroundImage: Images.Room6,
      ),
      new Slide(
-       title: "GOOGI",
        description: "Ye indulgence unreserved connection alteration appearance",
        pathImage: Images.ShopLocalTOLogo,
        backgroundImage: Images.Room5,
      ),
     new Slide(
-       title: "fITNESS",
        description:
        "Much evil soon high in hope do view. Out may few northward believing attempted. Yet timed being songs marry one defer men our. Although finished blessing do of",
        pathImage: Images.ShopLocalTOLogo, 

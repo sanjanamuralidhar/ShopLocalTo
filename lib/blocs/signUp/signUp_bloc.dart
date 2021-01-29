@@ -31,37 +31,36 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
 
       ///Fetch API
       final dynamic result = await Api.signup(
-        username: event.username,
-        email: event.email,
-        password: event.password,
-        phone: event.phone,
-        location: event.location
-      );
-       print('event.email at signup bloc:${event.email}');
+          username: event.username,
+          email: event.email,
+          password: event.password,
+          phone: event.phone,
+          location: event.location);
+      print('event.email at signup bloc:${event.email}');
       print('event.password at signup bloc:${event.password}');
-       print('event.phone at signup bloc:${event.phone}');
-        print('event.location at signup bloc:${event.location}');
+      print('event.phone at signup bloc:${event.phone}');
+      print('event.location at signup bloc:${event.location}');
 
-      flutterSecureStorage.write(key: 'username',value: event.username);
+      flutterSecureStorage.write(key: 'username', value: event.username);
       flutterSecureStorage.write(key: 'email', value: event.email);
       flutterSecureStorage.write(key: 'password', value: event.password);
       flutterSecureStorage.write(key: 'phone', value: event.phone);
       flutterSecureStorage.write(key: 'location', value: event.location);
-      Future<String> value = flutterSecureStorage.read(key: 'email') ;
+      Future<String> value = flutterSecureStorage.read(key: 'email');
       print('/////////////////////////////');
       print(value.toString());
 
-       @override
-  // ignore: unused_element
-  String toString() {
-    return value.toString();
-  }
+      @override
+      // ignore: unused_element
+      String toString() {
+        return value.toString();
+      }
 
       ///Case API fail but not have token
-      if (result['status']!=null) {
+      if (result['status'] != null) {
         ///Login API success
         final UserModel user = UserModel.fromJson(result);
-print('signup success');
+        print('signup success');
         try {
           ///Begin start AuthBloc Event AuthenticationSave
           authBloc.add(AuthenticationSignupSave(user));

@@ -7,6 +7,7 @@ import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/api/api.dart';
+import 'package:listar_flutter/screens/signin/signin.dart';
 
 class SignUp extends StatefulWidget {
   SignUp({Key key}) : super(key: key);
@@ -63,6 +64,64 @@ class _SignUpState extends State<SignUp> {
       _locations = result;
     });
   }
+
+   Future<void> _showMessage(String message) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Login'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Signup failed', style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+Future<void> _showSuccess() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('SignUp'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Thank You For SignUp!', style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              color: Theme.of(context).buttonColor,
+              child: Text('SignIn'),
+              onPressed: () {
+                Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => SignIn(),
+            ));
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+  
 
   ///On sign up
   // void _signUp() {
@@ -347,61 +406,48 @@ class _SignUpState extends State<SignUp> {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-                BlocBuilder<SignUpBloc, SignUpState>(
-                  builder: (context, signup) {
+               BlocBuilder<SignUpBloc, SignUpState>(
+                  builder: (context, login) {
                     return BlocListener<SignUpBloc, SignUpState>(
-                      listener: (context, signupListener) {
-                        if (signupListener is SignUpFail) {
-                          print("signup failed");
-                          Navigator.of(context).pop();
-                        } 
-                        else if(signupListener is SignUpLoading){
-                            _validID = UtilValidator.validate(data: _textIDController.text);
-                            _validEmail = UtilValidator.validate(data: _textEmailController.text);
-                            _validLocation = UtilValidator.validate(data: _textLocationController.text);
-                            _validPass = UtilValidator.validate(data: _textPassController.text);
-                            _validPhone = UtilValidator.validate(data: _textPhoneController.text);   
+                      listener: (context, loginListener) {
+                        if (loginListener is SignUpFail) {
+                          _showMessage(loginListener.message);
+                        }
+                        if(loginListener is SignUpSuccess){
+                          _showSuccess();
+                          // Navigator.of(context).pop();
                         }
                       },
                       child: AppButton(
                         onPressed: () {
-                          _signUpBloc.add(OnSignUp(
-                            username: _textIDController.text,
-                            email: _textEmailController.text,
-                            password: _textPassController.text,
-                            phone: _textPhoneController.text,
-                            location: _textLocationController.text,
-                          ));
-                          // _signUp();
-                          print('username:${_textIDController.text}');
-                          print('email:${_textEmailController.text}');
-                          print('password:${_textPassController.text}');
-                          print('phone:${_textPhoneController.text}');
-                          print('location:${_textLocationController.text}');
-                           Navigator.pop(context);
+                          setState(() {
+                            _signUpBloc.add(
+                              OnSignUp(
+                                email: _textEmailController.text,
+                                password: _textPassController.text,
+                                location: _textLocationController.text,
+                                phone: _textPhoneController.text,
+                                username: _textIDController.text,
+                              ),
+                            );
+                            print('email:${_textEmailController.text}');
+                            print('password:${_textPassController.text}');
+                          });
+                          //  _showSuccess();
+                          //  Navigator.of(context).pop();
                         },
-                        text: Translate.of(context).translate('sign_up'),
-                        loading: signup is SignUpLoading,
-                        disableTouchWhenLoading: true,
                         
+                        text: Translate.of(context).translate('SignUp'),
+                        loading: login is SignUpLoading,
+                        disableTouchWhenLoading: true,
+                       
                       ),
                     );
                   },
                 ),
-                // AppButton(
-                //   onPressed: () {
-                //     _signUp();
-                //     //  Navigator.pushNamed(context, Routes.success);
-                //   },
-                //   text: Translate.of(context).translate('sign_up'),
-                //   loading: _loading,
-                //   disableTouchWhenLoading: true,
-                // ),
                 SizedBox(
                   height: 30,
                 ),
-                // Image.asset(Images.INDigitalLOGO_logo_large,
-                // width: 100, height: 100),
               ],
             ),
           ),
@@ -409,4 +455,5 @@ class _SignUpState extends State<SignUp> {
       ),
     );
   }
+ 
 }

@@ -2,9 +2,9 @@ abstract class ResetEvent {}
 
 class OnReset extends ResetEvent {
   final String password;
-  final String confirm_password;
+  final String confirmpassword;
 
-OnReset({this.confirm_password,this.password});
+OnReset({this.confirmpassword,this.password});
 }
 
 class AfterReset extends ResetEvent {

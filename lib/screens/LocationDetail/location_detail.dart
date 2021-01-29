@@ -330,43 +330,43 @@ Widget _buildInfo() {
     );
   }
   ///Build list related
-  Widget _buildNearBy() {
-    // print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb${_nearby.length}');
-    if (_nearby == null) {
-      return Container();
-    }
+  // Widget _buildNearBy() {
+  //   // print('bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb${_nearby.length}');
+  //   if (_nearby == null) {
+  //     return Container();
+  //   }
 
-    return Padding(
-      padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.only(bottom: 15),
-            child: Text(
-              Translate.of(context).translate('NearBy'),
-              style: Theme.of(context)
-                  .textTheme
-                  .headline6
-                  .copyWith(fontWeight: FontWeight.w600),
-            ),
-          ),
-          Column(
-            children: _nearby.map((item) {
-              return Padding(
-                padding: EdgeInsets.only(bottom: 15),
-                child: AppPopularItem(
-                  onPressNearby: _onNearbyDetail,
-                  nearbyModel: item,
-                  type: PopularViewType.small,
-                ),
-              );
-            }).toList(),
-          )
-        ],
-      ),
-    );
-  }
+  //   return Padding(
+  //     padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+  //     child: Column(
+  //       crossAxisAlignment: CrossAxisAlignment.start,
+  //       children: <Widget>[
+  //         Padding(
+  //           padding: EdgeInsets.only(bottom: 15),
+  //           child: Text(
+  //             Translate.of(context).translate('NearBy'),
+  //             style: Theme.of(context)
+  //                 .textTheme
+  //                 .headline6
+  //                 .copyWith(fontWeight: FontWeight.w600),
+  //           ),
+  //         ),
+  //         Column(
+  //           children: _nearby.map((item) {
+  //             return Padding(
+  //               padding: EdgeInsets.only(bottom: 15),
+  //               child: AppPopularItem(
+  //                 onPressNearby: _onNearbyDetail,
+  //                 nearbyModel: item,
+  //                 type: PopularViewType.small,
+  //               ),
+  //             );
+  //           }).toList(),
+  //         )
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget _buildVendorList() {
     if (_shops == null) {
@@ -449,7 +449,7 @@ Widget _buildInfo() {
                   children: <Widget>[
                     _buildInfo(),
                     _buildVendorList(),
-                    _buildNearBy()
+                    // _buildNearBy()
                   ],
                 ),
               ),

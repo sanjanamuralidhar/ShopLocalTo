@@ -45,7 +45,8 @@ class _AboutUsState extends State<AboutUs> {
 
   ///Build UI
   Widget _buildBanner() {
-    if (_aboutUsPage.team.image == null) {
+    AboutUsModel about = _aboutUsPage == null?null:_aboutUsPage.team;
+    if (about.image == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -57,7 +58,7 @@ class _AboutUsState extends State<AboutUs> {
     }
 
     return Image.asset(
-      _aboutUsPage.team.image,
+      about.image,
       fit: BoxFit.cover,
     );
   }
@@ -285,7 +286,8 @@ class _AboutUsState extends State<AboutUs> {
 
   //  /Build UI
   Widget _buildTeam() {
-    if (_aboutus.description == null) {
+    AboutUsModel about = _aboutus == null?null:_aboutus;
+    if (about.description == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -315,7 +317,7 @@ class _AboutUsState extends State<AboutUs> {
     return Container(
       child:Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(_aboutus.description,
+        child: Text(about.description,
         style: Theme.of(context)
                       .textTheme
                       .bodyText1

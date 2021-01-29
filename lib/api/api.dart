@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/http_manager.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
@@ -52,9 +52,9 @@ class Api {
 
 
   // /Update password api
-   static Future<dynamic> editPassword({String password, String confirm_password}) async {
+   static Future<dynamic> editPassword({String password, String confirmpassword}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-password?password='+password+'&confirm_password='+confirm_password);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-password?password='+password+'&confirm_password='+confirmpassword);
     return result;
   }
 
@@ -274,7 +274,7 @@ class Api {
       path = 'http://dev.shoplocalto.ca/api/vendortabs?id='+id.toString();
     }
     final result = await httpManager.post(url:path);
-print('this is the............................... result tab data${result}');
+print('this is the............................... result tab data$result');
     return ProductDetailTabPageModel.fromJson(result);
   }
 

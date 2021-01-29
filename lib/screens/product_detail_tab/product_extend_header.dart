@@ -107,39 +107,39 @@ class ProductHeader extends SliverPersistentHeaderDelegate {
                       productTabPage?.product?.subtitle,
                       style: Theme.of(context).textTheme.bodyText1,
                     ),
-                    Padding(
-                      padding: EdgeInsets.only(top: 3),
-                    ),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AppTag(
-                          "${productTabPage?.product?.rate}",
-                          type: TagType.rateSmall,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        StarRating(
-                          rating: productTabPage?.product?.rate,
-                          size: 14,
-                          color: AppTheme.yellowColor,
-                          borderColor: AppTheme.yellowColor,
-                          onRatingChanged: (v) {
-                            onPressReview();
-                          },
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        Text(
-                          "(${productTabPage?.product?.numRate})",
-                          style: Theme.of(context).textTheme.bodyText1,
-                        ),
-                      ],
-                    )
+                    // Padding(
+                    //   padding: EdgeInsets.only(top: 3),
+                    // ),
+                    // Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     AppTag(
+                    //       "${productTabPage?.product?.rate}",
+                    //       type: TagType.rateSmall,
+                    //     ),
+                    //     Padding(padding: EdgeInsets.only(left: 5)),
+                    //     StarRating(
+                    //       rating: productTabPage?.product?.rate,
+                    //       size: 14,
+                    //       color: AppTheme.yellowColor,
+                    //       borderColor: AppTheme.yellowColor,
+                    //       onRatingChanged: (v) {
+                    //         onPressReview();
+                    //       },
+                    //     ),
+                    //     Padding(padding: EdgeInsets.only(left: 5)),
+                    //     Text(
+                    //       "(${productTabPage?.product?.numRate})",
+                    //       style: Theme.of(context).textTheme.bodyText1,
+                    //     ),
+                    //   ],
+                    // )
                   ],
                 ),
               ),
-              productTabPage?.product?.status != null
+              productTabPage.product.status != null
                   ? AppTag(
-                      productTabPage?.product?.status,
+                      productTabPage.product.status,
                       type: TagType.status,
                     )
                   : Container(),

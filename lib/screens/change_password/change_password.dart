@@ -19,7 +19,7 @@ class _ChangePasswordState extends State<ChangePassword> {
   final _focusPass = FocusNode();
   final _focusRePass = FocusNode();
 
-  bool _loading = false;
+  // bool _loading = false;
   String _validPass;
   String _validRePass;
   ResetBloc _resetBloc;
@@ -28,40 +28,37 @@ class _ChangePasswordState extends State<ChangePassword> {
     _resetBloc = BlocProvider.of<ResetBloc>(context);
     _textPassController.text;
     _textRePassController.text;
-    _validPass;
-    _validRePass;
-    _changePassword();
     super.initState();
   }
 
-  ///On change password
-  Future<void> _changePassword() async {
-    UtilOther.hiddenKeyboard(context);
-    setState(() {
-      _validPass = UtilValidator.validate(
-        data: _textPassController.text,
-      );
-      _validRePass = UtilValidator.validate(
-        data: _textRePassController.text,
-      );
+  // ///On change password
+  // Future<void> _changePassword() async {
+  //   UtilOther.hiddenKeyboard(context);
+  //   setState(() {
+  //     _validPass = UtilValidator.validate(
+  //       data: _textPassController.text,
+  //     );
+  //     _validRePass = UtilValidator.validate(
+  //       data: _textRePassController.text,
+  //     );
  
-    });
-    // if (_validPass == null && _validRePass == null) {
-    //   setState(() {
+  //   });
+  //   // if (_validPass == null && _validRePass == null) {
+  //   //   setState(() {
          
-    //     _loading = true;
-    //     _validPass = UtilValidator.validate(
-    //     data: _textPassController.text,
-    //   );
-    //   _validRePass = UtilValidator.validate(
-    //     data: _textRePassController.text,
-    //   );
-    //   });
-    //   await Future.delayed(Duration(seconds: 1));
-    //   Navigator.pop(context);
-    // }
+  //   //     _loading = true;
+  //   //     _validPass = UtilValidator.validate(
+  //   //     data: _textPassController.text,
+  //   //   );
+  //   //   _validRePass = UtilValidator.validate(
+  //   //     data: _textRePassController.text,
+  //   //   );
+  //   //   });
+  //   //   await Future.delayed(Duration(seconds: 1));
+  //   //   Navigator.pop(context);
+  //   // }
 
-  }
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -107,20 +104,20 @@ class _ChangePasswordState extends State<ChangePassword> {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textPassController.clear();
                   },
-                  onSubmitted: (text) {
-                    UtilOther.fieldFocusChange(
-                      context,
-                      _focusPass,
-                      _focusRePass,
-                    );
-                  },
-                  onChanged: (text) {
-                    setState(() {
-                      _validPass = UtilValidator.validate(
-                        data: _textPassController.text,
-                      );
-                    });
-                  },
+                  // onSubmitted: (text) {
+                  //   UtilOther.fieldFocusChange(
+                  //     context,
+                  //     _focusPass,
+                  //     _focusRePass,
+                  //   );
+                  // },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validPass = UtilValidator.validate(
+                  //       data: _textPassController.text,
+                  //     );
+                  //   });
+                  // },
                   icon: Icon(Icons.clear),
                   controller: _textPassController,
                 ),
@@ -149,69 +146,88 @@ class _ChangePasswordState extends State<ChangePassword> {
                     await Future.delayed(Duration(milliseconds: 100));
                     _textRePassController.clear();
                   },
-                  onSubmitted: (text) {
-                    _changePassword();
-                  },
-                  onChanged: (text) {
-                    setState(() {
-                      _validRePass = UtilValidator.validate(
-                          data: _textRePassController.text);
-                    });
+                  // onSubmitted: (text) {
+                  //   _changePassword();
+                  // },
+                  // onChanged: (text) {
+                  //   setState(() {
+                  //     _validRePass = UtilValidator.validate(
+                  //         data: _textRePassController.text);
+                  //   });
                     
-                  },
+                  // },
                   icon: Icon(Icons.clear),
                   controller: _textRePassController,
                 ),
                 Padding(
-                  padding: EdgeInsets.only(top: 20, bottom: 20),
-                  child: BlocBuilder<ResetBloc, ResetState>(
-                  builder: (context, update) {
+                  padding: EdgeInsets.only(top: 20),
+                ),
+                    BlocBuilder<ResetBloc, ResetState>(
+                  builder: (context, login) {
                     return BlocListener<ResetBloc, ResetState>(
-                      listener: (context, updateListener) {
-                        if (updateListener is ResetFail) {
-                          print("update failed");
+                      listener: (context, loginListener) {
+                        if (loginListener is ResetFail) {
+                          _showMessage();
+                        }
+                        if(loginListener is ResetSuccess){
                           Navigator.of(context).pop();
                         }
                       },
                       child: AppButton(
                         onPressed: () {
-                          _resetBloc.add(OnReset(
-                            confirm_password: _validRePass,
-                            password: _validPass,
-                          ));
-                            Navigator.pop(context);
-                          print('phone....................:${_validPass}');
-                          print('website...............:${_validRePass}');
+                          setState(() {
+                            _resetBloc.add(
+                              OnReset(
+                                password: _textPassController.text,
+                                confirmpassword: _textRePassController.text,
+                              ),
+                            );
+                            print('email:${_textRePassController.text}');
+                            print('password:${_textPassController.text}');
+                          });
+                          //  _showSuccess();
+                          //  Navigator.of(context).pop();
                         },
+                        
                         text: Translate.of(context).translate('confirm'),
-                        loading: update is ResetLoading,
+                        loading: login is ResetLoading,
                         disableTouchWhenLoading: true,
+                       
                       ),
                     );
                   },
-                ),
-                  // BlocBuilder<ResetBloc, ResetState>(
-                  //   builder: (context, login) {
-                  //     return AppButton(
-                  //       onPressed: () {
-                  //         _changePassword();
-                  //         _resetBloc.add(OnReset(
-                  //           password = _validPass,
-                  //           confirm_password = _validRePass,
-                  //         ));
-                  //       },
-                  //       text: Translate.of(context).translate('confirm'),
-                  //       loading: _loading,
-                  //       disableTouchWhenLoading: true,
-                  //     );
-                  //   },
-                  // ),
                 ),
               ],
             ),
           ),
         ),
       ),
+    );
+  }
+  Future<void> _showMessage() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ResetPassword'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                Text('Reset failed', style: Theme.of(context).textTheme.bodyText1),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

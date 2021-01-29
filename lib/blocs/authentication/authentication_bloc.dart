@@ -95,22 +95,30 @@ class AuthBloc extends Bloc<AuthenticationEvent, AuthenticationState> {
         throw Exception(message);
       }
     }
-    if (event is AuthenticationSignupSave) {
-      ///Save to Storage phone
-      final savePreferences = await UtilPreferences.setString(
-        Preferences.user,
-        jsonEncode(event.user.toJson()),
-      );
+    // if (event is AuthenticationSignupSave) {
+    //   ///Save to Storage phone
+    //   final savePreferences = await UtilPreferences.setString(
+    //     Preferences.user,
+    //     jsonEncode(event.user.toJson()),
+    //   );
+    //   final getUserPreferences = UtilPreferences.getString(
+    //     Preferences.user,
+    //   );
+    //   final user = UserModel.fromJson(jsonDecode(getUserPreferences));
+    //   httpManager.baseOptions.headers = {};
 
-      ///Check result save user
-      if (savePreferences) {
-        ///Notify loading to UI
-        yield AuthenticationSignupSuccess();
-      } else {
-        final String message = "Cannot save user data to storage phone";
-        throw Exception(message);
-      }
-    }
+    //   httpManager.baseOptions.headers["Authorization"] = "Bearer " + user.token;
+    //   print(httpManager.baseOptions.headers.toString());
+
+    //   ///Check result save user
+    //   if (savePreferences) {
+    //     ///Notify loading to UI
+    //     yield AuthenticationSignupSuccess();
+    //   } else {
+    //     final String message = "Cannot save user data to storage phone";
+    //     throw Exception(message);
+    //   }
+    // }
     //  if (event is AuthenticationUpdateSave) {
     //   ///Save to Storage phone
     //   final savePreferences = await UtilPreferences.setString(

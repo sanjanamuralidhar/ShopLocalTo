@@ -1,6 +1,6 @@
 
 
-import 'package:flutter/cupertino.dart';
+// import 'package:flutter/cupertino.dart';
 import 'package:listar_flutter/models/model.dart';
 
 enum CategoryType2 {

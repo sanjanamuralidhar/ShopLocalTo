@@ -32,10 +32,10 @@ class ResetBloc extends Bloc<ResetEvent, ResetState> {
       ///Fetch API
       final dynamic result = await Api.editPassword(
         password: event.password,
-        confirm_password: event.confirm_password,
+        confirmpassword: event.confirmpassword,
       );
       flutterSecureStorage.write(key: 'password',value: event.password);
-      flutterSecureStorage.write(key: 'password', value: event.confirm_password);
+      flutterSecureStorage.write(key: 'password', value: event.confirmpassword);
       Future<String> value = flutterSecureStorage.read(key: 'password') ;
       print('/////////////////////////////');
       print(value.toString());

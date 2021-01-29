@@ -1,5 +1,3 @@
-
-
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -30,8 +28,6 @@ class _EditProfileState extends State<EditProfile> {
   final _textInfoController = TextEditingController();
   final _textPhoneController = TextEditingController();
 
-  
-  
   final _focusName = FocusNode();
   final _focusEmail = FocusNode();
   final _focusAddress = FocusNode();
@@ -48,8 +44,11 @@ class _EditProfileState extends State<EditProfile> {
   String _validInfo;
   String _validPhone;
   UserModel _userData;
-UpdateBloc _updateBloc;
- String value;
+  UpdateBloc _updateBloc;
+  String value;
+  File cropImage;
+  bool _cropped = false;
+  final picker = ImagePicker();
 
   void initState() {
     _updateBloc = BlocProvider.of<UpdateBloc>(context);
@@ -62,6 +61,7 @@ UpdateBloc _updateBloc;
     _loadProfile();
     super.initState();
   }
+
   ///On async get Image file
   Future _getImage() async {
     // ignore: deprecated_member_use
@@ -72,12 +72,12 @@ UpdateBloc _updateBloc;
       });
     }
   }
+
   Future<void> _loadProfile() async {
     final UserModel result = await Api.getUserProfile();
-      setState(() {
-        _userData = result;
-      });
-       
+    setState(() {
+      _userData = result;
+    });
   }
 
   ///On update image
@@ -104,7 +104,7 @@ UpdateBloc _updateBloc;
   //     _validInfo = UtilValidator.validate(
   //       data: _textInfoController.text,
   //     );
-      
+
   //   });
   //   if (_validName == null &&
   //       _validEmail == null &&
@@ -184,11 +184,7 @@ UpdateBloc _updateBloc;
                               color: Colors.white,
                             ),
                             onPressed: _getImage,
-                            // onPressed: (){
-                            //   _onChangeSort();
-                            // }
-                            // _getImage,
-                          )
+                          ),
                         ],
                       )
                     ],
@@ -233,7 +229,7 @@ UpdateBloc _updateBloc;
                     //   });
                     // },
                     icon: Icon(Icons.clear),
-                    controller:_textNameController,
+                    controller: _textNameController,
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 10, bottom: 10),
@@ -283,31 +279,31 @@ UpdateBloc _updateBloc;
                     ),
                   ),
                   AppTextInput(
-                  hintText: Translate.of(context).translate('phone'),
-                  errorText: _validPhone != null
-                      ? Translate.of(context).translate(_validPhone)
-                      : null,
-                  icon: Icon(Icons.clear),
-                  controller: _textPhoneController,
-                  focusNode: _focusPhone,
-                  textInputAction: TextInputAction.next,
-                  // onChanged: (text) {
-                  //   setState(() {
-                  //     _validPhone = UtilValidator.validate(
-                  //       data: _textPhoneController.text,
-                  //     );
-                  //   });
-                  // },
-                  // onSubmitted: (text) {
-                  //   UtilOther.fieldFocusChange(
-                  //       context, _focusPhone, _focusPhone);
-                  // },
-                  onTapIcon: () async {
-                    await Future.delayed(Duration(milliseconds: 100));
-                    _textPhoneController.clear();
-                  },
-                ),
-                Padding(
+                    hintText: Translate.of(context).translate('phone'),
+                    errorText: _validPhone != null
+                        ? Translate.of(context).translate(_validPhone)
+                        : null,
+                    icon: Icon(Icons.clear),
+                    controller: _textPhoneController,
+                    focusNode: _focusPhone,
+                    textInputAction: TextInputAction.next,
+                    // onChanged: (text) {
+                    //   setState(() {
+                    //     _validPhone = UtilValidator.validate(
+                    //       data: _textPhoneController.text,
+                    //     );
+                    //   });
+                    // },
+                    // onSubmitted: (text) {
+                    //   UtilOther.fieldFocusChange(
+                    //       context, _focusPhone, _focusPhone);
+                    // },
+                    onTapIcon: () async {
+                      await Future.delayed(Duration(milliseconds: 100));
+                      _textPhoneController.clear();
+                    },
+                  ),
+                  Padding(
                     padding: EdgeInsets.only(top: 10, bottom: 10),
                     child: Text(
                       Translate.of(context).translate('address'),
@@ -420,55 +416,57 @@ UpdateBloc _updateBloc;
                     controller: _textInfoController,
                   ),
                   Padding(
-                  padding: EdgeInsets.only(top: 20),
-                ),
+                    padding: EdgeInsets.only(top: 20),
+                  ),
                 ],
               ),
             ),
-              Padding(
+            Padding(
               padding: EdgeInsets.only(
                 left: 20,
                 right: 20,
                 top: 15,
                 bottom: 15,
               ),
-               child: BlocBuilder<UpdateBloc, UpdateState>(
-                  builder: (context, update) {
-                    return BlocListener<UpdateBloc, UpdateState>(
-                      listener: (context, updateListener) {
-                        if (updateListener is UpdateFail) {
-                          print("update failed");
-                          
-                        }
+              child: BlocBuilder<UpdateBloc, UpdateState>(
+                builder: (context, update) {
+                  return BlocListener<UpdateBloc, UpdateState>(
+                    listener: (context, updateListener) {
+                      if (updateListener is UpdateFail) {
+                        print("update failed");
+                      }
+                    },
+                    child: AppButton(
+                      onPressed: () {
+                        _updateBloc.add(OnUpdate(
+                          username: _textNameController.text,
+                          email: _textEmailController.text,
+                          phone: _textPhoneController.text,
+                          address: _textAddressController.text,
+                          info: _textInfoController.text,
+                          website: _textWebsiteController.text,
+                        ));
+
+                        // Navigator.pop(context);
+                        Navigator.of(context).pop();
+                        // _signUp();
+                        print('username.........:${_textNameController.text}');
+                        print('email.........:${_textEmailController.text}');
+                        print(
+                            'Adress...........:${_textAddressController.text}');
+                        print(
+                            'phone....................:${_textPhoneController.text}');
+                        print(
+                            'website...............:${_textWebsiteController.text}');
                       },
-                      child: AppButton(
-                        onPressed: () {
-                          _updateBloc.add(OnUpdate(
-                            username: _textNameController.text,
-                            email: _textEmailController.text,
-                            phone: _textPhoneController.text,
-                            address: _textAddressController.text,
-                            info: _textInfoController.text,
-                            website:_textWebsiteController.text,
-                          ));
-                          
-                          // Navigator.pop(context);
-                         Navigator.of(context).pop();
-                          // _signUp();
-                          print('username.........:${_textNameController.text}');
-                          print('email.........:${_textEmailController.text}');
-                          print('Adress...........:${_textAddressController.text}');
-                          print('phone....................:${_textPhoneController.text}');
-                          print('website...............:${_textWebsiteController.text}');
-                        },
-                        text: Translate.of(context).translate('confirm'),
-                        loading: update is UpdateProfileLoading,
-                        disableTouchWhenLoading: true,
-                      ),
-                    );
-                  },
-                ),
-               ),
+                      text: Translate.of(context).translate('confirm'),
+                      loading: update is UpdateProfileLoading,
+                      disableTouchWhenLoading: true,
+                    ),
+                  );
+                },
+              ),
+            ),
           ],
         ),
       ),

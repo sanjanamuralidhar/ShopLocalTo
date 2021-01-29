@@ -7,6 +7,7 @@ import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
+import 'package:listar_flutter/main_navigation.dart';
 
 class SignIn extends StatefulWidget {
   final IconModel item;
@@ -37,6 +38,7 @@ class _SignInState extends State<SignIn> {
     _loginBloc = BlocProvider.of<LoginBloc>(context);
     _textEmailController.text;
     _textPassController.text;
+    // _successAlert(context);
     super.initState();
   }
 
@@ -87,7 +89,7 @@ class _SignInState extends State<SignIn> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text(message, style: Theme.of(context).textTheme.bodyText1),
+                Text('login failed', style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
           ),
@@ -206,11 +208,18 @@ class _SignInState extends State<SignIn> {
                         if (loginListener is LoginFail) {
                           _showMessage(loginListener.message);
                         }
+                        if (loginListener is LoginSuccess) {
+                          Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => MainNavigation(),
+            ));
+                        }
                       },
                       child: AppButton(
                         onPressed: () {
                           setState(() {
-                            _loginBloc.add(OnLogin(
+                            _loginBloc.add(
+                              OnLogin(
                                 email: _textEmailController.text,
                                 password: _textPassController.text,
                               ),
@@ -235,7 +244,7 @@ class _SignInState extends State<SignIn> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        Text('No Account?'),
+                        Text("Don't have an Account Yet?"),
                         Material(
                             type: MaterialType.transparency,
                             child: InkWell(
@@ -257,7 +266,8 @@ class _SignInState extends State<SignIn> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        Translate.of(context).translate('Forgot Your Password?'),
+                        Translate.of(context)
+                            .translate('Forgot Your Password?'),
                       ),
                       Material(
                           type: MaterialType.transparency,
@@ -281,12 +291,12 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 10),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * .7,
+                  width: MediaQuery.of(context).size.width * .75,
                   height: 45,
                   child: SignInButtonBuilder(
                     text: 'Sign in with Facebook',
                     image: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(left:0,right:5,top:8,bottom: 8),
                       child: Image.asset('assets/socialicons/facebook.png'),
                     ),
                     onPressed: () {},
@@ -295,12 +305,12 @@ class _SignInState extends State<SignIn> {
                 ),
                 SizedBox(height: 10),
                 SizedBox(
-                  width: MediaQuery.of(context).size.width * .7,
+                  width: MediaQuery.of(context).size.width * .75,
                   height: 45,
                   child: SignInButtonBuilder(
                     text: 'Sign in with Google',
                     image: Padding(
-                      padding: const EdgeInsets.all(8.0),
+                      padding: const EdgeInsets.only(left:0,right:5,top:8,bottom: 8),
                       child: Image.asset('assets/socialicons/google.png'),
                     ),
                     onPressed: () {},

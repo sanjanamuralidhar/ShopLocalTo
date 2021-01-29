@@ -35,6 +35,12 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   List<double> _offsetContentOrigin = [];
   int _indexTab = 0;
   ProductDetailTabPageModel _page;
+  
+  final controller = ScrollController();
+  static const double padding = 16;
+  static const double spacing = 8;
+  static const int crossAxisCount = 2;
+  int item = 0;
 
   @override
   void initState() {
@@ -72,8 +78,6 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       double offsetStart = widthDevice / 2 - itemSize / 2;
 
       int indexCheck = _offsetContentOrigin.indexWhere((item) {
-        // log(item.toString());
-        log(_scrollController.offset.toString());
         return item - 1 > _scrollController.offset;
       });
       if (indexCheck == -1) {
@@ -95,6 +99,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
       }
     }
   }
+
 
   ///Set Origin Offset default when render success
   void _setOriginOffset() {

@@ -133,23 +133,23 @@ final Function(ShopModel) onPressshop;
                           .caption
                           .copyWith(fontWeight: FontWeight.w600),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 10)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AppTag(
-                          "${relatedModel.rate}",
-                          type: TagType.rateSmall,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        StarRating(
-                          rating: relatedModel.rate,
-                          size: 14,
-                          color: AppTheme.yellowColor,
-                          borderColor: AppTheme.yellowColor,
-                        )
-                      ],
-                    )
+                    // Padding(padding: EdgeInsets.only(top: 10)),
+                    // Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     AppTag(
+                    //       "${relatedModel.rate}",
+                    //       type: TagType.rateSmall,
+                    //     ),
+                    //     Padding(padding: EdgeInsets.only(left: 5)),
+                    //     StarRating(
+                    //       rating: relatedModel.rate,
+                    //       size: 14,
+                    //       color: AppTheme.yellowColor,
+                    //       borderColor: AppTheme.yellowColor,
+                    //     )
+                    //   ],
+                    // )
                   ],
                 ),
               )
@@ -281,23 +281,23 @@ final Function(ShopModel) onPressshop;
                       .subtitle2
                       .copyWith(fontWeight: FontWeight.w600),
                 ),
-                Padding(padding: EdgeInsets.only(top: 10)),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: <Widget>[
-                    AppTag(
-                      "${featureModel.rate}",
-                      type: TagType.rateSmall,
-                    ),
-                    Padding(padding: EdgeInsets.only(left: 5)),
-                    StarRating(
-                      rating: featureModel.rate,
-                      size: 14,
-                      color: AppTheme.yellowColor,
-                      borderColor: AppTheme.yellowColor,
-                    )
-                  ],
-                ),
+                // Padding(padding: EdgeInsets.only(top: 10)),
+                // Row(
+                //   crossAxisAlignment: CrossAxisAlignment.center,
+                //   children: <Widget>[
+                //     AppTag(
+                //       "${featureModel.rate}",
+                //       type: TagType.rateSmall,
+                //     ),
+                //     Padding(padding: EdgeInsets.only(left: 5)),
+                //     StarRating(
+                //       rating: featureModel.rate,
+                //       size: 14,
+                //       color: AppTheme.yellowColor,
+                //       borderColor: AppTheme.yellowColor,
+                //     )
+                //   ],
+                // ),
                 Padding(padding: EdgeInsets.only(top: 10)),
                 // Text(
                 //   featureModel.address,
@@ -459,23 +459,23 @@ final Function(ShopModel) onPressshop;
                             .subtitle2
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
-                      Padding(padding: EdgeInsets.only(top: 5)),
-                      Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: <Widget>[
-                          AppTag(
-                            "${nearlyModel.rate}",
-                            type: TagType.rateSmall,
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 5)),
-                          StarRating(
-                            rating: nearlyModel.rate,
-                            size: 14,
-                            color: AppTheme.yellowColor,
-                            borderColor: AppTheme.yellowColor,
-                          )
-                        ],
-                      ),
+                      // Padding(padding: EdgeInsets.only(top: 5)),
+                      // Row(
+                      //   crossAxisAlignment: CrossAxisAlignment.center,
+                      //   children: <Widget>[
+                      //     AppTag(
+                      //       "${nearlyModel.rate}",
+                      //       type: TagType.rateSmall,
+                      //     ),
+                      //     Padding(padding: EdgeInsets.only(left: 5)),
+                      //     StarRating(
+                      //       rating: nearlyModel.rate,
+                      //       size: 14,
+                      //       color: AppTheme.yellowColor,
+                      //       borderColor: AppTheme.yellowColor,
+                      //     )
+                      //   ],
+                      // ),
                       Padding(padding: EdgeInsets.only(top: 5)),
                       Row(
                         children: <Widget>[
@@ -623,68 +623,68 @@ final Function(ShopModel) onPressshop;
                         ],
                       ),
                     ),
-                    Padding(
-                      padding: EdgeInsets.all(5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: <Widget>[
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Row(
-                                children: <Widget>[
-                                  AppTag(
-                                    "${item.rate}",
-                                    type: TagType.rateSmall,
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsets.only(left: 5),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        // Padding(
-                                        //   padding: EdgeInsets.only(left: 3),
-                                        //   child: Text(
-                                        //     wishlistModel.rateText,
-                                        //     style: Theme.of(context)
-                                        //         .textTheme
-                                        //         .caption
-                                        //         .copyWith(
-                                        //           color: Colors.white,
-                                        //           fontWeight: FontWeight.w600,
-                                        //         ),
-                                        //   ),
-                                        // ),
-                                        StarRating(
-                                          rating: item.rate,
-                                          size: 14,
-                                          color: AppTheme.yellowColor,
-                                          borderColor: AppTheme.yellowColor,
-                                        )
-                                      ],
-                                    ),
-                                  )
-                                ],
-                              ),
-                              // Padding(
-                              //   padding: EdgeInsets.only(top: 3),
-                              //   child: Text(
-                              //     "${wishlistModel.numRate} reviews",
-                              //     style: Theme.of(context)
-                              //         .textTheme
-                              //         .caption
-                              //         .copyWith(
-                              //           color: Colors.white,
-                              //           fontWeight: FontWeight.w600,
-                              //         ),
-                              //   ),
-                              // )
-                            ],
-                          )
-                        ],
-                      ),
-                    )
+                    // Padding(
+                    //   padding: EdgeInsets.all(5),
+                    //   child: Row(
+                    //     mainAxisAlignment: MainAxisAlignment.end,
+                    //     children: <Widget>[
+                    //       Column(
+                    //         crossAxisAlignment: CrossAxisAlignment.start,
+                    //         children: <Widget>[
+                    //           Row(
+                    //             children: <Widget>[
+                    //               AppTag(
+                    //                 "${item.rate}",
+                    //                 type: TagType.rateSmall,
+                    //               ),
+                    //               Padding(
+                    //                 padding: EdgeInsets.only(left: 5),
+                    //                 child: Column(
+                    //                   crossAxisAlignment:
+                    //                       CrossAxisAlignment.start,
+                    //                   children: <Widget>[
+                    //                     // Padding(
+                    //                     //   padding: EdgeInsets.only(left: 3),
+                    //                     //   child: Text(
+                    //                     //     wishlistModel.rateText,
+                    //                     //     style: Theme.of(context)
+                    //                     //         .textTheme
+                    //                     //         .caption
+                    //                     //         .copyWith(
+                    //                     //           color: Colors.white,
+                    //                     //           fontWeight: FontWeight.w600,
+                    //                     //         ),
+                    //                     //   ),
+                    //                     // ),
+                    //                     StarRating(
+                    //                       rating: item.rate,
+                    //                       size: 14,
+                    //                       color: AppTheme.yellowColor,
+                    //                       borderColor: AppTheme.yellowColor,
+                    //                     )
+                    //                   ],
+                    //                 ),
+                    //               )
+                    //             ],
+                    //           ),
+                    //           // Padding(
+                    //           //   padding: EdgeInsets.only(top: 3),
+                    //           //   child: Text(
+                    //           //     "${wishlistModel.numRate} reviews",
+                    //           //     style: Theme.of(context)
+                    //           //         .textTheme
+                    //           //         .caption
+                    //           //         .copyWith(
+                    //           //           color: Colors.white,
+                    //           //           fontWeight: FontWeight.w600,
+                    //           //         ),
+                    //           //   ),
+                    //           // )
+                    //         ],
+                    //       )
+                    //     ],
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -926,23 +926,23 @@ final Function(ShopModel) onPressshop;
                           .caption
                           .copyWith(fontWeight: FontWeight.w600),
                     ),
-                    Padding(padding: EdgeInsets.only(top: 10)),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: <Widget>[
-                        AppTag(
-                          "${shopModel.id}",
-                          type: TagType.rateSmall,
-                        ),
-                        Padding(padding: EdgeInsets.only(left: 5)),
-                        StarRating(
-                          rating: shopModel.rate,
-                          size: 14,
-                          color: AppTheme.yellowColor,
-                          borderColor: AppTheme.yellowColor,
-                        )
-                      ],
-                    )
+                    // Padding(padding: EdgeInsets.only(top: 10)),
+                    // Row(
+                    //   crossAxisAlignment: CrossAxisAlignment.center,
+                    //   children: <Widget>[
+                    //     AppTag(
+                    //       "${shopModel.id}",
+                    //       type: TagType.rateSmall,
+                    //     ),
+                    //     Padding(padding: EdgeInsets.only(left: 5)),
+                    //     StarRating(
+                    //       rating: shopModel.rate,
+                    //       size: 14,
+                    //       color: AppTheme.yellowColor,
+                    //       borderColor: AppTheme.yellowColor,
+                    //     )
+                    //   ],
+                    // )
                   ],
                 ),
               )
