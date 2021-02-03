@@ -1,10 +1,10 @@
 import 'package:listar_flutter/models/model.dart';
 
 class ChatPageModel {
-  final String roomName;
-  final int online;
-  final List<User> member;
-  final List<MessageModel> message;
+  String roomName;
+  int online;
+  List<User> member;
+  List<MessageModel> message;
 
   ChatPageModel(
     this.roomName,
@@ -13,24 +13,73 @@ class ChatPageModel {
     this.message,
   );
 
-  factory ChatPageModel.fromJson(Map<String, dynamic> json) {
-    final Iterable convertMessage = json['message'] ?? [];
-
-    final listMessage = convertMessage.map((item) {
-      return MessageModel.fromJson(item);
-    }).toList();
-
-    final Iterable convertUser = json['member'] ?? [];
-
-    final listUser = convertUser.map((item) {
-      return User.fromJson(item);
-    }).toList();
-
-    return ChatPageModel(
-      json['room_name'] as String ?? '',
-      json['online'] as int ?? 0,
-      listUser,
-      listMessage,
-    );
+  @override
+  String toString() {
+    return toJson().toString();
   }
+
+  ChatPageModel.fromJson(Map<String, dynamic> json) {
+    if (json == null) return;
+    member = _setList(json['member']);
+    message = _setMessageList(json['message']);
+    online = json['online'];  
+    roomName = json['room_name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = {};
+    if (message != null) json['message'] = message;
+    if (member !=null) json['member'] = member;
+    if(online !=null) json['online'] = online;
+    if(roomName!=null) json['roomName'] = roomName;
+    return json;
+  }
+
+    static List<User> _setList(list) {
+    if (list != null) {
+      final Iterable refactorFeature = list;
+      return refactorFeature.map((item) {
+        return User.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+    static List<MessageModel> _setMessageList(list) {
+    if (list != null) {
+      final Iterable refactorFeature = list;
+      return refactorFeature.map((item) {
+        return MessageModel.fromJson(item);
+      }).toList();
+    }
+    return null;
+  }
+
+  static List<ChatPageModel> listFromJson(List<dynamic> json) {
+    return json == null
+        ? List<ChatPageModel>()
+        : json.map((value) => ChatPageModel.fromJson(value)).toList();
+  }
+ 
+
+  // ChatPageModel.fromJson(Map<String, dynamic> json) {
+  //   if (json == null) return;
+  //   final Iterable convertMessage = json['message'] ?? [];
+
+  //   final listMessage = convertMessage.map((item) {
+  //     return MessageModel.fromJson(item);
+  //   }).toList();
+
+  //   final Iterable convertUser = json['member'] ?? [];
+
+  //   final listUser = convertUser.map((item) {
+  //     return User.fromJson(item);
+  //   }).toList();
+
+  //   return ChatPageModel(
+  //     json['room_name'] as String ?? '',
+  //     json['online'] as int ?? 0,
+  //     listUser,
+  //     listMessage,
+  //   );
+  // }
 }

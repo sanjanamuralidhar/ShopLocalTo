@@ -134,20 +134,21 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///On navigate gallery
   void _onPhotoPreview() {
-    // List<TabModel> tab = _page==null?[]:_page.tab;
+    ProductModel product = _page==null?null:_page.product;
     Navigator.pushNamed(
       context,
       Routes.gallery,
-      arguments: _page.product.photo,
+      arguments: product.photo,
     );
   }
 
   ///On navigate map
   void _onLocation() {
+    ProductModel product = _page==null?null:_page.product;
     Navigator.pushNamed(
       context,
       Routes.location,
-      arguments: _page.product.location,
+      arguments: product.location,
     );
   }
 
@@ -170,8 +171,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///Build banner UI
   Widget _buildBanner() {
-    ProductDetailTabPageModel productMdl = _page==null?null:_page;
-    if (productMdl.product.image == null) {
+    ProductModel productMdl = _page==null?null:_page.product;
+    if (productMdl.image == null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -183,7 +184,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     }
 
     return Image.network(
-      productMdl.product.image,
+      productMdl.image,
       fit: BoxFit.cover,
     );
   }

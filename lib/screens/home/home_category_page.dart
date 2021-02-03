@@ -73,7 +73,7 @@ Color colorConvert(String color) {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 36,
+              width: 40,
               height: 36,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -84,10 +84,10 @@ Color colorConvert(String color) {
 
             ),
             Padding(
-              padding: EdgeInsets.only(top: 3, left: 2, right: 2),
+              padding: EdgeInsets.only(top: 3, left: 1, right: 1),
               child: Text(
                 categoryModel2.title,
-                maxLines: 1,
+                maxLines: 4,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context)
                     .textTheme

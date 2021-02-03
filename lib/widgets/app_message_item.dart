@@ -105,7 +105,7 @@ class AppMessageItem extends StatelessWidget {
                       children: <Widget>[
                         Expanded(
                           child: Text(
-                            item.roomName,
+                            item.from,
                             maxLines: 1,
                             style: Theme.of(context)
                                 .textTheme
@@ -113,26 +113,26 @@ class AppMessageItem extends StatelessWidget {
                                 .copyWith(fontWeight: FontWeight.w600),
                           ),
                         ),
-                        Text(
-                          DateFormat(
-                            'EEE MMM d yyyy',
-                            AppLanguage.defaultLanguage.languageCode,
-                          ).format(item.date),
-                          style: Theme.of(context).textTheme.caption,
-                        )
+                        // Text(
+                        //   DateFormat(
+                        //     'EEE MMM d yyyy',
+                        //     AppLanguage.defaultLanguage.languageCode,
+                        //   ).format(item.date),
+                        //   style: Theme.of(context).textTheme.caption,
+                        // )
                       ],
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 3),
                     ),
-                    Text(
-                      item.message,
-                      maxLines: 1,
-                      style: Theme.of(context)
-                          .textTheme
-                          .caption
-                          .copyWith(fontWeight: FontWeight.w500),
-                    )
+                    // Text(
+                    //   item.message,
+                    //   maxLines: 1,
+                    //   style: Theme.of(context)
+                    //       .textTheme
+                    //       .caption
+                    //       .copyWith(fontWeight: FontWeight.w500),
+                    // )
                   ],
                 ),
               ),

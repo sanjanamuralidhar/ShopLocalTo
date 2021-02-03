@@ -134,29 +134,29 @@ class _SettingState extends State<Setting> {
             top: 15,
           ),
           children: <Widget>[
-            AppListTitle(
-              title: Translate.of(context).translate('language'),
-              onPressed: () {
-                _onNavigate(Routes.changeLanguage);
-              },
-              trailing: Row(
-                children: <Widget>[
-                  Text(
-                    UtilLanguage.getGlobalLanguageName(
-                      AppLanguage.defaultLanguage.languageCode,
-                    ),
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  RotatedBox(
-                    quarterTurns: UtilLanguage.isRTL() ? 2 : 0,
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      textDirection: TextDirection.ltr,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // AppListTitle(
+            //   title: Translate.of(context).translate('language'),
+            //   onPressed: () {
+            //     _onNavigate(Routes.changeLanguage);
+            //   },
+            //   trailing: Row(
+            //     children: <Widget>[
+            //       Text(
+            //         UtilLanguage.getGlobalLanguageName(
+            //           AppLanguage.defaultLanguage.languageCode,
+            //         ),
+            //         style: Theme.of(context).textTheme.bodyText1,
+            //       ),
+            //       RotatedBox(
+            //         quarterTurns: UtilLanguage.isRTL() ? 2 : 0,
+            //         child: Icon(
+            //           Icons.keyboard_arrow_right,
+            //           textDirection: TextDirection.ltr,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             AppListTitle(
               title: Translate.of(context).translate('notification'),
               trailing: Switch(
@@ -201,27 +201,27 @@ class _SettingState extends State<Setting> {
                 ],
               ),
             ),
-            AppListTitle(
-              title: Translate.of(context).translate('font'),
-              onPressed: () {
-                _onNavigate(Routes.fontSetting);
-              },
-              trailing: Row(
-                children: <Widget>[
-                  Text(
-                    AppTheme.currentFont,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  RotatedBox(
-                    quarterTurns: UtilLanguage.isRTL() ? 2 : 0,
-                    child: Icon(
-                      Icons.keyboard_arrow_right,
-                      textDirection: TextDirection.ltr,
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            // AppListTitle(
+            //   title: Translate.of(context).translate('font'),
+            //   onPressed: () {
+            //     _onNavigate(Routes.fontSetting);
+            //   },
+            //   trailing: Row(
+            //     children: <Widget>[
+            //       Text(
+            //         AppTheme.currentFont,
+            //         style: Theme.of(context).textTheme.bodyText1,
+            //       ),
+            //       RotatedBox(
+            //         quarterTurns: UtilLanguage.isRTL() ? 2 : 0,
+            //         child: Icon(
+            //           Icons.keyboard_arrow_right,
+            //           textDirection: TextDirection.ltr,
+            //         ),
+            //       ),
+            //     ],
+            //   ),
+            // ),
             AppListTitle(
               title: Translate.of(context).translate('version'),
               onPressed: () {},

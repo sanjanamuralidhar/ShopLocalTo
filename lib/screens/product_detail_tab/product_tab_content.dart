@@ -301,7 +301,7 @@ class TabContent extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => Chat(id: page.product.id)),
+                          builder: (context) => Chat(id: page.product.id,)),
                     );
                   },
                   child: Row(

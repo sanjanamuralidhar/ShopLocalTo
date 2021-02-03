@@ -225,6 +225,13 @@ class Api {
     final result = await UtilAsset.loadJson("assets/data/message.json");
     return ResultApiModel.fromJson(result);
   }
+///Get Messages list already chatted memebers list
+  static Future<dynamic> getMessagesList() async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/allmessages');
+    print('+++++++++++++++++++++++++++++++++++------------------------${result['data']}');
+    return MessagePageModel.fromJson(result['data']);
+  }
 
   ///Get Detail Messages
   static Future<dynamic> getDetailMessage({int id}) async {
@@ -237,9 +244,9 @@ class Api {
    ///Get Detail Messages
   static Future<dynamic> getVendorMessage({id:0}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/message-list?id='+id);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/message-list?id='+id.toString());
     print('$result');
-    return ResultApiModel.fromJson(result);
+    return ChatPageModel.fromJson(result['data']);
   }
 
   ///Get Notification

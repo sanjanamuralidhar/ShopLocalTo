@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:listar_flutter/api/api.dart';
+import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/chat_page_model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
@@ -26,41 +28,57 @@ class _ChatState extends State<Chat> {
   bool _loading = true;
   ChatPageModel _chatPage;
   List<MessageModel> _message;
+  ChatBloc _chatBloc;
 
   @override
   void initState() {
-    _loadData();
+    _chatBloc = BlocProvider.of<ChatBloc>(context);
+    // _loadData();
+    _loadDetail();
     super.initState();
   }
 
   ///Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getDetailMessage(id: widget.id);
-    if (result.success) {
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getDetailMessage(id: widget.id);
+  //   if (result.success) {
+  //     setState(() {
+  //       _chatPage = ChatPageModel.fromJson(result.data);
+  //       _message = _chatPage.message;
+  //       _loading = false;
+  //     });
+  //   }
+  // }
+
+    Future<void> _loadDetail() async {
+    final dynamic result = await Api.getVendorMessage(id: widget.id);
       setState(() {
-        _chatPage = ChatPageModel.fromJson(result.data);
+        _chatPage = result;
         _message = _chatPage.message;
         _loading = false;
       });
-    }
   }
 
   ///On async get Image file
-  Future _attachImage() async {
-    final image = await ImagePicker.pickImage(source: ImageSource.gallery);
-    if (image != null) {
-      final chat = MessageModel.fromJson({
-        "id": 10,
-        "date": DateFormat.jm().format(DateTime.now()),
-        "file": image.path,
-        "status": "sent"
-      });
-      setState(() {
-        _message.add(chat);
-      });
-      UtilOther.hiddenKeyboard(context);
-    }
-  }
+  // Future _attachImage() async {
+  //   final image = await ImagePicker.pickImage(source: ImageSource.gallery);
+  //   if (image != null) {
+  //     final chat = MessageModel.fromJson({
+  //       "id": 10,
+  //       "date": DateFormat.jm().format(DateTime.now()),
+  //       "file": image.path,
+  //       "status": "sent"
+  //     });
+  //     setState(() {
+  //        if( _message == null) {
+  //         _message = [];
+  //       }
+  //       _message.add(chat);
+  //       _loading = false;
+  //     });
+  //     UtilOther.hiddenKeyboard(context);
+  //   }
+  // }
 
   ///On load more
   Future<void> _onLoading() async {
@@ -78,7 +96,7 @@ class _ChatState extends State<Chat> {
   void _onSend() {
     print(_loading.toString());
     final chat = MessageModel.fromJson({
-      "id": 6,
+      "id": widget.id,
       "message": _textChatController.text,
       "date": DateFormat.jm().format(DateTime.now()),
       "status": "sent"
@@ -89,6 +107,7 @@ class _ChatState extends State<Chat> {
           _message = [];
         }
         _message.add(chat);
+        print(chat);
         _loading = false;
       });
     }
@@ -104,10 +123,10 @@ class _ChatState extends State<Chat> {
 
     return Row(
       children: <Widget>[
-        AppGroupCircleAvatar(
-          member: _chatPage.member,
-          size: 48,
-        ),
+        // AppGroupCircleAvatar(
+        //   member: _chatPage.member,
+        //   size: 48,
+        // ),
         SizedBox(width: 10),
         Expanded(
           child: Column(
@@ -221,10 +240,10 @@ class _ChatState extends State<Chat> {
                           },
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.attach_file),
-                        onPressed: _attachImage,
-                      )
+                      // IconButton(
+                      //   icon: Icon(Icons.attach_file),
+                      //   onPressed: _attachImage,
+                      // )
                     ],
                   ),
                 ),
@@ -345,10 +364,10 @@ class _ChatState extends State<Chat> {
                           },
                         ),
                       ),
-                      IconButton(
-                        icon: Icon(Icons.attach_file),
-                        onPressed: _attachImage,
-                      )
+                      // IconButton(
+                      //   icon: Icon(Icons.attach_file),
+                      //   onPressed: _attachImage,
+                      // )
                     ],
                   ),
                 ),

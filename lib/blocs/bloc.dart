@@ -8,3 +8,4 @@ export 'theme/bloc.dart';
 export 'Update/bloc.dart';
 export 'resetPassword/bloc.dart';
 export 'contactUs/bloc.dart';
+export 'chat/bloc.dart';

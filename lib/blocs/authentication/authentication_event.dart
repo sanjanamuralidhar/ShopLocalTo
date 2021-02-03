@@ -33,3 +33,8 @@ class AuthenticationContactSave extends AuthenticationEvent {
 
   AuthenticationContactSave(this.user);
 }
+class AuthenticationChatSave extends AuthenticationEvent {
+  final UserModel user;
+
+  AuthenticationChatSave(this.user);
+}

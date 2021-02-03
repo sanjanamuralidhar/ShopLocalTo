@@ -89,7 +89,7 @@ class HomeCategoryItem extends StatelessWidget {
             padding: EdgeInsets.only(top: 3, left: 2, right: 2),
             child: Text(
               item.title,
-              maxLines: 1,
+              maxLines: 4,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme

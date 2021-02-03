@@ -92,7 +92,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 ),
                 AppTextInput(
                   hintText: Translate.of(context).translate(
-                    'input_your_password',
+                    'New Password',
                   ),
                   errorText: _validPass != null
                       ? Translate.of(context).translate(_validPass)
@@ -134,7 +134,7 @@ class _ChangePasswordState extends State<ChangePassword> {
                 ),
                 AppTextInput(
                   hintText: Translate.of(context).translate(
-                    'confirm_your_password',
+                    'Confirm Password',
                   ),
                   errorText: _validRePass != null
                       ? Translate.of(context).translate(_validRePass)

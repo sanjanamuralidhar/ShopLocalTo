@@ -406,6 +406,7 @@ Future<void> _showSuccess() async {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
+            
                BlocBuilder<SignUpBloc, SignUpState>(
                   builder: (context, login) {
                     return BlocListener<SignUpBloc, SignUpState>(
@@ -415,6 +416,7 @@ Future<void> _showSuccess() async {
                         }
                         if(loginListener is SignUpSuccess){
                           _showSuccess();
+                          print('dknfdcvkfnvc');
                           // Navigator.of(context).pop();
                         }
                       },
@@ -433,8 +435,6 @@ Future<void> _showSuccess() async {
                             print('email:${_textEmailController.text}');
                             print('password:${_textPassController.text}');
                           });
-                          //  _showSuccess();
-                          //  Navigator.of(context).pop();
                         },
                         
                         text: Translate.of(context).translate('SignUp'),

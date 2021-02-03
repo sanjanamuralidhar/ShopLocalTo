@@ -6,6 +6,7 @@ import 'package:listar_flutter/blocs/contactUs/bloc.dart';
 import 'package:listar_flutter/blocs/signUp/bloc.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/main_navigation.dart';
+import 'package:listar_flutter/screens/page1/page1.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/blocs/resetPassword/bloc.dart';
@@ -28,6 +29,7 @@ class _AppState extends State<App> {
   UpdateBloc _updateBloc;
   ResetBloc _resetBloc;
   ContactBloc _contactUsBloc;
+  ChatBloc _chatBloc;
 
   @override
   void initState() {
@@ -46,6 +48,7 @@ class _AppState extends State<App> {
       languageBloc: _languageBloc,
     );
     _searchBloc = SearchBloc();
+    _chatBloc = ChatBloc(authBloc: _authBloc);
     super.initState();
   }
 
@@ -61,6 +64,7 @@ class _AppState extends State<App> {
     _updateBloc.close();
     _resetBloc.close();
     _contactUsBloc.close();
+    _chatBloc.close();
     super.dispose();
   }
 
@@ -98,6 +102,9 @@ class _AppState extends State<App> {
          BlocProvider<ContactBloc>(
           create: (context) => _contactUsBloc,
         ),
+        BlocProvider<ChatBloc>(
+          create: (context) => _chatBloc,
+        ),
       ],
       child: BlocBuilder<LanguageBloc, LanguageState>(
         builder: (context, lang) {
@@ -131,7 +138,7 @@ class _AppState extends State<App> {
                                             new AlwaysStoppedAnimation<Color>(
                                                 Colors.blue[800])),
                                   )
-                                : SignIn();
+                                :   Page1();
                       }
                       if (app is ApplicationIntroView) {
                         return IntroPreview();

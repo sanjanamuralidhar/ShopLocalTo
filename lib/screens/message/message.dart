@@ -25,18 +25,27 @@ class _MessageListState extends State<MessageList> {
 
   @override
   void initState() {
-    _loadData();
+    // _loadData();
+    _loadDetails();
     super.initState();
   }
 
   ///Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getMessage();
-    if (result.success) {
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getMessage();
+  //   if (result.success) {
+  //     setState(() {
+  //       _messagePage = MessagePageModel.fromJson(result.data);
+  //     });
+  //   }
+  // }
+
+  Future<void> _loadDetails() async {
+    final dynamic result = await Api.getMessagesList();
       setState(() {
-        _messagePage = MessagePageModel.fromJson(result.data);
+        _messagePage = result;
       });
-    }
+      print('-----------------length------------------${_messagePage.messages.length}');
   }
 
   ///On load more
@@ -58,37 +67,38 @@ class _MessageListState extends State<MessageList> {
 
   ///Build list
   Widget _buildList() {
-    if (_messagePage?.message == null) {
-      return Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.sentiment_satisfied),
-            Padding(
-              padding: EdgeInsets.all(3.0),
-              child: Text(
-                Translate.of(context).translate('No Messages'),
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-          ],
-        ),
-      );
-      // return ListView(
-      //   padding: EdgeInsets.only(top: 5),
-      //   children: List.generate(8, (index) => index).map(
-      //     (item) {
-      //       return AppMessageItem();
-      //     },
-      //   ).toList(),
+    List<MessageModel> message = _messagePage==null?[]:_messagePage.messages;
+    if (message == null) {
+      // return Center(
+      //   child: Row(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>[
+      //       Icon(Icons.sentiment_satisfied),
+      //       Padding(
+      //         padding: EdgeInsets.all(3.0),
+      //         child: Text(
+      //           Translate.of(context).translate('No Messages'),
+      //           style: Theme.of(context).textTheme.bodyText1,
+      //         ),
+      //       ),
+      //     ],
+      //   ),
       // );
+      return ListView(
+        padding: EdgeInsets.only(top: 5),
+        children: List.generate(8, (index) => index).map(
+          (item) {
+            return AppMessageItem();
+          },
+        ).toList(),
+      );
     }
 
     return ListView.builder(
       padding: EdgeInsets.only(top: 5),
-      itemCount: _messagePage.message.length,
+      itemCount: message.length,
       itemBuilder: (context, index) {
-        final item = _messagePage.message[index];
+        final item = message[index];
         return Slidable(
           controller: _slideController,
           actionPane: SlidableDrawerActionPane(),
@@ -98,7 +108,7 @@ class _MessageListState extends State<MessageList> {
             onPressed: () {
               _onChat(item);
             },
-            border: _messagePage.message.length - 1 != index,
+            border: message.length - 1 != index,
           ),
           secondaryActions: <Widget>[
             IconSlideAction(
