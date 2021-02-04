@@ -5,7 +5,7 @@ import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
 
 
-enum ProductViewType { small, gird, list, block, cardLarge, cardSmall }
+enum ProductViewType { small, gird, list, block, cardLarge, cardSmall, listSmall }
 
 class AppProductItem extends StatelessWidget {
   final ProductModel item;

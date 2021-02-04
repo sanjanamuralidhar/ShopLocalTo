@@ -286,38 +286,102 @@ class _AboutUsState extends State<AboutUs> {
 
   //  /Build UI
   Widget _buildTeam() {
-    AboutUsModel about = _aboutus == null?null:_aboutus;
-    if (about.description == null) {
-      return Shimmer.fromColors(
+    String about = _aboutus == null?null:_aboutus.description;
+    if (about == null) {
+         return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
         enabled: true,
-        child: Wrap(
-          alignment: WrapAlignment.spaceBetween,
-          runSpacing: 15,
-          children: [1, 2, 3, 4].map((item) {
-            return FractionallySizedBox(
-              widthFactor: 0.5,
-              child: Container(
-                margin: EdgeInsets.only(left: 20),
-                alignment: Alignment.bottomLeft,
-                padding: EdgeInsets.all(10),
-                height: 200,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.white,
-                ),
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              
+              Padding(
+                padding: EdgeInsets.only(top: 25),
+                child: Container(height: 10, color: Colors.white),
               ),
-            );
-          }).toList(),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, width: 50, color: Colors.white),
+              ),
+              SizedBox(height:20),
+              Padding(
+                padding: EdgeInsets.only(top: 25),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 5),
+                child: Container(height: 10, color: Colors.white),
+              ),
+            ],
+          ),
         ),
       );
+
+      // return Shimmer.fromColors(
+      //   baseColor: Theme.of(context).hoverColor,
+      //   highlightColor: Theme.of(context).highlightColor,
+      //   enabled: true,
+      //   child: Wrap(
+      //     alignment: WrapAlignment.spaceBetween,
+      //     runSpacing: 15,
+      //     children: [1, 2, 3, 4].map((item) {
+      //       return FractionallySizedBox(
+      //         widthFactor: 0.5,
+      //         child: Container(
+      //           margin: EdgeInsets.only(left: 20),
+      //           alignment: Alignment.bottomLeft,
+      //           padding: EdgeInsets.all(10),
+      //           height: 200,
+      //           decoration: BoxDecoration(
+      //             borderRadius: BorderRadius.circular(10),
+      //             color: Colors.white,
+      //           ),
+      //         ),
+      //       );
+      //     }).toList(),
+      //   ),
+      // );
     }
 
     return Container(
       child:Padding(
         padding: const EdgeInsets.all(20.0),
-        child: Text(about.description,
+        child: Text(about,
         style: Theme.of(context)
                       .textTheme
                       .bodyText1

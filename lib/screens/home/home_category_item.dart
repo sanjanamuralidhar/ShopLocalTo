@@ -67,7 +67,7 @@ class HomeCategoryItem extends StatelessWidget {
     return SingleChildScrollView(
         
       child: Container(
-    width: MediaQuery.of(context).size.width * 0.21,
+    width: MediaQuery.of(context).size.width * 0.22,
     child: GestureDetector(
       onTap: () => onPressed(item),
       child: Column(
@@ -90,6 +90,7 @@ class HomeCategoryItem extends StatelessWidget {
             child: Text(
               item.title,
               maxLines: 4,
+              textAlign: TextAlign.center,
               overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme

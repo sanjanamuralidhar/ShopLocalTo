@@ -412,7 +412,6 @@ void _onShopDetail(ShopModel item) {
             delegate: AppBarHomeSliver(
               expandedHeight: 250,
               banners:_homePage == null ? []: _homePage.banners,
-              // shopModel:_homePage.shops,
             ),
             pinned: true,
           ),

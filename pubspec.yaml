@@ -38,6 +38,7 @@ dependencies:
   flutter_secure_storage: ^3.3.5
   geolocator: ^6.1.13
   geocoder: ^0.2.1
+  autocomplete_textfield: ^1.7.3
 
 dev_dependencies:
   flutter_test:

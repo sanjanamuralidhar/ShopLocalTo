@@ -97,53 +97,9 @@ _loadProfile();
     return Stack(
       children: <Widget>[
         Container(child: _swipperBanner(context)),
-        // InkWell(
-        //   // onTap: (){
-
-        //   // },
-        //   child: Padding(
-        //     padding: const EdgeInsets.only(top: 35, right: 20),
-        //     child: Align(
-        //       alignment: Alignment.topRight,
-        //       child: InkWell(
-        //         onTap: () => Navigator.pushNamed(context, Routes.productDetail,
-        //             arguments: 11),
-        //         //itemid should be the argument we will get it during login(location id)
-        //         // Navigator.pushNamed(context, Routes.neighbourInfo,arguments: "Brampton"),
-        //         child: Icon(
-        //           Icons.info_outline,
-        //           color: Colors.white,
-        //           size: 30,
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        // ),
         _buildValue(context),
-        // Padding(
-        //   padding: const EdgeInsets.only(top: 30),
-        //   child: Align(
-        //     alignment: Alignment.topCenter,
-        //     child: Switch(
-        //       value: isSwitched,
-        //       onChanged: (value) {
-        //         setState(() {
-        //           isSwitched = value;
-        //           print(isSwitched);
-        //         });
-        //       },
-        //     ),
-        //   ),
-        // ),
-        // Padding(
-        //   padding: const EdgeInsets.only(top: 42, left: 220),
-        //   child: Text("10 km",
-        //       style: TextStyle(
-        //           color: Colors.white,
-        //           fontSize: 17,
-        //           fontWeight: FontWeight.bold)),
-        // ),
-      ],
+    _buildSearchIcon(context),
+          ],
     );
   }
 
@@ -161,7 +117,7 @@ _loadProfile();
         autoplay: true,
         itemCount: widget.images.length,
         pagination: SwiperPagination(
-          alignment: Alignment(0.0, 0.4),
+          // alignment: Alignment(0.0, 0.4),
           builder: SwiperPagination.dots,
         ),
       );
@@ -248,7 +204,6 @@ _loadProfile();
                                 return MainNavigation();
                               }
                               ));
-                              
 
                             })
 
@@ -338,7 +293,6 @@ _loadProfile();
                                 return MainNavigation();
                               }
                               ));
-                              
 
                             })
 
@@ -364,107 +318,32 @@ _loadProfile();
           )),
     );
   }
+  Widget _buildSearchIcon(BuildContext context){
+    return Container(
+      child:   Padding(
+        padding: const EdgeInsets.only(top: 35, left: 20,right: 15),
+        child: Align(
+           alignment: Alignment.topRight,
+                  child:   Material(
+                  type: MaterialType.transparency,
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20),
+                      color: Theme.of(context).buttonColor,
+                    ),
+                    child: InkWell(
+                        onTap: ()=> Navigator.pushNamed(context, Routes.searchHistory),
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.search_outlined,
+                            color: Colors.white,
+                          ),
+                        )),
+                  ),
+                ),
+        ),
+      ),
+    );
+  }
 }
-
-// openpopup sanjana old
-//  _openPopup(context) {
-//     Alert(
-//         context: context,
-//         title: "Neighbourhood",
-//         content: Column(
-//           children: <Widget>[
-//             TextField(
-//               decoration: InputDecoration(
-//                 icon: Icon(Icons.location_on),
-//                 labelText: 'Enter a Location',
-//                 border: InputBorder.none,
-//         focusedBorder: InputBorder.none,
-//         enabledBorder: InputBorder.none,
-//         errorBorder: InputBorder.none,
-//         disabledBorder: InputBorder.none,
-//               ),
-//             ),
-//           ],
-//         ),
-//         buttons: [
-//           DialogButton(
-// color: Colors.blue[900],
-//             onPressed: () => Navigator.pop(context),
-//             child: Text(
-//               "Select",
-//               style: TextStyle(color: Colors.white, fontSize: 20),
-//             ),
-//           )
-//         ]).show();
-//   }
-
-// changed code _swipperbanner to widget
-// openpopup sanjana
-// _openPopup(context,List<MyLocation> mylocation) {
-//   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
-//   Alert(
-//       context: context,
-//       title: "Neighbourhood",style: AlertStyle(titleStyle: TextStyle(color:Theme.of(context).primaryColor),),
-//       content: Column(children: <Widget>[
-//         Container(
-//             decoration: BoxDecoration(
-//               color: Theme.of(context).hoverColor,
-//               borderRadius: BorderRadius.all(
-//                 Radius.circular(8),
-//               ),
-//             ),
-//             child: TypeAheadField(
-//                 textFieldConfiguration: TextFieldConfiguration(
-//                   autofocus: false,
-//                   // enabled: enable,
-//                   onTap: () {},
-//                   decoration: InputDecoration(
-//                     prefixIcon: Icon(Icons.search),
-//                     border: InputBorder.none,
-//                     hintText: "Search by",
-//                   ),
-//                 ),
-//                 // ignore: non_constant_identifier_names
-//                 suggestionsCallback: (Pattern) async {
-//                   // //hardcoded datas to be changed
-//                   List<MyLocation> list = mylocation;
-//                   var suggetionList = Pattern.isEmpty
-//                       ? null
-//                       : list
-//                           .where((e) => e.title
-//                               .toLowerCase()
-//                               .contains(Pattern.toLowerCase()))
-//                           .toList();
-
-//                   return suggetionList;
-//                 },
-//                 itemBuilder: (context, suggestion) {
-//                   return ListTile(
-//                     // leading: Icon(Icons.location_city),
-//                     title: Text(suggestion.title),
-//                   );
-//                 },
-//                 onSuggestionSelected: (suggestion) {
-
-//                    flutterSecureStorage.write(key: 'location', value: suggestion.location);
-// Navigator.of(context).pop();
-//                   // Navigator.push(context, MaterialPageRoute(builder: (context) {
-//                   //   return LocationDetail(id: suggestion.id);
-//                   // }
-//                   // ));
-//                 })
-
-//             // previous search by sanjana search.txt
-//             ),
-//       ]),
-//       buttons: [
-//         DialogButton(
-//           color: Theme.of(context).buttonColor,
-//           onPressed: () => Navigator.pop(context),
-//           child: Text(
-//             "Cancel",
-//             style: TextStyle(color: Colors.white, fontSize: 20),
-//           ),
-//         )
-//       ]).show();
-// }

@@ -10,6 +10,7 @@ import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/models/model_user.dart';
 import 'package:listar_flutter/api/api.dart';
+import 'package:shimmer/shimmer.dart';
 
 class EditProfile extends StatefulWidget {
   EditProfile({Key key}) : super(key: key);
@@ -73,11 +74,78 @@ class _EditProfileState extends State<EditProfile> {
     }
   }
 
+  Future _getCameraImage() async {
+    // ignore: deprecated_member_use
+    final image = await ImagePicker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      setState(() {
+        _image = image;
+      });
+    }
+  }
+
   Future<void> _loadProfile() async {
     final UserModel result = await Api.getUserProfile();
     setState(() {
       _userData = result;
     });
+  }
+
+  void _onChangeSort() {
+    showModalBottomSheet<void>(
+      backgroundColor: Colors.white,
+      context: context,
+      builder: (BuildContext context) {
+        return Container(
+          child: Padding(
+            padding: const EdgeInsets.fromLTRB(30, 30, 30, 30),
+            child: Row(
+              // mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Material(
+                  type: MaterialType.transparency,
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).buttonColor,
+                    ),
+                    child: InkWell(
+                        onTap: _getImage,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.camera_alt,
+                            color: Colors.white,
+                          ),
+                        )),
+                  ),
+                ),
+                SizedBox(width: 30),
+                Material(
+                  type: MaterialType.transparency,
+                  child: Ink(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      color: Theme.of(context).buttonColor,
+                    ),
+                    child: InkWell(
+                        onTap: _getCameraImage,
+                        child: Padding(
+                          padding: const EdgeInsets.all(8),
+                          child: Icon(
+                            Icons.camera,
+                            color: Colors.white,
+                          ),
+                        )),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
   }
 
   ///On update image
@@ -139,6 +207,240 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
+    String userImage = _userData ==null?null:_userData.profile_image;
+    if(userImage==null){
+      return Container(
+        color: Colors.white,
+        child: Shimmer.fromColors(
+        baseColor: Theme.of(context).hoverColor,
+        highlightColor: Theme.of(context).highlightColor,
+        enabled: true,
+        child: Padding(
+          padding: EdgeInsets.only(left: 20, right: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+             Padding(
+                padding: EdgeInsets.only(top: 40),
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Container(
+                    alignment: Alignment.center,
+                        width: 100,
+                        height: 100,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                      ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                  
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                         height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+              
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                 
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+              Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                 
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Container(
+                          height: 10,
+                          width: 100,
+                          color: Colors.white,
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+             Padding(
+                padding: EdgeInsets.only(top: 20),
+              ),
+              Row(
+                children: <Widget>[
+                 
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: EdgeInsets.only(top: 3),
+                        ),
+                        Container(
+                          height: 50,
+                          width: 320,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            ],
+          ),
+        ),
+        )
+      );
+    }
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
@@ -157,6 +459,7 @@ class _EditProfileState extends State<EditProfile> {
                       Stack(
                         alignment: Alignment.bottomRight,
                         children: <Widget>[
+                          
                           Container(
                             width: 100,
                             height: 100,
@@ -166,7 +469,7 @@ class _EditProfileState extends State<EditProfile> {
                                       shape: BoxShape.circle,
                                       image: DecorationImage(
                                         fit: BoxFit.cover,
-                                        image: AssetImage(Images.Aavtar),
+                                        image: NetworkImage(userImage),
                                       ),
                                     ),
                                   )
@@ -181,9 +484,10 @@ class _EditProfileState extends State<EditProfile> {
                           IconButton(
                             icon: Icon(
                               Icons.camera_alt,
-                              color: Colors.white,
+                              color: Theme.of(context).buttonColor
                             ),
-                            onPressed: _getImage,
+                            // onPressed: _getImage,
+                            onPressed: _onChangeSort,
                           ),
                         ],
                       )
@@ -445,6 +749,7 @@ class _EditProfileState extends State<EditProfile> {
                           address: _textAddressController.text,
                           info: _textInfoController.text,
                           website: _textWebsiteController.text,
+                          // image: _image,
                         ));
 
                         // Navigator.pop(context);

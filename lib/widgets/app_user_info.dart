@@ -135,10 +135,10 @@ class AppUserInfo extends StatelessWidget {
                     height: 60,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      // image: DecorationImage(
-                      //   image: NetworkImage(user.image),
-                      //   fit: BoxFit.cover,
-                      // ),
+                      image: DecorationImage(
+                        image: NetworkImage(user.profile_image),
+                        fit: BoxFit.cover,
+                      ),
                     ),
                   ),
                   // Container(

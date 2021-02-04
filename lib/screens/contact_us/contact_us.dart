@@ -91,7 +91,8 @@ class ContactUsState extends State<ContactUs> {
       body: SafeArea(
         child: Column(
           children: <Widget>[
-            Expanded(
+            SizedBox(height:150),
+                        Expanded(
               child: SingleChildScrollView(
                 child: Padding(
                   padding: EdgeInsets.only(

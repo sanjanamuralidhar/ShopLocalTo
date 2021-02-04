@@ -574,7 +574,7 @@ List<ImageModel> _images = [];
               return Padding(
                 padding: EdgeInsets.only(bottom: 15),
                 child: AppProductItem(
-                  onPressRelated: _onRelatedDetail,
+                  onPressRelated: _onRelatedDetail,//Ordinary
                   relatedModel: item,
                   type: ProductViewType.small,
                 ),

@@ -1,8 +1,11 @@
+import 'package:autocomplete_textfield/autocomplete_textfield.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
+import 'package:listar_flutter/screens/SearchResult/searchResult.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -23,12 +26,35 @@ class _SearchHistoryState extends State<SearchHistory> {
   SearchHistoryPageModel _historyPage;
   SearchHistorySearchDelegate _delegate = SearchHistorySearchDelegate();
 
+  num id;
+  String value;
+  final _textController = TextEditingController();
+  AutoCompleteTextField searchTextField;
+  TextEditingController controller = new TextEditingController();
+  GlobalKey<AutoCompleteTextFieldState<CategoryModel2>> key = new GlobalKey();
+
+
+  void _onSearch(String text) {
+    if (text.isNotEmpty) {
+    } else {}
+  }
+
   @override
   void initState() {
     _loadData();
+    _loadCategoryList();
     super.initState();
   }
 
+  List<CategoryModel2> _categoryList;
+
+ Future<void> _loadCategoryList() async {
+    final List<CategoryModel2> result = await Api.getCategoryList();
+    setState(() {
+      _categoryList = result;
+    });
+    // print('category list *************:${_categoryList.length}');
+  }
   ///Fetch API
   Future<void> _loadData() async {
     setState(() {
@@ -43,7 +69,7 @@ class _SearchHistoryState extends State<SearchHistory> {
     }
   }
 
-  Future<ProductModel> _onSearch() async {
+  Future<ProductModel> _onSearched() async {
     final ProductModel selected = await showSearch(
       context: context,
       delegate: _delegate,
@@ -80,44 +106,17 @@ class _SearchHistoryState extends State<SearchHistory> {
 
     return _historyPage.tag.map((item) {
       return InputChip(
+        backgroundColor: Theme.of(context).buttonColor,
+        deleteIconColor: Theme.of(context).canvasColor,
         onPressed: () {
           _onProductList(item);
         },
-        label: Text(item.title),
+        label: Text(item.title,
+            style: TextStyle(
+              color: Theme.of(context).canvasColor,
+            )),
         onDeleted: () {
           _historyPage.tag.remove(item);
-          setState(() {});
-        },
-      );
-    }).toList();
-  }
-
-  ///Build list discover
-  List<Widget> _listDiscover(BuildContext context) {
-    if (_historyPage?.discover == null) {
-      return List.generate(6, (index) => index).map(
-        (item) {
-          return Shimmer.fromColors(
-            baseColor: Theme.of(context).dividerColor,
-            highlightColor: Theme.of(context).highlightColor,
-            enabled: true,
-            child: AppTag(
-              Translate.of(context).translate('loading'),
-              type: TagType.gray,
-            ),
-          );
-        },
-      ).toList();
-    }
-
-    return _historyPage.discover.map((item) {
-      return InputChip(
-        onPressed: () {
-          _onProductList(item);
-        },
-        label: Text(item.title),
-        onDeleted: () {
-          _historyPage.discover.remove(item);
           setState(() {});
         },
       );
@@ -164,27 +163,27 @@ class _SearchHistoryState extends State<SearchHistory> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(
-          icon: AnimatedIcon(
-            icon: AnimatedIcons.close_menu,
-            progress: _delegate?.transitionAnimation,
-          ),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
-        centerTitle: true,
+        // leading: IconButton(
+        //   icon: AnimatedIcon(
+        //     icon: AnimatedIcons.close_menu,
+        //     progress: _delegate?.transitionAnimation,
+        //   ),
+        //   onPressed: () {
+        //     Navigator.pop(context);
+        //   },
+        // ),
+        // centerTitle: true,
         title: Text(Translate.of(context).translate('search_title')),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search),
-            onPressed: _onSearch,
-          ),
-          IconButton(
-            icon: Icon(Icons.refresh),
-            onPressed: _loadData,
-          ),
-        ],
+        // actions: <Widget>[
+        //   IconButton(
+        //     icon: Icon(Icons.search),
+        //     onPressed: _onSearch,
+        //   ),
+        //   IconButton(
+        //     icon: Icon(Icons.refresh),
+        //     onPressed: _loadData,
+        //   ),
+        // ],
       ),
       body: SafeArea(
         top: false,
@@ -204,99 +203,198 @@ class _SearchHistoryState extends State<SearchHistory> {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
-                        Translate.of(context)
-                            .translate('search_history')
-                            .toUpperCase(),
+                        Translate.of(context).translate('Search').toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
-                      InkWell(
-                        onTap: () {
-                          _historyPage.tag.clear();
-                          setState(() {});
-                        },
-                        child: Text(
-                          Translate.of(context).translate('clear'),
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                                color: Theme.of(context).accentColor,
-                              ),
+                    ],
+                  ),
+                  // keyword search search bar
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * 0.85,
+                          decoration: BoxDecoration(
+                            color: Theme.of(context).hoverColor,
+                            borderRadius: BorderRadius.all(
+                              Radius.circular(8),
+                            ),
+                          ),
+                          child: AppTextInput(
+                            hintText: Translate.of(context).translate('search'),
+                            icon: Icon(Icons.search),
+                            controller: _textController,
+                            onSubmitted: _onSearch,
+                            onTapIcon: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => SearchResult(
+                                        id: id, title: _textController.text)),
+                              );
+                            },
+                            // onChanged: _onSearch,
+                          ),
+
+                          // // previous search by sanjana search.txt
                         ),
                       ),
                     ],
-                  ),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    spacing: 10,
-                    children: _listTag(context),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.only(top: 10),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Text(
                         Translate.of(context)
-                            .translate('discover_more')
+                            .translate('Select Category')
                             .toUpperCase(),
                         style: Theme.of(context)
                             .textTheme
                             .subtitle1
                             .copyWith(fontWeight: FontWeight.w600),
                       ),
-                      InkWell(
-                        onTap: () {
-                          _historyPage.discover.clear();
-                          setState(() {});
-                        },
-                        child: Text(
-                          Translate.of(context).translate('clear'),
-                          style: Theme.of(context).textTheme.subtitle2.copyWith(
-                                color: Theme.of(context).accentColor,
+                      // DropDown with suggestion
+                    ],
+                  ),
+                  Row(
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Container(
+                            width: MediaQuery.of(context).size.width * 0.85,
+                            decoration: BoxDecoration(
+                              color: Theme.of(context).hoverColor,
+                              borderRadius: BorderRadius.all(
+                                Radius.circular(8),
                               ),
-                        ),
+                            ),
+                            child: TypeAheadField(
+                                textFieldConfiguration: TextFieldConfiguration(
+                                  autofocus: false,
+                                  onTap: () {},
+                                  decoration: InputDecoration(
+                                    prefixIcon: Icon(Icons.search),
+                                    border: InputBorder.none,
+                                    hintText: "Select a category",
+                                    errorText: value,
+                                  ),
+                                ),
+
+                                // ignore: non_constant_identifier_names
+                                suggestionsCallback: (Pattern) async {
+                                  List<CategoryModel2> list = _categoryList;
+                                  var suggetionList = Pattern.isEmpty
+                                      ? null
+                                      : list
+                                          .where((e) => e.title
+                                              .toLowerCase()
+                                              .contains(Pattern.toLowerCase()))
+                                          .toList();
+
+                                  return suggetionList;
+                                },
+                                itemBuilder: (context, suggestion) {
+                                  return ListTile(
+                                    // leading: Icon(Icons.location_city),
+                                    title: Text(suggestion.title),
+                                  );
+                                },
+                                onSuggestionSelected: (suggestion) {
+                                  setState(() {
+                                    value = suggestion.title;
+                                    id = suggestion.id;
+                                  });
+                                })
+
+                            // previous search by sanjana search.txt
+                            ),
                       ),
                     ],
                   ),
-                  Wrap(
-                    alignment: WrapAlignment.start,
-                    spacing: 10,
-                    children: _listDiscover(context),
-                  ),
+                  ///////////////////////Requered/////////////////////
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: <Widget>[
+                  //     Text(
+                  //       Translate.of(context)
+                  //           .translate('Recent Searches')
+                  //           .toUpperCase(),
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .subtitle1
+                  //           .copyWith(fontWeight: FontWeight.w600),
+                  //     ),
+                  //     // recent
+                  //   ],
+                  // ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: <Widget>[
+                  //     Text(
+                  //       Translate.of(context)
+                  //           .translate('search_history')
+                  //           .toUpperCase(),
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .subtitle1
+                  //           .copyWith(fontWeight: FontWeight.w600),
+                  //     ),
+                  //     InkWell(
+                  //       onTap: () {
+                  //         _historyPage.tag.clear();
+                  //         setState(() {});
+                  //       },
+                  //       child: Text(
+                  //         Translate.of(context).translate('clear'),
+                  //         style: Theme.of(context).textTheme.subtitle2.copyWith(
+                  //               color: Theme.of(context).accentColor,
+                  //             ),
+                  //       ),
+                  //     ),
+                  //   ],
+                  // ),
+
+                  // Wrap(
+                  //   alignment: WrapAlignment.start,
+                  //   spacing: 10,
+                  //   children: _listTag(context),
+                  // ),
                 ],
               ),
             ),
-            Padding(
-              padding: EdgeInsets.only(left: 20, right: 20, top: 10),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Text(
-                    Translate.of(context)
-                        .translate('recently_viewed')
-                        .toUpperCase(),
-                    style: Theme.of(context)
-                        .textTheme
-                        .subtitle1
-                        .copyWith(fontWeight: FontWeight.w600),
-                  ),
-                ],
-              ),
-            ),
-            Container(
-              height: 120,
-              child: ListView(
-                padding: EdgeInsets.only(
-                  top: 10,
-                  left: 20,
-                  right: 5,
-                ),
-                scrollDirection: Axis.horizontal,
-                children: _listPopular(),
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(left: 20, right: 20, top: 10),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     children: <Widget>[
+            //       Text(
+            //         Translate.of(context)
+            //             .translate('recently_viewed')
+            //             .toUpperCase(),
+            //         style: Theme.of(context)
+            //             .textTheme
+            //             .subtitle1
+            //             .copyWith(fontWeight: FontWeight.w600),
+            //       ),
+            //     ],
+            //   ),
+            // ),
+            // Container(
+            //   height: 120,
+            //   child: ListView(
+            //     padding: EdgeInsets.only(
+            //       top: 10,
+            //       left: 20,
+            //       right: 5,
+            //     ),
+            //     scrollDirection: Axis.horizontal,
+            //     children: _listPopular(),
+            //   ),
+            // ),
           ],
         ),
       ),

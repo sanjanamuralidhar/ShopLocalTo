@@ -60,8 +60,6 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
         _page = result;
       });
       print('....................................getLoadTabDetail.....${_page.product.address}');
-      print('....................................getLoadTabDetail.....${_page.product.image}');
-      print('....................................getLoadTabDetail.....${_page.tab.length}');
       Timer(Duration(milliseconds: 150), () {
         _setOriginOffset();
       });
@@ -69,8 +67,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///ScrollListenerEvent
   void _scrollListener() {
-     List<TabModel> tab = _page==null?[]:_page.tab;
-    if (tab != null) {
+     List<TabModel> tabs = _page==null?[]:_page.tab;
+    if (tabs != null) {
       int activeTab = 0;
       double offsetTab;
       double widthDevice = MediaQuery.of(context).size.width;
@@ -103,10 +101,10 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///Set Origin Offset default when render success
   void _setOriginOffset() {
-    List<TabModel> tab = _page==null?[]:_page.tab;
-    if (tab != null && _offsetContentOrigin.isEmpty) {
+    List<TabModel> tabs = _page==null?[]:_page.tab;
+    if (tabs != null && _offsetContentOrigin.isEmpty) {
       setState(() {
-        _offsetContentOrigin = tab.map((item) {
+        _offsetContentOrigin = tabs.map((item) {
           final RenderBox box =
               item.keyContentItem.currentContext.findRenderObject();
           final position = box.localToGlobal(Offset.zero);
@@ -171,8 +169,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///Build banner UI
   Widget _buildBanner() {
-    ProductModel productMdl = _page==null?null:_page.product;
-    if (productMdl.image == null) {
+    String productMdl = _page==null?null:_page.product.image;
+    if (productMdl== null) {
       return Shimmer.fromColors(
         baseColor: Theme.of(context).hoverColor,
         highlightColor: Theme.of(context).highlightColor,
@@ -184,14 +182,15 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     }
 
     return Image.network(
-      productMdl.image,
+      productMdl,
       fit: BoxFit.cover,
     );
   }
 
   ///Build Tab Content UI
   Widget _buildTabContent() {
-    if (_page.tab == null) {
+    List<TabModel> tabs = _page==null?[]:_page.tab;
+    if (tabs == null) {
       return Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Shimmer.fromColors(
@@ -217,7 +216,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: _page.tab.map((item) {
+      children: tabs.map((item) {
         return TabContent(
             item: item, page: _page, onNearlyModelDetail: _onProductDetail);
       }).toList(),
@@ -226,6 +225,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   @override
   Widget build(BuildContext context) {
+    List<TabModel> tabs = _page==null?[]:_page.tab;
     return Scaffold(
       body: CustomScrollView(
         controller: _scrollController,
@@ -267,7 +267,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
               tabController: _tabController,
               onIndexChanged: _onChangeTab,
               indexTab: _indexTab,
-              tab: _page.tab,
+              tab: tabs,
             ),
           ),
           SliverToBoxAdapter(

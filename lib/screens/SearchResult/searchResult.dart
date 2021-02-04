@@ -50,32 +50,32 @@ class _SearchResultState extends State<SearchResult> {
   Future<void> _loadData() async {
     final dynamic result = await Api.getSearchResult(id: widget.id);
 // print('....................................get  L IST...........${widget.id}');
-      final listProduct = result;
+    final listProduct = result;
 // print('....................................get  L IST...........${listProduct.list.length}');
-      ///Setup list marker map from list
-      listProduct.list.forEach((item) {
-        final markerId = MarkerId(item.id.toString());
-        final marker = Marker(
-          markerId: markerId,
-          position: LatLng(item.location.lat, item.location.long),
-          infoWindow: InfoWindow(title: item.title),
-          onTap: () {
-            _onSelectLocation(item);
-          },
-        );
-        _markers[markerId] = marker;
-      });
+    ///Setup list marker map from list
+    // listProduct.list.forEach((item) {
+    //   final markerId = MarkerId(item.id.toString());
+    //   final marker = Marker(
+    //     markerId: markerId,
+    //     position: LatLng(item.location.lat, item.location.long),
+    //     infoWindow: InfoWindow(title: item.title),
+    //     onTap: () {
+    //       _onSelectLocation(item);
+    //     },
+    //   );
+    //   _markers[markerId] = marker;
+    // });
 
-      setState(() {
-        _productList = listProduct;
-        _initPosition = CameraPosition(
-          target: LatLng(
-            listProduct.list[0].location.lat,
-            listProduct.list[0].location.long,
-          ),
-          zoom: 14.4746,
-        );
-      });
+    setState(() {
+      _productList = listProduct;
+      _initPosition = CameraPosition(
+        target: LatLng(
+          listProduct.list[0].location.lat,
+          listProduct.list[0].location.long,
+        ),
+        zoom: 14.4746,
+      );
+    });
   }
 
   ///On Load More
@@ -290,19 +290,10 @@ class _SearchResultState extends State<SearchResult> {
 
   ///Widget build Content
   Widget _buildList() {
-    // if (_productList?.list == null) {
-    //   ///Build Loading
-    //   return Wrap(
-    //     runSpacing: 15,
-    //     alignment: WrapAlignment.spaceBetween,
-    //     children: List.generate(8, (index) => index).map((item) {
-    //       return _buildItemLoading(_modeView);
-    //     }).toList(),
-    //   );
-    // }
-List<ListModel> listM = _productList ==null?[]:_productList.list;
-     if (listM.isEmpty) {
-      return Center(
+ List<ListModel> listM = _productList ==null?[]:_productList.list;
+ if(listM == null){
+   if(listM.isEmpty){
+return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
@@ -317,9 +308,17 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
           ],
         ),
       );
-    }
+   }
+   return Wrap(
+        runSpacing: 15,
+        alignment: WrapAlignment.spaceBetween,
+        children: List.generate(8, (index) => index).map((item) {
+          return _buildItemLoading(_modeView);
+        }).toList(),
+      );
+ }
 
-    ///Build list
+
     return Wrap(
       runSpacing: 15,
       alignment: WrapAlignment.spaceBetween,
@@ -331,7 +330,6 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
 
   ///Build Content Page Style
   Widget _buildContent() {
-    List<ListModel> listM = _productList ==null?[]:_productList.list;
     if (_pageType == SearchType.list) {
       return SafeArea(
         child: SmartRefresher(
@@ -489,7 +487,7 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
                       onIndexChanged: (index) {
                         _onIndexChange(index);
                       },
-                      itemCount: listM.length,
+                      itemCount: _productList.list.length,
                       viewportFraction: 0.8,
                       scale: 0.9,
                     ),
@@ -538,12 +536,6 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
                 children: <Widget>[
                   Row(
                     children: <Widget>[
-                        Padding(
-                          padding: const EdgeInsets.only(top:10,left:20,bottom:10),
-                          child: Text('Category Listing',
-                          style: Theme.of(context).textTheme.subtitle2
-                          ),
-                        )
                       // IconButton(
                       //   icon: Icon(_currentSort.icon),
                       //   onPressed: _onChangeSort,
@@ -552,12 +544,16 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
                       //   Translate.of(context).translate(_currentSort.name),
                       //   style: Theme.of(context).textTheme.subtitle2,
                       // )
+                      Padding(
+                        padding: const EdgeInsets.only(left: 20,top: 10,bottom: 10),
+                        child: Text("Category listing",style: Theme.of(context).textTheme.subtitle2,),
+                      ),
                     ],
                   ),
                   Row(
                     children: <Widget>[
                       // Visibility(
-                      //   visible: _pageType == SearchType.list,
+                      //   visible: _pageType == PageType.list,
                       //   child: Row(
                       //     children: <Widget>[
                       //       IconButton(
@@ -574,7 +570,7 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
                       //   ),
                       // ),
                       // Visibility(
-                      //   visible: _pageType != SearchType.list,
+                      //   visible: _pageType != PageType.list,
                       //   child: Row(
                       //     children: <Widget>[
                       //       IconButton(
@@ -621,5 +617,7 @@ List<ListModel> listM = _productList ==null?[]:_productList.list;
     );
   }
 }
+
+
 
 

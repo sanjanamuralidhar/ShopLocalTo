@@ -9,20 +9,22 @@ class HomeCategoryPage extends StatelessWidget {
 
   HomeCategoryPage({
     Key key,
-    this.onPressed, this.categoryModel2,
+    this.onPressed,
+    this.categoryModel2,
   }) : super(key: key);
 
-Color colorConvert(String color) {
-  // print('color666666666666666666666///////:$color');
-  color = color.replaceAll("#", "");
-  var converted;
-  if (color.length == 6) {
-    converted = Color(int.parse("0xFF" + color));
-  } else if (color.length == 8) {
-    converted = Color(int.parse("0x" + color));
+  Color colorConvert(String color) {
+    // print('color666666666666666666666///////:$color');
+    color = color.replaceAll("#", "");
+    var converted;
+    if (color.length == 6) {
+      converted = Color(int.parse("0xFF" + color));
+    } else if (color.length == 8) {
+      converted = Color(int.parse("0x" + color));
+    }
+    return converted;
   }
-  return converted;
-}
+
   @override
   Widget build(BuildContext context) {
     // print('this is the color you are looking for:${categoryModel2.color}');
@@ -67,13 +69,13 @@ Color colorConvert(String color) {
       child: GestureDetector(
         onTap: () {
           onPressed(categoryModel2);
-        } ,
+        },
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Container(
-              width: 40,
+              width: 36,
               height: 36,
               alignment: Alignment.center,
               decoration: BoxDecoration(
@@ -81,13 +83,13 @@ Color colorConvert(String color) {
                 color: colorConvert(categoryModel2.color),
               ),
               child:Image.network(categoryModel2.icon,width: 18,height: 18,),
-
             ),
             Padding(
               padding: EdgeInsets.only(top: 3, left: 1, right: 1),
               child: Text(
                 categoryModel2.title,
                 maxLines: 4,
+                textAlign: TextAlign.center,
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context)
                     .textTheme

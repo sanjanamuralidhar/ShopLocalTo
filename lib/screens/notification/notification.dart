@@ -42,7 +42,6 @@ class _NotificationListState extends State<NotificationList> {
       setState(() {
         _notificationPage = result;
       });
-      print('-----------------------------${_notificationPage.notifications.length}');
   }
 
   ///On load more
@@ -59,7 +58,8 @@ class _NotificationListState extends State<NotificationList> {
 
   ///Build list
   Widget _buildList() {
-    if (_notificationPage.notifications.isEmpty ) {
+    List<NotificationModel> notification = _notificationPage == null?[]:_notificationPage.notifications;
+    if (notification.isEmpty ) {
       return Center(
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -87,16 +87,16 @@ class _NotificationListState extends State<NotificationList> {
 
     return ListView.builder(
       padding: EdgeInsets.only(top: 5),
-      itemCount: _notificationPage.notifications.length,
+      itemCount: notification.length,
       itemBuilder: (context, index) {
-        final item = _notificationPage.notifications[index];
+        final item = notification[index];
         return Dismissible(
           key: Key(item.id.toString()),
           direction: DismissDirection.endToStart,
           child: AppNotificationItem(
             item: item,
             onPressed: () {},
-            border: _notificationPage.notifications.length - 1 != index,
+            border: notification.length - 1 != index,
           ),
           background: Container(
             alignment: Alignment.center,
@@ -113,7 +113,7 @@ class _NotificationListState extends State<NotificationList> {
             ),
           ),
           onDismissed: (direction) {
-            _notificationPage.notifications.removeAt(index);
+            notification.removeAt(index);
           },
         );
       },

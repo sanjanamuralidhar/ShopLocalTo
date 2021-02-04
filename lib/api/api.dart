@@ -42,6 +42,12 @@ class Api {
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/contact-us?name='+username+'&email='+email+'&comment='+comment);
     return result;
   }
+//up[date chating session
+    static Future<dynamic> chatWithUs({String comment,int companyid}) async {
+    await Future.delayed(Duration(seconds: 1));
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/messages?comment='+comment+'&company_id='+companyid.toString());
+    return result;
+  }
 
     // /Update profile api
    static Future<dynamic> editProfile({String username, String email, String address, String website, String phone,String info}) async {
@@ -302,7 +308,7 @@ static Future<ProductListPageModel> getList({id:0}) async{
 }
 
   static Future<ProductListPageModel> getSearchResult({id:0}) async {
-    // await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id.toString());
   //  print('getShops():$result.runT');
    return ProductListPageModel.fromJson(result['data']['data']);

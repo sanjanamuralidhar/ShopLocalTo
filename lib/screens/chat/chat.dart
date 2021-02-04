@@ -93,7 +93,7 @@ class _ChatState extends State<Chat> {
   }
 
   ///On Send message
-  void _onSend() {
+  Future<void> _onSend() async {
     print(_loading.toString());
     final chat = MessageModel.fromJson({
       "id": widget.id,
@@ -110,6 +110,10 @@ class _ChatState extends State<Chat> {
         print(chat);
         _loading = false;
       });
+      await Api.chatWithUs(
+        comment: chat.message,
+        companyid: chat.id,
+      );
     }
     _textChatController.text = '';
     UtilOther.hiddenKeyboard(context);

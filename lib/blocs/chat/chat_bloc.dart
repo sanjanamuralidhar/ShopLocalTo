@@ -31,23 +31,9 @@ class ChatBloc extends Bloc<ChatEvent, ChatState> {
       await Future.delayed(Duration(seconds: 1));
 
       ///Fetch API
-      final dynamic result = await Api.contactUs(
-        username: event.name,
-        email: event.email,
+      final dynamic result = await Api.chatWithUs(
         comment: event.comment,
       );
-      print('event.email at signup bloc:${event.email}');
-      flutterSecureStorage.write(key: 'username', value: event.name);
-      flutterSecureStorage.write(key: 'email', value: event.email);
-      Future<String> value = flutterSecureStorage.read(key: 'email');
-      print('/////////////////////////////');
-      print(value.toString());
-
-      @override
-      // ignore: unused_element
-      String toString() {
-        return value.toString();
-      }
 
       ///Case API fail but not have token
       if (result['status'] != null) {
