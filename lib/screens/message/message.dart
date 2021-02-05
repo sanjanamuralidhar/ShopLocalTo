@@ -56,6 +56,7 @@ class _MessageListState extends State<MessageList> {
 
   ///On refresh
   Future<void> _onRefresh() async {
+    _loadDetails();
     await Future.delayed(Duration(seconds: 1));
     _controller.refreshCompleted();
   }
@@ -69,29 +70,29 @@ class _MessageListState extends State<MessageList> {
   Widget _buildList() {
     List<MessageModel> message = _messagePage==null?[]:_messagePage.messages;
     if (message == null) {
-      // return Center(
-      //   child: Row(
-      //     mainAxisAlignment: MainAxisAlignment.center,
-      //     children: <Widget>[
-      //       Icon(Icons.sentiment_satisfied),
-      //       Padding(
-      //         padding: EdgeInsets.all(3.0),
-      //         child: Text(
-      //           Translate.of(context).translate('No Messages'),
-      //           style: Theme.of(context).textTheme.bodyText1,
-      //         ),
-      //       ),
-      //     ],
-      //   ),
-      // );
-      return ListView(
-        padding: EdgeInsets.only(top: 5),
-        children: List.generate(8, (index) => index).map(
-          (item) {
-            return AppMessageItem();
-          },
-        ).toList(),
+      return Center(
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Icon(Icons.sentiment_satisfied),
+            Padding(
+              padding: EdgeInsets.all(3.0),
+              child: Text(
+                Translate.of(context).translate('No Messages pull down to refresh'),
+                style: Theme.of(context).textTheme.bodyText1,
+              ),
+            ),
+          ],
+        ),
       );
+      // return ListView(
+      //   padding: EdgeInsets.only(top: 5),
+      //   children: List.generate(8, (index) => index).map(
+      //     (item) {
+      //       return AppMessageItem();
+      //     },
+      //   ).toList(),
+      // );
     }
 
     return ListView.builder(

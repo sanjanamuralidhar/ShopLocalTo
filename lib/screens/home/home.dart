@@ -71,7 +71,7 @@ int id;
 
   // ///Fetch API
   Future<void> _loadData() async {
-    final dynamic result = await Api.getHome();
+    final dynamic result = await Api.getHome(id: widget.id);
       setState(() {
         _homePage = result;
       });

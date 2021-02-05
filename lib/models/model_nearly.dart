@@ -70,7 +70,6 @@ class NearlyModel {
     if (address != null) json['address'] = address;
     if (phone != null) json['phone'] = phone;
     if (location != null) json['location'] = location;
-
     return json;
   }
 

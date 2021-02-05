@@ -1,5 +1,5 @@
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -739,6 +739,9 @@ class _EditProfileState extends State<EditProfile> {
                       if (updateListener is UpdateFail) {
                         print("update failed");
                       }
+                       if (updateListener is UpdateSuccess) {
+                         Navigator.of(context).pop();
+                      }
                     },
                     child: AppButton(
                       onPressed: () {
@@ -749,11 +752,11 @@ class _EditProfileState extends State<EditProfile> {
                           address: _textAddressController.text,
                           info: _textInfoController.text,
                           website: _textWebsiteController.text,
-                          // image: _image,
+                          image: _image,
                         ));
 
                         // Navigator.pop(context);
-                        Navigator.of(context).pop();
+                       
                         // _signUp();
                         print('username.........:${_textNameController.text}');
                         print('email.........:${_textEmailController.text}');

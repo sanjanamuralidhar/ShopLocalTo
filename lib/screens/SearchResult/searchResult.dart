@@ -291,7 +291,6 @@ class _SearchResultState extends State<SearchResult> {
   ///Widget build Content
   Widget _buildList() {
  List<ListModel> listM = _productList ==null?[]:_productList.list;
- if(listM == null){
    if(listM.isEmpty){
 return Center(
         child: Row(
@@ -309,16 +308,6 @@ return Center(
         ),
       );
    }
-   return Wrap(
-        runSpacing: 15,
-        alignment: WrapAlignment.spaceBetween,
-        children: List.generate(8, (index) => index).map((item) {
-          return _buildItemLoading(_modeView);
-        }).toList(),
-      );
- }
-
-
     return Wrap(
       runSpacing: 15,
       alignment: WrapAlignment.spaceBetween,

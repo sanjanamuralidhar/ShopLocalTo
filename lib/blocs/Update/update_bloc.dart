@@ -36,6 +36,7 @@ class UpdateBloc extends Bloc<UpdateEvent, UpdateState> {
         info:event.info,
         website:event.website,
         phone: event.phone,
+        image: event.image,
       );
        print('event.email at signup bloc:${event.email}');
       flutterSecureStorage.write(key: 'username',value: event.username);

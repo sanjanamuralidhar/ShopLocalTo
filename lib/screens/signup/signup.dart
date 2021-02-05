@@ -24,6 +24,7 @@ class _SignUpState extends State<SignUp> {
   final _textEmailController = TextEditingController();
   final _textLocationController = TextEditingController();
   final _textPhoneController = TextEditingController();
+  final _textLocationIdController = TextEditingController();
   final TextEditingController _controller = new TextEditingController();
   // ignore: unused_field
   final _focusID = FocusNode();
@@ -370,7 +371,7 @@ Future<void> _showSuccess() async {
                                     (MyLocation value) {
                                   return new PopupMenuItem(
                                       child: new Text(value.name),
-                                      value: value.name
+                                      value: value.name,
                                       );
                                 }).toList();
                               },

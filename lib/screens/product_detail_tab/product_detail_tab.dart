@@ -67,8 +67,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
 
   ///ScrollListenerEvent
   void _scrollListener() {
-     List<TabModel> tabs = _page==null?[]:_page.tab;
-    if (tabs != null) {
+    if (_page?.tab != null) {
       int activeTab = 0;
       double offsetTab;
       double widthDevice = MediaQuery.of(context).size.width;
@@ -86,8 +85,8 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
         offsetTab =
             activeTab > 1 ? offsetStart + itemSize * (activeTab - 2) : 0;
       }
+
       if (activeTab != _indexTab) {
-       
         setState(() {
           _indexTab = activeTab;
         });
@@ -99,12 +98,11 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
   }
 
 
-  ///Set Origin Offset default when render success
+ ///Set Origin Offset default when render success
   void _setOriginOffset() {
-    List<TabModel> tabs = _page==null?[]:_page.tab;
-    if (tabs != null && _offsetContentOrigin.isEmpty) {
+    if (_page?.tab != null && _offsetContentOrigin.isEmpty) {
       setState(() {
-        _offsetContentOrigin = tabs.map((item) {
+        _offsetContentOrigin = _page.tab.map((item) {
           final RenderBox box =
               item.keyContentItem.currentContext.findRenderObject();
           final position = box.localToGlobal(Offset.zero);
@@ -118,7 +116,7 @@ class _ProductDetailTabState extends State<ProductDetailTab> {
     }
   }
 
-  ///On Change tab jumpTo offset
+ ///On Change tab jumpTo offset
   ///Scroll controller will handle setState active tab
   void _onChangeTab(int index) {
     if (_offsetContentOrigin.isNotEmpty) {

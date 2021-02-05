@@ -89,7 +89,8 @@ class _SignInState extends State<SignIn> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('login failed', style: Theme.of(context).textTheme.bodyText1),
+                Text('login failed',
+                    style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
           ),
@@ -210,9 +211,10 @@ class _SignInState extends State<SignIn> {
                         }
                         if (loginListener is LoginSuccess) {
                           Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => MainNavigation(),
-            ));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => MainNavigation(),
+                              ));
                         }
                       },
                       child: AppButton(
@@ -296,7 +298,8 @@ class _SignInState extends State<SignIn> {
                   child: SignInButtonBuilder(
                     text: 'Sign in with Facebook',
                     image: Padding(
-                      padding: const EdgeInsets.only(left:0,right:5,top:8,bottom: 8),
+                      padding: const EdgeInsets.only(
+                          left: 0, right: 5, top: 8, bottom: 8),
                       child: Image.asset('assets/socialicons/facebook.png'),
                     ),
                     onPressed: () {},
@@ -310,7 +313,8 @@ class _SignInState extends State<SignIn> {
                   child: SignInButtonBuilder(
                     text: 'Sign in with Google',
                     image: Padding(
-                      padding: const EdgeInsets.only(left:0,right:5,top:8,bottom: 8),
+                      padding: const EdgeInsets.only(
+                          left: 0, right: 5, top: 8, bottom: 8),
                       child: Image.asset('assets/socialicons/google.png'),
                     ),
                     onPressed: () {},

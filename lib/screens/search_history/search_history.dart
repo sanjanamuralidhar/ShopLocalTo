@@ -1,4 +1,4 @@
-import 'package:autocomplete_textfield/autocomplete_textfield.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
 import 'package:listar_flutter/api/api.dart';
@@ -29,9 +29,8 @@ class _SearchHistoryState extends State<SearchHistory> {
   num id;
   String value;
   final _textController = TextEditingController();
-  AutoCompleteTextField searchTextField;
   TextEditingController controller = new TextEditingController();
-  GlobalKey<AutoCompleteTextFieldState<CategoryModel2>> key = new GlobalKey();
+
 
 
   void _onSearch(String text) {

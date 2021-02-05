@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 // import 'package:flutter/material.dart';
 import 'package:listar_flutter/api/http_manager.dart';
@@ -50,9 +51,9 @@ class Api {
   }
 
     // /Update profile api
-   static Future<dynamic> editProfile({String username, String email, String address, String website, String phone,String info}) async {
+   static Future<dynamic> editProfile({String username, String email, String address, String website, String phone,String info,File image}) async {
     // await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&website='+website+'&info='+info+'&phone='+phone);
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/update-profile?name='+username+'&email='+email+'&address='+address+'&website='+website+'&info='+info+'&phone='+phone,data:{'image':image});
     return result;
   }
 
@@ -107,10 +108,10 @@ class Api {
   //  print('getCategoryDetailList():__________________________________${result['data']['list']}');
    return CategoryModel2.fromJson(result['data']);
   }
+  ///id home required
   static Future<CategoryPageModel> getCategoryViewList() async{
   await Future.delayed(Duration(seconds: 1));
   final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
-  // print('/././//............./////...getList${result['data']}');
   return CategoryPageModel.fromJson(result['data']);
 }
   static Future<List<ListModel>> getListDetailList({id: 0}) async {
@@ -220,7 +221,7 @@ class Api {
   ///Get Home
   static Future<HomePageModel> getHome({id:0}) async {
     await Future.delayed(Duration(seconds: 1));
-    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home');
+    final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home?id='+id.toString());
      print('jdbvjkdbjkvbj fjbkjdb dbfubm fjkbd......mmmmmmmmmmmmmm....${result['data']['banners']}');
     return HomePageModel.fromJson(result['data']);
   }
@@ -308,7 +309,7 @@ static Future<ProductListPageModel> getList({id:0}) async{
 }
 
   static Future<ProductListPageModel> getSearchResult({id:0}) async {
-    await Future.delayed(Duration(seconds: 1));
+    // await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/search-results?category_id='+id.toString());
   //  print('getShops():$result.runT');
    return ProductListPageModel.fromJson(result['data']['data']);

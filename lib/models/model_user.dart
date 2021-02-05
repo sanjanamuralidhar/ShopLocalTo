@@ -27,6 +27,7 @@ String information;
 String created_at;
 String updated_at;
 String comment;
+int neighbourhoodid;
 
 
   UserModel(
@@ -59,6 +60,7 @@ String comment;
     this.verify,
     this.website,
     this.comment,
+    this.neighbourhoodid,
   );
 
   UserModel.fromJson(Map<String, dynamic> json) {
@@ -93,6 +95,7 @@ String comment;
     verify=json['verify'];
     website=json['website'];
     comment = json['comment'];
+    neighbourhoodid = json['neighbourhood_id'];
     
   }
 
@@ -137,6 +140,7 @@ String comment;
      if(verify!=null) json['verify']=verify;
     if(website!=null) json['website']=website;
     if(comment!=null) json['comment']=comment;
+    if(neighbourhoodid !=null) json['neighbourhood_id'] =neighbourhoodid;
     return json;
   }
 // factory UserModel.fromJson(Map<String, dynamic> json) {

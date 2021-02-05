@@ -2,11 +2,14 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/blocs/bloc.dart';
 import 'package:listar_flutter/configs/application.dart';
 import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/logger.dart';
 import 'package:listar_flutter/utils/utils.dart';
+
+import 'models/model_user.dart';
 
 // import 'api/api.dart';
 
@@ -24,6 +27,7 @@ class _MainNavigationState extends State<MainNavigation> {
   final _fcm = FirebaseMessaging();
   int _selectedIndex = 0;
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
+
  Future<dynamic> getToken() async{
      Map<String, dynamic> headerParams = {};
     bool isLoggedIn = await flutterSecureStorage.containsKey(key:'token');
@@ -34,11 +38,21 @@ class _MainNavigationState extends State<MainNavigation> {
     print('cn kldnkv............. ndfkv nfkvn f...........$headerParams');
     return headerParams;
   }
+
+  UserModel _user;
   @override
   void initState() {
   //  _loadUser();
     _fcmHandle();
+    _loadUserid();
     super.initState();
+  }
+
+  Future<void> _loadUserid() async {
+    final dynamic result = await Api.getUserProfile();
+      setState(() {
+        _user = result;
+      });
   }
   // Future <dynamic> _loadUser() async {
   //  final token = await Api.getRefreshToken();
@@ -153,13 +167,14 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
+    int id = _user == null?null:_user.neighbourhoodid;
     return Scaffold(
       body: BlocBuilder<AuthBloc, AuthenticationState>(
         builder: (context, auth) {
           return IndexedStack(
             index: _selectedIndex,
             children: <Widget>[
-              Home(),
+              Home(id:id),
               WishList(),
               MessageList(),
               NotificationList(),

@@ -1,6 +1,8 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/routes.dart';
 import 'package:listar_flutter/main_navigation.dart';
@@ -335,8 +337,8 @@ _loadProfile();
                         onTap: ()=> Navigator.pushNamed(context, Routes.searchHistory),
                         child: Padding(
                           padding: const EdgeInsets.all(8),
-                          child: Icon(
-                            Icons.search_outlined,
+                          child:   Icon(
+                            Icons.search,
                             color: Colors.white,
                           ),
                         )),
