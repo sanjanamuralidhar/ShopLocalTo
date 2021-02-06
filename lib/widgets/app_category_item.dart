@@ -178,7 +178,8 @@ Color colorConvert(String color) {
                   )
                 ],
               ),
-            ));
+            )
+            );
       default:
         return Container();
     }

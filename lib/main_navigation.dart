@@ -15,7 +15,7 @@ import 'models/model_user.dart';
 
 
 class MainNavigation extends StatefulWidget {
-  MainNavigation({Key key}) : super(key: key);
+  MainNavigation({Key key,}) : super(key: key);
 
   @override
   _MainNavigationState createState() {
@@ -28,17 +28,32 @@ class _MainNavigationState extends State<MainNavigation> {
   int _selectedIndex = 0;
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
 
- Future<dynamic> getToken() async{
-     Map<String, dynamic> headerParams = {};
-    bool isLoggedIn = await flutterSecureStorage.containsKey(key:'token');
-    if(isLoggedIn){
-      String token = await flutterSecureStorage.read(key: 'token');
-      headerParams = {'Authorization':'Bearer $token'};
-    }
-    print('cn kldnkv............. ndfkv nfkvn f...........$headerParams');
-    return headerParams;
-  }
+//  Future<dynamic> getToken() async{
+//      Map<String, dynamic> headerParams = {};
+//     bool isLoggedIn = await flutterSecureStorage.containsKey(key:'token');
+//     if(isLoggedIn){
+//       String token = await flutterSecureStorage.read(key: 'token');
+//       headerParams = {'Authorization':'Bearer $token'};
+//     }
+//     print('cn kldnkv............. ndfkv nfkvn f...........$headerParams');
+//     return headerParams;
+//   }
 
+//  Future<dynamic> getLocation() async {
+//     int location1;
+//     bool isLoggedIn = await flutterSecureStorage.containsKey(key: 'locationid');
+//     print('......... ........ ......... isloggedin:$isLoggedIn');
+//     if (isLoggedIn) {
+//       String location = (await flutterSecureStorage.read(key: 'locationid'));
+//       location1 = location as int;
+//       print('location:$location');
+//     }
+//     final nullable = location1.isNegative ? null : location1;
+//     neighbourid = nullable;
+//     print('.llllllllllllllLLLLLLLLLLLLLLLLLLL      neighbourid $neighbourid');
+//   }
+
+int neighbourid;
   UserModel _user;
   @override
   void initState() {

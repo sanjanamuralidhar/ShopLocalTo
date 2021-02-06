@@ -6,6 +6,7 @@ import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/SearchResult/searchResult.dart';
+import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:shimmer/shimmer.dart';
@@ -31,6 +32,10 @@ class _SearchHistoryState extends State<SearchHistory> {
   final _textController = TextEditingController();
   TextEditingController controller = new TextEditingController();
 
+List<CategoryModel2> _category;
+  CategoryPageModel _categoryPage;
+    CategoryType _type = CategoryType.full;
+
 
 
   void _onSearch(String text) {
@@ -41,19 +46,16 @@ class _SearchHistoryState extends State<SearchHistory> {
   @override
   void initState() {
     _loadData();
-    _loadCategoryList();
+    _loadCategory();
     super.initState();
   }
-
-  List<CategoryModel2> _categoryList;
-
- Future<void> _loadCategoryList() async {
-    final List<CategoryModel2> result = await Api.getCategoryList();
-    setState(() {
-      _categoryList = result;
-    });
-    // print('category list *************:${_categoryList.length}');
-  }
+ Future<void> _loadCategory() async {
+    final dynamic result = await Api.getCategoryViewList();
+      setState(() {
+        _categoryPage = result;
+        _category = _categoryPage.category;
+      });
+ }
   ///Fetch API
   Future<void> _loadData() async {
     setState(() {
@@ -76,6 +78,18 @@ class _SearchHistoryState extends State<SearchHistory> {
     return selected;
   }
 
+  Color colorConvert(String color) {
+  print('color666666666666666666666///////:$color');
+  color = color.replaceFirst("#", "");
+  var converted;
+  if (color.length == 6) {
+    converted = Color(int.parse("0xFF" + color));
+  } else if (color.length == 8) {
+    converted = Color(int.parse("0x" + color));
+  }
+  return converted;
+}
+
   ///On navigate list product
   void _onProductList(TagModel item) {
     Navigator.pushNamed(
@@ -83,6 +97,13 @@ class _SearchHistoryState extends State<SearchHistory> {
       Routes.listProduct,
       arguments: item.title,
     );
+  }
+
+  void _onCategoryList(CategoryModel2 item) {
+     Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListProduct(id: item.id,title: item.title,)),
+            );
   }
 
   ///Build list tag
@@ -121,7 +142,121 @@ class _SearchHistoryState extends State<SearchHistory> {
       );
     }).toList();
   }
+  //Build Category list
 
+ List<Widget> _listCategory(BuildContext context) {
+    if (_category == null) {
+      return List.generate(6, (index) => index).map(
+        (item) {
+          return Shimmer.fromColors(
+            baseColor: Theme.of(context).dividerColor,
+            highlightColor: Theme.of(context).highlightColor,
+            enabled: true,
+            child: AppTag(
+              Translate.of(context).translate('loading'),
+              type: TagType.gray,
+            ),
+          );
+        },
+      ).toList();
+    }
+
+    return _category.map((item) {
+       return InkWell(
+            onTap: () => _onCategoryList(item),
+            child: Container(
+              padding: EdgeInsets.only(bottom: 15),
+              // decoration: BoxDecoration(
+              //   border: Border(
+              //     bottom: BorderSide(
+              //       color: Theme.of(context).dividerColor,
+              //     ),
+              //   ),
+              // ),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                  Container(
+                    width: 50,
+                    height: 50,
+                    alignment: Alignment.center,
+                   decoration: BoxDecoration(
+                shape: BoxShape.circle,
+
+                      color: colorConvert(item.color),
+                    ),
+                    child: Image.network(item.icon,width: 20,height: 20,)
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 10, right: 10),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Text(
+                          item.title,
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
+            )
+            );
+    }).toList();
+ }
+  // return InkWell(
+  //           onTap: () => onPressed(item),
+  //           child: Container(
+  //             padding: EdgeInsets.only(bottom: 15),
+  //             decoration: BoxDecoration(
+  //               border: Border(
+  //                 bottom: BorderSide(
+  //                   color: Theme.of(context).dividerColor,
+  //                 ),
+  //               ),
+  //             ),
+  //             child: Row(
+  //               crossAxisAlignment: CrossAxisAlignment.center,
+  //               children: <Widget>[
+  //                 Container(
+  //                   width: 60,
+  //                   height: 60,
+  //                   alignment: Alignment.center,
+  //                   decoration: BoxDecoration(
+  //                     borderRadius: BorderRadius.all(
+  //                       Radius.circular(8),
+  //                     ),
+  //                     color: colorConvert(item.color),
+  //                   ),
+  //                   child: Image.network(item.icon,width: 20,height: 20,)
+  //                 ),
+  //                 Padding(
+  //                   padding: EdgeInsets.only(left: 10, right: 10),
+  //                   child: Column(
+  //                     crossAxisAlignment: CrossAxisAlignment.start,
+  //                     children: <Widget>[
+  //                       Text(
+  //                         item.title,
+  //                         style: Theme.of(context)
+  //                             .textTheme
+  //                             .subtitle1
+  //                             .copyWith(fontWeight: FontWeight.w600),
+  //                       ),
+  //                       Text(
+  //                         '${item.count} location',
+  //                         style: Theme.of(context).textTheme.bodyText1,
+  //                       ),
+  //                     ],
+  //                   ),
+  //                 )
+  //               ],
+  //             ),
+  //           )
+  //           );
   ///Build popular
   List<Widget> _listPopular() {
     if (_historyPage?.popular == null) {
@@ -198,18 +333,18 @@ class _SearchHistoryState extends State<SearchHistory> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: <Widget>[
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context).translate('Search').toUpperCase(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: <Widget>[
+                  //     Text(
+                  //       Translate.of(context).translate('Search').toUpperCase(),
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .subtitle1
+                  //           .copyWith(fontWeight: FontWeight.w600),
+                  //     ),
+                  //   ],
+                  // ),
                   // keyword search search bar
                   Row(
                     children: [
@@ -224,7 +359,7 @@ class _SearchHistoryState extends State<SearchHistory> {
                             ),
                           ),
                           child: AppTextInput(
-                            hintText: Translate.of(context).translate('search'),
+                            hintText: Translate.of(context).translate('Find food,mobile,cosmetics'),
                             icon: Icon(Icons.search),
                             controller: _textController,
                             onSubmitted: _onSearch,
@@ -244,21 +379,21 @@ class _SearchHistoryState extends State<SearchHistory> {
                       ),
                     ],
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Text(
-                        Translate.of(context)
-                            .translate('Select Category')
-                            .toUpperCase(),
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle1
-                            .copyWith(fontWeight: FontWeight.w600),
-                      ),
-                      // DropDown with suggestion
-                    ],
-                  ),
+                  // Row(
+                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  //   children: <Widget>[
+                  //     Text(
+                  //       Translate.of(context)
+                  //           .translate('Select Category')
+                  //           .toUpperCase(),
+                  //       style: Theme.of(context)
+                  //           .textTheme
+                  //           .subtitle1
+                  //           .copyWith(fontWeight: FontWeight.w600),
+                  //     ),
+                  //     // DropDown with suggestion
+                  //   ],
+                  // ),
                   Row(
                     children: [
                       Padding(
@@ -285,7 +420,7 @@ class _SearchHistoryState extends State<SearchHistory> {
 
                                 // ignore: non_constant_identifier_names
                                 suggestionsCallback: (Pattern) async {
-                                  List<CategoryModel2> list = _categoryList;
+                                  List<CategoryModel2> list = _category;
                                   var suggetionList = Pattern.isEmpty
                                       ? null
                                       : list
@@ -314,7 +449,7 @@ class _SearchHistoryState extends State<SearchHistory> {
                       ),
                     ],
                   ),
-                  ///////////////////////Requered/////////////////////
+                  _recentsearches(context),
                   // Row(
                   //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   //   children: <Widget>[
@@ -330,38 +465,45 @@ class _SearchHistoryState extends State<SearchHistory> {
                   //     // recent
                   //   ],
                   // ),
-                  // Row(
-                  //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //   children: <Widget>[
-                  //     Text(
-                  //       Translate.of(context)
-                  //           .translate('search_history')
-                  //           .toUpperCase(),
-                  //       style: Theme.of(context)
-                  //           .textTheme
-                  //           .subtitle1
-                  //           .copyWith(fontWeight: FontWeight.w600),
-                  //     ),
-                  //     InkWell(
-                  //       onTap: () {
-                  //         _historyPage.tag.clear();
-                  //         setState(() {});
-                  //       },
-                  //       child: Text(
-                  //         Translate.of(context).translate('clear'),
-                  //         style: Theme.of(context).textTheme.subtitle2.copyWith(
-                  //               color: Theme.of(context).accentColor,
-                  //             ),
-                  //       ),
-                  //     ),
-                  //   ],
-                  // ),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        Text(
+                          Translate.of(context)
+                              .translate('Popular Categories')
+                              .toUpperCase(),
+                          style: Theme.of(context)
+                              .textTheme
+                              .subtitle1
+                              .copyWith(fontWeight: FontWeight.w600),
+                        ),
+                        // InkWell(
+                        //   onTap: () {
+                        //     _historyPage.tag.clear();
+                        //     setState(() {});
+                        //   },
+                        //   child: Text(
+                        //     Translate.of(context).translate('clear'),
+                        //     style: Theme.of(context).textTheme.subtitle2.copyWith(
+                        //           color: Theme.of(context).accentColor,
+                        //         ),
+                        //   ),
+                        // ),
+                      ],
+                    ),
+                  ),
 
-                  // Wrap(
-                  //   alignment: WrapAlignment.start,
-                  //   spacing: 10,
-                  //   children: _listTag(context),
-                  // ),
+
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Wrap(
+                      alignment: WrapAlignment.start,
+                      spacing: 10,
+                      children: _listCategory(context),
+                    ),
+                  ),
                 ],
               ),
             ),
@@ -398,6 +540,27 @@ class _SearchHistoryState extends State<SearchHistory> {
         ),
       ),
     );
+  }
+  Widget _recentsearches(BuildContext context){
+   String _recent = null;
+if(_recent == null){
+  return Container();
+}
+return Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: <Widget>[
+                      Text(
+                        Translate.of(context)
+                            .translate('Recent Searches')
+                            .toUpperCase(),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle1
+                            .copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      // recent
+                    ],
+                  );
   }
 }
 

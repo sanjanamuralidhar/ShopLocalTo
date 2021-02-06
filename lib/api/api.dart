@@ -220,7 +220,6 @@ class Api {
 
   ///Get Home
   static Future<HomePageModel> getHome({id:0}) async {
-    await Future.delayed(Duration(seconds: 1));
     final result = await httpManager.post(url:'http://dev.shoplocalto.ca/api/home?id='+id.toString());
      print('jdbvjkdbjkvbj fjbkjdb dbfubm fjkbd......mmmmmmmmmmmmmm....${result['data']['banners']}');
     return HomePageModel.fromJson(result['data']);

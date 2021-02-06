@@ -3,6 +3,7 @@ import 'package:listar_flutter/api/api.dart';
 import 'package:listar_flutter/configs/config.dart';
 import 'package:listar_flutter/models/model.dart';
 import 'package:listar_flutter/models/screen_models/category_page_model.dart';
+import 'package:listar_flutter/screens/screen.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -72,11 +73,15 @@ class _CategoryState extends State<Category> {
 
   ///On navigate list product
   void _onProductList(CategoryModel2 item) {
-    Navigator.pushNamed(
-      context,
-      Routes.listProduct,
-      arguments: item.id,
-    );
+    Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => ListProduct(id: item.id,title: item.title,)),
+            );
+    // Navigator.pushNamed(
+    //   context,
+    //   Routes.listProduct,
+    //   arguments: item.id,
+    // );
   }
 
   ///On Search Category

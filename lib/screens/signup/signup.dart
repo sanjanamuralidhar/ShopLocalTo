@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:listar_flutter/configs/image.dart';
 import 'package:listar_flutter/utils/utils.dart';
@@ -40,6 +41,9 @@ class _SignUpState extends State<SignUp> {
   String _validPhone;
   String _validLocation;
   List<MyLocation> _locations = [];
+  String locationname;
+  int locationid;
+  FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
 
   SignUpBloc _signUpBloc;
   var items = [
@@ -66,7 +70,7 @@ class _SignUpState extends State<SignUp> {
     });
   }
 
-   Future<void> _showMessage(String message) async {
+  Future<void> _showMessage(String message) async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -76,7 +80,8 @@ class _SignUpState extends State<SignUp> {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Signup failed', style: Theme.of(context).textTheme.bodyText1),
+                Text('Signup failed',
+                    style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
           ),
@@ -92,7 +97,8 @@ class _SignUpState extends State<SignUp> {
       },
     );
   }
-Future<void> _showSuccess() async {
+
+  Future<void> _showSuccess() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -102,7 +108,8 @@ Future<void> _showSuccess() async {
           content: SingleChildScrollView(
             child: ListBody(
               children: <Widget>[
-                Text('Thank You For SignUp!', style: Theme.of(context).textTheme.bodyText1),
+                Text('Thank You For SignUp!',
+                    style: Theme.of(context).textTheme.bodyText1),
               ],
             ),
           ),
@@ -112,9 +119,10 @@ Future<void> _showSuccess() async {
               child: Text('SignIn'),
               onPressed: () {
                 Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => SignIn(),
-            ));
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => SignIn(),
+                    ));
               },
             ),
           ],
@@ -122,7 +130,6 @@ Future<void> _showSuccess() async {
       },
     );
   }
-  
 
   ///On sign up
   // void _signUp() {
@@ -347,38 +354,46 @@ Future<void> _showSuccess() async {
                     child: new Row(children: <Widget>[
                       new Expanded(
                           child: SizedBox(
-                            height: 50,
-                            child: new TextField(
-                              
-                        controller: _textLocationController,
-                        decoration: InputDecoration(
-                          
-                          focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(10),
-                                borderSide: new BorderSide(color: Colors.grey[300]),
-                                ),
-                          filled:true,
-                          fillColor: Theme.of(context).highlightColor,
+                        height: 50,
+                        child: new TextField(
+                          controller: _textLocationController,
+                          decoration: InputDecoration(
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(10),
+                              borderSide:
+                                  new BorderSide(color: Colors.grey[300]),
+                            ),
+                            filled: true,
+                            fillColor: Theme.of(context).highlightColor,
                             hintText: Translate.of(context)
                                 .translate('Select Location'),
                             suffix: PopupMenuButton<String>(
-                              icon: const Icon(Icons.arrow_drop_down,color: Colors.grey,),
+                              icon: const Icon(
+                                Icons.arrow_drop_down,
+                                color: Colors.grey,
+                              ),
                               onSelected: (String value) {
                                 _textLocationController.text = value;
                               },
                               itemBuilder: (BuildContext context) {
                                 return _locations.map<PopupMenuItem<String>>(
                                     (MyLocation value) {
+                                  setState(() {
+                                    locationname = value.title;
+                                    locationid = value.id;
+                                    flutterSecureStorage.write(key: 'location', value: locationname);
+                                    flutterSecureStorage.write(key: 'locationid', value: locationid.toString());
+                                  });
                                   return new PopupMenuItem(
-                                      child: new Text(value.name),
-                                      value: value.name,
-                                      );
+                                    child: new Text(value.name),
+                                    value: value.name,
+                                  );
                                 }).toList();
                               },
                             ),
+                          ),
                         ),
-                      ),
-                          )),
+                      )),
                       // new PopupMenuButton<String>(
                       //   icon: const Icon(Icons.arrow_drop_down),
                       //   onSelected: (String value) {
@@ -407,15 +422,15 @@ Future<void> _showSuccess() async {
                 Padding(
                   padding: EdgeInsets.only(top: 20),
                 ),
-            
-               BlocBuilder<SignUpBloc, SignUpState>(
+
+                BlocBuilder<SignUpBloc, SignUpState>(
                   builder: (context, login) {
                     return BlocListener<SignUpBloc, SignUpState>(
                       listener: (context, loginListener) {
                         if (loginListener is SignUpFail) {
                           _showMessage(loginListener.message);
                         }
-                        if(loginListener is SignUpSuccess){
+                        if (loginListener is SignUpSuccess) {
                           _showSuccess();
                           print('dknfdcvkfnvc');
                           // Navigator.of(context).pop();
@@ -437,11 +452,9 @@ Future<void> _showSuccess() async {
                             print('password:${_textPassController.text}');
                           });
                         },
-                        
                         text: Translate.of(context).translate('SignUp'),
                         loading: login is SignUpLoading,
                         disableTouchWhenLoading: true,
-                       
                       ),
                     );
                   },
@@ -456,5 +469,4 @@ Future<void> _showSuccess() async {
       ),
     );
   }
- 
 }

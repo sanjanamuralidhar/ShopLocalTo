@@ -740,7 +740,7 @@ class _EditProfileState extends State<EditProfile> {
                         print("update failed");
                       }
                        if (updateListener is UpdateSuccess) {
-                         Navigator.of(context).pop();
+                         Navigator.pop(context);
                       }
                     },
                     child: AppButton(

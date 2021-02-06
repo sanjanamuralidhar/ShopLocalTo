@@ -11,7 +11,6 @@ import 'package:listar_flutter/models/screen_models/screen_models.dart';
 import 'package:listar_flutter/screens/home/home_category_list.dart';
 import 'package:listar_flutter/screens/home/home_category_page.dart';
 import 'package:listar_flutter/screens/home/home_sliver_app_bar.dart';
-import 'package:listar_flutter/screens/signup/signup.dart';
 import 'package:listar_flutter/utils/utils.dart';
 import 'package:listar_flutter/widgets/widget.dart';
 import 'package:listar_flutter/screens/list_product/list_product.dart';
