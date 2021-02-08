@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
@@ -39,7 +40,7 @@ class _ListProductState extends State<ListProduct> {
   ProductListPageModel _productList;
   SortModel _currentSort = AppSort.defaultSort;
   List<SortModel> _listSort = AppSort.listSortDefault;
-
+  bool isLoading = false;
   @override
   void initState() {
     _loadData();
@@ -48,7 +49,13 @@ class _ListProductState extends State<ListProduct> {
 
   ///On Fetch API
   Future<void> _loadData() async {
+    setState(() {
+      isLoading = true;
+    });
     final dynamic result = await Api.getList(id: widget.id);
+    setState(() {
+      isLoading = false;
+    });
 // print('....................................get  L IST...........${widget.id}');
     final listProduct = result;
 // print('....................................get  L IST...........${listProduct.list.length}');
@@ -290,33 +297,36 @@ class _ListProductState extends State<ListProduct> {
 
   ///Widget build Content
   Widget _buildList() {
- List<ListModel> listM = _productList ==null?[]:_productList.list;
- if(listM == null){
-   if(listM.isEmpty){
-return Center(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(Icons.sentiment_satisfied),
-            Padding(
-              padding: EdgeInsets.all(3.0),
-              child: Text(
-                Translate.of(context).translate('category_not_found'),
-                style: Theme.of(context).textTheme.bodyText1,
-              ),
-            ),
-          ],
-        ),
-      );
-   }
-   return Wrap(
+    if (isLoading) {
+      log(isLoading.toString());
+      return Wrap(
         runSpacing: 15,
         alignment: WrapAlignment.spaceBetween,
         children: List.generate(8, (index) => index).map((item) {
           return _buildItemLoading(_modeView);
         }).toList(),
       );
- }
+    }
+    List<ListModel> listM = _productList == null ? [] : _productList.list;
+    if (listM == null) {
+      if (listM.isEmpty) {
+        return Center(
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Icon(Icons.sentiment_satisfied),
+              Padding(
+                padding: EdgeInsets.all(3.0),
+                child: Text(
+                  Translate.of(context).translate('category_not_found'),
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ),
+            ],
+          ),
+        );
+      }
+    }
 
     ///Build list
     return Wrap(
@@ -518,7 +528,9 @@ return Center(
             visible: _productList?.list != null,
             child: IconButton(
               icon: Icon(
-                _pageType == PageType.map ? Icons.view_compact : Icons.location_on,
+                _pageType == PageType.map
+                    ? Icons.view_compact
+                    : Icons.location_on,
               ),
               onPressed: _onChangePageStyle,
             ),
@@ -545,8 +557,12 @@ return Center(
                       //   style: Theme.of(context).textTheme.subtitle2,
                       // )
                       Padding(
-                        padding: const EdgeInsets.only(left: 20,top: 10,bottom: 10),
-                        child: Text("Category listing",style: Theme.of(context).textTheme.subtitle2,),
+                        padding: const EdgeInsets.only(
+                            left: 20, top: 10, bottom: 10),
+                        child: Text(
+                          "Category listing",
+                          style: Theme.of(context).textTheme.subtitle2,
+                        ),
                       ),
                     ],
                   ),

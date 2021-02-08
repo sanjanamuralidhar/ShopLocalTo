@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_swiper/flutter_swiper.dart';
 import 'package:flutter_typeahead/flutter_typeahead.dart';
@@ -15,10 +14,12 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 // ignore: must_be_immutable
 class HomeSwipe extends StatefulWidget {
+  Function(int) neibhourIdTap;
   HomeSwipe({
     Key key,
     @required this.images,
     this.height,
+    this.neibhourIdTap
   }) : super(key: key);
   final double height;
   final List<ImageModel> images;
@@ -40,12 +41,12 @@ class _HomeSwipeState extends State<HomeSwipe> {
   List<MyLocation> _myLocation = [];
   HomePageModel homepage;
   num id;
-    UserModel _userData;
+  UserModel _userData;
 
   @override
   void initState() {
     _loadShops();
-_loadProfile();
+    _loadProfile();
     super.initState();
   }
 
@@ -65,13 +66,13 @@ _loadProfile();
     print('ShopModel list ************:${homepage.category.length}');
   }
 
-    Future<void> _loadProfile() async {
+  Future<void> _loadProfile() async {
     final UserModel result = await Api.getUserProfile();
-      setState(() {
-        _userData = result;
-      });
-       print('user user user user user user user ..........${_userData.location}');
-       return _userData;
+    setState(() {
+      _userData = result;
+    });
+    print('user user user user user user user ..........${_userData.location}');
+    return _userData;
   }
 
   FlutterSecureStorage flutterSecureStorage = FlutterSecureStorage();
@@ -100,8 +101,8 @@ _loadProfile();
       children: <Widget>[
         Container(child: _swipperBanner(context)),
         _buildValue(context),
-    _buildSearchIcon(context),
-          ],
+        _buildSearchIcon(context),
+      ],
     );
   }
 
@@ -201,12 +202,12 @@ _loadProfile();
                                 value = suggestion.title;
                                 id = suggestion.id;
                               });
-                              flutterSecureStorage.write(key: 'location', value: suggestion.title);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              flutterSecureStorage.write(
+                                  key: 'location', value: suggestion.title);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
                                 return MainNavigation();
-                              }
-                              ));
-
+                              }));
                             })
 
                         // previous search by sanjana search.txt
@@ -290,12 +291,14 @@ _loadProfile();
                                 value = suggestion.title;
                                 id = suggestion.id;
                               });
-                              flutterSecureStorage.write(key: 'location', value: suggestion.title);
-                              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                              
+                              widget.neibhourIdTap(id);
+                              flutterSecureStorage.write(
+                                  key: 'location', value: suggestion.title);
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
                                 return MainNavigation();
-                              }
-                              ));
-
+                              }));
                             })
 
                         // previous search by sanjana search.txt
@@ -320,30 +323,32 @@ _loadProfile();
           )),
     );
   }
-  Widget _buildSearchIcon(BuildContext context){
+
+  Widget _buildSearchIcon(BuildContext context) {
     return Container(
-      child:   Padding(
-        padding: const EdgeInsets.only(top: 35, left: 20,right: 15),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 35, left: 20, right: 15),
         child: Align(
-           alignment: Alignment.topRight,
-                  child:   Material(
-                  type: MaterialType.transparency,
-                  child: Ink(
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      color: Theme.of(context).buttonColor,
+          alignment: Alignment.topRight,
+          child: Material(
+            type: MaterialType.transparency,
+            child: Ink(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(20),
+                color: Theme.of(context).buttonColor,
+              ),
+              child: InkWell(
+                  onTap: () =>
+                      Navigator.pushNamed(context, Routes.searchHistory),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Icon(
+                      Icons.search,
+                      color: Colors.white,
                     ),
-                    child: InkWell(
-                        onTap: ()=> Navigator.pushNamed(context, Routes.searchHistory),
-                        child: Padding(
-                          padding: const EdgeInsets.all(8),
-                          child:   Icon(
-                            Icons.search,
-                            color: Colors.white,
-                          ),
-                        )),
-                  ),
-                ),
+                  )),
+            ),
+          ),
         ),
       ),
     );

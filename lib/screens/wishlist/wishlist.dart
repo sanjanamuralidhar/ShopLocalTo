@@ -22,28 +22,27 @@ class _WishListState extends State<WishList> {
 List<ShopModel> _wishlistPage = [];
   @override
   void initState() {
-    _loadData();
+    // _loadData();
     // _loadWishlist();
     super.initState();
   }
 
   ///Fetch API
-  Future<void> _loadData() async {
-    final ResultApiModel result = await Api.getWishList();
-    if (result.success) {
+  // Future<void> _loadData() async {
+  //   final ResultApiModel result = await Api.getWishList();
+  //   if (result.success) {
+  //     setState(() {
+  //       _listPage = new WishListPageModel.fromJson(result.data);
+  //     });
+  //   }
+  // }
+Future<void> _loadWishlist() async {
+    final List<ShopModel> result = await Api.getWishList();
       setState(() {
-        _listPage = new WishListPageModel.fromJson(result.data);
+        _wishlistPage = result;
       });
-    }
-  }
-// Future<void> _loadWishlist() async {
-//     final List<ShopModel> result = await Api.getWishList();
-//       setState(() {
-//         _wishlistPage = result;
-//       });
-//       print(_wishlistPage);
   
-//   }
+  }
   ///On load more
   Future<void> _onLoading() async {
     await Future.delayed(Duration(seconds: 1));

@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
@@ -43,9 +44,9 @@ class _HomeState extends State<Home> {
   final Geolocator geolocator = Geolocator();
   CategoryModel2 _categoryModel2;
 // ProductListPageModel _productListPageModel;
-List<ListModel> _list;
-String title;
-int id;
+  List<ListModel> _list;
+  String title;
+  int id;
   @override
   void initState() {
     //  _checkLocation();
@@ -56,7 +57,8 @@ int id;
     // _loadSearchResults();
     super.initState();
   }
-   _checkLocation() async {
+
+  _checkLocation() async {
     // the method below returns a Future
     var connectivityResult = await (new Connectivity().checkConnectivity());
     bool connectedToWifi = (connectivityResult == ConnectivityResult.wifi);
@@ -71,9 +73,9 @@ int id;
   // ///Fetch API
   Future<void> _loadData() async {
     final dynamic result = await Api.getHome(id: widget.id);
-      setState(() {
-        _homePage = result;
-      });
+    setState(() {
+      _homePage = result;
+    });
   }
 
   // Future<void> _loadPopular() async {
@@ -98,7 +100,6 @@ int id;
   //   // print('ShopModel list ************:${_shops.length}');
   // }
 
-
   //  Future<void> _loadCategoryList() async {
   //   final List<CategoryModel2> result = await Api.getCategoryList();
   //   setState(() {
@@ -117,11 +118,11 @@ int id;
   }
   // ******************************************************************/
 
-void _onShopDetail(ShopModel item) {
+  void _onShopDetail(ShopModel item) {
     // ignore: unrelated_type_equality_checks
     String route = item.type == ShopType.place
         ? Routes.productDetail
-        :Routes.productDetailTab;
+        : Routes.productDetailTab;
     Navigator.pushNamed(context, route, arguments: item.id);
   }
   // /Build category UI
@@ -169,17 +170,21 @@ void _onShopDetail(ShopModel item) {
   //   );
   // }
   // ontaps for catagory@sanjana
-   void _onTapService(CategoryModel2 item) {
+  void _onTapService(CategoryModel2 item) {
     switch (item.type) {
       case CategoryType2.more:
         _onOpenMore();
         break;
 
       default:
-      Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) => ListProduct(id: item.id,title: item.title,)),
-            );
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ListProduct(
+                    id: item.id,
+                    title: item.title,
+                  )),
+        );
         // Navigator.pushNamed(context, Routes.listProduct, arguments: item.id);
         break;
     }
@@ -192,7 +197,7 @@ void _onShopDetail(ShopModel item) {
       context: context,
       builder: (BuildContext context) {
         return HomeCategoryList(
-          category: _homePage == null?[]:_homePage.category,
+          category: _homePage == null ? [] : _homePage.category,
           onOpenList: () async {
             Navigator.pushNamed(context, Routes.category);
           },
@@ -205,24 +210,26 @@ void _onShopDetail(ShopModel item) {
       },
     );
   }
+
 //Build category @SANJANA
-   Widget _buildCategoryItem() {
+  Widget _buildCategoryItem() {
     //  print('category list ///////////////////:${_categoryList.length}');
-    List<CategoryModel2> category2 = _homePage == null?[]:_homePage.category;
+    List<CategoryModel2> category2 =
+        _homePage == null ? [] : _homePage.category;
     if (category2 == null) {
       return Wrap(
         runSpacing: 10,
         alignment: WrapAlignment.center,
         children: List.generate(8, (index) => index).map(
           (item) {
-            return HomeCategoryPage(
-            );
+            return HomeCategoryPage();
           },
         ).toList(),
       );
     }
 
-    List<CategoryModel2> listBuild = _homePage == null?[]:_homePage.category;
+    List<CategoryModel2> listBuild =
+        _homePage == null ? [] : _homePage.category;
     final more = CategoryModel2.fromJson({
       "id": 9,
       "title": Translate.of(context).translate("more"),
@@ -255,7 +262,7 @@ void _onShopDetail(ShopModel item) {
   //Build Popular @SANJANA
   Widget _buildPopLocation() {
     // print(_locations.toString());
-    List<MyLocation> poplocation = _homePage==null?[]:_homePage.locations;
+    List<MyLocation> poplocation = _homePage == null ? [] : _homePage.locations;
     if (poplocation == null) {
       return ListView.builder(
         scrollDirection: Axis.horizontal,
@@ -289,7 +296,8 @@ void _onShopDetail(ShopModel item) {
             child: AppProductItem(
               mylocation: item,
               type: ProductViewType.cardLarge,
-              onPressLocation: _onLocationDetail,//from here go to _onlocation detail
+              onPressLocation:
+                  _onLocationDetail, //from here go to _onlocation detail
             ),
             // *****************************************************
           ),
@@ -300,8 +308,8 @@ void _onShopDetail(ShopModel item) {
   }
 
   //Build shops @SANJANA
- Widget _buildShopList() {
-   List<ShopModel> shopss = _homePage == null? []: _homePage.shops;
+  Widget _buildShopList() {
+    List<ShopModel> shopss = _homePage == null ? [] : _homePage.shops;
     if (shopss == null) {
       return Column(
         children: List.generate(8, (index) => index).map(
@@ -370,7 +378,6 @@ void _onShopDetail(ShopModel item) {
   //   );
   // }
 
-
   ///Build list recent
   // Widget _buildList() {
   //   if (_homePage?.list == null) {
@@ -402,16 +409,22 @@ void _onShopDetail(ShopModel item) {
 
   @override
   Widget build(BuildContext context) {
-    
     // print('popular locatiugbuiiiiibj buiob:$_popularPageModel');
     return Scaffold(
       body: CustomScrollView(
         slivers: <Widget>[
           SliverPersistentHeader(
             delegate: AppBarHomeSliver(
-              expandedHeight: 250,
-              banners:_homePage == null ? []: _homePage.banners,
-            ),
+                expandedHeight: 250,
+                banners: _homePage == null ? [] : _homePage.banners,
+                neibhourIdTap: (val) async {
+                  log(' VAL HH' + val.toString());
+                  final dynamic result = await Api.getHome(id: val);
+                  log(result.toString());
+                  setState(() {
+                    _homePage = result;
+                  });
+                }),
             pinned: true,
           ),
           SliverList(
@@ -428,10 +441,8 @@ void _onShopDetail(ShopModel item) {
                         left: 10,
                         right: 10,
                       ),
-                      child: 
-                      _buildCategoryItem(),
+                      child: _buildCategoryItem(),
                       // _buildCategory(),
-
                     ),
                     Container(
                       padding: EdgeInsets.only(
@@ -444,8 +455,8 @@ void _onShopDetail(ShopModel item) {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                Translate.of(context)
-                                    .translate('Popular Neighbourhoods in Toronto'),
+                                Translate.of(context).translate(
+                                    'Popular Neighbourhoods in Toronto'),
                                 style: Theme.of(context)
                                     .textTheme
                                     .headline6
@@ -453,8 +464,8 @@ void _onShopDetail(ShopModel item) {
                               ),
                               Padding(padding: EdgeInsets.only(top: 3)),
                               Text(
-                                Translate.of(context)
-                                    .translate('Explore the Neighbourhoods in Nearby'),
+                                Translate.of(context).translate(
+                                    'Explore the Neighbourhoods in Nearby'),
                                 style: Theme.of(context).textTheme.bodyText1,
                               )
                             ],
@@ -464,8 +475,7 @@ void _onShopDetail(ShopModel item) {
                     ),
                     Container(
                       height: 195,
-                      child:
-                       _buildPopLocation(),
+                      child: _buildPopLocation(),
                       //  _buildPopular(),
                     ),
                     Container(
@@ -491,7 +501,8 @@ void _onShopDetail(ShopModel item) {
                                 padding: EdgeInsets.only(top: 3),
                               ),
                               Text(
-                                Translate.of(context).translate('Find Out what is popular in Neighbourhood'),
+                                Translate.of(context).translate(
+                                    'Find Out what is popular in Neighbourhood'),
                                 style: Theme.of(context).textTheme.bodyText1,
                               ),
                             ],
@@ -501,8 +512,7 @@ void _onShopDetail(ShopModel item) {
                     ),
                     Container(
                       padding: EdgeInsets.only(left: 20, right: 20),
-                      child: 
-                      _buildShopList(),
+                      child: _buildShopList(),
                       // _buildList()
                     ),
                   ],
@@ -514,12 +524,15 @@ void _onShopDetail(ShopModel item) {
       ),
     );
   }
-  
+
   Future<void> _showAlert(BuildContext context) async {
-     _currentPosition = await Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high);
-     _lastKnown = await Geolocator.getLastKnownPosition();
-     final coordinates = new Coordinates(_currentPosition.latitude,_currentPosition.longitude);
-     final coordinate = new Coordinates(_lastKnown.latitude,_lastKnown.longitude);
+    _currentPosition = await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    _lastKnown = await Geolocator.getLastKnownPosition();
+    final coordinates =
+        new Coordinates(_currentPosition.latitude, _currentPosition.longitude);
+    final coordinate =
+        new Coordinates(_lastKnown.latitude, _lastKnown.longitude);
     addresses = await Geocoder.local.findAddressesFromCoordinates(coordinates);
     address = await Geocoder.local.findAddressesFromCoordinates(coordinate);
     setState(() {
@@ -527,7 +540,7 @@ void _onShopDetail(ShopModel item) {
       old = address.first;
     });
     //  print("::::::::::::0000000000:::::::::: ${first.thoroughfare}");
-      // print("::::::::::::0000000000:::::::::: ${old.thoroughfare}");
+    // print("::::::::::::0000000000:::::::::: ${old.thoroughfare}");
     showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -557,7 +570,6 @@ void _onShopDetail(ShopModel item) {
                   },
                 ),
               ],
-            )
-          );
+            ));
   }
 }

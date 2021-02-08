@@ -1,4 +1,3 @@
-
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
@@ -17,10 +16,11 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final int id;
   final List<ImageModel> banners;
+  final Function(int) neibhourIdTap;
   // final List<ShopModel> shopModel;
-  
 
-  AppBarHomeSliver({this.id, this.expandedHeight, this.banners});
+  AppBarHomeSliver(
+      {this.id, this.expandedHeight, this.banners, this.neibhourIdTap});
   @override
   Widget build(context, shrinkOffset, overlapsContent) {
     return Stack(
@@ -31,6 +31,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
           child: HomeSwipe(
             images: banners,
             height: expandedHeight,
+            neibhourIdTap: neibhourIdTap,
           ),
         ),
         Container(
@@ -53,7 +54,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
 }
 
 // class HomeSearchBar extends StatefulWidget {
-  
+
 //   @override
 //   _HomeSearchBarState createState() => _HomeSearchBarState();
 // }
@@ -193,7 +194,7 @@ class AppBarHomeSliver extends SliverPersistentHeaderDelegate {
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
-     
+
 //       decoration: BoxDecoration(
 //         borderRadius: BorderRadius.circular(10.0),
 //         color: Theme.of(context).hoverColor,
